@@ -19,4 +19,5 @@
 #import "RequestAPI.h"
 #import "ErrorHandler.h"
 #import "StorageMgr.h"
+#import "HMSegmentedControl.h"
 #endif /* PrefixHeader_pch */

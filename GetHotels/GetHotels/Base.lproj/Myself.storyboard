@@ -20,13 +20,101 @@
                     <view key="view" contentMode="scaleToFill" id="whw-Pv-xh9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gtx-Md-Nmo">
+                                <rect key="frame" x="0.0" y="114" width="375" height="553"/>
+                                <subviews>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="NDn-vi-UVz">
+                                        <rect key="frame" x="8" y="-56" width="359" height="537"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </tableView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="NDn-vi-UVz" firstAttribute="top" secondItem="gtx-Md-Nmo" secondAttribute="top" id="4ru-3N-acA"/>
+                                    <constraint firstAttribute="trailing" secondItem="NDn-vi-UVz" secondAttribute="trailing" id="6gu-Je-KAj"/>
+                                    <constraint firstItem="NDn-vi-UVz" firstAttribute="leading" secondItem="gtx-Md-Nmo" secondAttribute="leading" id="OnZ-sU-Sej"/>
+                                    <constraint firstAttribute="bottom" secondItem="NDn-vi-UVz" secondAttribute="bottom" id="uH0-mV-IUC"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="gtx-Md-Nmo" secondAttribute="trailing" id="22i-X1-YWO"/>
+                            <constraint firstItem="gtx-Md-Nmo" firstAttribute="leading" secondItem="whw-Pv-xh9" secondAttribute="leading" id="4Rj-TH-0it"/>
+                            <constraint firstItem="gtx-Md-Nmo" firstAttribute="top" secondItem="vYb-Pp-PpS" secondAttribute="bottom" constant="50" id="afj-uR-YUU"/>
+                            <constraint firstItem="zaa-wH-66y" firstAttribute="top" secondItem="gtx-Md-Nmo" secondAttribute="bottom" id="xx3-Tt-g4M"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="我的酒店" id="kST-3I-GNa"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uKo-2o-tzW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1036" y="105.69715142428787"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="dZ0-VH-u2p">
+            <objects>
+                <viewController id="TPp-OF-8gJ" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="xiF-qR-Xfy"/>
+                        <viewControllerLayoutGuide type="bottom" id="9Vv-9Q-M7f"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="H0r-Wp-IjQ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="csm-RP-epr">
+                                <rect key="frame" x="0.0" y="144" width="375" height="120"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="厦门市集美区" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IWX-RX-mLi">
+                                        <rect key="frame" x="42" y="42" width="78" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="一人入住" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D7V-dV-5DU">
+                                        <rect key="frame" x="42" y="65" width="55" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="2017-2-23" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bQ3-rb-FYh">
+                                        <rect key="frame" x="42" y="91" width="61" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="2017-2-25" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m43-HS-8CB">
+                                        <rect key="frame" x="111" y="91" width="61" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="希尔顿酒店套房" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dwr-d0-zjo">
+                                        <rect key="frame" x="15" y="15" width="122" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="highlightedColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="dwr-d0-zjo" firstAttribute="top" secondItem="csm-RP-epr" secondAttribute="top" constant="15" id="GUj-3H-p04"/>
+                                    <constraint firstItem="dwr-d0-zjo" firstAttribute="leading" secondItem="csm-RP-epr" secondAttribute="leading" constant="15" id="HYf-zE-xZF"/>
+                                    <constraint firstAttribute="height" constant="120" id="hOe-KU-nD2"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="byk-TN-EGQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1654" y="111"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="xxG-r0-08O">
