@@ -9,9 +9,7 @@
 /* Begin PBXBuildFile section */
 		045E64E41F485CA3001A8263 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 045E64E31F485CA3001A8263 /* main.m */; };
 		045E64E71F485CA3001A8263 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 045E64E61F485CA3001A8263 /* AppDelegate.m */; };
-		045E64ED1F485CA3001A8263 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 045E64EB1F485CA3001A8263 /* Main.storyboard */; };
 		045E64F01F485CA3001A8263 /* GetHotels.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 045E64EE1F485CA3001A8263 /* GetHotels.xcdatamodeld */; };
-		045E64F51F485CA3001A8263 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 045E64F31F485CA3001A8263 /* LaunchScreen.storyboard */; };
 		045E65001F485CA3001A8263 /* GetHotelsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 045E64FF1F485CA3001A8263 /* GetHotelsTests.m */; };
 		045E650B1F485CA3001A8263 /* GetHotelsUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 045E650A1F485CA3001A8263 /* GetHotelsUITests.m */; };
 		045E65221F485F1A001A8263 /* BasicEncodingRules.m in Sources */ = {isa = PBXBuildFile; fileRef = 045E65211F485F1A001A8263 /* BasicEncodingRules.m */; };
@@ -38,6 +36,8 @@
 		841E379A1F495AE90057D58A /* MyHotelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841E37991F495AE90057D58A /* MyHotelViewController.m */; };
 		841E379D1F4960710057D58A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841E379C1F4960710057D58A /* ViewController.m */; };
 		841E37A11F4965F30057D58A /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 841E37A01F4965F30057D58A /* HMSegmentedControl.m */; };
+		84CD44191F49775D0074A42A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84CD44171F49775D0074A42A /* Main.storyboard */; };
+		84CD441B1F49777D0074A42A /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84CD441A1F49777D0074A42A /* Launch Screen.storyboard */; };
 		84F729D81F48658F00E7E773 /* Hotel.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84F729D61F48658F00E7E773 /* Hotel.storyboard */; };
 		84F729DB1F48661D00E7E773 /* BookHotels.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84F729D91F48661D00E7E773 /* BookHotels.storyboard */; };
 		84F729DE1F48663400E7E773 /* Myself.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84F729DC1F48663400E7E773 /* Myself.storyboard */; };
@@ -66,9 +66,7 @@
 		045E64E31F485CA3001A8263 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		045E64E51F485CA3001A8263 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		045E64E61F485CA3001A8263 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		045E64EC1F485CA3001A8263 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		045E64EF1F485CA3001A8263 /* GetHotels.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GetHotels.xcdatamodel; sourceTree = "<group>"; };
-		045E64F41F485CA3001A8263 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		045E64F61F485CA3001A8263 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		045E64FB1F485CA3001A8263 /* GetHotelsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GetHotelsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		045E64FF1F485CA3001A8263 /* GetHotelsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GetHotelsTests.m; sourceTree = "<group>"; };
@@ -118,6 +116,8 @@
 		841E379C1F4960710057D58A /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		841E379F1F4965F30057D58A /* HMSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSegmentedControl.h; sourceTree = "<group>"; };
 		841E37A01F4965F30057D58A /* HMSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSegmentedControl.m; sourceTree = "<group>"; };
+		84CD44181F49775D0074A42A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = GetHotels/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
+		84CD441A1F49777D0074A42A /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		84F729D71F48658F00E7E773 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = GetHotels/Base.lproj/Hotel.storyboard; sourceTree = SOURCE_ROOT; };
 		84F729DA1F48661D00E7E773 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = GetHotels/Base.lproj/BookHotels.storyboard; sourceTree = SOURCE_ROOT; };
 		84F729DD1F48663400E7E773 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = GetHotels/Base.lproj/Myself.storyboard; sourceTree = SOURCE_ROOT; };
@@ -293,12 +293,12 @@
 		045E651D1F485D9B001A8263 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				045E64EB1F485CA3001A8263 /* Main.storyboard */,
+				84CD44171F49775D0074A42A /* Main.storyboard */,
 				84F729D61F48658F00E7E773 /* Hotel.storyboard */,
 				84F729D91F48661D00E7E773 /* BookHotels.storyboard */,
 				84F729DC1F48663400E7E773 /* Myself.storyboard */,
-				045E64F31F485CA3001A8263 /* LaunchScreen.storyboard */,
 				FE9CAA7E1F49645C0064E327 /* Assets.xcassets */,
+				84CD441A1F49777D0074A42A /* Launch Screen.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -455,9 +455,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				045E64F51F485CA3001A8263 /* LaunchScreen.storyboard in Resources */,
+				84CD441B1F49777D0074A42A /* Launch Screen.storyboard in Resources */,
 				84F729DB1F48661D00E7E773 /* BookHotels.storyboard in Resources */,
-				045E64ED1F485CA3001A8263 /* Main.storyboard in Resources */,
+				84CD44191F49775D0074A42A /* Main.storyboard in Resources */,
 				84F729DE1F48663400E7E773 /* Myself.storyboard in Resources */,
 				FE9CAA7F1F49645C0064E327 /* Assets.xcassets in Resources */,
 				84F729D81F48658F00E7E773 /* Hotel.storyboard in Resources */,
@@ -586,22 +586,12 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		045E64EB1F485CA3001A8263 /* Main.storyboard */ = {
+		84CD44171F49775D0074A42A /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				045E64EC1F485CA3001A8263 /* Base */,
+				84CD44181F49775D0074A42A /* Base */,
 			);
 			name = Main.storyboard;
-			path = ..;
-			sourceTree = "<group>";
-		};
-		045E64F31F485CA3001A8263 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				045E64F41F485CA3001A8263 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			path = ..;
 			sourceTree = "<group>";
 		};
 		84F729D61F48658F00E7E773 /* Hotel.storyboard */ = {
