@@ -293,6 +293,7 @@
 		045E651D1F485D9B001A8263 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				841253901F4AF4270065C6E7 /* MyHotel */,
 				84CD44171F49775D0074A42A /* Main.storyboard */,
 				84F729D61F48658F00E7E773 /* Hotel.storyboard */,
 				84F729D91F48661D00E7E773 /* BookHotels.storyboard */,
@@ -319,6 +320,13 @@
 				27AA3E4D814345D229060FCF /* Pods-GetHotels.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		841253901F4AF4270065C6E7 /* MyHotel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = MyHotel;
 			sourceTree = "<group>";
 		};
 		841E379E1F4965F30057D58A /* HMSegmentedControl */ = {

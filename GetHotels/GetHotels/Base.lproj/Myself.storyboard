@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -49,46 +50,46 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="厦门市集美区" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5rU-Df-g6L">
-                                                            <rect key="frame" x="50" y="50.5" width="55.5" height="17"/>
+                                                            <rect key="frame" x="45" y="50.5" width="55.5" height="17"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="9"/>
                                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mrW-Wz-pBR">
-                                                            <rect key="frame" x="15" y="50.5" width="20" height="15"/>
+                                                            <rect key="frame" x="15" y="50.5" width="15" height="15"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="15" id="4Eo-Lf-mGJ"/>
-                                                                <constraint firstAttribute="width" constant="20" id="s8W-5a-c63"/>
+                                                                <constraint firstAttribute="width" secondItem="mrW-Wz-pBR" secondAttribute="height" multiplier="1:1" id="vdX-W5-aiX"/>
                                                             </constraints>
                                                         </imageView>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yDH-ay-Lxm">
-                                                            <rect key="frame" x="15" y="80.5" width="20" height="15"/>
+                                                            <rect key="frame" x="15" y="80.5" width="15" height="15"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="20" id="CKV-Ik-Ugl"/>
                                                                 <constraint firstAttribute="height" constant="15" id="mWd-Eg-m5h"/>
+                                                                <constraint firstAttribute="width" secondItem="yDH-ay-Lxm" secondAttribute="height" multiplier="1:1" id="xYg-ka-O1J"/>
                                                             </constraints>
                                                         </imageView>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KE4-jS-p29">
-                                                            <rect key="frame" x="15" y="110.5" width="20" height="15"/>
+                                                            <rect key="frame" x="15" y="110.5" width="15" height="15"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="20" id="Qf6-gg-f7f"/>
                                                                 <constraint firstAttribute="height" constant="15" id="Qra-pR-n1l"/>
+                                                                <constraint firstAttribute="width" secondItem="KE4-jS-p29" secondAttribute="height" multiplier="1:1" id="nHS-aL-M0N"/>
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="一人入住" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XdL-gf-ajE">
-                                                            <rect key="frame" x="50" y="82.5" width="37" height="11"/>
+                                                            <rect key="frame" x="45" y="82.5" width="37" height="11"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="9"/>
                                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2017-02-23" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="11Y-WX-Yxj">
-                                                            <rect key="frame" x="50" y="112.5" width="53" height="11"/>
+                                                            <rect key="frame" x="45" y="112.5" width="53" height="11"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="9"/>
                                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2017-02-25" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jOP-7S-Nyo">
-                                                            <rect key="frame" x="118" y="112.5" width="53" height="11"/>
+                                                            <rect key="frame" x="113" y="112.5" width="53" height="11"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="9"/>
                                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
@@ -300,10 +301,12 @@
                                     <constraint firstItem="mss-Dz-M9I" firstAttribute="centerX" secondItem="zQ4-Ve-tEt" secondAttribute="centerX" id="X44-MM-l5E"/>
                                     <constraint firstItem="mss-Dz-M9I" firstAttribute="centerY" secondItem="zQ4-Ve-tEt" secondAttribute="centerY" id="Yg4-Ee-rPi"/>
                                     <constraint firstItem="9LD-d7-hXy" firstAttribute="leading" secondItem="9qH-OQ-roy" secondAttribute="trailing" id="ZsC-xZ-LsM"/>
+                                    <constraint firstItem="9qH-OQ-roy" firstAttribute="top" secondItem="zQ4-Ve-tEt" secondAttribute="top" id="b9x-Vq-jXq"/>
                                     <constraint firstAttribute="bottom" secondItem="mss-Dz-M9I" secondAttribute="bottom" id="bgL-EO-R7H"/>
                                     <constraint firstAttribute="trailing" secondItem="9LD-d7-hXy" secondAttribute="trailing" id="caZ-li-zUq"/>
                                     <constraint firstItem="9qH-OQ-roy" firstAttribute="leading" secondItem="mss-Dz-M9I" secondAttribute="trailing" id="pJb-9W-ni1"/>
                                     <constraint firstItem="9qH-OQ-roy" firstAttribute="width" secondItem="mss-Dz-M9I" secondAttribute="width" id="skQ-PF-XlQ"/>
+                                    <constraint firstAttribute="bottom" secondItem="9qH-OQ-roy" secondAttribute="bottom" id="uwI-le-sw7"/>
                                     <constraint firstItem="9qH-OQ-roy" firstAttribute="height" secondItem="mss-Dz-M9I" secondAttribute="height" id="wW8-y5-FH0"/>
                                 </constraints>
                             </scrollView>
@@ -320,6 +323,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="我的酒店" id="kST-3I-GNa"/>
+                    <connections>
+                        <outlet property="scrollView" destination="zQ4-Ve-tEt" id="WwY-dz-9SI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uKo-2o-tzW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
