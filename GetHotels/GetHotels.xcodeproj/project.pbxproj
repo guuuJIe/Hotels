@@ -32,6 +32,7 @@
 		045E65721F486127001A8263 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 045E65711F486127001A8263 /* CoreMotion.framework */; };
 		045E65741F486133001A8263 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 045E65731F486133001A8263 /* CoreTelephony.framework */; };
 		045E65761F48613D001A8263 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 045E65751F48613D001A8263 /* libz.tbd */; };
+		0469420A1F4AFB3D00A28DFD /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046942091F4AFB3D00A28DFD /* LoginViewController.m */; };
 		3D8A9503E1C97F83257C6E00 /* libPods-GetHotels.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55FE6991657D1891A74110DA /* libPods-GetHotels.a */; };
 		841E379A1F495AE90057D58A /* MyHotelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841E37991F495AE90057D58A /* MyHotelViewController.m */; };
 		841E379D1F4960710057D58A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841E379C1F4960710057D58A /* ViewController.m */; };
@@ -108,6 +109,8 @@
 		045E65711F486127001A8263 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		045E65731F486133001A8263 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		045E65751F48613D001A8263 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		046942081F4AFB3D00A28DFD /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		046942091F4AFB3D00A28DFD /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		27AA3E4D814345D229060FCF /* Pods-GetHotels.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GetHotels.release.xcconfig"; path = "Pods/Target Support Files/Pods-GetHotels/Pods-GetHotels.release.xcconfig"; sourceTree = "<group>"; };
 		55FE6991657D1891A74110DA /* libPods-GetHotels.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GetHotels.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		841E37981F495AE90057D58A /* MyHotelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyHotelViewController.h; sourceTree = "<group>"; };
@@ -246,6 +249,7 @@
 		045E651A1F485D9B001A8263 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				046942071F4AFAD800A28DFD /* LoginViewController */,
 				841E379B1F4960710057D58A /* ViewController.h */,
 				841E379C1F4960710057D58A /* ViewController.m */,
 				841E37981F495AE90057D58A /* MyHotelViewController.h */,
@@ -310,6 +314,15 @@
 				045E65211F485F1A001A8263 /* BasicEncodingRules.m */,
 			);
 			path = SCZBasicEncodingRules;
+			sourceTree = "<group>";
+		};
+		046942071F4AFAD800A28DFD /* LoginViewController */ = {
+			isa = PBXGroup;
+			children = (
+				046942081F4AFB3D00A28DFD /* LoginViewController.h */,
+				046942091F4AFB3D00A28DFD /* LoginViewController.m */,
+			);
+			name = LoginViewController;
 			sourceTree = "<group>";
 		};
 		553CD5B2B9994D915DB545B5 /* Pods */ = {
@@ -548,6 +561,7 @@
 				045E655D1F485F4D001A8263 /* ErrorHandler.m in Sources */,
 				045E64E71F485CA3001A8263 /* AppDelegate.m in Sources */,
 				045E65601F485F4D001A8263 /* NSDate+Utility.m in Sources */,
+				0469420A1F4AFB3D00A28DFD /* LoginViewController.m in Sources */,
 				841E37A11F4965F30057D58A /* HMSegmentedControl.m in Sources */,
 				045E65661F485F4D001A8263 /* Utilities.m in Sources */,
 				045E64E41F485CA3001A8263 /* main.m in Sources */,
