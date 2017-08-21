@@ -9,7 +9,7 @@
 #import "MyHotelViewController.h"
 #import "HMSegmentedControl.h"
 @interface MyHotelViewController ()
-
+@property (strong,nonatomic) HMSegmentedControl *segmentcontrol;
 @end
 
 @implementation MyHotelViewController
@@ -22,6 +22,12 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+//设置菜单栏的方法
+-(void)setsegment{
+    //设置菜单栏主题字体
+    _segmentcontrol = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"全部订单",@"可使用",@"已过期"]];
+        [self.view addSubview:_segmentcontrol];
 }
 
 /*
