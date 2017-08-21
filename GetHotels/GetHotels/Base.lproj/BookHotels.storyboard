@@ -14,7 +14,7 @@
         <!--酒店预订-->
         <scene sceneID="hVa-ZC-wfP">
             <objects>
-                <viewController id="2Bt-FB-rBK" sceneMemberID="viewController">
+                <viewController id="2Bt-FB-rBK" customClass="HotelDetailViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="rCG-FS-9d7"/>
                         <viewControllerLayoutGuide type="bottom" id="lSF-P4-qdT"/>
@@ -29,19 +29,34 @@
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="1.4酒店信息 副本" translatesAutoresizingMaskIntoConstraints="NO" id="Mrd-ib-oLM">
                                         <rect key="frame" x="0.0" y="-63" width="375" height="150"/>
                                     </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="et5-Kq-TO1" userLabel="second Image View">
+                                        <rect key="frame" x="375" y="-63" width="375" height="150"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1gs-bS-mFl">
+                                        <rect key="frame" x="750" y="-63" width="375" height="150"/>
+                                    </imageView>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstItem="et5-Kq-TO1" firstAttribute="width" secondItem="Mrd-ib-oLM" secondAttribute="width" id="8gL-Hw-AFr"/>
+                                    <constraint firstItem="et5-Kq-TO1" firstAttribute="width" secondItem="1gs-bS-mFl" secondAttribute="width" id="IKj-7f-hy2"/>
                                     <constraint firstItem="Mrd-ib-oLM" firstAttribute="leading" secondItem="Ywq-8C-qft" secondAttribute="leading" id="Iw1-yb-OVP"/>
                                     <constraint firstAttribute="bottom" secondItem="Mrd-ib-oLM" secondAttribute="bottom" id="LiL-mx-ueZ"/>
                                     <constraint firstItem="Mrd-ib-oLM" firstAttribute="top" secondItem="Ywq-8C-qft" secondAttribute="top" constant="-63" id="Lj7-bl-OMw"/>
-                                    <constraint firstAttribute="trailing" secondItem="Mrd-ib-oLM" secondAttribute="trailing" id="UEH-hn-k4U"/>
+                                    <constraint firstItem="et5-Kq-TO1" firstAttribute="top" secondItem="Mrd-ib-oLM" secondAttribute="top" id="PYe-pO-Kmz"/>
+                                    <constraint firstItem="1gs-bS-mFl" firstAttribute="bottom" secondItem="et5-Kq-TO1" secondAttribute="bottom" id="YDY-N1-D6N"/>
+                                    <constraint firstItem="et5-Kq-TO1" firstAttribute="height" secondItem="1gs-bS-mFl" secondAttribute="height" id="ax8-ur-NaP"/>
+                                    <constraint firstItem="et5-Kq-TO1" firstAttribute="leading" secondItem="Mrd-ib-oLM" secondAttribute="trailing" id="byL-Gz-9bS"/>
                                     <constraint firstAttribute="height" constant="150" id="gwA-C1-GEX"/>
+                                    <constraint firstItem="et5-Kq-TO1" firstAttribute="height" secondItem="Mrd-ib-oLM" secondAttribute="height" id="jTr-Ix-cYZ"/>
+                                    <constraint firstItem="et5-Kq-TO1" firstAttribute="trailing" secondItem="1gs-bS-mFl" secondAttribute="leading" id="lHB-VF-VXS"/>
                                     <constraint firstItem="Mrd-ib-oLM" firstAttribute="height" secondItem="Ywq-8C-qft" secondAttribute="height" id="lPs-Nk-MFM"/>
-                                    <constraint firstItem="Mrd-ib-oLM" firstAttribute="centerX" secondItem="Ywq-8C-qft" secondAttribute="centerX" id="vs5-rX-abI"/>
+                                    <constraint firstItem="1gs-bS-mFl" firstAttribute="top" secondItem="et5-Kq-TO1" secondAttribute="top" id="qns-8g-eUz"/>
+                                    <constraint firstItem="et5-Kq-TO1" firstAttribute="bottom" secondItem="Mrd-ib-oLM" secondAttribute="bottom" id="txo-JA-GP8"/>
+                                    <constraint firstAttribute="trailing" secondItem="1gs-bS-mFl" secondAttribute="trailing" id="zyq-MG-rxJ"/>
                                 </constraints>
                             </scrollView>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bPf-SQ-anw">
-                                <rect key="frame" x="0.0" y="214" width="375" height="396"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bPf-SQ-anw">
+                                <rect key="frame" x="0.0" y="214" width="375" height="393"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GlG-41-6EN">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
@@ -346,6 +361,7 @@
                                     <constraint firstItem="NGf-C6-Ugo" firstAttribute="top" secondItem="Wx4-Qr-Yaq" secondAttribute="bottom" constant="10" id="eSM-Py-mjX"/>
                                     <constraint firstItem="Wx4-Qr-Yaq" firstAttribute="top" secondItem="YIC-n3-rEH" secondAttribute="bottom" constant="5" id="exc-nr-MdW"/>
                                     <constraint firstAttribute="trailing" secondItem="RRj-2f-Vjk" secondAttribute="trailing" id="flj-c3-Caf"/>
+                                    <constraint firstAttribute="bottom" secondItem="3yv-jg-wVd" secondAttribute="bottom" id="h5N-R3-OSs"/>
                                     <constraint firstItem="YIC-n3-rEH" firstAttribute="top" secondItem="hwj-wE-gJf" secondAttribute="bottom" id="hqa-Fe-jBi"/>
                                     <constraint firstItem="GlG-41-6EN" firstAttribute="centerX" secondItem="bPf-SQ-anw" secondAttribute="centerX" id="iPo-yL-kPH"/>
                                     <constraint firstItem="E4v-j5-DIr" firstAttribute="leading" secondItem="bPf-SQ-anw" secondAttribute="leading" constant="15" id="jDM-b8-rkC"/>
@@ -385,6 +401,7 @@
                             <constraint firstItem="Anl-tU-yQc" firstAttribute="width" secondItem="4Y9-wX-U6M" secondAttribute="width" id="QCD-Ab-u7V"/>
                             <constraint firstItem="4Y9-wX-U6M" firstAttribute="leading" secondItem="RRX-Md-gEH" secondAttribute="leading" id="Udu-J1-lll"/>
                             <constraint firstItem="Anl-tU-yQc" firstAttribute="top" secondItem="bPf-SQ-anw" secondAttribute="bottom" id="cNQ-KM-RtI"/>
+                            <constraint firstItem="Mrd-ib-oLM" firstAttribute="width" secondItem="RRX-Md-gEH" secondAttribute="width" id="cYO-iZ-vzM"/>
                             <constraint firstAttribute="trailing" secondItem="bPf-SQ-anw" secondAttribute="trailing" id="lXy-lF-BEj"/>
                             <constraint firstItem="Anl-tU-yQc" firstAttribute="leading" secondItem="4Y9-wX-U6M" secondAttribute="trailing" id="oRp-hw-CAn"/>
                             <constraint firstItem="lSF-P4-qdT" firstAttribute="top" secondItem="Anl-tU-yQc" secondAttribute="bottom" id="rsf-Jp-eXS"/>
@@ -398,7 +415,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mbk-n8-ZpK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1180" y="131.78410794602701"/>
+            <point key="canvasLocation" x="1434" y="88"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="TYT-cx-wpJ">
