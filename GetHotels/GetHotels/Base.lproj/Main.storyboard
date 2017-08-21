@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="nbM-da-5xU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="4Xk-wk-gAo">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -10,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Item-->
+        <!--Login View Controller-->
         <scene sceneID="dhY-97-Kh3">
             <objects>
-                <viewController id="nbM-da-5xU" sceneMemberID="viewController">
+                <viewController id="nbM-da-5xU" customClass="LoginViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="SAG-oy-9ju"/>
                         <viewControllerLayoutGuide type="bottom" id="Dbz-uP-hAN"/>
@@ -37,6 +37,9 @@
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="nbM-da-5xU" id="b9D-kA-Vcw"/>
+                                        </connections>
                                     </textField>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nm0-aJ-qMc" userLabel="line">
                                         <rect key="frame" x="44" y="130" width="255" height="1"/>
@@ -57,6 +60,9 @@
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="nbM-da-5xU" id="fe1-pq-t5j"/>
+                                        </connections>
                                     </textField>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YmE-45-uMZ" userLabel="line">
                                         <rect key="frame" x="46" y="82" width="255" height="1"/>
@@ -70,11 +76,12 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <state key="normal" title="注册新用户"/>
                                         <connections>
+                                            <action selector="signupAction:forEvent:" destination="nbM-da-5xU" eventType="touchUpInside" id="CAq-3m-Eu4"/>
                                             <segue destination="eTK-6m-Ooj" kind="show" id="xVw-YE-8lf"/>
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="DCn-EU-QUF" firstAttribute="width" secondItem="DCn-EU-QUF" secondAttribute="height" multiplier="1:1" id="2Hz-fe-N79"/>
                                     <constraint firstAttribute="bottom" secondItem="B6H-Yf-o9E" secondAttribute="bottom" constant="19" id="2Pv-bs-GfU"/>
@@ -112,7 +119,7 @@
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="45"/>
+                                        <integer key="value" value="30"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </imageView>
@@ -127,6 +134,9 @@
                                         <integer key="value" value="5"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="loginAction:forEvent:" destination="nbM-da-5xU" eventType="touchUpInside" id="fIY-RT-Dpn"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -143,12 +153,20 @@
                             <constraint firstItem="h6t-Zc-H4z" firstAttribute="leading" secondItem="6hJ-pe-4Gr" secondAttribute="leading" constant="120" id="weA-xU-Nmu"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="3H8-gN-Rpc"/>
+                    <navigationItem key="navigationItem" id="rZp-t6-SNO"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="loginBtn" destination="h6t-Zc-H4z" id="qlE-vY-XUr"/>
+                        <outlet property="loginView" destination="lqJ-Gb-KXj" id="udz-M5-wXp"/>
+                        <outlet property="phoneTextField" destination="Ggc-q2-SA6" id="NA6-Ev-kw9"/>
+                        <outlet property="pwdTextField" destination="bfH-XN-j8r" id="0YM-jw-CIb"/>
+                        <outlet property="signupBtn" destination="B6H-Yf-o9E" id="RU6-p6-ocU"/>
+                        <outlet property="userImageView" destination="gZJ-q8-Y8e" id="efz-Xk-9zp"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vPf-CX-8Xw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-274" y="-298"/>
+            <point key="canvasLocation" x="664.79999999999995" y="-298.2008995502249"/>
         </scene>
         <!--Item-->
         <scene sceneID="VW2-RH-C5E">
@@ -307,7 +325,26 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0vJ-h0-Ndk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="553" y="-304"/>
+            <point key="canvasLocation" x="1492" y="-304.4977511244378"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="KAi-gE-ClH">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="4Xk-wk-gAo" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="3H8-gN-Rpc"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="M4o-ub-dCk">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="nbM-da-5xU" kind="relationship" relationship="rootViewController" id="JF9-QV-Pf5"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GtU-4F-6rT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-274.39999999999998" y="-298.2008995502249"/>
         </scene>
     </scenes>
     <resources>
