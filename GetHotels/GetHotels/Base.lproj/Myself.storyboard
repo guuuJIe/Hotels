@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="jzY-Hp-zXr">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="jzY-Hp-zXr">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -37,7 +37,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="553"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="147" id="2g2-x1-Hg3">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AllOrderCell" rowHeight="147" id="2g2-x1-Hg3" customClass="AllOrderTableViewCell">
                                                 <rect key="frame" x="0.0" y="28" width="375" height="147"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2g2-x1-Hg3" id="SOg-63-7Tp">
@@ -136,7 +136,7 @@
                                         <rect key="frame" x="375" y="0.0" width="375" height="553"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="147" id="mbU-1Y-bMa">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="UseableOrderCell" rowHeight="147" id="mbU-1Y-bMa" customClass="UseableOrderTableViewCell">
                                                 <rect key="frame" x="0.0" y="28" width="375" height="147"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mbU-1Y-bMa" id="opN-vw-hnM">
@@ -226,12 +226,16 @@
                                                 </tableViewCellContentView>
                                             </tableViewCell>
                                         </prototypes>
+                                        <connections>
+                                            <outlet property="dataSource" destination="hZ6-hR-QAN" id="nV9-HW-LLo"/>
+                                            <outlet property="delegate" destination="hZ6-hR-QAN" id="wdE-wW-FMb"/>
+                                        </connections>
                                     </tableView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9LD-d7-hXy" userLabel="Third Table View">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="553"/>
+                                        <rect key="frame" x="750" y="0.0" width="375" height="553"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="147" id="BZ6-di-z1l" customClass="AllOrdersTableViewCell">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DatedOrderCell" rowHeight="147" id="BZ6-di-z1l" customClass="DatedOrderTableViewCell">
                                                 <rect key="frame" x="0.0" y="28" width="375" height="147"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BZ6-di-z1l" id="JAt-Nm-L09">
@@ -328,6 +332,10 @@
                                                 </connections>
                                             </tableViewCell>
                                         </prototypes>
+                                        <connections>
+                                            <outlet property="dataSource" destination="hZ6-hR-QAN" id="kxR-qS-DKv"/>
+                                            <outlet property="delegate" destination="hZ6-hR-QAN" id="sRa-mx-63a"/>
+                                        </connections>
                                     </tableView>
                                 </subviews>
                                 <constraints>
@@ -339,7 +347,7 @@
                                     <constraint firstAttribute="bottom" secondItem="9LD-d7-hXy" secondAttribute="bottom" id="X3Z-Wd-TmJ"/>
                                     <constraint firstItem="mss-Dz-M9I" firstAttribute="centerX" secondItem="zQ4-Ve-tEt" secondAttribute="centerX" id="X44-MM-l5E"/>
                                     <constraint firstItem="mss-Dz-M9I" firstAttribute="centerY" secondItem="zQ4-Ve-tEt" secondAttribute="centerY" id="Yg4-Ee-rPi"/>
-                                    <constraint firstItem="9LD-d7-hXy" firstAttribute="leading" secondItem="9qH-OQ-roy" secondAttribute="trailing" constant="-750" id="ZsC-xZ-LsM"/>
+                                    <constraint firstItem="9LD-d7-hXy" firstAttribute="leading" secondItem="9qH-OQ-roy" secondAttribute="trailing" id="ZsC-xZ-LsM"/>
                                     <constraint firstItem="9qH-OQ-roy" firstAttribute="top" secondItem="zQ4-Ve-tEt" secondAttribute="top" id="b9x-Vq-jXq"/>
                                     <constraint firstAttribute="bottom" secondItem="mss-Dz-M9I" secondAttribute="bottom" id="bgL-EO-R7H"/>
                                     <constraint firstAttribute="trailing" secondItem="9LD-d7-hXy" secondAttribute="trailing" id="caZ-li-zUq"/>
@@ -363,6 +371,9 @@
                     </view>
                     <navigationItem key="navigationItem" title="我的酒店" id="kST-3I-GNa"/>
                     <connections>
+                        <outlet property="AllOrderTableView" destination="mss-Dz-M9I" id="Oik-dK-3cS"/>
+                        <outlet property="DatedOrderTableView" destination="9LD-d7-hXy" id="bTM-dz-spp"/>
+                        <outlet property="UseableOrderTableView" destination="9qH-OQ-roy" id="ADA-az-Zvx"/>
                         <outlet property="scrollView" destination="zQ4-Ve-tEt" id="WwY-dz-9SI"/>
                     </connections>
                 </viewController>

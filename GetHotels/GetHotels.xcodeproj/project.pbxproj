@@ -38,6 +38,9 @@
 		841E379A1F495AE90057D58A /* MyHotelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841E37991F495AE90057D58A /* MyHotelViewController.m */; };
 		841E379D1F4960710057D58A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841E379C1F4960710057D58A /* ViewController.m */; };
 		841E37A11F4965F30057D58A /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 841E37A01F4965F30057D58A /* HMSegmentedControl.m */; };
+		8445AD791F4C4A8D00417B79 /* AllOrderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8445AD781F4C4A8D00417B79 /* AllOrderTableViewCell.m */; };
+		8445AD7D1F4C4ACE00417B79 /* UseableOrderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8445AD7C1F4C4ACE00417B79 /* UseableOrderTableViewCell.m */; };
+		8445AD811F4C4B0900417B79 /* DatedOrderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8445AD801F4C4B0900417B79 /* DatedOrderTableViewCell.m */; };
 		84A346761F4C3BCD0051BDFB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84A346751F4C3BCD0051BDFB /* Main.storyboard */; };
 		84A346781F4C3BE60051BDFB /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84A346771F4C3BE60051BDFB /* Login.storyboard */; };
 		84CD441B1F49777D0074A42A /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84CD441A1F49777D0074A42A /* Launch Screen.storyboard */; };
@@ -119,10 +122,16 @@
 		55FE6991657D1891A74110DA /* libPods-GetHotels.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GetHotels.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		841E37981F495AE90057D58A /* MyHotelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyHotelViewController.h; sourceTree = "<group>"; };
 		841E37991F495AE90057D58A /* MyHotelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyHotelViewController.m; sourceTree = "<group>"; };
-		841E379B1F4960710057D58A /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		841E379C1F4960710057D58A /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		841E379B1F4960710057D58A /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ViewController.h; path = Controller/ViewController.h; sourceTree = "<group>"; };
+		841E379C1F4960710057D58A /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ViewController.m; path = Controller/ViewController.m; sourceTree = "<group>"; };
 		841E379F1F4965F30057D58A /* HMSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSegmentedControl.h; sourceTree = "<group>"; };
 		841E37A01F4965F30057D58A /* HMSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSegmentedControl.m; sourceTree = "<group>"; };
+		8445AD771F4C4A8D00417B79 /* AllOrderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllOrderTableViewCell.h; sourceTree = "<group>"; };
+		8445AD781F4C4A8D00417B79 /* AllOrderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllOrderTableViewCell.m; sourceTree = "<group>"; };
+		8445AD7B1F4C4ACE00417B79 /* UseableOrderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UseableOrderTableViewCell.h; sourceTree = "<group>"; };
+		8445AD7C1F4C4ACE00417B79 /* UseableOrderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UseableOrderTableViewCell.m; sourceTree = "<group>"; };
+		8445AD7F1F4C4B0900417B79 /* DatedOrderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatedOrderTableViewCell.h; sourceTree = "<group>"; };
+		8445AD801F4C4B0900417B79 /* DatedOrderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatedOrderTableViewCell.m; sourceTree = "<group>"; };
 		84A346751F4C3BCD0051BDFB /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		84A346771F4C3BE60051BDFB /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		84CD441A1F49777D0074A42A /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
@@ -208,6 +217,8 @@
 		045E64E21F485CA3001A8263 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				841E379B1F4960710057D58A /* ViewController.h */,
+				841E379C1F4960710057D58A /* ViewController.m */,
 				045E64E51F485CA3001A8263 /* AppDelegate.h */,
 				045E64E61F485CA3001A8263 /* AppDelegate.m */,
 				045E64E31F485CA3001A8263 /* main.m */,
@@ -255,13 +266,10 @@
 		045E651A1F485D9B001A8263 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				8445AD751F4C44E000417B79 /* MyHotel */,
 				0477F52D1F4C368C00B16FB3 /* signup */,
 				0477F5281F4C34A600B16FB3 /* Login */,
 				FEACC7891F4AF3F2002EC5F8 /* HotelDetail */,
-				841E379B1F4960710057D58A /* ViewController.h */,
-				841E379C1F4960710057D58A /* ViewController.m */,
-				841E37981F495AE90057D58A /* MyHotelViewController.h */,
-				841E37991F495AE90057D58A /* MyHotelViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -305,6 +313,9 @@
 		045E651D1F485D9B001A8263 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				8445AD7E1F4C4AD900417B79 /* DatedOrder */,
+				8445AD7A1F4C4AA000417B79 /* UseableOrder */,
+				8445AD761F4C49A500417B79 /* AllOrder */,
 				84F729D91F48661D00E7E773 /* BookHotels.storyboard */,
 				84F729DC1F48663400E7E773 /* Myself.storyboard */,
 				FE9CAA7E1F49645C0064E327 /* Assets.xcassets */,
@@ -358,6 +369,42 @@
 				841E37A01F4965F30057D58A /* HMSegmentedControl.m */,
 			);
 			path = HMSegmentedControl;
+			sourceTree = "<group>";
+		};
+		8445AD751F4C44E000417B79 /* MyHotel */ = {
+			isa = PBXGroup;
+			children = (
+				841E37981F495AE90057D58A /* MyHotelViewController.h */,
+				841E37991F495AE90057D58A /* MyHotelViewController.m */,
+			);
+			name = MyHotel;
+			sourceTree = "<group>";
+		};
+		8445AD761F4C49A500417B79 /* AllOrder */ = {
+			isa = PBXGroup;
+			children = (
+				8445AD771F4C4A8D00417B79 /* AllOrderTableViewCell.h */,
+				8445AD781F4C4A8D00417B79 /* AllOrderTableViewCell.m */,
+			);
+			name = AllOrder;
+			sourceTree = "<group>";
+		};
+		8445AD7A1F4C4AA000417B79 /* UseableOrder */ = {
+			isa = PBXGroup;
+			children = (
+				8445AD7B1F4C4ACE00417B79 /* UseableOrderTableViewCell.h */,
+				8445AD7C1F4C4ACE00417B79 /* UseableOrderTableViewCell.m */,
+			);
+			name = UseableOrder;
+			sourceTree = "<group>";
+		};
+		8445AD7E1F4C4AD900417B79 /* DatedOrder */ = {
+			isa = PBXGroup;
+			children = (
+				8445AD7F1F4C4B0900417B79 /* DatedOrderTableViewCell.h */,
+				8445AD801F4C4B0900417B79 /* DatedOrderTableViewCell.m */,
+			);
+			name = DatedOrder;
 			sourceTree = "<group>";
 		};
 		FEACC7891F4AF3F2002EC5F8 /* HotelDetail */ = {
@@ -577,6 +624,7 @@
 				045E65621F485F4D001A8263 /* NSString+Crypt.m in Sources */,
 				045E65261F485F34001A8263 /* Order.m in Sources */,
 				0477F52B1F4C34C300B16FB3 /* LoginViewController.m in Sources */,
+				8445AD811F4C4B0900417B79 /* DatedOrderTableViewCell.m in Sources */,
 				045E655C1F485F4D001A8263 /* AppAPIClient.m in Sources */,
 				045E65221F485F1A001A8263 /* BasicEncodingRules.m in Sources */,
 				045E65641F485F4D001A8263 /* StorageMgr.m in Sources */,
@@ -586,10 +634,12 @@
 				045E655E1F485F4D001A8263 /* JSONS.m in Sources */,
 				0477F5301F4C36DB00B16FB3 /* SignupViewController.m in Sources */,
 				045E64F01F485CA3001A8263 /* GetHotels.xcdatamodeld in Sources */,
+				8445AD7D1F4C4ACE00417B79 /* UseableOrderTableViewCell.m in Sources */,
 				045E655D1F485F4D001A8263 /* ErrorHandler.m in Sources */,
 				045E64E71F485CA3001A8263 /* AppDelegate.m in Sources */,
 				045E65601F485F4D001A8263 /* NSDate+Utility.m in Sources */,
 				FEACC78C1F4AF4A6002EC5F8 /* HotelDetailViewController.m in Sources */,
+				8445AD791F4C4A8D00417B79 /* AllOrderTableViewCell.m in Sources */,
 				841E37A11F4965F30057D58A /* HMSegmentedControl.m in Sources */,
 				045E65661F485F4D001A8263 /* Utilities.m in Sources */,
 				045E64E41F485CA3001A8263 /* main.m in Sources */,

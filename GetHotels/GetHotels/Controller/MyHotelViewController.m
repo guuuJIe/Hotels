@@ -8,9 +8,15 @@
 
 #import "MyHotelViewController.h"
 #import "HMSegmentedControl.h"
-@interface MyHotelViewController ()
+#import "AllOrderTableViewCell.h"
+#import "UseableOrderTableViewCell.h"
+#import "DatedOrderTableViewCell.h"
+@interface MyHotelViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (strong,nonatomic) HMSegmentedControl *segmentcontrol;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UITableView *AllOrderTableView;
+@property (weak, nonatomic) IBOutlet UITableView *UseableOrderTableView;
+@property (weak, nonatomic) IBOutlet UITableView *DatedOrderTableView;
 @end
 
 @implementation MyHotelViewController
@@ -80,6 +86,7 @@
 }
 
 
+
 /*
 #pragma mark - Navigation
 
@@ -89,5 +96,48 @@
     // Pass the selected object to the new view controller.
 }
 */
+#pragma mark - tableView
+//一共多少组
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    if (tableView == _AllOrderTableView) {
+        return 1;
+    }
+    else if(tableView == _UseableOrderTableView){
+        return 1;
+    }
+    else{
+        return 1;
+    }
+}
+//细胞有多高
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 50.f;
+}
+//哪行细胞选中后调用
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    //取消选中
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+//每组有几行
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 1;
+}
 
+//每行长什么样
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (tableView == _AllOrderTableView) {
+        AllOrderTableViewCell *AllOrderCell = [tableView dequeueReusableCellWithIdentifier:@"AllOrderCell" forIndexPath:indexPath];
+        return AllOrderCell;
+    }
+    else if(tableView == _UseableOrderTableView){
+        UseableOrderTableViewCell *useableCell = [tableView dequeueReusableCellWithIdentifier:@"UseableOrderCell" forIndexPath:indexPath];
+        return useableCell;
+    }
+    else{
+        DatedOrderTableViewCell *datedCell = [tableView dequeueReusableCellWithIdentifier:@"DatedOrderCell" forIndexPath:indexPath ];
+        return datedCell;
+       
+    }
+
+}
 @end
