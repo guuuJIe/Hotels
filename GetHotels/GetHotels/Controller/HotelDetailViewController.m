@@ -9,6 +9,22 @@
 #import "HotelDetailViewController.h"
 
 @interface HotelDetailViewController ()
+@property (weak, nonatomic) IBOutlet UIScrollView *imageScrollView;
+@property (weak, nonatomic) IBOutlet UIScrollView *DetailScrollView;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *priceLabel;
+@property (weak, nonatomic) IBOutlet UIView *nameToView;
+@property (weak, nonatomic) IBOutlet UILabel *adressLabel;
+@property (weak, nonatomic) IBOutlet UILabel *mapLabel;
+@property (weak, nonatomic) IBOutlet UIView *adressToView;
+@property (weak, nonatomic) IBOutlet UIButton *dateBtn;
+- (IBAction)dateActionBtn:(UIButton *)sender forEvent:(UIEvent *)event;
+@property (weak, nonatomic) IBOutlet UILabel *dayLabel;
+@property (weak, nonatomic) IBOutlet UIButton *nextDateBtn;
+- (IBAction)nextDateActionBtn:(UIButton *)sender forEvent:(UIEvent *)event;
+@property (weak, nonatomic) IBOutlet UILabel *nextDayLabel;
+@property (weak, nonatomic) IBOutlet UIView *facilitiesView;
+
 
 @end
 
@@ -34,4 +50,10 @@
 }
 */
 
+- (IBAction)dateBtn:(UIButton *)sender forEvent:(UIEvent *)event {
+}
+- (IBAction)dateActionBtn:(UIButton *)sender forEvent:(UIEvent *)event {
+}
+- (IBAction)nextDateActionBtn:(UIButton *)sender forEvent:(UIEvent *)event {
+}
 @end
