@@ -124,8 +124,9 @@
                                 </userDefinedRuntimeAttributes>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h6t-Zc-H4z">
-                                <rect key="frame" x="120" y="424" width="135" height="30"/>
+                                <rect key="frame" x="100" y="424" width="175" height="33"/>
                                 <color key="backgroundColor" red="0.25940886759999998" green="0.63428873119999996" blue="0.91410156249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="登录">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -143,14 +144,14 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="lqJ-Gb-KXj" secondAttribute="trailing" constant="15" id="3lf-fb-WLK"/>
                             <constraint firstItem="lqJ-Gb-KXj" firstAttribute="leading" secondItem="6hJ-pe-4Gr" secondAttribute="leading" constant="15" id="J7V-xT-T74"/>
-                            <constraint firstAttribute="trailing" secondItem="h6t-Zc-H4z" secondAttribute="trailing" constant="120" id="PTe-jG-grX"/>
+                            <constraint firstAttribute="trailing" secondItem="h6t-Zc-H4z" secondAttribute="trailing" constant="100" id="PTe-jG-grX"/>
                             <constraint firstItem="gZJ-q8-Y8e" firstAttribute="top" secondItem="SAG-oy-9ju" secondAttribute="bottom" constant="50" id="VoJ-ad-lld"/>
                             <constraint firstItem="h6t-Zc-H4z" firstAttribute="top" secondItem="lqJ-Gb-KXj" secondAttribute="bottom" constant="80" id="h2e-XV-dYC"/>
                             <constraint firstItem="lqJ-Gb-KXj" firstAttribute="top" secondItem="SAG-oy-9ju" secondAttribute="bottom" constant="80" id="h5G-pQ-4Mz"/>
                             <constraint firstItem="lqJ-Gb-KXj" firstAttribute="centerX" secondItem="gZJ-q8-Y8e" secondAttribute="centerX" id="ht3-Hb-6LT"/>
                             <constraint firstItem="lqJ-Gb-KXj" firstAttribute="centerX" secondItem="6hJ-pe-4Gr" secondAttribute="centerX" id="jd2-Sh-csr"/>
                             <constraint firstItem="h6t-Zc-H4z" firstAttribute="centerX" secondItem="6hJ-pe-4Gr" secondAttribute="centerX" id="s23-wb-0Ng"/>
-                            <constraint firstItem="h6t-Zc-H4z" firstAttribute="leading" secondItem="6hJ-pe-4Gr" secondAttribute="leading" constant="120" id="weA-xU-Nmu"/>
+                            <constraint firstItem="h6t-Zc-H4z" firstAttribute="leading" secondItem="6hJ-pe-4Gr" secondAttribute="leading" constant="100" id="weA-xU-Nmu"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="rZp-t6-SNO"/>
@@ -294,8 +295,9 @@
                                 </userDefinedRuntimeAttributes>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o28-7I-wWe">
-                                <rect key="frame" x="120" y="424" width="135" height="30"/>
+                                <rect key="frame" x="100" y="424" width="175" height="33"/>
                                 <color key="backgroundColor" red="0.25940886759999998" green="0.63428873119999996" blue="0.91410156249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="注册">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -312,12 +314,12 @@
                             <constraint firstItem="eLm-EU-fPM" firstAttribute="leading" secondItem="9IL-z6-i4G" secondAttribute="leading" constant="15" id="U15-Sw-ZV0"/>
                             <constraint firstAttribute="trailing" secondItem="eLm-EU-fPM" secondAttribute="trailing" constant="15" id="VJo-FD-0fF"/>
                             <constraint firstItem="eLm-EU-fPM" firstAttribute="centerX" secondItem="9IL-z6-i4G" secondAttribute="centerX" id="b4g-Xb-Xv2"/>
-                            <constraint firstAttribute="trailing" secondItem="o28-7I-wWe" secondAttribute="trailing" constant="120" id="f4E-bA-GvU"/>
+                            <constraint firstAttribute="trailing" secondItem="o28-7I-wWe" secondAttribute="trailing" constant="100" id="f4E-bA-GvU"/>
                             <constraint firstItem="o28-7I-wWe" firstAttribute="centerX" secondItem="9IL-z6-i4G" secondAttribute="centerX" id="ofd-Hb-aUY"/>
                             <constraint firstItem="eLm-EU-fPM" firstAttribute="centerX" secondItem="E6c-tS-LsY" secondAttribute="centerX" id="peF-Gp-AkJ"/>
                             <constraint firstItem="E6c-tS-LsY" firstAttribute="top" secondItem="g3v-eo-6MZ" secondAttribute="bottom" constant="50" id="uaP-fJ-TQm"/>
                             <constraint firstItem="eLm-EU-fPM" firstAttribute="top" secondItem="g3v-eo-6MZ" secondAttribute="bottom" constant="80" id="wvf-bb-9tb"/>
-                            <constraint firstItem="o28-7I-wWe" firstAttribute="leading" secondItem="9IL-z6-i4G" secondAttribute="leading" constant="120" id="yJt-6J-PCh"/>
+                            <constraint firstItem="o28-7I-wWe" firstAttribute="leading" secondItem="9IL-z6-i4G" secondAttribute="leading" constant="100" id="yJt-6J-PCh"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="NLr-Vf-K27"/>
