@@ -397,6 +397,9 @@
                                 <state key="normal" title="购买">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="buyAction:forEvent:" destination="2Bt-FB-rBK" eventType="touchUpInside" id="XQb-hD-tS3"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -425,18 +428,24 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="DetailScrollView" destination="bPf-SQ-anw" id="eXu-LY-KFi"/>
+                        <outlet property="SmallTalkBtn" destination="4Y9-wX-U6M" id="DkO-tz-DnR"/>
                         <outlet property="adressLabel" destination="aGO-JX-xzs" id="KjK-vF-J8C"/>
                         <outlet property="adressToView" destination="YIC-n3-rEH" id="jPe-3K-IMa"/>
+                        <outlet property="buyBtn" destination="Anl-tU-yQc" id="mGA-fP-bT7"/>
+                        <outlet property="comeLabel" destination="VAq-IQ-D8A" id="nDx-oh-5y6"/>
                         <outlet property="dateBtn" destination="07D-9d-nOr" id="xmZ-ue-EYf"/>
                         <outlet property="dayLabel" destination="Ekz-pe-zpn" id="yWP-Zv-W5z"/>
+                        <outlet property="dayView" destination="Wx4-Qr-Yaq" id="fle-W5-nE6"/>
                         <outlet property="facilitiesView" destination="gH2-UK-y9Z" id="KmA-XN-FbD"/>
                         <outlet property="imageScrollView" destination="Ywq-8C-qft" id="X8Q-vc-8RP"/>
+                        <outlet property="leaveLabel" destination="sNQ-yK-4Vg" id="JuD-Tl-oPV"/>
                         <outlet property="mapLabel" destination="UdT-ys-4Gl" id="OMT-oN-Red"/>
                         <outlet property="nameLabel" destination="gTX-mh-LRi" id="vu9-Hz-cW2"/>
                         <outlet property="nameToView" destination="GlG-41-6EN" id="cDf-Bl-Y35"/>
                         <outlet property="nextDateBtn" destination="VEt-js-OML" id="Rtx-H0-uj1"/>
                         <outlet property="nextDayLabel" destination="2HX-5J-d95" id="xSY-2s-fNK"/>
                         <outlet property="priceLabel" destination="pux-HS-fZI" id="udA-dR-Sjw"/>
+                        <outlet property="timeView" destination="RRj-2f-Vjk" id="1Z8-cw-fDx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mbk-n8-ZpK" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -24,7 +24,14 @@
 - (IBAction)nextDateActionBtn:(UIButton *)sender forEvent:(UIEvent *)event;
 @property (weak, nonatomic) IBOutlet UILabel *nextDayLabel;
 @property (weak, nonatomic) IBOutlet UIView *facilitiesView;
+@property (weak, nonatomic) IBOutlet UIView *dayView;
+@property (weak, nonatomic) IBOutlet UIView *timeView;
+@property (weak, nonatomic) IBOutlet UILabel *comeLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *leaveLabel;
+@property (weak, nonatomic) IBOutlet UIButton *buyBtn;
+- (IBAction)buyAction:(UIButton *)sender forEvent:(UIEvent *)event;
+@property (weak, nonatomic) IBOutlet UIButton *SmallTalkBtn;
 
 @end
 
@@ -34,6 +41,19 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
+- (void) naviConfig{
+    //设置导航条的风格颜色
+    self.navigationController.navigationBar.barTintColor = [UIColor darkGrayColor];
+    //设置导航条标题颜色
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor] };
+    //设置导航条是否隐藏
+    self.navigationController.navigationBar.hidden = NO;
+    //设置导航条上按钮的风格颜色
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    //设置是否需要毛玻璃效果
+    self.navigationController.navigationBar.translucent = YES;
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -55,5 +75,7 @@
 - (IBAction)dateActionBtn:(UIButton *)sender forEvent:(UIEvent *)event {
 }
 - (IBAction)nextDateActionBtn:(UIButton *)sender forEvent:(UIEvent *)event {
+}
+- (IBAction)buyAction:(UIButton *)sender forEvent:(UIEvent *)event {
 }
 @end
