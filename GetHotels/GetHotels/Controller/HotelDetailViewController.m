@@ -7,7 +7,7 @@
 //
 
 #import "HotelDetailViewController.h"
-
+#import "HotelViewController.h"
 @interface HotelDetailViewController ()
 @property (weak, nonatomic) IBOutlet UIScrollView *imageScrollView;
 @property (weak, nonatomic) IBOutlet UIScrollView *DetailScrollView;
@@ -38,12 +38,16 @@
 @implementation HotelDetailViewController
 
 - (void)viewDidLoad {
+    [self naviConfig];
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    //状态栏变成白色
+    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
 }
 - (void) naviConfig{
+   
     //设置导航条的风格颜色
-    self.navigationController.navigationBar.barTintColor = [UIColor darkGrayColor];
+    [self.navigationController.navigationBar setBarTintColor:UIColorFromRGB(23,115,232)];
     //设置导航条标题颜色
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor] };
     //设置导航条是否隐藏
@@ -52,6 +56,25 @@
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     //设置是否需要毛玻璃效果
     self.navigationController.navigationBar.translucent = YES;
+    //实例化一个button，类型为UIButtonTypeSystem
+    UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+    //设置位置大小
+    leftBtn.frame = CGRectMake(0, 0, 20, 20);
+    //设置其背景图片为返回图片
+    [leftBtn setBackgroundImage:[UIImage imageNamed:@"返回3"] forState:UIControlStateNormal];
+    //给按钮添加事件
+    [leftBtn addTarget:self action:@selector(leftButtonAction:) forControlEvents: UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:leftBtn];
+
+}
+-(void)leftButtonAction:(UIButton *)sender{
+    [self.navigationController popViewControllerAnimated:YES];
+    HotelViewController *IssueVC = [Utilities getStoryboardInstance:@"Main" byIdentity:@"HomeHotel"];
+    UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:IssueVC];
+    //2、用某种方式跳转到上述页面（这里用Modal的方式跳转）
+    [self presentViewController:nc animated:YES completion:nil];
+    
+
 }
 
 
