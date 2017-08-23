@@ -18,6 +18,7 @@
 
 - (IBAction)loginAction:(UIButton *)sender forEvent:(UIEvent *)event;
 - (IBAction)signupAction:(UIButton *)sender forEvent:(UIEvent *)event;
+@property (strong, nonatomic) UIActivityIndicatorView *aiv;//菊花膜(蒙层)
 
 @end
 
@@ -121,9 +122,64 @@
     return YES;
 }
 
+#pragma mark - request 网络请求
+
+//登录
+- (void)request {
+    //点击按钮的时候创建一个蒙层(菊花膜)，并显示在当前页面(防止连续点击按钮)
+    _aiv = [Utilities getCoverOnView:self.view];
+    //参数(用户手机号和密码)
+    NSDictionary *para = @{@"tel" : _phoneTextField.text,@"pwd" : _pwdTextField.text};
+    //NSLog(@"参数:%@",para);
+    //网络请求(方法是kPost，数据提交方式是kJson)
+//    [RequestAPI requestURL:@"/api/session" withParameters:para andHeader:nil byMethod:kPost andSerializer:kJson success:^(id responseObject) {
+//        //成功以后要做的事情在此处执行
+//        //NSLog(@"responseObject = %@", responseObject);
+//        //当网络请求成功的时候停止动画(菊花膜/蒙层停止转动消失)
+//        [_aiv stopAnimating];
+//        if ([responseObject[@"flag"] isEqualToString:@"success"]) {
+//            NSDictionary *result = responseObject[@"result"];
+//            NSString *token = result[@"token"];
+//            //NSLog(@"token = %@",token);
+//            //移除键，防止有重复的键名
+//            [[StorageMgr singletonStorageMgr] removeObjectForKey:@"token"];
+//            //StorageMgr *sto = [StorageMgr singletonStorageMgr];
+//            //把token存入单例化的全局变量中
+//            [[StorageMgr singletonStorageMgr] addKey:@"token" andValue:token];
+//            
+//            //登录成功后清空手机号和密码
+//            _phoneTextField.text = @"";
+//            _pwdTextField.text = @"";
+//            //登录成功后按钮禁用
+//            _loginBtn.enabled = NO;
+//            _loginBtn.backgroundColor = UIColorFromRGB(200, 200, 200);
+//            //登录成功后跳转到其它页面
+//            [self performSegueWithIdentifier:@"signupToLogin" sender:self];
+//        } else {
+//            //登录失败提示框
+//            //[Utilities popUpAlertViewWithMsg:responseObject[@"message"] andTitle:@"提示" onView:self onCompletion:^{
+//            //}];
+//        }
+//    } failure:^(NSInteger statusCode, NSError *error) {
+//        //当网络请求成功的时候停止动画(菊花膜/蒙层停止转动消失)
+//        [_aiv stopAnimating];
+//        //失败提示框
+//        //[Utilities popUpAlertViewWithMsg:@"网络错误，请稍后再试" andTitle:@"提示" onView:self onCompletion:^{
+//            
+//        //}];
+//        //[Utilities popUpAlertViewWithMsg:@"网络错误，请稍后再试" andTitle:@"提示" onView:self onCompletion:nil];
+//    }];
+    
+    
+}
+
+#pragma mark - buttonAction
+
 - (IBAction)loginAction:(UIButton *)sender forEvent:(UIEvent *)event {
+    [self request];
 }
 
 - (IBAction)signupAction:(UIButton *)sender forEvent:(UIEvent *)event {
+     [self performSegueWithIdentifier:@"signupToLogin" sender:self];
 }
 @end

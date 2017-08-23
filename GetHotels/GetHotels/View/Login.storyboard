@@ -77,9 +77,6 @@
                                         <state key="normal" title="注册新用户"/>
                                         <connections>
                                             <action selector="signupAction:forEvent:" destination="X5B-8L-Bha" eventType="touchUpInside" id="aLU-1g-d7W"/>
-                                            <segue destination="rF1-EG-XHm" kind="show" id="fTM-eX-UST">
-                                                <nil key="action"/>
-                                            </segue>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -165,6 +162,7 @@
                         <outlet property="pwdTextField" destination="II4-fE-Yd9" id="Zba-S4-qNb"/>
                         <outlet property="signupBtn" destination="tFV-ku-oHt" id="Hhh-Xm-1Ac"/>
                         <outlet property="userImageView" destination="eW6-pI-kpz" id="Nqq-he-1KA"/>
+                        <segue destination="rF1-EG-XHm" kind="show" identifier="signupToLogin" id="dbk-tQ-pus"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="plZ-z6-mWF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -174,7 +172,7 @@
         <!--Item-->
         <scene sceneID="1RN-BZ-thk">
             <objects>
-                <viewController id="rF1-EG-XHm" sceneMemberID="viewController">
+                <viewController id="rF1-EG-XHm" customClass="SignupViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="AiA-NY-omm"/>
                         <viewControllerLayoutGuide type="bottom" id="LyJ-7i-cmc"/>
@@ -198,6 +196,9 @@
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="rF1-EG-XHm" id="eTr-mz-ZKw"/>
+                                        </connections>
                                     </textField>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hFb-DT-de8" userLabel="line">
                                         <rect key="frame" x="44" y="130" width="255" height="1"/>
@@ -218,6 +219,9 @@
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="rF1-EG-XHm" id="Sjn-B0-fZm"/>
+                                        </connections>
                                     </textField>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VUr-ay-EGg" userLabel="line">
                                         <rect key="frame" x="46" y="82" width="255" height="1"/>
@@ -238,6 +242,9 @@
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="rF1-EG-XHm" id="34q-ST-tPo"/>
+                                        </connections>
                                     </textField>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wdk-Cf-E2n" userLabel="line">
                                         <rect key="frame" x="46" y="182" width="255" height="1"/>
@@ -292,7 +299,7 @@
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="45"/>
+                                        <integer key="value" value="30"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </imageView>
@@ -308,6 +315,9 @@
                                         <integer key="value" value="5"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="signupAction:forEvent:" destination="rF1-EG-XHm" eventType="touchUpInside" id="VcM-Z8-kc5"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -326,6 +336,14 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="COe-nY-OMb"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="confirmPwdTextField" destination="MaG-qg-bPF" id="ZfH-SJ-bPd"/>
+                        <outlet property="phoneTextField" destination="6Ol-wY-C9T" id="0dp-U2-geE"/>
+                        <outlet property="pwdTextField" destination="OIo-BQ-fba" id="bAD-Ay-vNz"/>
+                        <outlet property="signupBtn" destination="SaM-8S-7om" id="P5y-AT-obt"/>
+                        <outlet property="signupView" destination="vh3-Q8-DLo" id="QJV-Cr-J6o"/>
+                        <outlet property="userImageView" destination="k0g-yZ-pyP" id="3qV-wn-9Od"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zY8-xY-BXV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
