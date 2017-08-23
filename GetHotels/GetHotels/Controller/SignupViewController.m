@@ -26,8 +26,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    //设置图片的边框宽度
     _userImageView.layer.borderWidth = 0.5;
+    //设置图片的边框颜色
     _userImageView.layer.borderColor = UIColorFromRGB(66, 162, 233).CGColor;
+    
     //阴影颜色
     _signupView.layer.shadowColor = [UIColor blackColor].CGColor;
     //偏移距离
@@ -36,14 +39,20 @@
     _signupView.layer.shadowOpacity = 0.5;
     //半径
     _signupView.layer.shadowRadius = 5.0;
+    
     //注册按钮禁用
     _signupBtn.enabled = NO;
     _signupBtn.backgroundColor = UIColorFromRGB(200, 200, 200);
+    
     //添加事件监听当输入框文本内容改变时，调用textChange:方法
     [_phoneTextField addTarget:self action:@selector(textChange:) forControlEvents:UIControlEventEditingChanged];
     [_pwdTextField addTarget:self action:@selector(textChange:) forControlEvents:UIControlEventEditingChanged];
     [_confirmPwdTextField addTarget:self action:@selector(textChange:) forControlEvents: UIControlEventEditingChanged ];
+    
+    //调用设置导航样式
     [self setNavigationItem];
+    //调用注册接口
+    [self signupRequest];
 
 }
 
@@ -106,11 +115,14 @@
         
     }
 }
+
 //键盘收回
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     //让根视图结束编辑状态达到收起键盘的目的
     [self.view endEditing:YES];
 }
+
+//按键盘上的Return键收起键盘
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if (textField == _phoneTextField || textField == _pwdTextField || textField == _confirmPwdTextField) {
         [textField resignFirstResponder];
@@ -120,8 +132,63 @@
 
 #pragma mark - request 网络请求
 
-
-- (IBAction)signupAction:(UIButton *)sender forEvent:(UIEvent *)event {
-    
+//注册接口
+- (void)signupRequest {
+    _aiv = [Utilities getCoverOnView:self.view];
+    //参数
+    NSDictionary *para = @{@"tel" : _phoneTextField.text,@"pwd" : _pwdTextField.text};
+    [RequestAPI requestURL:@"/register" withParameters:para andHeader:nil byMethod:kPost andSerializer:kJson success:^(id responseObject) {
+        
+    } failure:^(NSInteger statusCode, NSError *error) {
+        //当网络请求成功的时候停止动画(菊花膜/蒙层停止转动消失)
+        [_aiv stopAnimating];
+        //失败提示框
+        [Utilities popUpAlertViewWithMsg:@"网络错误，请稍后再试" andTitle:@"温馨提示" onView:self];
+    }];
 }
+
+//登录按钮事件
+- (IBAction)signupAction:(UIButton *)sender forEvent:(UIEvent *)event {
+    //判断某个字符串中是否都是数字
+    NSCharacterSet *notDigits = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
+    if (_phoneTextField.text.length < 11 || [_phoneTextField.text rangeOfCharacterFromSet:notDigits].location != NSNotFound){
+        [Utilities
+         popUpAlertViewWithMsg:@"请输入有效的手机号码" andTitle:@"温馨提示" onView:self];
+        //清空手机号，方便再次输入
+        _phoneTextField.text = @"";
+        return;
+    }
+    if (_phoneTextField.text.length == 0){
+        [Utilities
+         popUpAlertViewWithMsg:@"请输入你的手机号" andTitle:@"温馨提示" onView:self];
+        return;
+    }
+    if (_pwdTextField.text.length == 0){
+        [Utilities
+         popUpAlertViewWithMsg:@"请输入密码" andTitle:@"温馨提示" onView:self];
+        return;
+    }
+    if (_pwdTextField.text.length < 6 || _pwdTextField.text.length > 18){
+        [Utilities
+         popUpAlertViewWithMsg:@"您输入的密码必须在6-18之间" andTitle:@"温馨提示" onView:self];
+        //清空密码，方便再次输入
+        _pwdTextField.text = @"";
+        return;
+    }
+    if (_confirmPwdTextField.text.length == 0) {
+        [Utilities popUpAlertViewWithMsg:@"请输入确认密码" andTitle:@"温馨提示" onView:self];
+        return;
+    }
+    if (![_pwdTextField.text isEqualToString:_confirmPwdTextField.text]) {
+        [Utilities popUpAlertViewWithMsg:@"密码输入不一致，请重新输入" andTitle:@"温馨提示" onView:self];
+        //清空密码和确认密码，方便再次输入
+        _pwdTextField.text = @"";
+        _confirmPwdTextField.text = @"";
+        return;
+    }
+    //无输入异常,开始正式执行注册接口
+    [self signupRequest];
+}
+
+
 @end
