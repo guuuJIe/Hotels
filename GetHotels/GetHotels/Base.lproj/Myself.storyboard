@@ -323,13 +323,6 @@
                                                         <constraint firstItem="sE0-VK-0SB" firstAttribute="top" secondItem="BJf-TP-JVz" secondAttribute="bottom" constant="15" id="ywM-r8-kwk"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
-                                                <connections>
-                                                    <outlet property="hotelLocation" destination="gPR-qd-Ptd" id="27n-i8-nQi"/>
-                                                    <outlet property="hotelName" destination="BJf-TP-JVz" id="Onn-4g-Qit"/>
-                                                    <outlet property="leavelTime" destination="Ff7-zv-fAZ" id="jwn-CY-TJf"/>
-                                                    <outlet property="numberOfPeople" destination="Oj1-t3-Lor" id="6vF-un-BAn"/>
-                                                    <outlet property="stayTime" destination="Qv9-f2-3T8" id="jnI-Pb-qZ8"/>
-                                                </connections>
                                             </tableViewCell>
                                         </prototypes>
                                         <connections>
