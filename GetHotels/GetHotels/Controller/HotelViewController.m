@@ -55,7 +55,7 @@
 
 //设置每一组中每一行细胞的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 50;
+    return 100;
 }
 
 //设置每一组中每一行的细胞长什么样
