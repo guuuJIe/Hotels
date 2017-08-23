@@ -268,9 +268,12 @@
                                         <fontDescription key="fontDescription" name=".PingFangSC-Regular" family=".PingFang SC" pointSize="11"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="白云" translatesAutoresizingMaskIntoConstraints="NO" id="dQg-hy-Rp7">
-                                        <rect key="frame" x="345" y="72" width="25" height="18.5"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="白云" translatesAutoresizingMaskIntoConstraints="NO" id="dQg-hy-Rp7">
+                                        <rect key="frame" x="340" y="72.5" width="25" height="20"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="2g4-CW-WHv"/>
+                                            <constraint firstAttribute="width" secondItem="dQg-hy-Rp7" secondAttribute="height" multiplier="5:4" id="OLB-Yr-jYD"/>
+                                        </constraints>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VpL-DO-aMp">
                                         <rect key="frame" x="35" y="70.5" width="30" height="23"/>
@@ -302,6 +305,7 @@
                                     <constraint firstItem="K9p-FL-vIq" firstAttribute="leading" secondItem="9dY-jf-QEG" secondAttribute="trailing" constant="20" id="Fmn-05-Hll"/>
                                     <constraint firstAttribute="bottom" secondItem="BEr-M2-p6F" secondAttribute="bottom" constant="20" id="KhO-WY-0nv"/>
                                     <constraint firstItem="BEr-M2-p6F" firstAttribute="leading" secondItem="eaf-MP-1d6" secondAttribute="leading" constant="5" id="Meh-Nw-trc"/>
+                                    <constraint firstItem="dQg-hy-Rp7" firstAttribute="centerY" secondItem="9dY-jf-QEG" secondAttribute="centerY" id="O0e-Oe-2ry"/>
                                     <constraint firstItem="K9p-FL-vIq" firstAttribute="top" secondItem="9dY-jf-QEG" secondAttribute="top" constant="3" id="Oix-SB-8fa"/>
                                     <constraint firstItem="9dY-jf-QEG" firstAttribute="centerY" secondItem="VpL-DO-aMp" secondAttribute="centerY" id="PSN-pN-i9D"/>
                                     <constraint firstItem="9dY-jf-QEG" firstAttribute="centerX" secondItem="eaf-MP-1d6" secondAttribute="centerX" id="W0f-ej-0kR"/>
@@ -309,6 +313,7 @@
                                     <constraint firstItem="BEr-M2-p6F" firstAttribute="height" secondItem="eaf-MP-1d6" secondAttribute="height" multiplier="1:6" id="WzH-P8-sJb"/>
                                     <constraint firstItem="q7t-V9-zQU" firstAttribute="centerX" secondItem="eaf-MP-1d6" secondAttribute="centerX" id="but-VT-1h4"/>
                                     <constraint firstItem="9dY-jf-QEG" firstAttribute="width" secondItem="eaf-MP-1d6" secondAttribute="width" multiplier="3:5" id="iUp-Gt-1ey"/>
+                                    <constraint firstAttribute="trailing" secondItem="dQg-hy-Rp7" secondAttribute="trailing" constant="10" id="inX-Jg-fUE"/>
                                     <constraint firstItem="q7t-V9-zQU" firstAttribute="centerY" secondItem="eaf-MP-1d6" secondAttribute="centerY" constant="-15" id="zYx-nP-nbX"/>
                                 </constraints>
                             </view>
