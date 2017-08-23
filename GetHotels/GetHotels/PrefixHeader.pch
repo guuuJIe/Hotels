@@ -20,4 +20,6 @@
 #import "ErrorHandler.h"
 #import "StorageMgr.h"
 #import "HMSegmentedControl.h"
+#import "NSString+Crypt.h"
+
 #endif /* PrefixHeader_pch */
