@@ -28,9 +28,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    
+    //设置图片的边框宽度
     _userImageView.layer.borderWidth = 0.5;
+    //设置图片的边框颜色
     _userImageView.layer.borderColor = UIColorFromRGB(66, 162, 233).CGColor;
+    
     //阴影颜色
     _loginView.layer.shadowColor = [UIColor blackColor].CGColor;
     //偏移距离
@@ -39,6 +41,7 @@
     _loginView.layer.shadowOpacity = 0.5;
     //半径
     _loginView.layer.shadowRadius = 5.0;
+    
     //登录按钮禁用
     _loginBtn.enabled = NO;
     _loginBtn.backgroundColor = UIColorFromRGB(200, 200, 200);
@@ -46,7 +49,11 @@
     //添加事件监听当输入框文本内容改变时，调用textChange:方法
     [_phoneTextField addTarget:self action:@selector(textChange:) forControlEvents:UIControlEventEditingChanged];
     [_pwdTextField addTarget:self action:@selector(textChange:) forControlEvents:UIControlEventEditingChanged];
+    
+    //调用设置导航样式
     [self setNavigationItem];
+    //调用登录接口
+    [self loginRequest];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -107,7 +114,6 @@
         //登录按钮禁用
         _loginBtn.enabled = NO;
         _loginBtn.backgroundColor = UIColorFromRGB(200, 200, 200);
-        
     }
 }
 //键盘收回
@@ -115,6 +121,8 @@
     //让根视图结束编辑状态达到收起键盘的目的
     [self.view endEditing:YES];
 }
+
+//按键盘上的Return键收起键盘
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if (textField == _phoneTextField || textField == _pwdTextField) {
         [textField resignFirstResponder];
@@ -124,19 +132,19 @@
 
 #pragma mark - request 网络请求
 
-//登录
-- (void)request {
+//登录接口
+- (void)loginRequest {
     //点击按钮的时候创建一个蒙层(菊花膜)，并显示在当前页面(防止连续点击按钮)
     _aiv = [Utilities getCoverOnView:self.view];
     //参数(用户手机号和密码)
     NSDictionary *para = @{@"tel" : _phoneTextField.text,@"pwd" : _pwdTextField.text};
-    //NSLog(@"参数:%@",para);
+    NSLog(@"参数:%@",para);
     //网络请求(方法是kPost，数据提交方式是kJson)
-//    [RequestAPI requestURL:@"/api/session" withParameters:para andHeader:nil byMethod:kPost andSerializer:kJson success:^(id responseObject) {
-//        //成功以后要做的事情在此处执行
-//        //NSLog(@"responseObject = %@", responseObject);
-//        //当网络请求成功的时候停止动画(菊花膜/蒙层停止转动消失)
-//        [_aiv stopAnimating];
+    [RequestAPI requestURL:@"/login" withParameters:para andHeader:nil byMethod:kPost andSerializer:kJson success:^(id responseObject) {
+        //成功以后要做的事情在此处执行
+        NSLog(@"responseObject = %@", responseObject);
+        //当网络请求成功的时候停止动画(菊花膜/蒙层停止转动消失)
+        [_aiv stopAnimating];
 //        if ([responseObject[@"flag"] isEqualToString:@"success"]) {
 //            NSDictionary *result = responseObject[@"result"];
 //            NSString *token = result[@"token"];
@@ -160,15 +168,12 @@
 //            //[Utilities popUpAlertViewWithMsg:responseObject[@"message"] andTitle:@"提示" onView:self onCompletion:^{
 //            //}];
 //        }
-//    } failure:^(NSInteger statusCode, NSError *error) {
-//        //当网络请求成功的时候停止动画(菊花膜/蒙层停止转动消失)
-//        [_aiv stopAnimating];
-//        //失败提示框
-//        //[Utilities popUpAlertViewWithMsg:@"网络错误，请稍后再试" andTitle:@"提示" onView:self onCompletion:^{
-//            
-//        //}];
-//        //[Utilities popUpAlertViewWithMsg:@"网络错误，请稍后再试" andTitle:@"提示" onView:self onCompletion:nil];
-//    }];
+    } failure:^(NSInteger statusCode, NSError *error) {
+        //当网络请求成功的时候停止动画(菊花膜/蒙层停止转动消失)
+        [_aiv stopAnimating];
+        //失败提示框
+        [Utilities popUpAlertViewWithMsg:@"网络错误，请稍后再试" andTitle:@"温馨提示" onView:self];
+    }];
     
     
 }
@@ -176,10 +181,39 @@
 #pragma mark - buttonAction
 
 - (IBAction)loginAction:(UIButton *)sender forEvent:(UIEvent *)event {
-    [self request];
+    //判断某个字符串中是否都是数字
+    NSCharacterSet *notDigits = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
+    if (_phoneTextField.text.length < 11 || [_phoneTextField.text rangeOfCharacterFromSet:notDigits].location != NSNotFound){
+        [Utilities
+         popUpAlertViewWithMsg:@"请输入有效的手机号码" andTitle:@"温馨提示" onView:self];
+        //清空手机号，方便再次输入
+        _phoneTextField.text = @"";
+        return;
+    }
+    if (_phoneTextField.text.length == 0){
+        [Utilities
+         popUpAlertViewWithMsg:@"请输入你的手机号" andTitle:@"温馨提示" onView:self];
+        return;
+    }
+    if (_pwdTextField.text.length == 0){
+        [Utilities
+         popUpAlertViewWithMsg:@"请输入密码" andTitle:@"温馨提示" onView:self];
+        return;
+    }
+    if (_pwdTextField.text.length < 6 || _pwdTextField.text.length > 18){
+        [Utilities
+         popUpAlertViewWithMsg:@"您输入的密码必须在6-18之间" andTitle:@"温馨提示" onView:self];
+        //清空密码，方便再次输入
+        _pwdTextField.text = @"";
+        return;
+    }
+    //无输入异常,开始正式执行登录接口
+    [self loginRequest];
 }
 
+//注册按钮事件
 - (IBAction)signupAction:(UIButton *)sender forEvent:(UIEvent *)event {
      [self performSegueWithIdentifier:@"signupToLogin" sender:self];
 }
+     
 @end
