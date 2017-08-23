@@ -31,10 +31,10 @@
             </objects>
             <point key="canvasLocation" x="1224.8" y="289.20539730134936"/>
         </scene>
-        <!--View Controller-->
+        <!--My Info View Controller-->
         <scene sceneID="tlB-E0-6as">
             <objects>
-                <viewController id="dvP-6s-nU1" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeMyInfo" useStoryboardIdentifierAsRestorationIdentifier="YES" id="dvP-6s-nU1" customClass="MyInfoViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="gkV-c4-9pE"/>
                         <viewControllerLayoutGuide type="bottom" id="MFD-2e-v6s"/>
@@ -101,6 +101,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
+                                            <action selector="loginAction:forEvent:" destination="dvP-6s-nU1" eventType="touchUpInside" id="Q3k-il-b04"/>
                                             <segue destination="seM-2e-Vea" kind="presentation" id="HAF-gY-F0s"/>
                                         </connections>
                                     </button>
@@ -134,7 +135,7 @@
                                 <rect key="frame" x="0.0" y="205" width="375" height="413"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="ZPD-j6-c0x">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="HomeMyInfoCell" id="ZPD-j6-c0x" customClass="MyInfoTableViewCell">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZPD-j6-c0x" id="d3R-L9-m4W">
@@ -148,9 +149,9 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的酒店" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iKE-Ev-l6d">
-                                                    <rect key="frame" x="54.5" y="15.5" width="45" height="13.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <rect key="frame" x="54.5" y="14.5" width="53.5" height="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -163,10 +164,16 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="myInfoCellImg" destination="Yhy-nK-2gI" id="YQB-lH-nej"/>
+                                            <outlet property="myInfoCellLabel" destination="iKE-Ev-l6d" id="95P-Up-dYN"/>
                                             <segue destination="fpM-G6-g2A" kind="show" id="wKH-ac-CVN"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="dvP-6s-nU1" id="Dv9-eO-oZo"/>
+                                    <outlet property="delegate" destination="dvP-6s-nU1" id="pT2-DW-Fk7"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -182,6 +189,14 @@
                     </view>
                     <navigationItem key="navigationItem" id="mGS-gW-oc2"/>
                     <nil key="simulatedTopBarMetrics"/>
+                    <connections>
+                        <outlet property="headerImg" destination="nqP-7j-HUV" id="n7v-Dk-cYh"/>
+                        <outlet property="loginBtn" destination="fNh-HD-bpM" id="95s-gm-sPu"/>
+                        <outlet property="oneStarImg" destination="dtw-Wf-svh" id="oyy-rc-Zm2"/>
+                        <outlet property="threeStarImg" destination="q7F-d9-dFH" id="tX2-XO-6yh"/>
+                        <outlet property="twoStarImg" destination="06z-sY-ygh" id="m2N-Sb-3HN"/>
+                        <outlet property="usernameLabel" destination="2Yj-yC-GmV" id="LgY-ev-Tq6"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lUF-HS-zYI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -203,10 +218,10 @@
             </objects>
             <point key="canvasLocation" x="1116" y="967"/>
         </scene>
-        <!--View Controller-->
+        <!--Hotel View Controller-->
         <scene sceneID="BE1-Wb-faE">
             <objects>
-                <viewController id="GKM-U3-8e4" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeHotel" useStoryboardIdentifierAsRestorationIdentifier="YES" id="GKM-U3-8e4" customClass="HotelViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ncS-fB-mKa"/>
                         <viewControllerLayoutGuide type="bottom" id="NuQ-7w-Hbe"/>
@@ -215,6 +230,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2DI-Ci-nEv">
+                                <rect key="frame" x="0.0" y="111" width="375" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="Kwy-q2-YJF"/>
+                                </constraints>
+                            </scrollView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eaf-MP-1d6" userLabel="HeadView">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="111"/>
                                 <subviews>
@@ -230,25 +251,6 @@
                                             <constraint firstAttribute="width" secondItem="BEr-M2-p6F" secondAttribute="height" multiplier="4:3" id="OGa-ww-HyC"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="58a-hb-esD">
-                                        <rect key="frame" x="35" y="77" width="30" height="11"/>
-                                        <attributedString key="attributedText">
-                                            <fragment content="无锡">
-                                                <attributes>
-                                                    <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <font key="NSFont" size="11" name=".PingFangSC-Regular"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                </attributes>
-                                            </fragment>
-                                            <fragment content="▼">
-                                                <attributes>
-                                                    <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <font key="NSFont" size="7" name=".PingFangSC-Regular"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                </attributes>
-                                            </fragment>
-                                        </attributedString>
-                                    </label>
                                     <textField opaque="NO" clipsSubviews="YES" alpha="0.10000000149011612" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9dY-jf-QEG">
                                         <rect key="frame" x="75" y="67.5" width="225" height="30"/>
                                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -270,31 +272,124 @@
                                         <rect key="frame" x="345" y="72" width="25" height="18.5"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VpL-DO-aMp">
+                                        <rect key="frame" x="35" y="70.5" width="30" height="23"/>
+                                        <state key="normal">
+                                            <attributedString key="attributedTitle">
+                                                <fragment content="无锡">
+                                                    <attributes>
+                                                        <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                        <font key="NSFont" size="11" name=".PingFangSC-Regular"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                            <tabStops>
+                                                                <textTab alignment="left" location="28">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="56">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="84">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="112">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="140">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="168">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="196">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="224">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="252">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="280">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="308">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="336">
+                                                                    <options/>
+                                                                </textTab>
+                                                            </tabStops>
+                                                        </paragraphStyle>
+                                                    </attributes>
+                                                </fragment>
+                                                <fragment content="▼">
+                                                    <attributes>
+                                                        <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                        <font key="NSFont" size="7" name=".PingFangSC-Regular"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO">
+                                                            <tabStops>
+                                                                <textTab alignment="left" location="28">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="56">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="84">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="112">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="140">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="168">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="196">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="224">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="252">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="280">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="308">
+                                                                    <options/>
+                                                                </textTab>
+                                                                <textTab alignment="left" location="336">
+                                                                    <options/>
+                                                                </textTab>
+                                                            </tabStops>
+                                                        </paragraphStyle>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                        </state>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.089943633679999996" green="0.45186795149999998" blue="0.90834330269999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
+                                    <constraint firstItem="VpL-DO-aMp" firstAttribute="centerY" secondItem="BEr-M2-p6F" secondAttribute="centerY" id="5IE-cU-Ofw"/>
                                     <constraint firstItem="cV7-Cf-0pg" firstAttribute="leading" secondItem="9dY-jf-QEG" secondAttribute="trailing" constant="15" id="5el-dn-Xbn"/>
-                                    <constraint firstItem="9dY-jf-QEG" firstAttribute="centerY" secondItem="58a-hb-esD" secondAttribute="centerY" id="84W-vD-Oct"/>
-                                    <constraint firstItem="58a-hb-esD" firstAttribute="centerY" secondItem="BEr-M2-p6F" secondAttribute="centerY" id="8nV-8e-hqk"/>
+                                    <constraint firstItem="VpL-DO-aMp" firstAttribute="leading" secondItem="BEr-M2-p6F" secondAttribute="trailing" constant="5" id="B9B-wP-hdK"/>
                                     <constraint firstItem="K9p-FL-vIq" firstAttribute="leading" secondItem="9dY-jf-QEG" secondAttribute="trailing" constant="20" id="Fmn-05-Hll"/>
                                     <constraint firstAttribute="bottom" secondItem="BEr-M2-p6F" secondAttribute="bottom" constant="20" id="KhO-WY-0nv"/>
                                     <constraint firstItem="BEr-M2-p6F" firstAttribute="leading" secondItem="eaf-MP-1d6" secondAttribute="leading" constant="5" id="Meh-Nw-trc"/>
                                     <constraint firstItem="K9p-FL-vIq" firstAttribute="top" secondItem="9dY-jf-QEG" secondAttribute="top" constant="3" id="Oix-SB-8fa"/>
+                                    <constraint firstItem="9dY-jf-QEG" firstAttribute="centerY" secondItem="VpL-DO-aMp" secondAttribute="centerY" id="PSN-pN-i9D"/>
                                     <constraint firstItem="9dY-jf-QEG" firstAttribute="centerX" secondItem="eaf-MP-1d6" secondAttribute="centerX" id="W0f-ej-0kR"/>
                                     <constraint firstItem="cV7-Cf-0pg" firstAttribute="bottom" secondItem="9dY-jf-QEG" secondAttribute="bottom" constant="-2" id="WKs-hQ-gLt"/>
                                     <constraint firstItem="BEr-M2-p6F" firstAttribute="height" secondItem="eaf-MP-1d6" secondAttribute="height" multiplier="1:6" id="WzH-P8-sJb"/>
-                                    <constraint firstItem="58a-hb-esD" firstAttribute="leading" secondItem="BEr-M2-p6F" secondAttribute="trailing" constant="5" id="Xw0-AZ-oEs"/>
                                     <constraint firstItem="q7t-V9-zQU" firstAttribute="centerX" secondItem="eaf-MP-1d6" secondAttribute="centerX" id="but-VT-1h4"/>
                                     <constraint firstItem="9dY-jf-QEG" firstAttribute="width" secondItem="eaf-MP-1d6" secondAttribute="width" multiplier="3:5" id="iUp-Gt-1ey"/>
                                     <constraint firstItem="q7t-V9-zQU" firstAttribute="centerY" secondItem="eaf-MP-1d6" secondAttribute="centerY" constant="-15" id="zYx-nP-nbX"/>
                                 </constraints>
                             </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2DI-Ci-nEv">
-                                <rect key="frame" x="0.0" y="111" width="375" height="100"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="Kwy-q2-YJF"/>
-                                </constraints>
-                            </scrollView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tDV-wn-kSN" userLabel="first Image View">
                                 <rect key="frame" x="0.0" y="111" width="375" height="100"/>
                             </imageView>
@@ -450,7 +545,7 @@
                                 <rect key="frame" x="0.0" y="251" width="375" height="367"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="73" id="8xK-Mf-fcP">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="HomeHotelCell" rowHeight="73" id="8xK-Mf-fcP" customClass="HotelTableViewCell">
                                         <rect key="frame" x="0.0" y="28" width="375" height="73"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8xK-Mf-fcP" id="7Pt-YF-rgs">
@@ -503,10 +598,19 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="hotelDistanceLabel" destination="jb2-ds-IgD" id="VmC-2x-mYa"/>
+                                            <outlet property="hotelImg" destination="rHc-DR-YUv" id="44U-gF-21t"/>
+                                            <outlet property="hotelLocLabel" destination="CvF-HC-6We" id="GoF-Ua-54I"/>
+                                            <outlet property="hotelNameLabel" destination="X0z-S7-nTd" id="GLl-dz-VNj"/>
+                                            <outlet property="hotelPriceLabel" destination="MCS-Gf-mJL" id="Emn-c8-hww"/>
                                             <segue destination="88j-Dv-Zqy" kind="show" id="U3p-zx-7pt"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="GKM-U3-8e4" id="lsv-a8-prA"/>
+                                    <outlet property="delegate" destination="GKM-U3-8e4" id="Wop-h6-3MG"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
@@ -550,6 +654,13 @@
                     </view>
                     <navigationItem key="navigationItem" id="WrZ-U5-dA9"/>
                     <nil key="simulatedTopBarMetrics"/>
+                    <connections>
+                        <outlet property="homeLocation" destination="VpL-DO-aMp" id="Nf5-gZ-vEr"/>
+                        <outlet property="searchTextField" destination="9dY-jf-QEG" id="671-92-vOa"/>
+                        <outlet property="tempLabel" destination="K9p-FL-vIq" id="WCu-NX-eks"/>
+                        <outlet property="weatherImg" destination="dQg-hy-Rp7" id="gFu-WA-irq"/>
+                        <outlet property="weatherLabel" destination="cV7-Cf-0pg" id="cfL-vg-rHy"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5yK-eW-Hf4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
