@@ -34,7 +34,7 @@
         <!--My Info View Controller-->
         <scene sceneID="tlB-E0-6as">
             <objects>
-                <viewController id="dvP-6s-nU1" customClass="MyInfoViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeMyInfo" useStoryboardIdentifierAsRestorationIdentifier="YES" id="dvP-6s-nU1" customClass="MyInfoViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="gkV-c4-9pE"/>
                         <viewControllerLayoutGuide type="bottom" id="MFD-2e-v6s"/>
@@ -149,9 +149,9 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我的酒店" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iKE-Ev-l6d">
-                                                    <rect key="frame" x="54.5" y="15.5" width="45" height="13.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <rect key="frame" x="54.5" y="14.5" width="53.5" height="16"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -164,6 +164,8 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="myInfoCellImg" destination="Yhy-nK-2gI" id="YQB-lH-nej"/>
+                                            <outlet property="myInfoCellLabel" destination="iKE-Ev-l6d" id="95P-Up-dYN"/>
                                             <segue destination="fpM-G6-g2A" kind="show" id="wKH-ac-CVN"/>
                                         </connections>
                                     </tableViewCell>
@@ -219,7 +221,7 @@
         <!--Hotel View Controller-->
         <scene sceneID="BE1-Wb-faE">
             <objects>
-                <viewController id="GKM-U3-8e4" customClass="HotelViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeHotel" useStoryboardIdentifierAsRestorationIdentifier="YES" id="GKM-U3-8e4" customClass="HotelViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ncS-fB-mKa"/>
                         <viewControllerLayoutGuide type="bottom" id="NuQ-7w-Hbe"/>

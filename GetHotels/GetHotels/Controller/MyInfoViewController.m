@@ -27,6 +27,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    _arr = @[@{@"leftIcon" : @"酒店大", @"title" : @"我的酒店"}, @{@"leftIcon" : @"飞机大", @"title" : @"我的航空"}, @{@"leftIcon" : @"信息", @"title" : @"我的消息"}, @{@"leftIcon" : @"设置", @"title" : @"账户设置"}, @{@"leftIcon" : @"协议", @"title" : @"使用协议"}, @{@"leftIcon" : @"电话", @"title" : @"联系客服"}];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -50,7 +51,7 @@
 }
 //设置表格视图中每一组有多少行
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 5;
+    return 6;
 }
 
 //当一个细胞将要出现的时候要做的事情
@@ -66,6 +67,9 @@
 //设置每一组中每一行的细胞长什么样
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     MyInfoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HomeMyInfoCell" forIndexPath:indexPath];
+    NSDictionary *dict = _arr[indexPath.row];
+    cell.myInfoCellImg.image = [UIImage imageNamed:dict[@"leftIcon"]];
+    cell.myInfoCellLabel.text = dict[@"title"];
     return  cell;
 }
 
