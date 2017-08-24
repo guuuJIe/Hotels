@@ -17,7 +17,6 @@
 @property (weak, nonatomic) IBOutlet UITableView *AllOrderTableView;
 @property (weak, nonatomic) IBOutlet UITableView *UseableOrderTableView;
 @property (weak, nonatomic) IBOutlet UITableView *DatedOrderTableView;
-@property (strong,nonatomic) UIActivityIndicatorView *aiv;
 @end
 
 @implementation MyHotelViewController
@@ -100,43 +99,6 @@
     // Pass the selected object to the new view controller.
 }
 */
-//全部订单
--(void)AllOrdersRequest{
-    NSDictionary *para = @{@"openid":@"",@"id":@1};
-    [RequestAPI requestURL:@"/findOrders" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
-        // NSLog(@"acquire:%@",responseObject);
-        [_aiv stopAnimating];
-        //防范式编程   强制转换(UIRefreshControl *)
-        NSLog(@"%@",responseObject);
-        if ([responseObject[@"flag"] isEqualToString:@"success"]) {
-           
-        }
-        else{
-            [Utilities popUpAlertViewWithMsg:@"网络错误,请稍后再试" andTitle:@"提示" onView:self];
-        }
-    } failure:^(NSInteger statusCode, NSError *error) {
-    }];
-    
-}
-//可使用订单
--(void)UseableOrdersRequest{
-    NSDictionary *para = @{@"openid":@"",@"id":@2};
-    [RequestAPI requestURL:@"/findOrders_edu" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
-        // NSLog(@"acquire:%@",responseObject);
-        [_aiv stopAnimating];
-        //防范式编程   强制转换(UIRefreshControl *)
-        NSLog(@"%@",responseObject);
-        if ([responseObject[@"flag"] isEqualToString:@"success"]) {
-            
-        }
-        else{
-            [Utilities popUpAlertViewWithMsg:@"网络错误,请稍后再试" andTitle:@"提示" onView:self];
-        }
-    } failure:^(NSInteger statusCode, NSError *error) {
-    }];
-    
-}
-
 #pragma mark - tableView
 //一共多少组
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
