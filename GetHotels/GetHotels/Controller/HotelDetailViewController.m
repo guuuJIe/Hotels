@@ -75,11 +75,8 @@
 
 }
 -(void)leftButtonAction:(UIButton *)sender{
-    [self.navigationController popViewControllerAnimated:YES];
-    HotelViewController *IssueVC = [Utilities getStoryboardInstance:@"Main" byIdentity:@"HomeHotel"];
-    UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:IssueVC];
-    //2、用某种方式跳转到上述页面（这里用Modal的方式跳转）
-    [self presentViewController:nc animated:YES completion:nil];
+    //跳转回原来页
+        [self dismissViewControllerAnimated:YES completion:nil];
     
 
 }
@@ -99,8 +96,12 @@
     imageViewDisplay.animationInterVale = 0.6;
     [self.view addSubview:imageViewDisplay];
 }
-
-
+#pragma mark - quest
+//网络请求
+-(void)hotelDetailRequest{
+    //获取token请求接口
+        
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -117,8 +118,7 @@
 }
 */
 
-- (IBAction)dateBtn:(UIButton *)sender forEvent:(UIEvent *)event {
-}
+
 - (IBAction)dateActionBtn:(UIButton *)sender forEvent:(UIEvent *)event {
 }
 - (IBAction)nextDateActionBtn:(UIButton *)sender forEvent:(UIEvent *)event {
