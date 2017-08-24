@@ -14,7 +14,6 @@
         <!--酒店预订-->
         <scene sceneID="hVa-ZC-wfP">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="mbk-n8-ZpK" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="2Bt-FB-rBK" customClass="HotelDetailViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="rCG-FS-9d7"/>
@@ -396,7 +395,7 @@
                                 <constraints>
                                     <constraint firstItem="QNq-5w-mZs" firstAttribute="leading" secondItem="bPf-SQ-anw" secondAttribute="leading" id="0DB-sZ-nij"/>
                                     <constraint firstItem="pvs-jl-bDF" firstAttribute="top" secondItem="oR8-3u-Gg1" secondAttribute="bottom" id="0Sz-cr-uyz"/>
-                                    <constraint firstAttribute="bottom" secondItem="6vn-SD-2TS" secondAttribute="bottom" id="4sg-ke-b0r"/>
+                                    <constraint firstAttribute="bottom" secondItem="6vn-SD-2TS" secondAttribute="bottom" constant="20" id="4sg-ke-b0r"/>
                                     <constraint firstAttribute="trailing" secondItem="QNq-5w-mZs" secondAttribute="trailing" id="5dY-PH-xv5"/>
                                     <constraint firstItem="hwj-wE-gJf" firstAttribute="top" secondItem="GlG-41-6EN" secondAttribute="bottom" id="77o-hm-r2E"/>
                                     <constraint firstItem="gH2-UK-y9Z" firstAttribute="leading" secondItem="bPf-SQ-anw" secondAttribute="leading" id="C2J-Oa-tHL"/>
@@ -502,13 +501,13 @@
                         <outlet property="sizeLabel" destination="gGA-xV-irJ" id="4Em-Gc-29T"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mbk-n8-ZpK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1172" y="131.78410794602701"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="TYT-cx-wpJ">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="PmH-jv-CSO" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Dwd-ws-vUF" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="du7-dF-9LT">
@@ -520,6 +519,7 @@
                         <segue destination="2Bt-FB-rBK" kind="relationship" relationship="rootViewController" id="tfk-rQ-orX"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PmH-jv-CSO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="240.80000000000001" y="131.78410794602701"/>
         </scene>

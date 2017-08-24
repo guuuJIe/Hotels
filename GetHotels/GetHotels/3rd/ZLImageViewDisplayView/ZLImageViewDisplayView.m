@@ -36,8 +36,8 @@
     if (self) {
         _widthOfView = frame.size.width;            //获取滚动视图的宽度
         _heightView = frame.size.height;            //获取滚动视图的高度
-        _scrollInterval = 2;
-        _animationInterVale = 0.7;
+        _scrollInterval = 3;
+        _animationInterVale = 0.6;
         _currentPage = 1;                           //当前显示页面
         _imageViewcontentModel = UIViewContentModeScaleAspectFill;
         self.clipsToBounds = YES;
