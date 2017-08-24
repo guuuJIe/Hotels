@@ -92,7 +92,7 @@
     //初始化控件
     ZLImageViewDisplayView *imageViewDisplay = [ZLImageViewDisplayView zlImageViewDisplayViewWithFrame:frame];
     imageViewDisplay.imageViewArray = imageArray;
-    imageViewDisplay.scrollInterval = 3;
+    imageViewDisplay.scrollInterval = 2;
     imageViewDisplay.animationInterVale = 0.6;
     [self.view addSubview:imageViewDisplay];
 }
