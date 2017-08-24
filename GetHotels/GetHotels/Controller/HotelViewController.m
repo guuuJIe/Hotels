@@ -19,8 +19,11 @@
 @property (weak, nonatomic) IBOutlet UILabel *weatherLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *weatherImg;
 @property (weak, nonatomic) IBOutlet UIButton *cityBtn;
+
 @property (strong,nonatomic)CLLocationManager *locMgr;
 @property (strong,nonatomic)CLLocation *location;
+
+@property (strong,nonatomic)UIActivityIndicatorView *aiv;
 @end
 
 @implementation HotelViewController
@@ -30,9 +33,11 @@
     firstVisit = YES;
     // Do any additional setup after loading the view.
     [self.navigationController setNavigationBarHidden:YES animated:NO];
-    [self locationConfig];
-    [self enterApp];
+   // [self weatherRequest];          //天气网络请求
+    [self locationConfig];          //开始定位
+    [self enterApp];                //判断是否第一次进入app
     [[NSNotificationCenter defaultCenter ] addObserver:self selector:@selector(chooseCity:) name:@"ResetCity" object:nil];
+    [self hotel];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -88,6 +93,57 @@
         }
     }
 }
+
+#pragma  mark - request
+//天气
+-(void)weatherRequest{
+    _aiv = [Utilities getCoverOnView:self.view];
+    
+    NSDictionary *parameters = @{@"cityname" : @"%E5%A4%AA%E5%8E%9F&dtype=&format=&key=9c44df781a01d4f579aa8c782a578ea5"};
+    
+    [RequestAPI requestURL:@"http://op.juhe.cn/onebox/weather/query" withParameters:nil andHeader:nil byMethod:kGet andSerializer:kJson success:^(id responseObject) {
+        [_aiv stopAnimating];
+        NSLog(@"pp:%@",responseObject);
+        if ([responseObject[@"resultFlag"] integerValue] == 8001){
+            
+        }else {
+            
+        }
+    } failure:^(NSInteger statusCode, NSError *error) {
+        [_aiv stopAnimating];
+        [Utilities
+         popUpAlertViewWithMsg:@"请保持网络连接畅通" andTitle:nil onView:self];
+    }];
+
+}
+
+//酒店
+- (void)hotel{
+    //点击按钮的时候创建一个蒙层，并显示在当前页面
+    
+    //参数
+    NSDictionary *para = @{@"startId" :  @1,@"priceId" :@1,@"inTime" :  @0,@"outTime" : @0,@"page" :@1,@"sortingId" :@1};
+    //网络请求
+    [RequestAPI requestURL:@"/findAllHotelAndAdvertising" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
+        NSLog(@"登录 = %@",responseObject);
+        //当网络请求成功时让蒙层消失
+        [_aiv stopAnimating];
+        if([responseObject[@"resultFlag"]intValue] == 1){
+            NSDictionary *result = responseObject[@"result"];
+            
+        } else {
+            //业务逻辑失败的情况下
+            NSString *errorMsg = [ErrorHandler getProperErrorString:[responseObject[@"resultFlag"] integerValue]];
+            [Utilities popUpAlertViewWithMsg:errorMsg andTitle:nil onView:self];
+        }
+    } failure:^(NSInteger statusCode, NSError *error) {
+        //当网络请求失败时让蒙层消失
+        [_aiv stopAnimating];
+        [Utilities
+         popUpAlertViewWithMsg:@"请保持网络连接畅通" andTitle:nil onView:self];
+    }];
+}
+
 /*
 #pragma mark - Navigation
 
@@ -122,6 +178,8 @@
     return  cell;
 }
 
+
+#pragma mark - location
 //定位失败时
 - (void)locationManager:(CLLocationManager *)manager
        didFailWithError:(NSError *)error{
@@ -166,10 +224,10 @@
             if (!error) {
                 CLPlacemark *first = placemarks.firstObject;
                 NSDictionary *locDict = first.addressDictionary;
-                NSLog(@"locDict = %@",locDict);
+                //NSLog(@"locDict = %@",locDict);
                 NSString *city = locDict[@"City"];
                 city = [city substringToIndex:city.length - 1];
-                NSLog(@"%@",city);
+                //NSLog(@"%@",city);
                 [[StorageMgr singletonStorageMgr] removeObjectForKey:@"LocCity"];
                 //将定位到的城市保存进单例化全局变量
                 [[StorageMgr singletonStorageMgr] addKey:@"LocCity" andValue:city];
