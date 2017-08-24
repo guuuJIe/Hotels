@@ -12,7 +12,6 @@
     BOOL firstVisit;
 }
 @property (weak, nonatomic) IBOutlet UIButton *cityBtn;
-
 @property (strong,nonatomic)NSDictionary *cities;
 @property (strong,nonatomic)NSArray *keys;
 @property (strong,nonatomic)CLLocationManager *locMgr;
