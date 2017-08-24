@@ -36,7 +36,7 @@
     if (self) {
         _widthOfView = frame.size.width;            //获取滚动视图的宽度
         _heightView = frame.size.height;            //获取滚动视图的高度
-        _scrollInterval = 2;
+        _scrollInterval = 3;
         _animationInterVale = 0.7;
         _currentPage = 1;                           //当前显示页面
         _imageViewcontentModel = UIViewContentModeScaleAspectFill;
@@ -193,11 +193,7 @@
         _mainScrollView.contentOffset = CGPointMake(_widthOfView * _imageViewArray.count, 0);
         _imageViewPageControl.currentPage = _imageViewArray.count;
         _currentPage = _imageViewArray.count;
-<<<<<<< HEAD:GetHotels/GetHotels/ZLImageViewDisplayView.m
         [self resumeTimer];
-=======
-       [self resumeTimer];
->>>>>>> ec9d3bf5200b2966c207f3182419c30427f92c0e:GetHotels/GetHotels/3rd/ZLImageViewDisplayView/ZLImageViewDisplayView.m
         return;
     }
     
