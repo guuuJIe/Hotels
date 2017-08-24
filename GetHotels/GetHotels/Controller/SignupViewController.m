@@ -52,7 +52,7 @@
     //调用设置导航样式
     [self setNavigationItem];
     //调用注册接口
-    [self signupRequest];
+    //[self signupRequest];
 
 }
 
@@ -137,17 +137,28 @@
     _aiv = [Utilities getCoverOnView:self.view];
     //参数
     NSDictionary *para = @{@"tel" : _phoneTextField.text,@"pwd" : _pwdTextField.text};
-    [RequestAPI requestURL:@"/register" withParameters:para andHeader:nil byMethod:kPost andSerializer:kJson success:^(id responseObject) {
-        
-    } failure:^(NSInteger statusCode, NSError *error) {
+    NSLog(@"%@",para);
+    [RequestAPI requestURL:@"/register" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
+        NSLog(@"%@",responseObject);
         //当网络请求成功的时候停止动画(菊花膜/蒙层停止转动消失)
+        [_aiv stopAnimating];
+        if ([responseObject[@"result"] integerValue] == 1) {
+            
+        } else {
+            [_aiv stopAnimating];
+            //业务逻辑失败的情况下
+            NSString *errorMsg = [ErrorHandler getProperErrorString:[responseObject[@"result"] integerValue]];
+            [Utilities popUpAlertViewWithMsg:errorMsg andTitle:nil onView:self];
+        }
+    } failure:^(NSInteger statusCode, NSError *error) {
+        //当网络请求失败的时候停止动画(菊花膜/蒙层停止转动消失)
         [_aiv stopAnimating];
         //失败提示框
         [Utilities popUpAlertViewWithMsg:@"网络错误，请稍后再试" andTitle:@"温馨提示" onView:self];
     }];
 }
 
-//登录按钮事件
+//注册按钮事件
 - (IBAction)signupAction:(UIButton *)sender forEvent:(UIEvent *)event {
     //判断某个字符串中是否都是数字
     NSCharacterSet *notDigits = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];

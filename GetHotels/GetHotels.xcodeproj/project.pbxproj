@@ -278,7 +278,7 @@
 			children = (
 				8445AD8F1F4C546C00417B79 /* MyHotelOrder */,
 				84A346791F4C42360051BDFB /* Hotel */,
-				0477F52D1F4C368C00B16FB3 /* signup */,
+				0477F52D1F4C368C00B16FB3 /* Signup */,
 				0477F5281F4C34A600B16FB3 /* Login */,
 				FEACC7891F4AF3F2002EC5F8 /* HotelDetail */,
 				841E379B1F4960710057D58A /* ViewController.h */,
@@ -358,13 +358,13 @@
 			name = Login;
 			sourceTree = "<group>";
 		};
-		0477F52D1F4C368C00B16FB3 /* signup */ = {
+		0477F52D1F4C368C00B16FB3 /* Signup */ = {
 			isa = PBXGroup;
 			children = (
 				0477F52E1F4C36DB00B16FB3 /* SignupViewController.h */,
 				0477F52F1F4C36DB00B16FB3 /* SignupViewController.m */,
 			);
-			name = signup;
+			name = Signup;
 			sourceTree = "<group>";
 		};
 		553CD5B2B9994D915DB545B5 /* Pods */ = {
