@@ -31,6 +31,7 @@
     // Do any additional setup after loading the view.
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     [self locationConfig];
+    [self enterApp];
     [[NSNotificationCenter defaultCenter ] addObserver:self selector:@selector(chooseCity:) name:@"ResetCity" object:nil];
 }
 
@@ -66,7 +67,27 @@
     [_locMgr startUpdatingLocation];
     
 }
-
+- (void)enterApp{
+    BOOL AppInit = NO;
+    if ([[Utilities getUserDefaults:@"UserCity"] isKindOfClass:[NSNull class]]) {
+        //说明是第一次打开APP
+        AppInit = YES;
+    } else {
+        if ([Utilities getUserDefaults:@"UserCity"] == nil) {
+            //也说明是第一次打开APP
+            AppInit = YES;
+        }
+        if (AppInit) {
+            //第一次打开到APP将默认城市与记忆城市同步
+            NSString *userCity = _cityBtn.titleLabel.text;
+            [Utilities setUserDefaults:@"UserCity" content:userCity];
+        }else {
+            //不是第一次打开到APP将默认城市与按钮上的城市名反向同步
+            NSString *userCity =[Utilities getUserDefaults:@"UserCity"];
+            [_cityBtn setTitle:userCity forState:UIControlStateNormal];
+        }
+    }
+}
 /*
 #pragma mark - Navigation
 
@@ -147,7 +168,7 @@
                 NSDictionary *locDict = first.addressDictionary;
                 NSLog(@"locDict = %@",locDict);
                 NSString *city = locDict[@"City"];
-              city = [city substringToIndex:city.length - 1];
+                city = [city substringToIndex:city.length - 1];
                 NSLog(@"%@",city);
                 [[StorageMgr singletonStorageMgr] removeObjectForKey:@"LocCity"];
                 //将定位到的城市保存进单例化全局变量
