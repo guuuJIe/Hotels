@@ -7,6 +7,7 @@
 //
 
 #import "LoginViewController.h"
+#import "UserModel.h"
 
 @interface LoginViewController ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UIView *loginView;
@@ -27,6 +28,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    //把状态栏变成白色
+    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     
     //设置图片的边框宽度
     _userImageView.layer.borderWidth = 0.5;
@@ -52,8 +56,8 @@
     
     //调用设置导航样式
     [self setNavigationItem];
-    //调用登录接口
-    [self loginRequest];
+    //调用记忆用户名
+    [self uilayout];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -91,6 +95,17 @@
     
 }
 
+//记忆用户名
+-(void)uilayout{
+    //判断是否存在用户记忆体
+    if (![[Utilities getUserDefaults:@"Username"] isKindOfClass:[NSNull class]]) {
+        if ([Utilities getUserDefaults:@"Username"] != nil) {
+            //将用户名显示在输入框中
+            _phoneTextField.text = [Utilities getUserDefaults:@"Username"];
+        }
+    }
+}
+
 
 /*
 #pragma mark - Navigation
@@ -116,6 +131,7 @@
         _loginBtn.backgroundColor = UIColorFromRGB(200, 200, 200);
     }
 }
+
 //键盘收回
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     //让根视图结束编辑状态达到收起键盘的目的
@@ -139,47 +155,46 @@
     //参数(用户手机号和密码)
     NSDictionary *para = @{@"tel" : _phoneTextField.text,@"pwd" : _pwdTextField.text};
     NSLog(@"参数:%@",para);
-    //网络请求(方法是kPost，数据提交方式是kJson)
-    [RequestAPI requestURL:@"/login" withParameters:para andHeader:nil byMethod:kPost andSerializer:kJson success:^(id responseObject) {
+    //网络请求(方法是kPost，数据提交方式是kForm)
+    [RequestAPI requestURL:@"/login" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
         //成功以后要做的事情在此处执行
-        NSLog(@"responseObject = %@", responseObject);
+        NSLog(@"登录：%@", responseObject);
         //当网络请求成功的时候停止动画(菊花膜/蒙层停止转动消失)
         [_aiv stopAnimating];
-//        if ([responseObject[@"flag"] isEqualToString:@"success"]) {
-//            NSDictionary *result = responseObject[@"result"];
-//            NSString *token = result[@"token"];
-//            //NSLog(@"token = %@",token);
-//            //移除键，防止有重复的键名
-//            [[StorageMgr singletonStorageMgr] removeObjectForKey:@"token"];
-//            //StorageMgr *sto = [StorageMgr singletonStorageMgr];
-//            //把token存入单例化的全局变量中
-//            [[StorageMgr singletonStorageMgr] addKey:@"token" andValue:token];
-//            
-//            //登录成功后清空手机号和密码
-//            _phoneTextField.text = @"";
-//            _pwdTextField.text = @"";
-//            //登录成功后按钮禁用
-//            _loginBtn.enabled = NO;
-//            _loginBtn.backgroundColor = UIColorFromRGB(200, 200, 200);
-//            //登录成功后跳转到其它页面
-//            [self performSegueWithIdentifier:@"signupToLogin" sender:self];
-//        } else {
-//            //登录失败提示框
-//            //[Utilities popUpAlertViewWithMsg:responseObject[@"message"] andTitle:@"提示" onView:self onCompletion:^{
-//            //}];
-//        }
+        if ([responseObject[@"result"] integerValue] == 1) {
+            NSDictionary *content = responseObject[@"content"];
+            UserModel *userModel = [[UserModel alloc] initWithDict:content];
+            //将登录获取到的用户信息打包存储到单例化的全局变量中
+            [[StorageMgr singletonStorageMgr] addKey:@"UserInfo" andValue:userModel];
+            //单独将用户的ID也存储进单例化的全局变量来作为用户是否已经登录的判断依据，同时也方便其他页面更快的使用用户ID参数
+            [[StorageMgr singletonStorageMgr] addKey:@"UserInfo" andValue:userModel.userId];
+            //如果键盘还打开就让它收回去
+            [self.view endEditing:YES];
+            //登录成功后清空密码
+            _pwdTextField.text = @"";
+            //登录成功后按钮禁用
+            _loginBtn.enabled = NO;
+            _loginBtn.backgroundColor = UIColorFromRGB(200, 200, 200);
+            //记忆用户名
+            [Utilities setUserDefaults:@"Username" content:_phoneTextField.text];
+            //登录成功后返回上一页
+            [self dismissViewControllerAnimated:YES completion:nil];
+        } else {
+            [_aiv stopAnimating];
+            //业务逻辑失败的情况下
+            NSString *errorMsg = [ErrorHandler getProperErrorString:[responseObject[@"result"] integerValue]];
+            [Utilities popUpAlertViewWithMsg:errorMsg andTitle:nil onView:self];        }
     } failure:^(NSInteger statusCode, NSError *error) {
         //当网络请求成功的时候停止动画(菊花膜/蒙层停止转动消失)
         [_aiv stopAnimating];
         //失败提示框
         [Utilities popUpAlertViewWithMsg:@"网络错误，请稍后再试" andTitle:@"温馨提示" onView:self];
     }];
-    
-    
 }
 
 #pragma mark - buttonAction
 
+//登录按钮事件
 - (IBAction)loginAction:(UIButton *)sender forEvent:(UIEvent *)event {
     //判断某个字符串中是否都是数字
     NSCharacterSet *notDigits = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
