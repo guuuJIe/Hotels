@@ -8,8 +8,8 @@
 
 #import "HotelDetailViewController.h"
 #import "HotelViewController.h"
+#import "ZLImageViewDisplayView.h"
 @interface HotelDetailViewController ()
-@property (weak, nonatomic) IBOutlet UIScrollView *imageScrollView;
 @property (weak, nonatomic) IBOutlet UIScrollView *DetailScrollView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
@@ -25,13 +25,19 @@
 @property (weak, nonatomic) IBOutlet UILabel *nextDayLabel;
 @property (weak, nonatomic) IBOutlet UIView *facilitiesView;
 @property (weak, nonatomic) IBOutlet UIView *dayView;
-@property (weak, nonatomic) IBOutlet UIView *timeView;
+@property (weak, nonatomic) IBOutlet UIView *bedView;
+@property (weak, nonatomic) IBOutlet UIView *comeToLeaveView;
+@property (weak, nonatomic) IBOutlet UIView *petView;
 @property (weak, nonatomic) IBOutlet UILabel *comeLabel;
-
 @property (weak, nonatomic) IBOutlet UILabel *leaveLabel;
 @property (weak, nonatomic) IBOutlet UIButton *buyBtn;
 - (IBAction)buyAction:(UIButton *)sender forEvent:(UIEvent *)event;
 @property (weak, nonatomic) IBOutlet UIButton *SmallTalkBtn;
+@property (weak, nonatomic) IBOutlet UIImageView *internalImageView;
+@property (weak, nonatomic) IBOutlet UILabel *roomLabel;
+@property (weak, nonatomic) IBOutlet UILabel *earlyLabel;
+@property (weak, nonatomic) IBOutlet UILabel *bigBedLabel;
+@property (weak, nonatomic) IBOutlet UILabel *sizeLabel;
 
 @end
 
@@ -40,6 +46,7 @@
 - (void)viewDidLoad {
     [self naviConfig];
     [super viewDidLoad];
+    [self addZLImageViewDisPlayView];
     // Do any additional setup after loading the view.
     //状态栏变成白色
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
@@ -76,6 +83,23 @@
     
 
 }
+-(void) addZLImageViewDisPlayView{
+    
+    //获取要显示的位置
+    CGRect screenFrame = [[UIScreen mainScreen] bounds];
+    
+    CGRect frame = CGRectMake(0, self.navigationController.navigationBar.frame.size.height + 20, screenFrame.size.width, 180);
+    
+    NSArray *imageArray = @[@"酒店1.jpg", @"酒店2.jpg", @"酒店3.jpg"];
+    
+    //初始化控件
+    ZLImageViewDisplayView *imageViewDisplay = [ZLImageViewDisplayView zlImageViewDisplayViewWithFrame:frame];
+    imageViewDisplay.imageViewArray = imageArray;
+    imageViewDisplay.scrollInterval = 3;
+    imageViewDisplay.animationInterVale = 0.6;
+    [self.view addSubview:imageViewDisplay];
+}
+
 
 
 - (void)didReceiveMemoryWarning {
