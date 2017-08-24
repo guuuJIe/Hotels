@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *AllOrderTableView;
 @property (weak, nonatomic) IBOutlet UITableView *UseableOrderTableView;
 @property (weak, nonatomic) IBOutlet UITableView *DatedOrderTableView;
+@property (strong,nonatomic)UIActivityIndicatorView *aiv;
 @end
 
 @implementation MyHotelViewController
@@ -25,6 +26,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self setsegment];
+    _AllOrderTableView.tableFooterView = [UIView new];
+    _UseableOrderTableView.tableFooterView = [UIView new];
+    _DatedOrderTableView.tableFooterView = [UIView new];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -87,9 +91,32 @@
     [self dismissViewControllerAnimated:YES completion:nil];
     
 }
-
-
-
+-(void)refreshControl{
+    UIRefreshControl *allorderRefresh = [UIRefreshControl new];
+    [allorderRefresh addTarget:self action:@selector(refreshAllOrder) forControlEvents:UIControlEventValueChanged];
+    allorderRefresh.tag = 100;
+    [_AllOrderTableView addSubview:allorderRefresh];
+    UIRefreshControl *useableorderRefresh = [UIRefreshControl new];
+    [useableorderRefresh addTarget:self action:@selector(refreshUseableOrder) forControlEvents:UIControlEventValueChanged];
+    useableorderRefresh.tag = 101;
+    [_UseableOrderTableView addSubview:useableorderRefresh];
+    UIRefreshControl *datedorderRefresh = [UIRefreshControl new];
+    [datedorderRefresh addTarget:self action:@selector(refreshDatedOrder) forControlEvents:UIControlEventValueChanged];
+    datedorderRefresh.tag = 102;
+    [_DatedOrderTableView addSubview:datedorderRefresh];
+}
+//刷新全部订单
+-(void)refreshAllOrder{
+    [self AllOrdersRequest];
+}
+//刷新可用订单
+-(void)refreshUseableOrder{
+    [self UseableOrdersRequest];
+}
+//刷新过期订单
+-(void)refreshDatedOrder{
+    [self DatedOrdersRequest];
+}
 /*
 #pragma mark - Navigation
 
@@ -99,6 +126,61 @@
     // Pass the selected object to the new view controller.
 }
 */
+//全部订单
+-(void)AllOrdersRequest{
+    NSDictionary *para = @{@"openid":@"",@"id":@1};
+    [RequestAPI requestURL:@"/findOrders" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
+        // NSLog(@"acquire:%@",responseObject);
+        [_aiv stopAnimating];
+        //防范式编程   强制转换(UIRefreshControl *)
+        NSLog(@"%@",responseObject);
+        if ([responseObject[@"flag"] isEqualToString:@"success"]) {
+            
+        }
+        else{
+            [Utilities popUpAlertViewWithMsg:@"网络错误,请稍后再试" andTitle:@"提示" onView:self];
+        }
+    } failure:^(NSInteger statusCode, NSError *error) {
+    }];
+    
+}
+//可使用订单
+-(void)UseableOrdersRequest{
+    NSDictionary *para = @{@"openid":@"",@"id":@2};
+    [RequestAPI requestURL:@"/findOrders_edu" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
+        // NSLog(@"acquire:%@",responseObject);
+        [_aiv stopAnimating];
+        //防范式编程   强制转换(UIRefreshControl *)
+        NSLog(@"%@",responseObject);
+        if ([responseObject[@"flag"] isEqualToString:@"success"]) {
+            
+        }
+        else{
+            [Utilities popUpAlertViewWithMsg:@"网络错误,请稍后再试" andTitle:@"提示" onView:self];
+        }
+    } failure:^(NSInteger statusCode, NSError *error) {
+    }];
+    
+}
+//可使用订单
+-(void)DatedOrdersRequest{
+    NSDictionary *para = @{@"openid":@"",@"id":@2};
+    [RequestAPI requestURL:@"/findOrders_edu" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
+        // NSLog(@"acquire:%@",responseObject);
+        [_aiv stopAnimating];
+        //防范式编程   强制转换(UIRefreshControl *)
+        NSLog(@"%@",responseObject);
+        if ([responseObject[@"flag"] isEqualToString:@"success"]) {
+            
+        }
+        else{
+            [Utilities popUpAlertViewWithMsg:@"网络错误,请稍后再试" andTitle:@"提示" onView:self];
+        }
+    } failure:^(NSInteger statusCode, NSError *error) {
+    }];
+    
+}
+
 #pragma mark - tableView
 //一共多少组
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
