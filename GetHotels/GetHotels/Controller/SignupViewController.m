@@ -26,6 +26,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    //把状态栏变成白色
+    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+    
     //设置图片的边框宽度
     _userImageView.layer.borderWidth = 0.5;
     //设置图片的边框颜色

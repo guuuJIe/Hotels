@@ -28,6 +28,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    //把状态栏变成白色
+    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+    
     //设置图片的边框宽度
     _userImageView.layer.borderWidth = 0.5;
     //设置图片的边框颜色
@@ -52,7 +55,7 @@
     
     //调用设置导航样式
     [self setNavigationItem];
-    //调用保存用户名
+    //调用记忆用户名
     [self uilayout];
 }
 
@@ -91,6 +94,7 @@
     
 }
 
+//记忆用户名
 -(void)uilayout{
     //判断是否存在用户记忆体
     if (![[Utilities getUserDefaults:@"Username"] isKindOfClass:[NSNull class]]) {
@@ -165,8 +169,8 @@
             _loginBtn.backgroundColor = UIColorFromRGB(200, 200, 200);
             //记忆用户名
             [Utilities setUserDefaults:@"Username" content:_phoneTextField.text];
-            //登录成功后跳转到其它页面
-            [self performSegueWithIdentifier:@"HomeMyInfo" sender:self];
+            //登录成功后返回上一页
+            [self dismissViewControllerAnimated:YES completion:nil];
         } else {
             //业务逻辑失败的情况下
             NSString *errorMsg = [ErrorHandler getProperErrorString:[responseObject[@"result"] integerValue]];
