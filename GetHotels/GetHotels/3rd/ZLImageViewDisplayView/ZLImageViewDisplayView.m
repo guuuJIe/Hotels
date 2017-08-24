@@ -15,7 +15,7 @@
 @property (nonatomic, assign) CGFloat widthOfView;
 @property (nonatomic, assign) CGFloat heightView;
 @property (nonatomic, assign) NSInteger currentPage;
-//@property (nonatomic, strong) NSTimer *timer;
+@property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic, assign) UIViewContentMode imageViewcontentModel;
 @property (nonatomic, strong) UIPageControl *imageViewPageControl;
 @property (nonatomic, strong) TapImageViewButtonBlock block;
@@ -36,7 +36,7 @@
     if (self) {
         _widthOfView = frame.size.width;            //获取滚动视图的宽度
         _heightView = frame.size.height;            //获取滚动视图的高度
-        _scrollInterval = 3;
+        _scrollInterval = 2;
         _animationInterVale = 0.7;
         _currentPage = 1;                           //当前显示页面
         _imageViewcontentModel = UIViewContentModeScaleAspectFill;
@@ -48,7 +48,7 @@
 -(void)layoutSubviews {
     [self initMainScrollView];                          //初始化滚动视图
     [self addImageviewsForMainScroll];    //添加ImageView
- //   [self addTimerLoop];            //添加timer
+    [self addTimerLoop];            //添加timer
     [self addPageControl];
     [self initImageViewButton];
 }
@@ -161,11 +161,11 @@
     return isMatch;
 }
 
-/*- (void) addTimerLoop{
+- (void) addTimerLoop{
     if (_timer == nil) {
         _timer = [NSTimer scheduledTimerWithTimeInterval:_scrollInterval target:self selector:@selector(changeOffset) userInfo:nil repeats:YES];
     }
-}*/
+}
 
 - (void)changeOffset{
     
@@ -193,7 +193,7 @@
         _mainScrollView.contentOffset = CGPointMake(_widthOfView * _imageViewArray.count, 0);
         _imageViewPageControl.currentPage = _imageViewArray.count;
         _currentPage = _imageViewArray.count;
-  //      [self resumeTimer];
+       [self resumeTimer];
         return;
     }
     
@@ -209,7 +209,7 @@
         }
         
         _imageViewPageControl.currentPage = _currentPage - 1;
-  //      [self resumeTimer];
+        [self resumeTimer];
         return;
     }
     
@@ -219,13 +219,13 @@
 /**
  *  暂停定时器
  */
-/*-(void)resumeTimer{
+-(void)resumeTimer{
     
     if (![_timer isValid]) {
         return ;
     }
     [_timer setFireDate:[NSDate dateWithTimeIntervalSinceNow:_scrollInterval-_animationInterVale]];
-}*/
+}
 
 
 @end
