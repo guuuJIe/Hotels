@@ -573,6 +573,7 @@
                     <connections>
                         <outlet property="cityBtn" destination="VpL-DO-aMp" id="2PN-vK-XL2"/>
                         <outlet property="homeLocation" destination="VpL-DO-aMp" id="Nf5-gZ-vEr"/>
+                        <outlet property="hotelTableView" destination="2AC-uB-ATg" id="nVw-3c-kR5"/>
                         <outlet property="searchTextField" destination="9dY-jf-QEG" id="671-92-vOa"/>
                         <outlet property="tempLabel" destination="K9p-FL-vIq" id="WCu-NX-eks"/>
                         <outlet property="weatherImg" destination="dQg-hy-Rp7" id="gFu-WA-irq"/>
@@ -702,7 +703,7 @@
         <scene sceneID="xnv-jR-lMk">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="BoR-uH-kny" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="航空" image="航空" id="2UK-Vi-xZe"/>
+                    <tabBarItem key="tabBarItem" title="航空" image="飞机" id="2UK-Vi-xZe"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="AXI-ey-xT6">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -721,7 +722,7 @@
         <scene sceneID="TJk-fU-egA">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="lWU-B8-G33" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="酒店" image="酒店" id="G8g-lu-Qiq"/>
+                    <tabBarItem key="tabBarItem" title="酒店" image="酒店-1" id="G8g-lu-Qiq"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="vrg-kJ-oeW">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -761,8 +762,9 @@
         <image name="星级" width="52" height="44"/>
         <image name="星级2" width="52" height="45"/>
         <image name="白云" width="30" height="30"/>
-        <image name="航空" width="30" height="30"/>
         <image name="路标" width="30" height="30"/>
         <image name="酒店" width="30" height="30"/>
+        <image name="酒店-1" width="22" height="22"/>
+        <image name="飞机" width="22" height="22"/>
     </resources>
 </document>

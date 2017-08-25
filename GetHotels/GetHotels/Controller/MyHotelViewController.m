@@ -35,7 +35,7 @@
     _AllOrderTableView.tableFooterView = [UIView new];
     _UseableOrderTableView.tableFooterView = [UIView new];
     _DatedOrderTableView.tableFooterView = [UIView new];
-     [self AllOrdersRequest];
+    [self AllOrdersRequest];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -135,22 +135,20 @@
 */
 //全部订单
 -(void)AllOrdersRequest{
-    NSDictionary *para = @{@"openid": @"" ,@"id" : @1};
-    if ([Utilities loginCheck]) {
-        
-    }
-    [RequestAPI requestURL:@"/findOrders_edu" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
-       ;
+    UserModel *model = [[StorageMgr singletonStorageMgr] objectForKey:@"UserInfo"];
+    NSDictionary *para = @{@"openid": model.openid,@"id" : @1};
+       [RequestAPI requestURL:@"/findOrders_edu" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
+       
         [_aiv stopAnimating];
         
-        NSLog(@"%@",responseObject);
+        NSLog(@"Orders:%@",responseObject);
         if ([responseObject[@"flag"] isEqualToString:@"success"]) {
             
         }
         else{
             [Utilities popUpAlertViewWithMsg:@"网络错误,请稍后再试" andTitle:@"提示" onView:self];
         }
-    } failure:^(NSInteger statusCode, NSError *error) {
+    }failure:^(NSInteger statusCode, NSError *error) {
     }];
     
 }
@@ -206,9 +204,10 @@
 }
 #pragma mark - scrollView
 //scrollView已经停止减速
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView      // called when scroll view grinds to a halt
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    if (scrollView == _scrollView) {
+    if (scrollView == _scrollView)
+    {
         NSInteger page = [self scrollCheck:scrollView];
         //将segmentedControl设置选中的index为page,[scrollView当前显示的tableView]
         [_segmentcontrol setSelectedSegmentIndex:page animated:YES];
@@ -225,7 +224,7 @@
 -(NSInteger)scrollCheck:(UIScrollView *)scrollView{
     //ScrollView中的contentoffset内容的左上角位置
     NSInteger page = scrollView.contentOffset.x/(scrollView.frame.size.width);
-   // NSLog(@"scrollView.contentOffset.x = %f",scrollView.contentOffset.x);
+   NSLog(@"scrollView.contentOffset.x = %f",scrollView.contentOffset.x);
     return page;
 }
 #pragma mark - tableView

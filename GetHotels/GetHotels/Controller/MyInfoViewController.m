@@ -39,7 +39,23 @@
     if ([Utilities loginCheck]){
         _loginBtn.hidden = YES;
         _usernameLabel.hidden = NO; 
-        _usernameLabel.text = [[StorageMgr singletonStorageMgr] objectForKey:@"UserInfo"];;
+        _usernameLabel.text = [[StorageMgr singletonStorageMgr] objectForKey:@"MemberId"]; 
+        UserModel *model = [[StorageMgr singletonStorageMgr] objectForKey:@"UseInfo"];
+        if ([model.grade integerValue] == 1){
+            _oneStarImg.image = [UIImage imageNamed:@"星级"];
+        } else if([model.grade integerValue] == 2){
+            _oneStarImg.image = [UIImage imageNamed:@"星级"];
+            _twoStarImg.image = [UIImage imageNamed:@"星级"];
+        }else if([model.grade integerValue] == 3){
+            _oneStarImg.image = [UIImage imageNamed:@"星级"];
+            _twoStarImg.image = [UIImage imageNamed:@"星级"];
+            _threeStarImg.image = [UIImage imageNamed:@"星级"];
+        }
+        else {
+            _oneStarImg.image = [UIImage imageNamed:@"星级2"];
+            _twoStarImg.image = [UIImage imageNamed:@"星级2"];
+            _threeStarImg.image = [UIImage imageNamed:@"星级2"];
+            }
     }
 }
 
