@@ -35,7 +35,7 @@
     _AllOrderTableView.tableFooterView = [UIView new];
     _UseableOrderTableView.tableFooterView = [UIView new];
     _DatedOrderTableView.tableFooterView = [UIView new];
-     [self AllOrdersRequest];
+    [self AllOrdersRequest];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -135,11 +135,9 @@
 */
 //全部订单
 -(void)AllOrdersRequest{
-    NSDictionary *para = @{@"openid": @"" ,@"id" : @1};
-    if ([Utilities loginCheck]) {
-        
-    }
-    [RequestAPI requestURL:@"/findOrders_edu" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
+    UserModel *model = [[StorageMgr singletonStorageMgr] objectForKey:@"UserInfo"];
+    NSDictionary *para = @{@"openid": model.openid,@"id" : @1};
+       [RequestAPI requestURL:@"/findOrders_edu" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
        ;
         [_aiv stopAnimating];
         
