@@ -11,24 +11,31 @@
 #import "AllOrdersTableViewCell.h"
 #import "UseableOrderTableViewCell.h"
 #import "DatedOrderTableViewCell.h"
-@interface MyHotelViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface MyHotelViewController ()<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>
 @property (strong,nonatomic) HMSegmentedControl *segmentcontrol;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UITableView *AllOrderTableView;
 @property (weak, nonatomic) IBOutlet UITableView *UseableOrderTableView;
 @property (weak, nonatomic) IBOutlet UITableView *DatedOrderTableView;
 @property (strong,nonatomic)UIActivityIndicatorView *aiv;
+@property ( nonatomic)CGRect rectStatus;
+@property ( nonatomic)CGRect rectNav;
 @end
 
 @implementation MyHotelViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    // 状态栏(statusbar)
+    _rectStatus = [[UIApplication sharedApplication] statusBarFrame];
+    // 导航栏（navigationbar）
+    _rectNav = self.navigationController.navigationBar.frame;
     // Do any additional setup after loading the view.
     [self setsegment];
     _AllOrderTableView.tableFooterView = [UIView new];
     _UseableOrderTableView.tableFooterView = [UIView new];
     _DatedOrderTableView.tableFooterView = [UIView new];
+     [self AllOrdersRequest];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -46,7 +53,7 @@
     //设置菜单栏主题字体
     _segmentcontrol = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"全部订单",@"可使用",@"已过期"]];
     //设置位置，原点是模拟器左上角
-    _segmentcontrol.frame = CGRectMake(0, self.navigationController.navigationBar.frame.size.height+30, UI_SCREEN_W, 40);
+    _segmentcontrol.frame = CGRectMake(0,_rectStatus.size.height+_rectNav.size.height , UI_SCREEN_W, 40);
     //设置默认选中项为下标为 0 ；
     _segmentcontrol.selectedSegmentIndex = 0;
     //设置背景颜色
@@ -58,9 +65,9 @@
     //选中时的标记
     _segmentcontrol.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
     //设置未选中的标题属性
-    _segmentcontrol.titleTextAttributes = @{NSForegroundColorAttributeName:UIColorFromRGB(230, 230, 230),NSFontAttributeName:[UIFont boldSystemFontOfSize:15.f]};
+    _segmentcontrol.titleTextAttributes = @{NSForegroundColorAttributeName:UIColorFromRGB(150, 150, 150),NSFontAttributeName:[UIFont boldSystemFontOfSize:15.f]};
     //选中时的标题样式
-    _segmentcontrol.selectedTitleTextAttributes =@{NSForegroundColorAttributeName:UIColorFromRGB(23, 115, 232),NSFontAttributeName:[UIFont boldSystemFontOfSize:15.f]};
+    _segmentcontrol.selectedTitleTextAttributes =@{NSForegroundColorAttributeName:UIColorFromRGB(0, 115, 255),NSFontAttributeName:[UIFont boldSystemFontOfSize:15.f]};
     __weak typeof(self) weakSelf = self;
     [_segmentcontrol setIndexChangeBlock:^(NSInteger index) {
         [weakSelf.scrollView scrollRectToVisible:CGRectMake(UI_SCREEN_W * index, 0, UI_SCREEN_W,200) animated:YES];
@@ -128,11 +135,14 @@
 */
 //全部订单
 -(void)AllOrdersRequest{
-    NSDictionary *para = @{@"openid":@"",@"id":@1};
-    [RequestAPI requestURL:@"/findOrders" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
-        // NSLog(@"acquire:%@",responseObject);
+    NSDictionary *para = @{@"openid": @"" ,@"id" : @1};
+    if ([Utilities loginCheck]) {
+        
+    }
+    [RequestAPI requestURL:@"/findOrders_edu" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
+       ;
         [_aiv stopAnimating];
-        //防范式编程   强制转换(UIRefreshControl *)
+        
         NSLog(@"%@",responseObject);
         if ([responseObject[@"flag"] isEqualToString:@"success"]) {
             
@@ -164,7 +174,7 @@
 }
 //可使用订单
 -(void)DatedOrdersRequest{
-    NSDictionary *para = @{@"openid":@"",@"id":@2};
+    NSDictionary *para = @{@"openid":_user.openid,@"id":@2};
     [RequestAPI requestURL:@"/findOrders_edu" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
         // NSLog(@"acquire:%@",responseObject);
         [_aiv stopAnimating];
@@ -194,6 +204,31 @@
         return 1;
     }
 }
+#pragma mark - scrollView
+//scrollView已经停止减速
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView      // called when scroll view grinds to a halt
+{
+    if (scrollView == _scrollView) {
+        NSInteger page = [self scrollCheck:scrollView];
+        //将segmentedControl设置选中的index为page,[scrollView当前显示的tableView]
+        [_segmentcontrol setSelectedSegmentIndex:page animated:YES];
+    }
+    
+}
+//scrollView已经结束滚动的动画
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView{
+    if (scrollView == _scrollView) {
+        [self scrollCheck:scrollView];
+    }
+}
+//判断scrollView滚到哪一页
+-(NSInteger)scrollCheck:(UIScrollView *)scrollView{
+    //ScrollView中的contentoffset内容的左上角位置
+    NSInteger page = scrollView.contentOffset.x/(scrollView.frame.size.width);
+   // NSLog(@"scrollView.contentOffset.x = %f",scrollView.contentOffset.x);
+    return page;
+}
+#pragma mark - tableView
 //细胞有多高
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 150.f;
