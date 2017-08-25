@@ -122,18 +122,18 @@
     //点击按钮的时候创建一个蒙层，并显示在当前页面
     
     //参数
-    NSDictionary *para = @{@"startId" :  @1,@"priceId" :@1,@"inTime" :  @0,@"outTime" : @0,@"page" :@1,@"sortingId" :@1};
+    NSDictionary *para = @{@"startId" :  @1,@"priceId" :@1,@"inTime" :  @0,@"outTime" : @0,@"page" :@1,@"sortingId" :@0};
     //网络请求
     [RequestAPI requestURL:@"/findAllHotelAndAdvertising" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
         NSLog(@"登录 = %@",responseObject);
         //当网络请求成功时让蒙层消失
         [_aiv stopAnimating];
-        if([responseObject[@"resultFlag"]intValue] == 1){
+        if([responseObject[@"result"]intValue] == 1){
             NSDictionary *result = responseObject[@"result"];
             
         } else {
             //业务逻辑失败的情况下
-            NSString *errorMsg = [ErrorHandler getProperErrorString:[responseObject[@"resultFlag"] integerValue]];
+            NSString *errorMsg = [ErrorHandler getProperErrorString:[responseObject[@"result"] integerValue]];
             [Utilities popUpAlertViewWithMsg:errorMsg andTitle:nil onView:self];
         }
     } failure:^(NSInteger statusCode, NSError *error) {
