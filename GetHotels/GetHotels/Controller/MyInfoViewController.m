@@ -8,6 +8,7 @@
 
 #import "MyInfoViewController.h"
 #import "MyInfoTableViewCell.h"
+#import "UserModel.h"
 
 @interface MyInfoViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *headerImg;
@@ -29,6 +30,17 @@
     // Do any additional setup after loading the view.
     _arr = @[@{@"leftIcon" : @"酒店大", @"title" : @"我的酒店"}, @{@"leftIcon" : @"飞机大", @"title" : @"我的航空"}, @{@"leftIcon" : @"信息", @"title" : @"我的消息"}, @{@"leftIcon" : @"设置", @"title" : @"账户设置"}, @{@"leftIcon" : @"协议", @"title" : @"使用协议"}, @{@"leftIcon" : @"电话", @"title" : @"联系客服"}];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
+    
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    if ([Utilities loginCheck]){
+        _loginBtn.hidden = YES;
+        _usernameLabel.hidden = NO; 
+        _usernameLabel.text = [[StorageMgr singletonStorageMgr] objectForKey:@"UserInfo"];;
+    }
 }
 
 - (void)didReceiveMemoryWarning {
