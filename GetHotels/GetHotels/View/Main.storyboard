@@ -573,6 +573,7 @@
                     <connections>
                         <outlet property="cityBtn" destination="VpL-DO-aMp" id="2PN-vK-XL2"/>
                         <outlet property="homeLocation" destination="VpL-DO-aMp" id="Nf5-gZ-vEr"/>
+                        <outlet property="hotelTableView" destination="2AC-uB-ATg" id="nVw-3c-kR5"/>
                         <outlet property="searchTextField" destination="9dY-jf-QEG" id="671-92-vOa"/>
                         <outlet property="tempLabel" destination="K9p-FL-vIq" id="WCu-NX-eks"/>
                         <outlet property="weatherImg" destination="dQg-hy-Rp7" id="gFu-WA-irq"/>
