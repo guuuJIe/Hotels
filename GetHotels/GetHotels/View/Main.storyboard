@@ -75,7 +75,7 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="星级2" translatesAutoresizingMaskIntoConstraints="NO" id="dtw-Wf-svh">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="星级" translatesAutoresizingMaskIntoConstraints="NO" id="dtw-Wf-svh">
                                         <rect key="frame" x="149" y="127.5" width="17.5" height="15"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="dtw-Wf-svh" secondAttribute="height" multiplier="8:7" id="WMj-Xp-Z7A"/>
@@ -759,6 +759,7 @@
         <image name="多云" width="30" height="30"/>
         <image name="头像" width="100" height="100"/>
         <image name="我的" width="25" height="25"/>
+        <image name="星级" width="52" height="44"/>
         <image name="星级2" width="52" height="45"/>
         <image name="路标" width="30" height="30"/>
         <image name="酒店" width="30" height="30"/>

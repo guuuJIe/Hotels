@@ -40,12 +40,19 @@
         _loginBtn.hidden = YES;
         _usernameLabel.hidden = NO; 
         _usernameLabel.text = [[StorageMgr singletonStorageMgr] objectForKey:@"MemberId"];
-        NSArray *imgArr = @[@{@"one" : _oneStarImg},@{@"two" : _twoStarImg},@{@"three" : _threeStarImg}];
+        NSArray *imgArr = @[@{@"0" : _oneStarImg},@{@"1" : _twoStarImg},@{@"2" : _threeStarImg}];
         UserModel *model = [[StorageMgr singletonStorageMgr] objectForKey:@"UseInfo"];
-        for (NSInteger i = 0; i < [model.grade integerValue] ; i++){
-            NSDictionary *dict = imgArr[i];
+        if ([model.grade isEqualToString:@"无"]){
+            _oneStarImg.image = [UIImage imageNamed:@"星级2"];
+            _twoStarImg.image = [UIImage imageNamed:@"星级2"];
+            _threeStarImg.image = [UIImage imageNamed:@"星级2"];
+        }else {
+            for (NSInteger i = 0; i < [model.grade integerValue]; i++){
+                NSDictionary *dict = imgArr[i];
+                UIImageView *imgView = dict[[NSString stringWithFormat:@"%ld",(long)i]];
+                imgView.image = [UIImage imageNamed:@"星级"];
+            }
         }
-        
     }
 }
 
