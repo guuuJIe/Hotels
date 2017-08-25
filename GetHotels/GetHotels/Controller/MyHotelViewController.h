@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "UserModel.h"
 @interface MyHotelViewController : UIViewController
-
+@property (strong,nonatomic)UserModel *user;
 @end
