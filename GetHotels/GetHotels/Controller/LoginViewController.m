@@ -167,7 +167,7 @@
             //将登录获取到的用户信息打包存储到单例化的全局变量中
             [[StorageMgr singletonStorageMgr] addKey:@"UserInfo" andValue:userModel];
             //单独将用户的ID也存储进单例化的全局变量来作为用户是否已经登录的判断依据，同时也方便其他页面更快的使用用户ID参数
-            [[StorageMgr singletonStorageMgr] addKey:@"UserInfo" andValue:userModel.nickname];
+            [[StorageMgr singletonStorageMgr] addKey:@"MemberId" andValue:userModel.nickname];
             //如果键盘还打开就让它收回去
             [self.view endEditing:YES];
             //登录成功后清空密码
