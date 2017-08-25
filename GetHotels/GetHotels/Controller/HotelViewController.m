@@ -12,6 +12,9 @@
 @interface HotelViewController ()<UITableViewDataSource,UITableViewDelegate,CLLocationManagerDelegate>
 {
     BOOL firstVisit;
+    NSInteger detailPageNum;
+    NSInteger pageSize;
+    BOOL isLastPage;
 }
 @property (weak, nonatomic) IBOutlet UIButton *homeLocation;
 @property (weak, nonatomic) IBOutlet UITextField *searchTextField;
@@ -33,6 +36,13 @@
     firstVisit = YES;
     // Do any additional setup after loading the view.
     [self.navigationController setNavigationBarHidden:YES animated:NO];
+    detailPageNum = 1;
+    pageSize = 15;
+    //创建一个刷新指示器放在tableview中
+    UIRefreshControl *ref = [UIRefreshControl new];
+    [ref addTarget:self action:@selector(refreshRequest) forControlEvents:UIControlEventValueChanged];
+    ref.tag = 10004;
+    //[_taskDetailTableView addSubview:ref];
    // [self weatherRequest];          //天气网络请求
     [self locationConfig];          //开始定位
     [self enterApp];                //判断是否第一次进入app
