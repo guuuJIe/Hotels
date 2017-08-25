@@ -125,7 +125,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="返回2" translatesAutoresizingMaskIntoConstraints="NO" id="KBs-09-0wc">
-                                                <rect key="frame" x="158.5" y="9" width="22" height="22"/>
+                                                <rect key="frame" x="148.5" y="9" width="22" height="22"/>
                                             </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VEt-js-OML">
                                                 <rect key="frame" x="210.5" y="8" width="51" height="28"/>
@@ -153,15 +153,16 @@
                                             <constraint firstItem="KBs-09-0wc" firstAttribute="centerY" secondItem="PPB-tA-3aI" secondAttribute="centerY" id="1zd-8q-POH"/>
                                             <constraint firstItem="VEt-js-OML" firstAttribute="centerY" secondItem="PPB-tA-3aI" secondAttribute="centerY" constant="2" id="5hB-Ti-Opu"/>
                                             <constraint firstItem="Ekz-pe-zpn" firstAttribute="leading" secondItem="07D-9d-nOr" secondAttribute="trailing" constant="5" id="6Qy-pc-zJW"/>
-                                            <constraint firstItem="KBs-09-0wc" firstAttribute="leading" secondItem="Ekz-pe-zpn" secondAttribute="trailing" constant="40" id="BuR-So-ueQ"/>
+                                            <constraint firstItem="KBs-09-0wc" firstAttribute="leading" secondItem="Ekz-pe-zpn" secondAttribute="trailing" constant="30" id="BuR-So-ueQ"/>
                                             <constraint firstAttribute="height" constant="40" id="CAF-SI-RUa"/>
                                             <constraint firstItem="07D-9d-nOr" firstAttribute="leading" secondItem="PPB-tA-3aI" secondAttribute="leading" constant="40" id="Fuh-Ap-QFL"/>
                                             <constraint firstItem="07D-9d-nOr" firstAttribute="centerY" secondItem="PPB-tA-3aI" secondAttribute="centerY" constant="1" id="Mdn-lX-weJ"/>
+                                            <constraint firstItem="2HX-5J-d95" firstAttribute="centerY" secondItem="Ekz-pe-zpn" secondAttribute="centerY" id="REw-7Z-vlj"/>
                                             <constraint firstItem="2HX-5J-d95" firstAttribute="leading" secondItem="VEt-js-OML" secondAttribute="trailing" constant="5" id="RFy-Jv-UNp"/>
                                             <constraint firstItem="I0C-m2-faZ" firstAttribute="centerY" secondItem="PPB-tA-3aI" secondAttribute="centerY" id="h7B-JL-OCt"/>
                                             <constraint firstAttribute="bottom" secondItem="Ekz-pe-zpn" secondAttribute="bottom" constant="10" id="lyG-BA-hwu"/>
                                             <constraint firstAttribute="bottom" secondItem="2HX-5J-d95" secondAttribute="bottom" constant="10" id="pCZ-gO-Ohb"/>
-                                            <constraint firstItem="VEt-js-OML" firstAttribute="leading" secondItem="KBs-09-0wc" secondAttribute="trailing" constant="30" id="t23-Jo-jfR"/>
+                                            <constraint firstItem="VEt-js-OML" firstAttribute="leading" secondItem="KBs-09-0wc" secondAttribute="trailing" constant="40" id="t23-Jo-jfR"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oR8-3u-Gg1">
@@ -174,7 +175,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pvs-jl-bDF">
                                         <rect key="frame" x="0.0" y="52" width="375" height="50"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="58q-92-iBX">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="酒店2" translatesAutoresizingMaskIntoConstraints="NO" id="58q-92-iBX">
                                                 <rect key="frame" x="15" y="5" width="48" height="40"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="58q-92-iBX" secondAttribute="height" multiplier="6:5" id="p8W-Eg-vEX"/>
@@ -205,8 +206,9 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <toolbar hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bMI-z5-lk6">
-                                                <rect key="frame" x="0.0" y="6" width="375" height="44"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                 <items>
                                                     <barButtonItem title="取消" id="Xgh-DK-ExR">
                                                         <connections>
@@ -559,5 +561,6 @@
         <image name="返回1" width="22" height="22"/>
         <image name="返回2" width="22" height="22"/>
         <image name="酒店" width="30" height="30"/>
+        <image name="酒店2" width="325" height="205"/>
     </resources>
 </document>
