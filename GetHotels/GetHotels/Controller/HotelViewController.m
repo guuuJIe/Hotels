@@ -154,7 +154,15 @@
         [_aiv stopAnimating];
         if([responseObject[@"result"]intValue] == 1){
             NSDictionary *result = responseObject[@"result"];
+            /*NSArray *list = result[@"list"];
+            isLastPage = [result[@"isLastPage"] boolValue];
+            if (PageNum == 1) {
+                [_hotelArr removeAllObjects];
+            }
             
+            
+            
+            [_hotelTableView reloadData];*/
         } else {
             //业务逻辑失败的情况下
             NSString *errorMsg = [ErrorHandler getProperErrorString:[responseObject[@"result"] integerValue]];
@@ -185,12 +193,12 @@
 }
 //设置表格视图中每一组有多少行
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return _hotelArr.count;
+    return 5;
 }
 
 //当一个细胞将要出现的时候要做的事情
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+   /* [tableView deselectRowAtIndexPath:indexPath animated:YES];
     //判断将要出现的细胞是不是当前最后一行
     if (indexPath.row == _hotelArr.count - 1) {
         //当存在下一页的时候，页码自增，请求下一页数据
@@ -198,7 +206,7 @@
             PageNum ++;
             [self hotel];
         }
-    }
+    }*/
 }
 
 //设置每一组中每一行细胞的高度
