@@ -21,8 +21,8 @@
         _openid = [Utilities nullAndNilCheck:dict[@"openid"] replaceBy:@"0"];
         _password = [Utilities nullAndNilCheck:dict[@"password"] replaceBy:@""];
         _realname = [Utilities nullAndNilCheck:dict[@"real_name"] replaceBy:@"未设置"];
-        _startTime = [Utilities nullAndNilCheck:dict[@"start_time"] replaceBy:@""];
-        _startTimeStr = [Utilities nullAndNilCheck:dict[@"start_time_str"] replaceBy:@""];
+        _startTime = [dict[@"start_time"] isKindOfClass:[NSNull class]] ? (NSTimeInterval)0 : (NSTimeInterval)[dict[@"start_time"] integerValue];
+        _startTimeStr = [dict[@"start_time_str"] isKindOfClass:[NSNull class]] ? (NSTimeInterval)0 : (NSTimeInterval)[dict[@"start_time_str"] integerValue];
         _state = [Utilities nullAndNilCheck:dict[@"state"] replaceBy:@"未设置"];
         _phone = [Utilities nullAndNilCheck:dict[@"tel"] replaceBy:@"未设置"];
         if ([dict[@"gender"] isKindOfClass:[NSNull class]]) {
