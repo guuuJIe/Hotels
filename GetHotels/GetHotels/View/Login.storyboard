@@ -343,11 +343,12 @@
                         <outlet property="signupBtn" destination="SaM-8S-7om" id="P5y-AT-obt"/>
                         <outlet property="signupView" destination="vh3-Q8-DLo" id="QJV-Cr-J6o"/>
                         <outlet property="userImageView" destination="k0g-yZ-pyP" id="3qV-wn-9Od"/>
+                        <segue destination="X5B-8L-Bha" kind="show" identifier="returnLogin" id="WsP-Ll-RHj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zY8-xY-BXV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1598" y="-298"/>
+            <point key="canvasLocation" x="1652" y="-298"/>
         </scene>
         <!--Item-->
         <scene sceneID="VxU-qC-ghN">
@@ -374,4 +375,7 @@
         <image name="安全图标" width="27" height="27"/>
         <image name="手机图标" width="29" height="29"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="WsP-Ll-RHj"/>
+    </inferredMetricsTieBreakers>
 </document>

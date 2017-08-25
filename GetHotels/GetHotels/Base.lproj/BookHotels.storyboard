@@ -125,7 +125,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="返回2" translatesAutoresizingMaskIntoConstraints="NO" id="KBs-09-0wc">
-                                                <rect key="frame" x="158.5" y="9" width="22" height="22"/>
+                                                <rect key="frame" x="148.5" y="9" width="22" height="22"/>
                                             </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VEt-js-OML">
                                                 <rect key="frame" x="210.5" y="8" width="51" height="28"/>
@@ -153,15 +153,16 @@
                                             <constraint firstItem="KBs-09-0wc" firstAttribute="centerY" secondItem="PPB-tA-3aI" secondAttribute="centerY" id="1zd-8q-POH"/>
                                             <constraint firstItem="VEt-js-OML" firstAttribute="centerY" secondItem="PPB-tA-3aI" secondAttribute="centerY" constant="2" id="5hB-Ti-Opu"/>
                                             <constraint firstItem="Ekz-pe-zpn" firstAttribute="leading" secondItem="07D-9d-nOr" secondAttribute="trailing" constant="5" id="6Qy-pc-zJW"/>
-                                            <constraint firstItem="KBs-09-0wc" firstAttribute="leading" secondItem="Ekz-pe-zpn" secondAttribute="trailing" constant="40" id="BuR-So-ueQ"/>
+                                            <constraint firstItem="KBs-09-0wc" firstAttribute="leading" secondItem="Ekz-pe-zpn" secondAttribute="trailing" constant="30" id="BuR-So-ueQ"/>
                                             <constraint firstAttribute="height" constant="40" id="CAF-SI-RUa"/>
                                             <constraint firstItem="07D-9d-nOr" firstAttribute="leading" secondItem="PPB-tA-3aI" secondAttribute="leading" constant="40" id="Fuh-Ap-QFL"/>
                                             <constraint firstItem="07D-9d-nOr" firstAttribute="centerY" secondItem="PPB-tA-3aI" secondAttribute="centerY" constant="1" id="Mdn-lX-weJ"/>
+                                            <constraint firstItem="2HX-5J-d95" firstAttribute="centerY" secondItem="Ekz-pe-zpn" secondAttribute="centerY" id="REw-7Z-vlj"/>
                                             <constraint firstItem="2HX-5J-d95" firstAttribute="leading" secondItem="VEt-js-OML" secondAttribute="trailing" constant="5" id="RFy-Jv-UNp"/>
                                             <constraint firstItem="I0C-m2-faZ" firstAttribute="centerY" secondItem="PPB-tA-3aI" secondAttribute="centerY" id="h7B-JL-OCt"/>
                                             <constraint firstAttribute="bottom" secondItem="Ekz-pe-zpn" secondAttribute="bottom" constant="10" id="lyG-BA-hwu"/>
                                             <constraint firstAttribute="bottom" secondItem="2HX-5J-d95" secondAttribute="bottom" constant="10" id="pCZ-gO-Ohb"/>
-                                            <constraint firstItem="VEt-js-OML" firstAttribute="leading" secondItem="KBs-09-0wc" secondAttribute="trailing" constant="30" id="t23-Jo-jfR"/>
+                                            <constraint firstItem="VEt-js-OML" firstAttribute="leading" secondItem="KBs-09-0wc" secondAttribute="trailing" constant="40" id="t23-Jo-jfR"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oR8-3u-Gg1">
@@ -174,7 +175,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pvs-jl-bDF">
                                         <rect key="frame" x="0.0" y="52" width="375" height="50"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="58q-92-iBX">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="酒店2" translatesAutoresizingMaskIntoConstraints="NO" id="58q-92-iBX">
                                                 <rect key="frame" x="15" y="5" width="48" height="40"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="58q-92-iBX" secondAttribute="height" multiplier="6:5" id="p8W-Eg-vEX"/>
@@ -204,6 +205,24 @@
                                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <toolbar hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bMI-z5-lk6">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                <items>
+                                                    <barButtonItem title="取消" id="Xgh-DK-ExR">
+                                                        <connections>
+                                                            <action selector="cancelAction:" destination="2Bt-FB-rBK" id="QVl-7k-GOz"/>
+                                                        </connections>
+                                                    </barButtonItem>
+                                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="JVz-Zg-TTH"/>
+                                                    <barButtonItem title="确定" id="hS1-xS-t8z">
+                                                        <connections>
+                                                            <action selector="confirmAction:" destination="2Bt-FB-rBK" id="kze-Vt-p2B"/>
+                                                        </connections>
+                                                    </barButtonItem>
+                                                </items>
+                                            </toolbar>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -390,6 +409,14 @@
                                             <constraint firstItem="xHa-HJ-mDg" firstAttribute="centerY" secondItem="6vn-SD-2TS" secondAttribute="centerY" id="L9A-5i-gTx"/>
                                         </constraints>
                                     </view>
+                                    <datePicker hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="vtd-Wj-SLY">
+                                        <rect key="frame" x="0.0" y="95" width="375" height="216"/>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                        <date key="date" timeIntervalSinceReferenceDate="525270822.24919897">
+                                            <!--2017-08-24 12:33:42 +0000-->
+                                        </date>
+                                        <locale key="locale" localeIdentifier="zh-Hans"/>
+                                    </datePicker>
                                 </subviews>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
@@ -406,7 +433,9 @@
                                     <constraint firstItem="pvs-jl-bDF" firstAttribute="leading" secondItem="bPf-SQ-anw" secondAttribute="leading" id="M3J-xb-P5u"/>
                                     <constraint firstItem="pQG-rl-1T1" firstAttribute="leading" secondItem="bPf-SQ-anw" secondAttribute="leading" id="NjL-7t-ofR"/>
                                     <constraint firstAttribute="trailing" secondItem="6vn-SD-2TS" secondAttribute="trailing" id="PJS-n1-lxo"/>
+                                    <constraint firstItem="vtd-Wj-SLY" firstAttribute="top" secondItem="oR8-3u-Gg1" secondAttribute="bottom" constant="43" id="QLr-oq-TuA"/>
                                     <constraint firstItem="XeI-dH-ook" firstAttribute="leading" secondItem="bPf-SQ-anw" secondAttribute="leading" id="RRr-Ov-qxj"/>
+                                    <constraint firstItem="vtd-Wj-SLY" firstAttribute="leading" secondItem="bPf-SQ-anw" secondAttribute="leading" id="SSV-Gg-Zoy"/>
                                     <constraint firstItem="gH2-UK-y9Z" firstAttribute="top" secondItem="pQG-rl-1T1" secondAttribute="bottom" id="SVB-eA-Joe"/>
                                     <constraint firstAttribute="trailing" secondItem="hwj-wE-gJf" secondAttribute="trailing" id="SwK-gG-rEb"/>
                                     <constraint firstItem="6vn-SD-2TS" firstAttribute="leading" secondItem="bPf-SQ-anw" secondAttribute="leading" id="TcO-TG-p28"/>
@@ -432,6 +461,7 @@
                                     <constraint firstItem="XeI-dH-ook" firstAttribute="top" secondItem="QNq-5w-mZs" secondAttribute="bottom" id="s6Q-Dg-SaF"/>
                                     <constraint firstItem="PPB-tA-3aI" firstAttribute="leading" secondItem="bPf-SQ-anw" secondAttribute="leading" id="sGw-Jw-9Rb"/>
                                     <constraint firstItem="PPB-tA-3aI" firstAttribute="top" secondItem="YIC-n3-rEH" secondAttribute="bottom" constant="3" id="xkG-nh-UPG"/>
+                                    <constraint firstAttribute="trailing" secondItem="vtd-Wj-SLY" secondAttribute="trailing" id="yOl-83-gI5"/>
                                     <constraint firstItem="oR8-3u-Gg1" firstAttribute="top" secondItem="PPB-tA-3aI" secondAttribute="bottom" id="yVI-bP-74B"/>
                                 </constraints>
                             </scrollView>
@@ -484,6 +514,7 @@
                         <outlet property="comeLabel" destination="VAq-IQ-D8A" id="nDx-oh-5y6"/>
                         <outlet property="comeToLeaveView" destination="QNq-5w-mZs" id="tcL-yi-mkF"/>
                         <outlet property="dateBtn" destination="07D-9d-nOr" id="xmZ-ue-EYf"/>
+                        <outlet property="datePicker" destination="vtd-Wj-SLY" id="izA-fK-CJ3"/>
                         <outlet property="dayLabel" destination="Ekz-pe-zpn" id="yWP-Zv-W5z"/>
                         <outlet property="dayView" destination="PPB-tA-3aI" id="dtS-ES-XLO"/>
                         <outlet property="earlyLabel" destination="Lza-i3-RHc" id="xiJ-jN-d9N"/>
@@ -499,6 +530,7 @@
                         <outlet property="priceLabel" destination="pux-HS-fZI" id="udA-dR-Sjw"/>
                         <outlet property="roomLabel" destination="Igp-Sx-3G6" id="tRm-dJ-THm"/>
                         <outlet property="sizeLabel" destination="gGA-xV-irJ" id="4Em-Gc-29T"/>
+                        <outlet property="tooBar" destination="bMI-z5-lk6" id="hbE-pw-AjP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mbk-n8-ZpK" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -529,5 +561,6 @@
         <image name="返回1" width="22" height="22"/>
         <image name="返回2" width="22" height="22"/>
         <image name="酒店" width="30" height="30"/>
+        <image name="酒店2" width="325" height="205"/>
     </resources>
 </document>

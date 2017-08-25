@@ -9,7 +9,10 @@
 #import "HotelDetailViewController.h"
 #import "HotelViewController.h"
 #import "ZLImageViewDisplayView.h"
-@interface HotelDetailViewController ()
+@interface HotelDetailViewController (){
+    NSTimeInterval followUpTime;
+    NSUInteger flag;
+}
 @property (weak, nonatomic) IBOutlet UIScrollView *DetailScrollView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
@@ -38,6 +41,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *earlyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *bigBedLabel;
 @property (weak, nonatomic) IBOutlet UILabel *sizeLabel;
+@property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
+@property (weak, nonatomic) IBOutlet UIToolbar *tooBar;
+- (IBAction)cancelAction:(UIBarButtonItem *)sender;
+- (IBAction)confirmAction:(UIBarButtonItem *)sender;
 
 @end
 
@@ -99,9 +106,25 @@
 #pragma mark - quest
 //网络请求
 -(void)hotelDetailRequest{
-    //获取token请求接口
+    UIActivityIndicatorView *aiv = [Utilities getCoverOnView:self.view];
+    NSMutableDictionary *para = [NSMutableDictionary new];
+    [RequestAPI requestURL:@"/HotelApi" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
+        [aiv stopAnimating];
+        NSLog(@"responseObject:%@",responseObject);
         
-}
+        if([responseObject[@"resultFlag"]intValue] == 1){
+            
+            
+        }else{
+            
+        }
+    }
+failure:^(NSInteger statusCode, NSError *error) {
+    [aiv stopAnimating];
+    [Utilities popUpAlertViewWithMsg:@"请保持网络连接畅通" andTitle:nil onView:self];
+    }];
+
+   }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -120,9 +143,46 @@
 
 
 - (IBAction)dateActionBtn:(UIButton *)sender forEvent:(UIEvent *)event {
+    flag=0;
+    _tooBar.hidden = NO;
+    _datePicker.hidden = NO;
+    NSLog(@"我被按了");
+ 
 }
 - (IBAction)nextDateActionBtn:(UIButton *)sender forEvent:(UIEvent *)event {
+    flag=1;
+    _tooBar.hidden = NO;
+    _datePicker.hidden = NO;
+    NSLog(@"我被按了");
+
 }
 - (IBAction)buyAction:(UIButton *)sender forEvent:(UIEvent *)event {
 }
+//取消事件
+- (IBAction)cancelAction:(UIBarButtonItem *)sender {
+    _tooBar.hidden = YES;
+    _datePicker.hidden = YES;
+    
+}
+//确定事件
+
+- (IBAction)confirmAction:(UIBarButtonItem *)sender {
+    
+    _tooBar.hidden = YES;
+    _datePicker.hidden = YES;
+    NSDate *date = _datePicker.date;
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    formatter.dateFormat = @"MM月dd日";
+    NSString *thDate = [formatter stringFromDate:date];
+    followUpTime = [Utilities cTimestampFromString:thDate format:@"MMdd"];
+    if(flag == 0){
+        [_dateBtn setTitle:thDate forState:UIControlStateNormal];
+    }else{
+        [_nextDateBtn setTitle:thDate forState:UIControlStateNormal];
+    }
+    _tooBar.hidden = YES;
+    _datePicker.hidden = YES;
+    
+}
+
 @end
