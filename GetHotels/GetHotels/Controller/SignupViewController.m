@@ -148,14 +148,19 @@
         if ([responseObject[@"result"] integerValue] == 1) {
             //如果键盘还打开就让它收回去
             [self.view endEditing:YES];
-            //清空用户名、密码和确认密码
-            _phoneTextField.text = @"";
-            _pwdTextField.text = @"";
-            _confirmPwdTextField.text = @"";
+            
             //注册成功提示框
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"恭喜你注册成功，请登录" preferredStyle:UIAlertControllerStyleAlert];
             //创建确定按钮
-            UIAlertAction *actionA = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            UIAlertAction *actionA = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
+            {
+                //注册成功后返回上一页
+                [self performSegueWithIdentifier:@"returnLogin" sender:self];
+                //清空用户名、密码和确认密码
+                _phoneTextField.text = @"";
+                _pwdTextField.text = @"";
+                _confirmPwdTextField.text = @"";
+            
             }];
             //创建取消按钮
             //UIAlertAction *actionB = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
@@ -163,9 +168,9 @@
             //[alert addAction:actionB];
             //把弹窗加到视图上
             [self presentViewController:alert animated:YES completion:nil];
-            //注册成功后返回上一页
-            [self dismissViewControllerAnimated:YES completion:nil];
-            [self performSegueWithIdentifier:@"returnLogin" sender:self];
+            
+            
+           // [self performSegueWithIdentifier:@"returnLogin" sender:self];
         } else {
             [_aiv stopAnimating];
             //业务逻辑失败的情况下

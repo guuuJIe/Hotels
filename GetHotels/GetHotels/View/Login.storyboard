@@ -343,7 +343,7 @@
                         <outlet property="signupBtn" destination="SaM-8S-7om" id="P5y-AT-obt"/>
                         <outlet property="signupView" destination="vh3-Q8-DLo" id="QJV-Cr-J6o"/>
                         <outlet property="userImageView" destination="k0g-yZ-pyP" id="3qV-wn-9Od"/>
-                        <segue destination="X5B-8L-Bha" kind="show" identifier="returnLogin" id="WsP-Ll-RHj"/>
+                        <segue destination="X5B-8L-Bha" kind="push" identifier="returnLogin" id="Fm0-hM-5ga"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zY8-xY-BXV" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -376,6 +376,6 @@
         <image name="手机图标" width="29" height="29"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="WsP-Ll-RHj"/>
+        <segue reference="Fm0-hM-5ga"/>
     </inferredMetricsTieBreakers>
 </document>
