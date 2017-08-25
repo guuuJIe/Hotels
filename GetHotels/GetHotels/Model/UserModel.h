@@ -19,8 +19,8 @@
 @property (strong, nonatomic) NSString *openid;         //
 @property (strong, nonatomic) NSString *password;       //密码
 @property (strong, nonatomic) NSString *realname;       //真实姓名
-@property (strong, nonatomic) NSString *startTime;      //
-@property (strong, nonatomic) NSString *startTimeStr;   //
+@property (nonatomic) NSTimeInterval startTime;         //
+@property (nonatomic) NSTimeInterval startTimeStr;      //
 @property (strong, nonatomic) NSString *state;          //状态
 @property (strong, nonatomic) NSString *phone;          //手机号
 

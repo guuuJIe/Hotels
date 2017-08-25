@@ -172,9 +172,9 @@ failure:^(NSInteger statusCode, NSError *error) {
     _datePicker.hidden = YES;
     NSDate *date = _datePicker.date;
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    formatter.dateFormat = @"yyyy-MM-dd HH:mm";
+    formatter.dateFormat = @"MM月dd日";
     NSString *thDate = [formatter stringFromDate:date];
-    followUpTime = [Utilities cTimestampFromString:thDate format:@"yyyy-MM-dd HH:mm"];
+    followUpTime = [Utilities cTimestampFromString:thDate format:@"MMdd"];
     if(flag == 0){
         [_dateBtn setTitle:thDate forState:UIControlStateNormal];
     }else{
