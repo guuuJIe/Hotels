@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0459D82C1F4EED2600ED7943 /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0459D82B1F4EED2600ED7943 /* UserModel.m */; };
 		045E64E41F485CA3001A8263 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 045E64E31F485CA3001A8263 /* main.m */; };
 		045E64E71F485CA3001A8263 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 045E64E61F485CA3001A8263 /* AppDelegate.m */; };
 		045E64F01F485CA3001A8263 /* GetHotels.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 045E64EE1F485CA3001A8263 /* GetHotels.xcdatamodeld */; };
@@ -75,6 +76,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0459D82A1F4EED2600ED7943 /* UserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserModel.h; sourceTree = "<group>"; };
+		0459D82B1F4EED2600ED7943 /* UserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserModel.m; sourceTree = "<group>"; };
 		045E64DF1F485CA3001A8263 /* GetHotels.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GetHotels.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		045E64E31F485CA3001A8263 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		045E64E51F485CA3001A8263 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -201,7 +204,6 @@
 			isa = PBXGroup;
 			children = (
 				045E64E11F485CA3001A8263 /* GetHotels */,
-				045E64FE1F485CA3001A8263 /* GetHotelsTests */,
 				045E65091F485CA3001A8263 /* GetHotelsUITests */,
 				045E64E01F485CA3001A8263 /* Products */,
 				553CD5B2B9994D915DB545B5 /* Pods */,
@@ -237,6 +239,7 @@
 		045E64E21F485CA3001A8263 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				045E64FE1F485CA3001A8263 /* GetHotelsTests */,
 				045E64E51F485CA3001A8263 /* AppDelegate.h */,
 				045E64E61F485CA3001A8263 /* AppDelegate.m */,
 				045E64E31F485CA3001A8263 /* main.m */,
@@ -254,7 +257,7 @@
 				045E65011F485CA3001A8263 /* Info.plist */,
 			);
 			path = GetHotelsTests;
-			sourceTree = "<group>";
+			sourceTree = SOURCE_ROOT;
 		};
 		045E65091F485CA3001A8263 /* GetHotelsUITests */ = {
 			isa = PBXGroup;
@@ -288,8 +291,8 @@
 			children = (
 				8445AD8F1F4C546C00417B79 /* MyHotelOrder */,
 				84A346791F4C42360051BDFB /* Hotel */,
-				0477F52D1F4C368C00B16FB3 /* signup */,
 				0477F5281F4C34A600B16FB3 /* Login */,
+				0477F52D1F4C368C00B16FB3 /* Signup */,
 				FEACC7891F4AF3F2002EC5F8 /* HotelDetail */,
 				841E379B1F4960710057D58A /* ViewController.h */,
 				841E379C1F4960710057D58A /* ViewController.m */,
@@ -302,6 +305,8 @@
 			children = (
 				045E65241F485F34001A8263 /* Order.h */,
 				045E65251F485F34001A8263 /* Order.m */,
+				0459D82A1F4EED2600ED7943 /* UserModel.h */,
+				0459D82B1F4EED2600ED7943 /* UserModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -368,13 +373,13 @@
 			name = Login;
 			sourceTree = "<group>";
 		};
-		0477F52D1F4C368C00B16FB3 /* signup */ = {
+		0477F52D1F4C368C00B16FB3 /* Signup */ = {
 			isa = PBXGroup;
 			children = (
 				0477F52E1F4C36DB00B16FB3 /* SignupViewController.h */,
 				0477F52F1F4C36DB00B16FB3 /* SignupViewController.m */,
 			);
-			name = signup;
+			name = Signup;
 			sourceTree = "<group>";
 		};
 		553CD5B2B9994D915DB545B5 /* Pods */ = {
@@ -691,6 +696,7 @@
 				841E379D1F4960710057D58A /* ViewController.m in Sources */,
 				84A3467C1F4C42A20051BDFB /* HotelViewController.m in Sources */,
 				8445AD861F4C535000417B79 /* AllOrdersTableViewCell.m in Sources */,
+				0459D82C1F4EED2600ED7943 /* UserModel.m in Sources */,
 				045E65631F485F4D001A8263 /* RequestAPI.m in Sources */,
 				045E65611F485F4D001A8263 /* NSDateFormatter+Category.m in Sources */,
 				045E655E1F485F4D001A8263 /* JSONS.m in Sources */,
