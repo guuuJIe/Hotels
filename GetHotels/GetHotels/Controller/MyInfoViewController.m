@@ -39,7 +39,13 @@
     if ([Utilities loginCheck]){
         _loginBtn.hidden = YES;
         _usernameLabel.hidden = NO; 
-        _usernameLabel.text = [[StorageMgr singletonStorageMgr] objectForKey:@"UserInfo"];;
+        _usernameLabel.text = [[StorageMgr singletonStorageMgr] objectForKey:@"MemberId"];
+        NSArray *imgArr = @[@{@"one" : _oneStarImg},@{@"two" : _twoStarImg},@{@"three" : _threeStarImg}];
+        UserModel *model = [[StorageMgr singletonStorageMgr] objectForKey:@"UseInfo"];
+        for (NSInteger i = 0; i < [model.grade integerValue] ; i++){
+            NSDictionary *dict = imgArr[i];
+        }
+        
     }
 }
 
