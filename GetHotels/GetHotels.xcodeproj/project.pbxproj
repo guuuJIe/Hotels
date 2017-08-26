@@ -303,7 +303,7 @@
 		045E651B1F485D9B001A8263 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				8459DB2C1F5100D7003EAF92 /* New Group */,
+				8459DB2C1F5100D7003EAF92 /* HomeHotel */,
 				045E65241F485F34001A8263 /* Order.h */,
 				045E65251F485F34001A8263 /* Order.m */,
 				0459D82A1F4EED2600ED7943 /* UserModel.h */,
@@ -437,11 +437,11 @@
 			name = MyHotelOrder;
 			sourceTree = "<group>";
 		};
-		8459DB2C1F5100D7003EAF92 /* New Group */ = {
+		8459DB2C1F5100D7003EAF92 /* HomeHotel */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			name = "New Group";
+			name = HomeHotel;
 			sourceTree = "<group>";
 		};
 		84A346791F4C42360051BDFB /* Hotel */ = {
