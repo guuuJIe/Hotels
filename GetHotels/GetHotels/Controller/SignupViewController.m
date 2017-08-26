@@ -91,7 +91,7 @@
 //自定义的返回按钮的事件
 - (void)leftButtonAction:(UIButton *)sender {
     [self.navigationController popViewControllerAnimated:YES];
-    
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 /*
@@ -140,6 +140,7 @@
     _aiv = [Utilities getCoverOnView:self.view];
     //参数
     NSDictionary *para = @{@"tel" : _phoneTextField.text,@"pwd" : _pwdTextField.text};
+    NSLog(@"%@",para);
     //网络请求(方法是kPost，数据提交方式是kForm)
     [RequestAPI requestURL:@"/register" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
         NSLog(@"注册：%@",responseObject);
@@ -155,7 +156,8 @@
             UIAlertAction *actionA = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
             {
                 //注册成功后返回上一页
-                [self performSegueWithIdentifier:@"returnLogin" sender:self];
+                //[self performSegueWithIdentifier:@"returnLogin" sender:self];
+                [self dismissViewControllerAnimated:YES completion:nil];
                 //清空用户名、密码和确认密码
                 _phoneTextField.text = @"";
                 _pwdTextField.text = @"";
