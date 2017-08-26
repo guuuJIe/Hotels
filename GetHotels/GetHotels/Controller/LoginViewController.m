@@ -10,6 +10,7 @@
 #import "UserModel.h"
 
 @interface LoginViewController ()<UITextFieldDelegate>
+
 @property (weak, nonatomic) IBOutlet UIView *loginView;
 @property (weak, nonatomic) IBOutlet UIImageView *userImageView;
 @property (weak, nonatomic) IBOutlet UITextField *pwdTextField;
@@ -228,7 +229,7 @@
 
 //注册按钮事件
 - (IBAction)signupAction:(UIButton *)sender forEvent:(UIEvent *)event {
-     [self performSegueWithIdentifier:@"signupToLogin" sender:self];
+     //[self performSegueWithIdentifier:@"signupToLogin" sender:self];
 }
      
 @end

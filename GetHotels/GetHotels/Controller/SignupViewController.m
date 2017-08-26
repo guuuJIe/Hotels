@@ -9,6 +9,7 @@
 #import "SignupViewController.h"
 
 @interface SignupViewController ()<UITextFieldDelegate>
+
 @property (weak, nonatomic) IBOutlet UIView *signupView;
 @property (weak, nonatomic) IBOutlet UIImageView *userImageView;
 @property (weak, nonatomic) IBOutlet UITextField *phoneTextField;
@@ -91,7 +92,7 @@
 //自定义的返回按钮的事件
 - (void)leftButtonAction:(UIButton *)sender {
     [self.navigationController popViewControllerAnimated:YES];
-    
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 /*
@@ -155,7 +156,8 @@
             UIAlertAction *actionA = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action)
             {
                 //注册成功后返回上一页
-                [self performSegueWithIdentifier:@"returnLogin" sender:self];
+                //[self performSegueWithIdentifier:@"returnLogin" sender:self];
+                [self dismissViewControllerAnimated:YES completion:nil];
                 //清空用户名、密码和确认密码
                 _phoneTextField.text = @"";
                 _pwdTextField.text = @"";
@@ -222,6 +224,7 @@
         //清空密码和确认密码，方便再次输入
         _pwdTextField.text = @"";
         _confirmPwdTextField.text = @"";
+        
         return;
     }
     //无输入异常,开始正式执行注册接口
