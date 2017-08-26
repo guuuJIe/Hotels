@@ -10,6 +10,7 @@
 #import "UserModel.h"
 
 @interface LoginViewController ()<UITextFieldDelegate>
+
 @property (weak, nonatomic) IBOutlet UIView *loginView;
 @property (weak, nonatomic) IBOutlet UIImageView *userImageView;
 @property (weak, nonatomic) IBOutlet UITextField *pwdTextField;

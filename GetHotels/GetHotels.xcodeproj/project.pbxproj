@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04587C861F5199C3005A7569 /* AccountSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04587C851F5199C3005A7569 /* AccountSettingViewController.m */; };
 		0459D82C1F4EED2600ED7943 /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0459D82B1F4EED2600ED7943 /* UserModel.m */; };
 		045E64E41F485CA3001A8263 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 045E64E31F485CA3001A8263 /* main.m */; };
 		045E64E71F485CA3001A8263 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 045E64E61F485CA3001A8263 /* AppDelegate.m */; };
@@ -77,6 +78,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		04587C841F5199C3005A7569 /* AccountSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountSettingViewController.h; sourceTree = "<group>"; };
+		04587C851F5199C3005A7569 /* AccountSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountSettingViewController.m; sourceTree = "<group>"; };
 		0459D82A1F4EED2600ED7943 /* UserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserModel.h; sourceTree = "<group>"; };
 		0459D82B1F4EED2600ED7943 /* UserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserModel.m; sourceTree = "<group>"; };
 		045E64DF1F485CA3001A8263 /* GetHotels.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GetHotels.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -202,6 +205,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		04587C831F519986005A7569 /* AccountSetting */ = {
+			isa = PBXGroup;
+			children = (
+				04587C841F5199C3005A7569 /* AccountSettingViewController.h */,
+				04587C851F5199C3005A7569 /* AccountSettingViewController.m */,
+			);
+			name = AccountSetting;
+			sourceTree = "<group>";
+		};
 		045E64D61F485CA3001A8263 = {
 			isa = PBXGroup;
 			children = (
@@ -291,6 +303,7 @@
 		045E651A1F485D9B001A8263 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				04587C831F519986005A7569 /* AccountSetting */,
 				8445AD8F1F4C546C00417B79 /* MyHotelOrder */,
 				84A346791F4C42360051BDFB /* Hotel */,
 				0477F5281F4C34A600B16FB3 /* Login */,
@@ -697,6 +710,7 @@
 				045E655F1F485F4D001A8263 /* NSData+Base64.m in Sources */,
 				841E379A1F495AE90057D58A /* MyHotelViewController.m in Sources */,
 				045E65621F485F4D001A8263 /* NSString+Crypt.m in Sources */,
+				04587C861F5199C3005A7569 /* AccountSettingViewController.m in Sources */,
 				045E65261F485F34001A8263 /* Order.m in Sources */,
 				0477F52B1F4C34C300B16FB3 /* LoginViewController.m in Sources */,
 				045E655C1F485F4D001A8263 /* AppAPIClient.m in Sources */,

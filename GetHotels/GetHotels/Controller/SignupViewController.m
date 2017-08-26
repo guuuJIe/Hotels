@@ -9,6 +9,7 @@
 #import "SignupViewController.h"
 
 @interface SignupViewController ()<UITextFieldDelegate>
+
 @property (weak, nonatomic) IBOutlet UIView *signupView;
 @property (weak, nonatomic) IBOutlet UIImageView *userImageView;
 @property (weak, nonatomic) IBOutlet UITextField *phoneTextField;
@@ -140,7 +141,6 @@
     _aiv = [Utilities getCoverOnView:self.view];
     //参数
     NSDictionary *para = @{@"tel" : _phoneTextField.text,@"pwd" : _pwdTextField.text};
-    NSLog(@"%@",para);
     //网络请求(方法是kPost，数据提交方式是kForm)
     [RequestAPI requestURL:@"/register" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
         NSLog(@"注册：%@",responseObject);
@@ -224,6 +224,7 @@
         //清空密码和确认密码，方便再次输入
         _pwdTextField.text = @"";
         _confirmPwdTextField.text = @"";
+        
         return;
     }
     //无输入异常,开始正式执行注册接口
