@@ -29,12 +29,12 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GlG-41-6EN">
                                         <rect key="frame" x="0.0" y="-63" width="375" height="40"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="酒店" translatesAutoresizingMaskIntoConstraints="NO" id="7ap-DD-Z0C">
-                                                <rect key="frame" x="15" y="8" width="30" height="30"/>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="酒店-1" translatesAutoresizingMaskIntoConstraints="NO" id="7ap-DD-Z0C">
+                                                <rect key="frame" x="15" y="8" width="22" height="22"/>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="无锡喜来登酒店大床房" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gTX-mh-LRi">
-                                                <rect key="frame" x="55" y="13" width="153" height="18"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <rect key="frame" x="47" y="13" width="153" height="18"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -65,35 +65,35 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YIC-n3-rEH">
                                         <rect key="frame" x="0.0" y="-22" width="375" height="30"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="路标" translatesAutoresizingMaskIntoConstraints="NO" id="PD6-p3-2Pt">
-                                                <rect key="frame" x="15" y="5" width="20" height="20"/>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="map" translatesAutoresizingMaskIntoConstraints="NO" id="PD6-p3-2Pt">
+                                                <rect key="frame" x="15" y="5" width="15" height="20"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" secondItem="PD6-p3-2Pt" secondAttribute="height" multiplier="1:1" id="nxe-vk-nwe"/>
+                                                    <constraint firstAttribute="width" secondItem="PD6-p3-2Pt" secondAttribute="height" multiplier="3:4" id="nxe-vk-nwe"/>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="阳山镇桃文化博物馆内" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aGO-JX-xzs">
-                                                <rect key="frame" x="45" y="6.5" width="133" height="16"/>
+                                                <rect key="frame" x="40" y="6.5" width="133" height="16"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="地图" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UdT-ys-4Gl">
                                                 <rect key="frame" x="313" y="6.5" width="27" height="16"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="返回1" translatesAutoresizingMaskIntoConstraints="NO" id="9rT-tf-ZAG">
-                                                <rect key="frame" x="340" y="5" width="20" height="20"/>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="more1" translatesAutoresizingMaskIntoConstraints="NO" id="9rT-tf-ZAG">
+                                                <rect key="frame" x="349" y="7.5" width="11" height="15"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" secondItem="9rT-tf-ZAG" secondAttribute="height" id="k3G-OW-Idu"/>
+                                                    <constraint firstAttribute="width" secondItem="9rT-tf-ZAG" secondAttribute="height" constant="-4" id="k3G-OW-Idu"/>
                                                 </constraints>
                                             </imageView>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="UdT-ys-4Gl" secondAttribute="trailing" constant="35" id="IfD-ch-zBF"/>
-                                            <constraint firstItem="9rT-tf-ZAG" firstAttribute="height" secondItem="YIC-n3-rEH" secondAttribute="height" multiplier="2:3" id="NBN-0Y-izy"/>
+                                            <constraint firstItem="9rT-tf-ZAG" firstAttribute="height" secondItem="YIC-n3-rEH" secondAttribute="height" multiplier="4:8" id="NBN-0Y-izy"/>
                                             <constraint firstItem="UdT-ys-4Gl" firstAttribute="centerY" secondItem="aGO-JX-xzs" secondAttribute="centerY" id="P2G-Ym-pBS"/>
                                             <constraint firstAttribute="trailing" secondItem="9rT-tf-ZAG" secondAttribute="trailing" constant="15" id="Rcd-dD-Tnw"/>
                                             <constraint firstItem="PD6-p3-2Pt" firstAttribute="leading" secondItem="YIC-n3-rEH" secondAttribute="leading" constant="15" id="SK0-nU-n10"/>
@@ -175,7 +175,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pvs-jl-bDF">
                                         <rect key="frame" x="0.0" y="52" width="375" height="50"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="酒店2" translatesAutoresizingMaskIntoConstraints="NO" id="58q-92-iBX">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hotels" translatesAutoresizingMaskIntoConstraints="NO" id="58q-92-iBX">
                                                 <rect key="frame" x="15" y="5" width="48" height="40"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="58q-92-iBX" secondAttribute="height" multiplier="6:5" id="p8W-Eg-vEX"/>
@@ -410,7 +410,7 @@
                                         </constraints>
                                     </view>
                                     <datePicker hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="vtd-Wj-SLY">
-                                        <rect key="frame" x="0.0" y="95" width="375" height="216"/>
+                                        <rect key="frame" x="0.0" y="95" width="375" height="240"/>
                                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <date key="date" timeIntervalSinceReferenceDate="525270822.24919897">
                                             <!--2017-08-24 12:33:42 +0000-->
@@ -429,6 +429,7 @@
                                     <constraint firstItem="GlG-41-6EN" firstAttribute="top" secondItem="bPf-SQ-anw" secondAttribute="top" constant="-63" id="Cp9-0w-CHe"/>
                                     <constraint firstAttribute="trailing" secondItem="GlG-41-6EN" secondAttribute="trailing" id="DFc-Yt-EG3"/>
                                     <constraint firstItem="gH2-UK-y9Z" firstAttribute="leading" secondItem="bPf-SQ-anw" secondAttribute="leading" id="EUz-h3-KNI"/>
+                                    <constraint firstAttribute="bottom" secondItem="vtd-Wj-SLY" secondAttribute="bottom" constant="2" id="JDH-Az-bmU"/>
                                     <constraint firstItem="oR8-3u-Gg1" firstAttribute="leading" secondItem="bPf-SQ-anw" secondAttribute="leading" id="Jea-lt-f1H"/>
                                     <constraint firstItem="pvs-jl-bDF" firstAttribute="leading" secondItem="bPf-SQ-anw" secondAttribute="leading" id="M3J-xb-P5u"/>
                                     <constraint firstItem="pQG-rl-1T1" firstAttribute="leading" secondItem="bPf-SQ-anw" secondAttribute="leading" id="NjL-7t-ofR"/>
@@ -557,10 +558,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="路标" width="30" height="30"/>
-        <image name="返回1" width="22" height="22"/>
+        <image name="hotels" width="82" height="61"/>
+        <image name="map" width="17" height="21"/>
+        <image name="more1" width="10" height="18"/>
         <image name="返回2" width="22" height="22"/>
-        <image name="酒店" width="30" height="30"/>
-        <image name="酒店2" width="325" height="205"/>
+        <image name="酒店-1" width="22" height="22"/>
     </resources>
 </document>

@@ -9,6 +9,7 @@
 #import "HotelDetailViewController.h"
 #import "HotelViewController.h"
 #import "ZLImageViewDisplayView.h"
+#import "hotelDetailModel.h"
 @interface HotelDetailViewController (){
     NSTimeInterval followUpTime;
     NSUInteger flag;
@@ -43,6 +44,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *sizeLabel;
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
 @property (weak, nonatomic) IBOutlet UIToolbar *tooBar;
+@property (strong,nonatomic) NSArray *arr;
 - (IBAction)cancelAction:(UIBarButtonItem *)sender;
 - (IBAction)confirmAction:(UIBarButtonItem *)sender;
 
@@ -54,6 +56,7 @@
     [self naviConfig];
     [super viewDidLoad];
     [self addZLImageViewDisPlayView];
+    [self hotelDetailRequest];
     // Do any additional setup after loading the view.
     //状态栏变成白色
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
@@ -107,13 +110,21 @@
 //网络请求
 -(void)hotelDetailRequest{
     UIActivityIndicatorView *aiv = [Utilities getCoverOnView:self.view];
-    NSMutableDictionary *para = [NSMutableDictionary new];
-    [RequestAPI requestURL:@"/HotelApi" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
+    NSDictionary *para =@{@"id":@1};
+    [RequestAPI requestURL:@"/findHotelById" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
         [aiv stopAnimating];
         NSLog(@"responseObject:%@",responseObject);
         
-        if([responseObject[@"resultFlag"]intValue] == 1){
+        if([responseObject[@"result"]intValue] == 1){
+            NSDictionary *content = responseObject[@"content"];
             
+         // NSArray *hotel_facilities = content[@"hotel_facilities"];
+        //NSArray *hotel_types = content[@"hotel_types"];
+         hotelDetailModel *detailModel = [[hotelDetailModel alloc]initWithDictionary:content];
+         _nameLabel.text = detailModel.hotel_name;
+            _adressLabel.text = detailModel.hotel_address;
+            _priceLabel.text = detailModel.now_price;
+            _priceLabel.text =[NSString stringWithFormat:@"¥%@",_priceLabel.text];
             
         }else{
             
