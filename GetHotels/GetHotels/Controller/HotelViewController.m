@@ -12,6 +12,9 @@
 @interface HotelViewController ()<UITableViewDataSource,UITableViewDelegate,CLLocationManagerDelegate>
 {
     BOOL firstVisit;
+    NSInteger PageNum;
+    NSInteger pageSize;
+    BOOL isLastPage;
 }
 @property (weak, nonatomic) IBOutlet UIButton *homeLocation;
 @property (weak, nonatomic) IBOutlet UITextField *searchTextField;
@@ -19,11 +22,13 @@
 @property (weak, nonatomic) IBOutlet UILabel *weatherLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *weatherImg;
 @property (weak, nonatomic) IBOutlet UIButton *cityBtn;
+@property (weak, nonatomic) IBOutlet UITableView *hotelTableView;
 
 @property (strong,nonatomic)CLLocationManager *locMgr;
 @property (strong,nonatomic)CLLocation *location;
 
 @property (strong,nonatomic)UIActivityIndicatorView *aiv;
+@property (strong, nonatomic) NSMutableArray *hotelArr;
 @end
 
 @implementation HotelViewController
@@ -32,12 +37,22 @@
     [super viewDidLoad];
     firstVisit = YES;
     // Do any additional setup after loading the view.
+    _hotelArr = [NSMutableArray new];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
+    PageNum = 1;
+    pageSize = 15;
+    //去掉tableview底部多余的线
+    _hotelTableView.tableFooterView = [UIView new];
+    //创建一个刷新指示器放在tableview中
+    UIRefreshControl *ref = [UIRefreshControl new];
+    [ref addTarget:self action:@selector(refreshRequest) forControlEvents:UIControlEventValueChanged];
+    ref.tag = 10004;
+    [_hotelTableView addSubview:ref];
    // [self weatherRequest];          //天气网络请求
     [self locationConfig];          //开始定位
     [self enterApp];                //判断是否第一次进入app
     [[NSNotificationCenter defaultCenter ] addObserver:self selector:@selector(chooseCity:) name:@"ResetCity" object:nil];
-    [self hotel];
+    [self initializeData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -94,6 +109,10 @@
     }
 }
 
+- (void)refreshRequest{
+    PageNum = 1;
+    [self hotel];
+}
 #pragma  mark - request
 //天气
 -(void)weatherRequest{
@@ -116,29 +135,44 @@
     }];
 
 }
-
+- (void)initializeData{
+    _aiv = [Utilities getCoverOnView:self.view];
+    [self refreshRequest];
+}
 //酒店
 - (void)hotel{
     //点击按钮的时候创建一个蒙层，并显示在当前页面
     
     //参数
-    NSDictionary *para = @{@"startId" :  @1,@"priceId" :@1,@"inTime" :  @0,@"outTime" : @0,@"page" :@1,@"sortingId" :@1};
+    NSDictionary *para = @{@"startId" :  @1,@"priceId" :@1,@"inTime" :  @0,@"outTime" : @0,@"page" :@1,@"sortingId" :@0};
     //网络请求
     [RequestAPI requestURL:@"/findAllHotelAndAdvertising" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
         NSLog(@"登录 = %@",responseObject);
+        UIRefreshControl *ref = (UIRefreshControl *)[_hotelTableView viewWithTag:10004];
+        [ref endRefreshing];
         //当网络请求成功时让蒙层消失
         [_aiv stopAnimating];
-        if([responseObject[@"resultFlag"]intValue] == 1){
+        if([responseObject[@"result"]intValue] == 1){
             NSDictionary *result = responseObject[@"result"];
+            /*NSArray *list = result[@"list"];
+            isLastPage = [result[@"isLastPage"] boolValue];
+            if (PageNum == 1) {
+                [_hotelArr removeAllObjects];
+            }
             
+            
+            
+            [_hotelTableView reloadData];*/
         } else {
             //业务逻辑失败的情况下
-            NSString *errorMsg = [ErrorHandler getProperErrorString:[responseObject[@"resultFlag"] integerValue]];
+            NSString *errorMsg = [ErrorHandler getProperErrorString:[responseObject[@"result"] integerValue]];
             [Utilities popUpAlertViewWithMsg:errorMsg andTitle:nil onView:self];
         }
     } failure:^(NSInteger statusCode, NSError *error) {
         //当网络请求失败时让蒙层消失
         [_aiv stopAnimating];
+        UIRefreshControl *ref = (UIRefreshControl *)[_hotelTableView viewWithTag:10004];
+        [ref endRefreshing];
         [Utilities
          popUpAlertViewWithMsg:@"请保持网络连接畅通" andTitle:nil onView:self];
     }];
@@ -164,7 +198,15 @@
 
 //当一个细胞将要出现的时候要做的事情
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+   /* [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    //判断将要出现的细胞是不是当前最后一行
+    if (indexPath.row == _hotelArr.count - 1) {
+        //当存在下一页的时候，页码自增，请求下一页数据
+        if (!isLastPage) {
+            PageNum ++;
+            [self hotel];
+        }
+    }*/
 }
 
 //设置每一组中每一行细胞的高度
