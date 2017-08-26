@@ -2,6 +2,8 @@
 <Bucket
    type = "0"
    version = "2.0">
+<<<<<<< HEAD
+=======
    <Breakpoints>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
@@ -9,60 +11,44 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "GetHotels/Controller/HotelViewController.m"
-            timestampString = "525429106.93397"
+            filePath = "GetHotels/Controller/MyHotelViewController.m"
+            timestampString = "525349714.419467"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "162"
-            endingLineNumber = "162"
-            landmarkName = "-hotelRequest"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "GetHotels/Controller/HotelViewController.m"
-            timestampString = "525429116.505435"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "164"
-            endingLineNumber = "164"
-            landmarkName = "-hotelRequest"
+            startingLineNumber = "140"
+            endingLineNumber = "140"
+            landmarkName = "-AllOrdersRequest"
             landmarkType = "7">
             <Locations>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "-[HotelViewController hotelRequest]"
+                  symbolName = "-[MyHotelViewController AllOrdersRequest]"
                   moduleName = "GetHotels"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/admin1/Desktop/%E5%B0%8F%E7%BB%84/GetHotel/GetHotels/GetHotels/Controller/HotelViewController.m"
-                  timestampString = "525429567.300619"
+                  urlString = "file:///Users/admin1/Desktop/Hotels/GetHotels/GetHotels/Controller/MyHotelViewController.m"
+                  timestampString = "525357988.876518"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "164"
-                  endingLineNumber = "164"
-                  offsetFromSymbolStart = "1047">
+                  startingLineNumber = "140"
+                  endingLineNumber = "140"
+                  offsetFromSymbolStart = "372">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "__35-[HotelViewController hotelRequest]_block_invoke"
+                  symbolName = "__41-[MyHotelViewController AllOrdersRequest]_block_invoke"
                   moduleName = "GetHotels"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/admin1/Desktop/%E5%B0%8F%E7%BB%84/GetHotel/GetHotels/GetHotels/Controller/HotelViewController.m"
-                  timestampString = "525429567.302974"
+                  urlString = "file:///Users/admin1/Desktop/Hotels/GetHotels/GetHotels/Controller/MyHotelViewController.m"
+                  timestampString = "525357988.878988"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "164"
-                  endingLineNumber = "164"
-                  offsetFromSymbolStart = "19">
+                  startingLineNumber = "140"
+                  endingLineNumber = "140"
+                  offsetFromSymbolStart = "16">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -73,92 +59,78 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "GetHotels/Controller/HotelViewController.m"
-            timestampString = "525429120.409769"
+            filePath = "GetHotels/Controller/MyHotelViewController.m"
+            timestampString = "525349758.52214"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "187"
-            endingLineNumber = "187"
-            landmarkName = "-hotelRequest"
+            startingLineNumber = "151"
+            endingLineNumber = "151"
+            landmarkName = "-AllOrdersRequest"
             landmarkType = "7">
             <Locations>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "-[HotelViewController hotelRequest]"
+                  symbolName = "__41-[MyHotelViewController AllOrdersRequest]_block_invoke"
                   moduleName = "GetHotels"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/admin1/Desktop/%E5%B0%8F%E7%BB%84/GetHotel/GetHotels/GetHotels/Controller/HotelViewController.m"
-                  timestampString = "525429567.319604"
+                  urlString = "file:///Users/admin1/Desktop/Hotels/GetHotels/GetHotels/Controller/MyHotelViewController.m"
+                  timestampString = "525357988.88437"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "187"
-                  endingLineNumber = "187"
-                  offsetFromSymbolStart = "1188">
+                  startingLineNumber = "151"
+                  endingLineNumber = "151"
+                  offsetFromSymbolStart = "273">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "__35-[HotelViewController hotelRequest]_block_invoke"
+                  symbolName = "__copy_helper_block_.157"
                   moduleName = "GetHotels"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/admin1/Desktop/%E5%B0%8F%E7%BB%84/GetHotel/GetHotels/GetHotels/Controller/HotelViewController.m"
-                  timestampString = "525429567.322363"
+                  urlString = "file:///Users/admin1/Desktop/Hotels/GetHotels/GetHotels/Controller/MyHotelViewController.m"
+                  timestampString = "525357988.886792"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "187"
-                  endingLineNumber = "187"
-                  offsetFromSymbolStart = "850">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__copy_helper_block_.173"
-                  moduleName = "GetHotels"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/admin1/Desktop/%E5%B0%8F%E7%BB%84/GetHotel/GetHotels/GetHotels/Controller/HotelViewController.m"
-                  timestampString = "525429567.324868"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "187"
-                  endingLineNumber = "187"
+                  startingLineNumber = "151"
+                  endingLineNumber = "151"
                   offsetFromSymbolStart = "51">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "__destroy_helper_block_.174"
+                  symbolName = "__destroy_helper_block_.158"
                   moduleName = "GetHotels"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/admin1/Desktop/%E5%B0%8F%E7%BB%84/GetHotel/GetHotels/GetHotels/Controller/HotelViewController.m"
-                  timestampString = "525429567.327437"
+                  urlString = "file:///Users/admin1/Desktop/Hotels/GetHotels/GetHotels/Controller/MyHotelViewController.m"
+                  timestampString = "525357988.888983"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "187"
-                  endingLineNumber = "187"
+                  startingLineNumber = "151"
+                  endingLineNumber = "151"
                   offsetFromSymbolStart = "29">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "__35-[HotelViewController hotelRequest]_block_invoke.176"
+                  symbolName = "__41-[MyHotelViewController AllOrdersRequest]_block_invoke.161"
                   moduleName = "GetHotels"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/admin1/Desktop/%E5%B0%8F%E7%BB%84/GetHotel/GetHotels/GetHotels/Controller/HotelViewController.m"
-                  timestampString = "525429567.33012"
+                  urlString = "file:///Users/admin1/Desktop/Hotels/GetHotels/GetHotels/Controller/MyHotelViewController.m"
+                  timestampString = "525357988.891184"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "187"
-                  endingLineNumber = "187"
-                  offsetFromSymbolStart = "16">
+                  startingLineNumber = "152"
+                  endingLineNumber = "152"
+                  offsetFromSymbolStart = "59">
                </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
+>>>>>>> e3b433f89feabd84947eaa21260b9bd64a2e1fdd
 </Bucket>
