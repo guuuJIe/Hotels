@@ -82,7 +82,7 @@
                                 <rect key="frame" x="94" y="165" width="221" height="19"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <textInputTraits key="textInputTraits" keyboardType="phonePad" secureTextEntry="YES"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="u53-fd-omw" id="l7f-0o-xJY"/>
                                 </connections>
@@ -98,7 +98,7 @@
                                 <rect key="frame" x="94" y="234" width="221" height="19"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <textInputTraits key="textInputTraits" keyboardType="phonePad" secureTextEntry="YES"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="u53-fd-omw" id="SBI-sT-FId"/>
                                 </connections>
@@ -120,7 +120,7 @@
                                 <rect key="frame" x="94" y="291" width="221" height="19"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <textInputTraits key="textInputTraits" keyboardType="phonePad" secureTextEntry="YES"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="u53-fd-omw" id="nVv-XP-us7"/>
                                 </connections>
