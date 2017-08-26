@@ -233,16 +233,16 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2DI-Ci-nEv">
                                 <rect key="frame" x="0.0" y="111" width="375" height="100"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tDV-wn-kSN" userLabel="first Image View">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="飞机大" translatesAutoresizingMaskIntoConstraints="NO" id="tDV-wn-kSN" userLabel="first Image View">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="osn-Uu-qyi" userLabel="second Image View">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="酒店3" translatesAutoresizingMaskIntoConstraints="NO" id="osn-Uu-qyi" userLabel="second Image View">
                                         <rect key="frame" x="375" y="0.0" width="375" height="100"/>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Epe-fS-e1e" userLabel="three Image View">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="userIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Epe-fS-e1e" userLabel="three Image View">
                                         <rect key="frame" x="750" y="0.0" width="375" height="100"/>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GnR-ub-8Jr" userLabel="four Image View">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="news" translatesAutoresizingMaskIntoConstraints="NO" id="GnR-ub-8Jr" userLabel="four Image View">
                                         <rect key="frame" x="1125" y="0.0" width="375" height="100"/>
                                     </imageView>
                                 </subviews>
@@ -629,7 +629,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pCL-bL-UPc">
-                                            <rect key="frame" x="15" y="0.0" width="345" height="43.5"/>
+                                            <rect key="frame" x="16" y="0.0" width="344" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -757,6 +757,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="news" width="23" height="20"/>
+        <image name="userIcon" width="25" height="25"/>
         <image name="头像" width="100" height="100"/>
         <image name="我的" width="25" height="25"/>
         <image name="星级" width="52" height="44"/>
@@ -765,6 +767,8 @@
         <image name="路标" width="30" height="30"/>
         <image name="酒店" width="30" height="30"/>
         <image name="酒店-1" width="22" height="22"/>
+        <image name="酒店3" width="497" height="342"/>
         <image name="飞机" width="22" height="22"/>
+        <image name="飞机大" width="40" height="40"/>
     </resources>
 </document>
