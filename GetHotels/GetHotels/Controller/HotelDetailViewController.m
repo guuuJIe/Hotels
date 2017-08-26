@@ -44,7 +44,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *sizeLabel;
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
 @property (weak, nonatomic) IBOutlet UIToolbar *tooBar;
-@property (strong,nonatomic) NSArray *arr;
 - (IBAction)cancelAction:(UIBarButtonItem *)sender;
 - (IBAction)confirmAction:(UIBarButtonItem *)sender;
 
@@ -90,22 +89,6 @@
     
 
 }
--(void) addZLImageViewDisPlayView{
-    
-    //获取要显示的位置
-    CGRect screenFrame = [[UIScreen mainScreen] bounds];
-    
-    CGRect frame = CGRectMake(0, self.navigationController.navigationBar.frame.size.height + 20, screenFrame.size.width, 180);
-    
-    NSArray *imageArray = @[@"酒店1.jpg", @"酒店2.jpg", @"酒店3.jpg"];
-    
-    //初始化控件
-    ZLImageViewDisplayView *imageViewDisplay = [ZLImageViewDisplayView zlImageViewDisplayViewWithFrame:frame];
-    imageViewDisplay.imageViewArray = imageArray;
-    imageViewDisplay.scrollInterval = 2;
-    imageViewDisplay.animationInterVale = 0.6;
-    [self.view addSubview:imageViewDisplay];
-}
 #pragma mark - quest
 //网络请求
 -(void)hotelDetailRequest{
@@ -125,7 +108,7 @@
             _adressLabel.text = detailModel.hotel_address;
             _priceLabel.text = detailModel.now_price;
             _priceLabel.text =[NSString stringWithFormat:@"¥%@",_priceLabel.text];
-            
+        //UIImage *_decodedImage = [UIImage imageWithData:detailModel.hotel_imgs];
         }else{
             
         }
@@ -136,6 +119,23 @@ failure:^(NSInteger statusCode, NSError *error) {
     }];
 
    }
+-(void) addZLImageViewDisPlayView{
+    
+    //获取要显示的位置
+    CGRect screenFrame = [[UIScreen mainScreen] bounds];
+    
+    CGRect frame = CGRectMake(0, self.navigationController.navigationBar.frame.size.height + 20, screenFrame.size.width, 180);
+    
+    NSArray *imageArray = @[@"酒店1.jpg", @"酒店2.jpg", @"酒店3.jpg"];
+    
+    //初始化控件
+    ZLImageViewDisplayView *imageViewDisplay = [ZLImageViewDisplayView zlImageViewDisplayViewWithFrame:frame];
+    imageViewDisplay.imageViewArray = imageArray;
+    imageViewDisplay.scrollInterval = 2;
+    imageViewDisplay.animationInterVale = 0.6;
+    [self.view addSubview:imageViewDisplay];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
