@@ -42,6 +42,7 @@
 		8445AD861F4C535000417B79 /* AllOrdersTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8445AD851F4C535000417B79 /* AllOrdersTableViewCell.m */; };
 		8445AD8A1F4C53BD00417B79 /* UseableOrderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8445AD891F4C53BD00417B79 /* UseableOrderTableViewCell.m */; };
 		8445AD8E1F4C53DE00417B79 /* DatedOrderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8445AD8D1F4C53DE00417B79 /* DatedOrderTableViewCell.m */; };
+		844745851F516F2D001D2E2F /* setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 844745841F516F2D001D2E2F /* setting.storyboard */; };
 		846DB0221F4D9EE700578D22 /* Cities.plist in Resources */ = {isa = PBXBuildFile; fileRef = 846DB0211F4D9EE700578D22 /* Cities.plist */; };
 		846DB0251F4DA09300578D22 /* CityTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 846DB0241F4DA09300578D22 /* CityTableViewController.m */; };
 		84A346761F4C3BCD0051BDFB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84A346751F4C3BCD0051BDFB /* Main.storyboard */; };
@@ -142,6 +143,7 @@
 		8445AD891F4C53BD00417B79 /* UseableOrderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UseableOrderTableViewCell.m; sourceTree = "<group>"; };
 		8445AD8C1F4C53DE00417B79 /* DatedOrderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatedOrderTableViewCell.h; sourceTree = "<group>"; };
 		8445AD8D1F4C53DE00417B79 /* DatedOrderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatedOrderTableViewCell.m; sourceTree = "<group>"; };
+		844745841F516F2D001D2E2F /* setting.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = setting.storyboard; sourceTree = "<group>"; };
 		846DB0211F4D9EE700578D22 /* Cities.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Cities.plist; sourceTree = "<group>"; };
 		846DB0231F4DA09300578D22 /* CityTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityTableViewController.h; sourceTree = "<group>"; };
 		846DB0241F4DA09300578D22 /* CityTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityTableViewController.m; sourceTree = "<group>"; };
@@ -351,6 +353,7 @@
 				FE9CAA7E1F49645C0064E327 /* Assets.xcassets */,
 				84CD441A1F49777D0074A42A /* Launch Screen.storyboard */,
 				84A346751F4C3BCD0051BDFB /* Main.storyboard */,
+				844745841F516F2D001D2E2F /* setting.storyboard */,
 				84A346771F4C3BE60051BDFB /* Login.storyboard */,
 			);
 			path = View;
@@ -618,6 +621,7 @@
 				84F729DB1F48661D00E7E773 /* BookHotels.storyboard in Resources */,
 				84F729DE1F48663400E7E773 /* Myself.storyboard in Resources */,
 				FE9CAA7F1F49645C0064E327 /* Assets.xcassets in Resources */,
+				844745851F516F2D001D2E2F /* setting.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
