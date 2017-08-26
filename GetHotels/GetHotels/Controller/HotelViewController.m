@@ -40,14 +40,10 @@
     _hotelArr = [NSMutableArray new];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     PageNum = 1;
-    pageSize = 15;
+    pageSize = 8;
     //去掉tableview底部多余的线
     _hotelTableView.tableFooterView = [UIView new];
-    //创建一个刷新指示器放在tableview中
-    UIRefreshControl *ref = [UIRefreshControl new];
-    [ref addTarget:self action:@selector(refreshRequest) forControlEvents:UIControlEventValueChanged];
-    ref.tag = 10004;
-    [_hotelTableView addSubview:ref];
+   
    // [self weatherRequest];          //天气网络请求
     [self locationConfig];          //开始定位
     [self enterApp];                //判断是否第一次进入app
@@ -109,9 +105,23 @@
     }
 }
 
+
+//创建一个刷新指示器
+- (void)refesh{
+    //创建一个刷新指示器放在tableview中
+    UIRefreshControl *ref = [UIRefreshControl new];
+    [ref addTarget:self action:@selector(refreshRequest) forControlEvents:UIControlEventValueChanged];
+    ref.tag = 10004;
+    [_hotelTableView addSubview:ref];
+}
+//刷新事件
 - (void)refreshRequest{
     PageNum = 1;
-    [self hotel];
+    [self hotelRequest];
+}
+- (void)initializeData{
+    _aiv = [Utilities getCoverOnView:self.view];
+    [self hotelRequest];
 }
 #pragma  mark - request
 //天气
@@ -135,26 +145,32 @@
     }];
 
 }
-- (void)initializeData{
-    _aiv = [Utilities getCoverOnView:self.view];
-    [self refreshRequest];
-}
+
 //酒店
-- (void)hotel{
-    //点击按钮的时候创建一个蒙层，并显示在当前页面
-    
+- (void)hotelRequest{
+    //初始化日期格式器
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    //定义日期格式
+    formatter.dateFormat = @"yyyy-MM-dd";
+    //当前时间
+    NSDate *date = [NSDate date];
+    //明天的日期
+    NSDate *dateTom = [NSDate dateTomorrow];
+    NSString *dateStr = [formatter stringFromDate:date];
+    NSString *dateTomStr= [formatter stringFromDate:dateTom];
     //参数
-    NSDictionary *para = @{@"startId" :  @1,@"priceId" :@1,@"inTime" :  @0,@"outTime" : @0,@"page" :@1,@"sortingId" :@0};
+    NSDictionary *para = @{@"city_name"  :  _cityBtn.titleLabel.text , @"startId" :  @1, @"priceId" :@1, @"inTime" : dateStr, @"outTime" : dateTomStr, @"page" :@(PageNum), @"pageSize" :@(pageSize), @"sortingId" :@1};//, @"wxlongitude" :@0, @"wxlatitude" :@0};
     //网络请求
-    [RequestAPI requestURL:@"/findAllHotelAndAdvertising" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
+    [RequestAPI requestURL:@"/findHotelByCity_edu" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
         NSLog(@"登录 = %@",responseObject);
         UIRefreshControl *ref = (UIRefreshControl *)[_hotelTableView viewWithTag:10004];
         [ref endRefreshing];
         //当网络请求成功时让蒙层消失
         [_aiv stopAnimating];
         if([responseObject[@"result"]intValue] == 1){
-            NSDictionary *result = responseObject[@"result"];
-            /*NSArray *list = result[@"list"];
+            NSDictionary *result = responseObject[@"content"];
+            NSArray *advertising = result[@"advertising"];
+            NSArray *hotel = result[@"hotel"];
             isLastPage = [result[@"isLastPage"] boolValue];
             if (PageNum == 1) {
                 [_hotelArr removeAllObjects];
@@ -162,7 +178,7 @@
             
             
             
-            [_hotelTableView reloadData];*/
+            [_hotelTableView reloadData];
         } else {
             //业务逻辑失败的情况下
             NSString *errorMsg = [ErrorHandler getProperErrorString:[responseObject[@"result"] integerValue]];
