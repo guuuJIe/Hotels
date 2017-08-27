@@ -11,6 +11,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import <UIImageView+WebCache.h>
 #import "HotelListModel.h"
+
 @interface HotelViewController ()<UITableViewDataSource,UITableViewDelegate,CLLocationManagerDelegate>
 {
     BOOL firstVisit;
@@ -194,6 +195,14 @@
         [_aiv stopAnimating];
         if([responseObject[@"result"]intValue] == 1){
             NSDictionary *content = responseObject[@"content"];
+            //酒店列表信息
+            NSDictionary *hotel = content[@"hotel"];
+            NSArray *list = hotel[@"list"];
+            for (NSDictionary *dict in  list){
+                
+                HotelListModel *model = [[HotelListModel alloc] initWithDict:dict];
+                [_hotelArr addObject:model];
+            }
             //广告图片
             NSArray *advertising = content[@"advertising"];
             for (NSDictionary *imgUrl in advertising){
@@ -204,12 +213,7 @@
             [_secondImg sd_setImageWithURL:[NSURL URLWithString:_advImgArr[2]] placeholderImage:[UIImage imageNamed:@"白云"]];
             [_threeImg sd_setImageWithURL:[NSURL URLWithString:_advImgArr[3]] placeholderImage:[UIImage imageNamed:@"白云"]];
             [_fourImg sd_setImageWithURL:[NSURL URLWithString:_advImgArr[4]] placeholderImage:[UIImage imageNamed:@"白云"]];
-            //酒店列表信息
-            NSArray *hotel = content[@"hotel"];
-            for (NSDictionary *dict in  hotel){
-                HotelListModel *model = [[HotelListModel alloc] initWithDict:dict];
-                [_hotelArr addObject:model];
-            }
+            
             
            /* isLastPage = [result[@"isLastPage"] boolValue];
             if (PageNum == 1) {
@@ -300,14 +304,15 @@
     HotelTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HomeHotelCell" forIndexPath:indexPath];
     HotelListModel *model = _hotelArr[indexPath.row];
     cell.hotelNameLabel.text = model.name;
-    cell.hotelLocLabel.text = model.address;
+    cell.hotelLocLabel.text = _cityBtn.titleLabel.text;
+    cell.hotelPriceLabel.text =   [NSString stringWithFormat:@"¥%ld" ,(long)model.price] ;
     NSURL *URL = [NSURL URLWithString:model.imgUrl];
     [cell.hotelImg sd_setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"酒店-1"]];
     //计算距离
      CLLocation *otherLocation = [[CLLocation alloc] initWithLatitude:[model.latitude doubleValue] longitude:[model.longitude doubleValue]];
     
     CLLocationDistance kilometers=[_location distanceFromLocation:otherLocation]/1000;
-    NSLog(@"距离:%f",kilometers);
+    cell.hotelDistanceLabel.text = [NSString stringWithFormat:@"%f公里",kilometers];
     return  cell;
 }
 

@@ -17,5 +17,5 @@
 @property (nonatomic) NSInteger price;
 @property (nonatomic) NSInteger id;
 
--(id)initWithDict:(NSDictionary *)dict;
+-(instancetype)initWithDict: (NSDictionary *)dict;
 @end
