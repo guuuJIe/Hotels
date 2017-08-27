@@ -36,6 +36,8 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden = NO;
+    
     if ([Utilities loginCheck]){
         _loginBtn.hidden = YES;
         _usernameLabel.hidden = NO; 
@@ -57,6 +59,12 @@
             _threeStarImg.image = [UIImage imageNamed:@"星级2"];
             }
     }
+    
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
 }
 
 - (void)didReceiveMemoryWarning {
