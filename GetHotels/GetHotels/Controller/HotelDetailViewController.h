@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface HotelDetailViewController : UIViewController
-
+@property (nonatomic)NSInteger hotelId;
 @end
