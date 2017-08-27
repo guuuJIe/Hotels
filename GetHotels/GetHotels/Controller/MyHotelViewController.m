@@ -14,6 +14,10 @@
 @interface MyHotelViewController ()<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>{
     NSInteger useableFirst;
     NSInteger datedFirst;
+    
+    NSInteger allOrdersNum;
+    NSInteger useableOrdersNum;
+    NSInteger datedOrdersNum;
 }
 @property (strong,nonatomic) HMSegmentedControl *segmentcontrol;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -31,12 +35,16 @@
     [super viewDidLoad];
     useableFirst = 1;
     datedFirst = 1;
+    allOrdersNum = 1;
+    useableOrdersNum = 1;
+    datedOrdersNum  = 1;
     // 状态栏(statusbar)
     _rectStatus = [[UIApplication sharedApplication] statusBarFrame];
     // 导航栏（navigationbar）
     _rectNav = self.navigationController.navigationBar.frame;
     // Do any additional setup after loading the view.
     [self setsegment];
+    [self refreshControl];
     _AllOrderTableView.tableFooterView = [UIView new];
     _UseableOrderTableView.tableFooterView = [UIView new];
     _DatedOrderTableView.tableFooterView = [UIView new];
@@ -108,10 +116,12 @@
     [allorderRefresh addTarget:self action:@selector(refreshAllOrder) forControlEvents:UIControlEventValueChanged];
     allorderRefresh.tag = 100;
     [_AllOrderTableView addSubview:allorderRefresh];
+    
     UIRefreshControl *useableorderRefresh = [UIRefreshControl new];
     [useableorderRefresh addTarget:self action:@selector(refreshUseableOrder) forControlEvents:UIControlEventValueChanged];
     useableorderRefresh.tag = 101;
     [_UseableOrderTableView addSubview:useableorderRefresh];
+    
     UIRefreshControl *datedorderRefresh = [UIRefreshControl new];
     [datedorderRefresh addTarget:self action:@selector(refreshDatedOrder) forControlEvents:UIControlEventValueChanged];
     datedorderRefresh.tag = 102;
@@ -119,14 +129,17 @@
 }
 //刷新全部订单
 -(void)refreshAllOrder{
+    allOrdersNum = 1;
     [self AllOrdersRequest];
 }
 //刷新可用订单
 -(void)refreshUseableOrder{
+    useableOrdersNum = 1;
     [self UseableOrdersRequest];
 }
 //刷新过期订单
 -(void)refreshDatedOrder{
+    datedOrdersNum = 1;
     [self DatedOrdersRequest];
 }
 /*
@@ -145,27 +158,31 @@
        [RequestAPI requestURL:@"/findOrders_edu" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
        
         [_aiv stopAnimating];
-        
+        UIRefreshControl *ref = (UIRefreshControl *)[_AllOrderTableView viewWithTag:100];
+        [ref endRefreshing];
         NSLog(@"Orders:%@",responseObject);
-        if ([responseObject[@"flag"] isEqualToString:@"success"]) {
+        if ([responseObject[@"result"] integerValue] == 1) {
             
         }
         else{
             [Utilities popUpAlertViewWithMsg:@"网络错误,请稍后再试" andTitle:@"提示" onView:self];
         }
     }failure:^(NSInteger statusCode, NSError *error) {
+         
     }];
     
 }
 //可使用订单
 -(void)UseableOrdersRequest{
-    NSDictionary *para = @{@"openid":_user.openid,@"id":@2};
+    UserModel *model = [[StorageMgr singletonStorageMgr] objectForKey:@"UserInfo"];
+    NSDictionary *para = @{@"openid":model.openid,@"id":@2};
     [RequestAPI requestURL:@"/findOrders_edu" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
         // NSLog(@"acquire:%@",responseObject);
         [_aiv stopAnimating];
-        //防范式编程   强制转换(UIRefreshControl *)
-        NSLog(@"%@",responseObject);
-        if ([responseObject[@"flag"] isEqualToString:@"success"]) {
+        UIRefreshControl *ref = (UIRefreshControl *)[_UseableOrderTableView viewWithTag:101];
+        [ref endRefreshing];
+        NSLog(@"可使用订单%@",responseObject);
+        if ([responseObject[@"result"] integerValue] == 1) {
             
         }
         else{
@@ -177,13 +194,15 @@
 }
 //过期订单
 -(void)DatedOrdersRequest{
-    NSDictionary *para = @{@"openid":_user.openid,@"id":@3};
+    UserModel *model = [[StorageMgr singletonStorageMgr] objectForKey:@"UserInfo"];
+    NSDictionary *para = @{@"openid":model.openid,@"id":@3};
     [RequestAPI requestURL:@"/findOrders_edu" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
         // NSLog(@"acquire:%@",responseObject);
         [_aiv stopAnimating];
-        //防范式编程   强制转换(UIRefreshControl *)
-        NSLog(@"%@",responseObject);
-        if ([responseObject[@"flag"] isEqualToString:@"success"]) {
+        UIRefreshControl *ref = (UIRefreshControl *)[_DatedOrderTableView viewWithTag:102];
+        [ref endRefreshing];
+        NSLog(@"过期订单:%@",responseObject);
+        if ([responseObject[@"result"] integerValue] == 1) {
             
         }
         else{
