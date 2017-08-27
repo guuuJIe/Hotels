@@ -15,7 +15,7 @@
 @property (strong,nonatomic) NSString *latitude;
 @property (strong,nonatomic) NSString *longitude;   //经度
 @property (nonatomic) NSInteger price;
-@property (nonatomic) NSInteger id;
+@property (nonatomic) NSInteger hotelId;
 
 -(instancetype)initWithDict: (NSDictionary *)dict;
 @end

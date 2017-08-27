@@ -43,10 +43,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *bigBedLabel;
 @property (weak, nonatomic) IBOutlet UILabel *sizeLabel;
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
+@property (weak, nonatomic) IBOutlet UIButton *startBtn;
 @property (weak, nonatomic) IBOutlet UIToolbar *tooBar;
 - (IBAction)cancelAction:(UIBarButtonItem *)sender;
 - (IBAction)confirmAction:(UIBarButtonItem *)sender;
 @property (strong,nonatomic) NSMutableArray *arr;
+@property (weak, nonatomic) IBOutlet UILabel *petLabel;
 
 @end
 
@@ -61,6 +63,10 @@
     // Do any additional setup after loading the view.
     //状态栏变成白色
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+}
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden = YES;
 }
 - (void) naviConfig{
    
@@ -87,15 +93,14 @@
 }
 -(void)leftButtonAction:(UIButton *)sender{
     //跳转回原来页
-        [self dismissViewControllerAnimated:YES completion:nil];
-    
+       [self.navigationController popViewControllerAnimated:YES];
 
 }
 #pragma mark - quest
 //网络请求
 -(void)hotelDetailRequest{
     UIActivityIndicatorView *aiv = [Utilities getCoverOnView:self.view];
-    NSDictionary *para =@{@"id":@1};
+    NSDictionary *para =@{@"id":@(_hotelId)};
     [RequestAPI requestURL:@"/findHotelById" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
         [aiv stopAnimating];
         NSLog(@"responseObject:%@",responseObject);
@@ -107,17 +112,21 @@
         NSArray *hotel_types = content[@"hotel_types"];
             NSArray *image = content[@"hotel_imgs"];
             for(NSString *string in image){
-                [_arr addObject:string];
-
+              NSString *img = [NSHomeDirectory()stringByAppendingString:string];
+                [_arr addObject:img];
             }
-            NSLog(@"string=%@",_arr);
         hotelDetailModel *detailModel = [[hotelDetailModel alloc]initWithDictionary:content];
          _nameLabel.text = detailModel.hotel_name;
             _adressLabel.text = detailModel.hotel_address;
             _priceLabel.text = detailModel.now_price;
-            _priceLabel.text =[NSString stringWithFormat:@"¥%@",_priceLabel.text];
+            _priceLabel.text = [NSString stringWithFormat:@"¥%@",_priceLabel.text];
+            _petLabel.text = detailModel.is_pet;
             
-         [self addZLImageViewDisPlayView];
+            NSString *starTimeStr = [Utilities dateStrFromCstampTime:[detailModel.start_time integerValue] withDateFormat:@"YYYY-MM-dd"];
+            //NSString *star = [starTimeStr substringFromIndex:starTimeStr.length]
+            _startBtn.titleLabel.text = starTimeStr;
+            [self addZLImageViewDisPlayView];
+            
         }
         else{
             
@@ -136,11 +145,11 @@ failure:^(NSInteger statusCode, NSError *error) {
     
     CGRect frame = CGRectMake(0, self.navigationController.navigationBar.frame.size.height + 20, screenFrame.size.width, 180);
     
-    //NSArray *imageArray = @[@"酒店1.jpg", @"酒店2.jpg", @"酒店3.jpg"];
+    NSArray *imageArray = _arr;
     
     //初始化控件
     ZLImageViewDisplayView *imageViewDisplay = [ZLImageViewDisplayView zlImageViewDisplayViewWithFrame:frame];
-    imageViewDisplay.imageViewArray =_arr;
+    imageViewDisplay.imageViewArray =imageArray;
     imageViewDisplay.scrollInterval = 2;
     imageViewDisplay.animationInterVale = 0.6;
     [self.view addSubview:imageViewDisplay];

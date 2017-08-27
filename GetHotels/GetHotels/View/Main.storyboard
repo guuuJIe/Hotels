@@ -269,7 +269,7 @@
                                         </constraints>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tFK-iK-Ofd">
-                                        <rect key="frame" x="34" y="71" width="30" height="23"/>
+                                        <rect key="frame" x="31" y="71" width="39" height="23"/>
                                         <fontDescription key="fontDescription" name=".PingFangSC-Regular" family=".PingFang SC" pointSize="11"/>
                                         <state key="normal" title="苏州">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -285,9 +285,10 @@
                                     <constraint firstItem="Pgg-hO-e6H" firstAttribute="width" secondItem="pWW-Aj-cBA" secondAttribute="width" multiplier="3:5" id="FlO-PO-4ir"/>
                                     <constraint firstItem="Clp-Da-fn6" firstAttribute="centerX" secondItem="pWW-Aj-cBA" secondAttribute="centerX" id="M7z-ri-dTq"/>
                                     <constraint firstItem="Pgg-hO-e6H" firstAttribute="centerX" secondItem="pWW-Aj-cBA" secondAttribute="centerX" id="Pyi-hm-b7u"/>
+                                    <constraint firstItem="Pgg-hO-e6H" firstAttribute="leading" secondItem="tFK-iK-Ofd" secondAttribute="trailing" constant="5" id="QzE-UX-n7D"/>
                                     <constraint firstItem="68Z-N2-kvw" firstAttribute="centerY" secondItem="Pgg-hO-e6H" secondAttribute="centerY" id="RL7-xj-M67"/>
                                     <constraint firstItem="PU2-2W-Gfi" firstAttribute="leading" secondItem="Pgg-hO-e6H" secondAttribute="trailing" constant="20" id="U30-4q-SjX"/>
-                                    <constraint firstItem="tFK-iK-Ofd" firstAttribute="leading" secondItem="6Vi-x9-CBg" secondAttribute="trailing" constant="5" id="W0D-Xe-Cax"/>
+                                    <constraint firstItem="tFK-iK-Ofd" firstAttribute="leading" secondItem="6Vi-x9-CBg" secondAttribute="trailing" constant="2" id="W0D-Xe-Cax"/>
                                     <constraint firstItem="6Vi-x9-CBg" firstAttribute="leading" secondItem="pWW-Aj-cBA" secondAttribute="leading" constant="5" id="X0Y-hc-dq2"/>
                                     <constraint firstItem="Clp-Da-fn6" firstAttribute="centerY" secondItem="pWW-Aj-cBA" secondAttribute="centerY" constant="-15" id="glM-B6-B5F"/>
                                     <constraint firstItem="tFK-iK-Ofd" firstAttribute="centerY" secondItem="6Vi-x9-CBg" secondAttribute="centerY" id="k2s-dD-fyc"/>
@@ -528,7 +529,7 @@
                                                     <outlet property="hotelLocLabel" destination="5Ho-j5-dk5" id="a17-nW-vfb"/>
                                                     <outlet property="hotelNameLabel" destination="oc6-bt-LeJ" id="JWN-db-MqP"/>
                                                     <outlet property="hotelPriceLabel" destination="3uy-46-maq" id="kLJ-6y-izB"/>
-                                                    <segue destination="88j-Dv-Zqy" kind="presentation" id="zml-w4-eMM"/>
+                                                    <segue destination="88j-Dv-Zqy" kind="show" identifier="ListToDetail" id="zml-w4-eMM"/>
                                                 </connections>
                                             </tableViewCell>
                                         </prototypes>
@@ -539,8 +540,7 @@
                                     </tableView>
                                     <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="L9G-jp-pBX">
                                         <rect key="frame" x="321" y="80" width="39" height="20.5"/>
-                                        <color key="pageIndicatorTintColor" white="0.66666666666666663" alpha="0.60209760273972601" colorSpace="calibratedWhite"/>
-                                        <color key="currentPageIndicatorTintColor" white="0.33333333333333331" alpha="0.60215111301369861" colorSpace="calibratedWhite"/>
+                                        <color key="currentPageIndicatorTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </pageControl>
                                 </subviews>
                                 <constraints>
