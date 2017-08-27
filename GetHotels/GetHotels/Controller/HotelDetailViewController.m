@@ -64,6 +64,10 @@
     //状态栏变成白色
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
 }
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden = YES;
+}
 - (void) naviConfig{
    
     //设置导航条的风格颜色
@@ -89,8 +93,7 @@
 }
 -(void)leftButtonAction:(UIButton *)sender{
     //跳转回原来页
-        [self dismissViewControllerAnimated:YES completion:nil];
-    
+       [self.navigationController popViewControllerAnimated:YES];
 
 }
 #pragma mark - quest
