@@ -58,6 +58,7 @@
 		84F729DE1F48663400E7E773 /* Myself.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84F729DC1F48663400E7E773 /* Myself.storyboard */; };
 		FE9C941D1F4E7BAE00252250 /* ZLImageViewDisplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C941C1F4E7BAE00252250 /* ZLImageViewDisplayView.m */; };
 		FE9CAA7F1F49645C0064E327 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE9CAA7E1F49645C0064E327 /* Assets.xcassets */; };
+		FEA94EBC1F52757B00F37096 /* hotelDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA94EBB1F52757B00F37096 /* hotelDetailModel.m */; };
 		FEACC78C1F4AF4A6002EC5F8 /* HotelDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEACC78B1F4AF4A6002EC5F8 /* HotelDetailViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -170,6 +171,8 @@
 		FE9C941B1F4E7BAE00252250 /* ZLImageViewDisplayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLImageViewDisplayView.h; sourceTree = "<group>"; };
 		FE9C941C1F4E7BAE00252250 /* ZLImageViewDisplayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZLImageViewDisplayView.m; sourceTree = "<group>"; };
 		FE9CAA7E1F49645C0064E327 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = GetHotels/Assets.xcassets; sourceTree = SOURCE_ROOT; };
+		FEA94EBA1F52757B00F37096 /* hotelDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hotelDetailModel.h; sourceTree = "<group>"; };
+		FEA94EBB1F52757B00F37096 /* hotelDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = hotelDetailModel.m; sourceTree = "<group>"; };
 		FEACC78A1F4AF4A6002EC5F8 /* HotelDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotelDetailViewController.h; sourceTree = "<group>"; };
 		FEACC78B1F4AF4A6002EC5F8 /* HotelDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotelDetailViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -320,6 +323,7 @@
 		045E651B1F485D9B001A8263 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				FEA94EB91F5274A600F37096 /* HoteDetaillModel */,
 				8459DB2C1F5100D7003EAF92 /* HomeHotel */,
 				045E65241F485F34001A8263 /* Order.h */,
 				045E65251F485F34001A8263 /* Order.m */,
@@ -496,6 +500,15 @@
 				FE9C941C1F4E7BAE00252250 /* ZLImageViewDisplayView.m */,
 			);
 			path = ZLImageViewDisplayView;
+			sourceTree = "<group>";
+		};
+		FEA94EB91F5274A600F37096 /* HoteDetaillModel */ = {
+			isa = PBXGroup;
+			children = (
+				FEA94EBA1F52757B00F37096 /* hotelDetailModel.h */,
+				FEA94EBB1F52757B00F37096 /* hotelDetailModel.m */,
+			);
+			name = HoteDetaillModel;
 			sourceTree = "<group>";
 		};
 		FEACC7891F4AF3F2002EC5F8 /* HotelDetail */ = {
@@ -742,6 +755,7 @@
 				84A3467F1F4C42C60051BDFB /* MyInfoViewController.m in Sources */,
 				045E65601F485F4D001A8263 /* NSDate+Utility.m in Sources */,
 				FEACC78C1F4AF4A6002EC5F8 /* HotelDetailViewController.m in Sources */,
+				FEA94EBC1F52757B00F37096 /* hotelDetailModel.m in Sources */,
 				841E37A11F4965F30057D58A /* HMSegmentedControl.m in Sources */,
 				045E65661F485F4D001A8263 /* Utilities.m in Sources */,
 				045E64E41F485CA3001A8263 /* main.m in Sources */,
