@@ -43,10 +43,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *bigBedLabel;
 @property (weak, nonatomic) IBOutlet UILabel *sizeLabel;
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
+@property (weak, nonatomic) IBOutlet UIButton *startBtn;
 @property (weak, nonatomic) IBOutlet UIToolbar *tooBar;
 - (IBAction)cancelAction:(UIBarButtonItem *)sender;
 - (IBAction)confirmAction:(UIBarButtonItem *)sender;
 @property (strong,nonatomic) NSMutableArray *arr;
+@property (weak, nonatomic) IBOutlet UILabel *petLabel;
 
 @end
 
@@ -107,17 +109,21 @@
         NSArray *hotel_types = content[@"hotel_types"];
             NSArray *image = content[@"hotel_imgs"];
             for(NSString *string in image){
-                [_arr addObject:string];
-
+              NSString *img = [NSHomeDirectory()stringByAppendingString:string];
+                [_arr addObject:img];
             }
-            NSLog(@"string=%@",_arr);
         hotelDetailModel *detailModel = [[hotelDetailModel alloc]initWithDictionary:content];
          _nameLabel.text = detailModel.hotel_name;
             _adressLabel.text = detailModel.hotel_address;
             _priceLabel.text = detailModel.now_price;
-            _priceLabel.text =[NSString stringWithFormat:@"¥%@",_priceLabel.text];
+            _priceLabel.text = [NSString stringWithFormat:@"¥%@",_priceLabel.text];
+            _petLabel.text = detailModel.is_pet;
             
-         [self addZLImageViewDisPlayView];
+            NSString *starTimeStr = [Utilities dateStrFromCstampTime:[detailModel.start_time integerValue] withDateFormat:@"YYYY-MM-dd"];
+            //NSString *star = [starTimeStr substringFromIndex:starTimeStr.length]
+            _startBtn.titleLabel.text = starTimeStr;
+            [self addZLImageViewDisPlayView];
+            
         }
         else{
             
