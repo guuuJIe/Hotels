@@ -136,11 +136,11 @@ failure:^(NSInteger statusCode, NSError *error) {
     
     CGRect frame = CGRectMake(0, self.navigationController.navigationBar.frame.size.height + 20, screenFrame.size.width, 180);
     
-    //NSArray *imageArray = @[@"酒店1.jpg", @"酒店2.jpg", @"酒店3.jpg"];
+    NSArray *imageArray = _arr;
     
     //初始化控件
     ZLImageViewDisplayView *imageViewDisplay = [ZLImageViewDisplayView zlImageViewDisplayViewWithFrame:frame];
-    imageViewDisplay.imageViewArray =_arr;
+    imageViewDisplay.imageViewArray =imageArray;
     imageViewDisplay.scrollInterval = 2;
     imageViewDisplay.animationInterVale = 0.6;
     [self.view addSubview:imageViewDisplay];
