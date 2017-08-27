@@ -97,7 +97,7 @@
 //网络请求
 -(void)hotelDetailRequest{
     UIActivityIndicatorView *aiv = [Utilities getCoverOnView:self.view];
-    NSDictionary *para =@{@"id":@1};
+    NSDictionary *para =@{@"id":@(_hotelId)};
     [RequestAPI requestURL:@"/findHotelById" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
         [aiv stopAnimating];
         NSLog(@"responseObject:%@",responseObject);
