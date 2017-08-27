@@ -9,32 +9,48 @@
 #import "HotelViewController.h"
 #import "HotelTableViewCell.h"
 #import <CoreLocation/CoreLocation.h>
+#import <UIImageView+WebCache.h>
 @interface HotelViewController ()<UITableViewDataSource,UITableViewDelegate,CLLocationManagerDelegate>
 {
     BOOL firstVisit;
     NSInteger PageNum;
     NSInteger pageSize;
     BOOL isLastPage;
+    NSInteger scrollPage;
+    NSInteger scrollPageC;
 }
 @property (weak, nonatomic) IBOutlet UIButton *homeLocation;
 @property (weak, nonatomic) IBOutlet UITextField *searchTextField;
 @property (weak, nonatomic) IBOutlet UILabel *tempLabel;
 @property (weak, nonatomic) IBOutlet UILabel *weatherLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *weatherImg;
-@property (weak, nonatomic) IBOutlet UIButton *cityBtn;
+
 @property (weak, nonatomic) IBOutlet UITableView *hotelTableView;
+@property (weak, nonatomic) IBOutlet UIImageView *firstImg;
+@property (weak, nonatomic) IBOutlet UIImageView *secondImg;
+@property (weak, nonatomic) IBOutlet UIImageView *threeImg;
+@property (weak, nonatomic) IBOutlet UIImageView *fourImg;
+@property (weak, nonatomic) IBOutlet UIScrollView *homeScrollView;
+@property (weak, nonatomic) IBOutlet UIScrollView *bottmScrollView;
+@property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
+
+@property (weak, nonatomic) IBOutlet UIButton *cityBtn;
 
 @property (strong,nonatomic)CLLocationManager *locMgr;
 @property (strong,nonatomic)CLLocation *location;
 
 @property (strong,nonatomic)UIActivityIndicatorView *aiv;
 @property (strong, nonatomic) NSMutableArray *hotelArr;
+@property (strong, nonatomic) NSMutableArray *advImgArr;
+//@property (strong, nonatomic) NSString *longitude;      //经度
+//@property (strong, nonatomic) NSString *latitude;       //纬度
 @end
 
 @implementation HotelViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _advImgArr = [NSMutableArray new];
     firstVisit = YES;
     // Do any additional setup after loading the view.
     _hotelArr = [NSMutableArray new];
@@ -43,16 +59,17 @@
     pageSize = 15;
     //去掉tableview底部多余的线
     _hotelTableView.tableFooterView = [UIView new];
-    //创建一个刷新指示器放在tableview中
-    UIRefreshControl *ref = [UIRefreshControl new];
-    [ref addTarget:self action:@selector(refreshRequest) forControlEvents:UIControlEventValueChanged];
-    ref.tag = 10004;
-    [_hotelTableView addSubview:ref];
+    
    // [self weatherRequest];          //天气网络请求
+    
     [self locationConfig];          //开始定位
     [self enterApp];                //判断是否第一次进入app
     [[NSNotificationCenter defaultCenter ] addObserver:self selector:@selector(chooseCity:) name:@"ResetCity" object:nil];
     [self initializeData];
+    //去掉scrollView横向滚动标示
+    _homeScrollView.showsHorizontalScrollIndicator = NO;
+    //滑动点设为4个
+    _pageControl.numberOfPages = 4;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -63,6 +80,8 @@
     [super viewWillAppear:animated];
     [self locationStart];
 }
+
+//================================================================定位相关
 -(void)locationConfig{
     _locMgr = [CLLocationManager new];
     //签协议
@@ -109,14 +128,29 @@
     }
 }
 
+ //=========================================================================
+//创建一个刷新指示器
+- (void)refresh{
+    //创建一个刷新指示器放在tableview中
+    UIRefreshControl *ref = [UIRefreshControl new];
+    [ref addTarget:self action:@selector(refreshRequest) forControlEvents:UIControlEventValueChanged];
+    ref.tag = 10004;
+    [_bottmScrollView addSubview:ref];
+}
+
 - (void)refreshRequest{
     PageNum = 1;
-    [self hotel];
+    [self hotelAdv];
+    //[self hotelList];
+}
+- (void)initializeData{
+    _aiv = [Utilities getCoverOnView:self.view];
+    [self refreshRequest];
 }
 #pragma  mark - request
 //天气
 -(void)weatherRequest{
-    _aiv = [Utilities getCoverOnView:self.view];
+    
     
     NSDictionary *parameters = @{@"cityname" : @"%E5%A4%AA%E5%8E%9F&dtype=&format=&key=9c44df781a01d4f579aa8c782a578ea5"};
     
@@ -135,27 +169,40 @@
     }];
 
 }
-- (void)initializeData{
-    _aiv = [Utilities getCoverOnView:self.view];
-    [self refreshRequest];
-}
-//酒店
-- (void)hotel{
-    //点击按钮的时候创建一个蒙层，并显示在当前页面
-    
+
+//广告
+- (void)hotelAdv{
+    //初始化日期格式器
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    //定义日期格式
+    formatter.dateFormat = @"yyyy-MM-dd";
+    //当前时间
+    NSDate *date = [NSDate date];
+    //明天的日期
+    NSDate *dateTom = [NSDate dateTomorrow];
+    NSString *dateStr = [formatter stringFromDate:date];
+    NSString *dateTomStr= [formatter stringFromDate:dateTom];
     //参数
-    NSDictionary *para = @{@"startId" :  @1,@"priceId" :@1,@"inTime" :  @0,@"outTime" : @0,@"page" :@1,@"sortingId" :@0};
+    NSDictionary *para = @{@"city_name" : @"无锡", @"pageNum" :@(PageNum), @"pageSize" :  @(pageSize), @"startId" :  @1, @"priceId" :@1, @"sortingId" :@1 ,@"inTime" :  @0,@"outTime" : @0,@"wxlongitude" :@"", @"wxlatitude" :@""};
     //网络请求
-    [RequestAPI requestURL:@"/findAllHotelAndAdvertising" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
+    [RequestAPI requestURL:@"/findHotelByCity_edu" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
         NSLog(@"登录 = %@",responseObject);
         UIRefreshControl *ref = (UIRefreshControl *)[_hotelTableView viewWithTag:10004];
         [ref endRefreshing];
         //当网络请求成功时让蒙层消失
         [_aiv stopAnimating];
         if([responseObject[@"result"]intValue] == 1){
-            NSDictionary *result = responseObject[@"result"];
-            /*NSArray *list = result[@"list"];
-            isLastPage = [result[@"isLastPage"] boolValue];
+            NSDictionary *content = responseObject[@"content"];
+            NSArray *advertising = content[@"advertising"];
+            for (NSDictionary *imgUrl in advertising){
+                NSString *str = imgUrl[@"ad_img"];
+                [_advImgArr addObject:str];
+            }
+            [_firstImg sd_setImageWithURL:[NSURL URLWithString:_advImgArr[0]] placeholderImage:[UIImage imageNamed:@"白云"]];
+            [_secondImg sd_setImageWithURL:[NSURL URLWithString:_advImgArr[2]] placeholderImage:[UIImage imageNamed:@"白云"]];
+            [_threeImg sd_setImageWithURL:[NSURL URLWithString:_advImgArr[3]] placeholderImage:[UIImage imageNamed:@"白云"]];
+            [_fourImg sd_setImageWithURL:[NSURL URLWithString:_advImgArr[4]] placeholderImage:[UIImage imageNamed:@"白云"]];
+           /* isLastPage = [result[@"isLastPage"] boolValue];
             if (PageNum == 1) {
                 [_hotelArr removeAllObjects];
             }
@@ -164,6 +211,7 @@
             
             [_hotelTableView reloadData];*/
         } else {
+            [_aiv stopAnimating];
             //业务逻辑失败的情况下
             NSString *errorMsg = [ErrorHandler getProperErrorString:[responseObject[@"result"] integerValue]];
             [Utilities popUpAlertViewWithMsg:errorMsg andTitle:nil onView:self];
@@ -178,6 +226,88 @@
     }];
 }
 
+//酒店
+- (void)hotelList{
+    //初始化日期格式器
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    //定义日期格式
+    formatter.dateFormat = @"yyyy-MM-dd";
+    //当前时间
+    NSDate *date = [NSDate date];
+    //明天的日期
+    NSDate *dateTom = [NSDate dateTomorrow];
+    NSString *dateStr = [formatter stringFromDate:date];
+    NSString *dateTomStr= [formatter stringFromDate:dateTom];
+    //参数
+    NSDictionary *para = @{@"city_name" :  @"无锡", @"page" :@(PageNum), @"startId" :  @1, @"priceId" :@1, @"sortingId" :@1 ,@"inTime" :  dateStr,@"outTime" : dateTomStr};//,@"wxlongitude" :@"", @"wxlatitude" :@""};
+    
+    //网络请求
+    [RequestAPI requestURL:@"/findHotelByCity" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
+        NSLog(@"登录 = %@",responseObject);
+//        UIRefreshControl *ref = (UIRefreshControl *)[_hotelTableView viewWithTag:10004];
+//        [ref endRefreshing];
+        //当网络请求成功时让蒙层消失
+        [_aiv stopAnimating];
+        if([responseObject[@"result"]intValue] == 1){
+            NSDictionary *content = responseObject[@"content"];
+//            NSArray *advertising = content[@"advertising"];
+//            for (NSDictionary *imgUrl in advertising){
+//                NSString *str = imgUrl[@"ad_img"];
+//                [_advImgArr addObject:str];
+//            }
+//            [_firstImg sd_setImageWithURL:[NSURL URLWithString:_advImgArr[0]] placeholderImage:[UIImage imageNamed:@"白云"]];
+//            [_secondImg sd_setImageWithURL:[NSURL URLWithString:_advImgArr[2]] placeholderImage:[UIImage imageNamed:@"白云"]];
+//            [_threeImg sd_setImageWithURL:[NSURL URLWithString:_advImgArr[3]] placeholderImage:[UIImage imageNamed:@"白云"]];
+//            [_fourImg sd_setImageWithURL:[NSURL URLWithString:_advImgArr[4]] placeholderImage:[UIImage imageNamed:@"白云"]];
+            /* isLastPage = [result[@"isLastPage"] boolValue];
+             if (PageNum == 1) {
+             [_hotelArr removeAllObjects];
+             }
+             
+             
+             
+             [_hotelTableView reloadData];*/
+        } else {
+            [_aiv stopAnimating];
+            //业务逻辑失败的情况下
+            NSString *errorMsg = [ErrorHandler getProperErrorString:[responseObject[@"result"] integerValue]];
+            [Utilities popUpAlertViewWithMsg:errorMsg andTitle:nil onView:self];
+        }
+    } failure:^(NSInteger statusCode, NSError *error) {
+        //当网络请求失败时让蒙层消失
+        [_aiv stopAnimating];
+        UIRefreshControl *ref = (UIRefreshControl *)[_hotelTableView viewWithTag:10004];
+        [ref endRefreshing];
+        [Utilities
+         popUpAlertViewWithMsg:@"请保持网络连接畅通" andTitle:nil onView:self];
+    }];
+}
+
+//================================================================滚动广告相关
+//scrollView已经停止减速
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+    scrollPage = [self scrollCheck:scrollView];
+    _pageControl.currentPage = scrollPage;
+    
+}
+//scrollView已经开始减速
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView{
+    if (scrollPage == 3){
+        scrollPageC = 0;
+    }else {
+        scrollPageC = 1;
+    }
+}
+
+//判断scrollView滑动到哪里了
+-(NSInteger)scrollCheck:(UIScrollView *)scrollView{
+    scrollPage = scrollView.contentOffset.x /(scrollView.frame.size.width);
+    if (scrollPageC == 0){
+        scrollPage = scrollPageC;
+        scrollView.contentOffset = CGPointMake(0, 0);
+    }
+    return scrollPage;
+}
 /*
 #pragma mark - Navigation
 
