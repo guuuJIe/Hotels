@@ -84,6 +84,12 @@
     [self locationStart];
 }
 
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
+    self.tabBarController.tabBar.hidden = YES;
+}
+
 //================================================================定位相关
 -(void)locationConfig{
     _locMgr = [CLLocationManager new];
