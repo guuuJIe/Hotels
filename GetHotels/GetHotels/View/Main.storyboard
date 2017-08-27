@@ -529,7 +529,7 @@
                                                     <outlet property="hotelLocLabel" destination="5Ho-j5-dk5" id="a17-nW-vfb"/>
                                                     <outlet property="hotelNameLabel" destination="oc6-bt-LeJ" id="JWN-db-MqP"/>
                                                     <outlet property="hotelPriceLabel" destination="3uy-46-maq" id="kLJ-6y-izB"/>
-                                                    <segue destination="88j-Dv-Zqy" kind="presentation" identifier="ListToDetail" id="zml-w4-eMM"/>
+                                                    <segue destination="88j-Dv-Zqy" kind="show" identifier="ListToDetail" id="zml-w4-eMM"/>
                                                 </connections>
                                             </tableViewCell>
                                         </prototypes>

@@ -19,7 +19,7 @@
         _latitude = [Utilities nullAndNilCheck:dict[@"latitude"] replaceBy:@"0"];
         _longitude = [Utilities nullAndNilCheck:dict[@"longitude"] replaceBy:@"0"];
         _price = [[Utilities nullAndNilCheck:dict[@"price"] replaceBy:@"0"] integerValue];
-        _id = [[Utilities nullAndNilCheck:dict[@"id"] replaceBy:@"0"] integerValue];
+        _hotelId = [[Utilities nullAndNilCheck:dict[@"id"] replaceBy:@"0"] integerValue];
         
     }
     return self;
