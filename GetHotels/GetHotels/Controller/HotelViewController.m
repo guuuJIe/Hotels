@@ -422,7 +422,7 @@
         //2.获取下一页这个实例
         HotelDetailViewController *detailVC = segue.destinationViewController;
         //3、把数据给下一页预备好的接受容器
-        detailVC.activity = [NSString stringWithFormat:@"%ld",(long)model.id];
+        detailVC.hotelId = [NSString stringWithFormat:@"%ld",(long)model.id];
     }
 }
 @end
