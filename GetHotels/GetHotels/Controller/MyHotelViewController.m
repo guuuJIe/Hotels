@@ -11,7 +11,10 @@
 #import "AllOrdersTableViewCell.h"
 #import "UseableOrderTableViewCell.h"
 #import "DatedOrderTableViewCell.h"
-@interface MyHotelViewController ()<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>
+@interface MyHotelViewController ()<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>{
+    NSInteger useableFirst;
+    NSInteger datedFirst;
+}
 @property (strong,nonatomic) HMSegmentedControl *segmentcontrol;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UITableView *AllOrderTableView;
@@ -26,6 +29,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    useableFirst = 1;
+    datedFirst = 1;
     // 状态栏(statusbar)
     _rectStatus = [[UIApplication sharedApplication] statusBarFrame];
     // 导航栏（navigationbar）
@@ -154,7 +159,7 @@
 }
 //可使用订单
 -(void)UseableOrdersRequest{
-    NSDictionary *para = @{@"openid":@"",@"id":@2};
+    NSDictionary *para = @{@"openid":_user.openid,@"id":@2};
     [RequestAPI requestURL:@"/findOrders_edu" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
         // NSLog(@"acquire:%@",responseObject);
         [_aiv stopAnimating];
@@ -170,9 +175,9 @@
     }];
     
 }
-//可使用订单
+//过期订单
 -(void)DatedOrdersRequest{
-    NSDictionary *para = @{@"openid":_user.openid,@"id":@2};
+    NSDictionary *para = @{@"openid":_user.openid,@"id":@3};
     [RequestAPI requestURL:@"/findOrders_edu" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
         // NSLog(@"acquire:%@",responseObject);
         [_aiv stopAnimating];
@@ -224,7 +229,15 @@
 -(NSInteger)scrollCheck:(UIScrollView *)scrollView{
     //ScrollView中的contentoffset内容的左上角位置
     NSInteger page = scrollView.contentOffset.x/(scrollView.frame.size.width);
-   NSLog(@"scrollView.contentOffset.x = %f",scrollView.contentOffset.x);
+   // NSLog(@"scrollView.contentOffset.x = %f",scrollView.contentOffset.x);
+    if (useableFirst == 1  && page == 1) {
+        useableFirst =0;
+        [self UseableOrdersRequest];
+    }
+    if (datedFirst == 1 && page ==2) {
+        datedFirst = 0;
+        [self DatedOrdersRequest];
+    }
     return page;
 }
 #pragma mark - tableView
