@@ -59,7 +59,7 @@
     _hotelArr = [NSMutableArray new];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     PageNum = 1;
-    pageSize = 15;
+    pageSize = 5;
     //去掉tableview底部多余的线
     _hotelTableView.tableFooterView = [UIView new];
     
@@ -68,7 +68,9 @@
     [self locationConfig];          //开始定位
     [self enterApp];                //判断是否第一次进入app
     [[NSNotificationCenter defaultCenter ] addObserver:self selector:@selector(chooseCity:) name:@"ResetCity" object:nil];
+    //调用蒙层和刷新指示器
     [self initializeData];
+    [self refresh];
     //去掉scrollView横向滚动标示
     _homeScrollView.showsHorizontalScrollIndicator = NO;
     //滑动点设为4个
@@ -144,17 +146,17 @@
     UIRefreshControl *ref = [UIRefreshControl new];
     [ref addTarget:self action:@selector(refreshRequest) forControlEvents:UIControlEventValueChanged];
     ref.tag = 10004;
-    [_bottmScrollView addSubview:ref];
+    [_hotelTableView addSubview:ref];
+}
+
+- (void)initializeData{
+    _aiv = [Utilities getCoverOnView:self.view];
+    [self refreshRequest];
 }
 
 - (void)refreshRequest{
     PageNum = 1;
     [self hotelAdv];
-    //[self hotelList];
-}
-- (void)initializeData{
-    _aiv = [Utilities getCoverOnView:self.view];
-    [self refreshRequest];
 }
 #pragma  mark - request
 //天气
@@ -193,18 +195,24 @@
     NSString *dateTomStr= [formatter stringFromDate:dateTom];
     //参数
     NSDictionary *para = @{@"city_name" : _cityBtn.titleLabel.text, @"pageNum" :@(PageNum), @"pageSize" :  @(pageSize), @"startId" :  @1, @"priceId" :@1, @"sortingId" :@1 ,@"inTime" : dateStr ,@"outTime" : dateTomStr,@"wxlongitude" :@"", @"wxlatitude" :@""};
+    //拿到刷新指示器
+    UIRefreshControl *ref = (UIRefreshControl *)[_hotelTableView viewWithTag:10004];
     //网络请求
     [RequestAPI requestURL:@"/findHotelByCity_edu" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
-        NSLog(@"登录 = %@",responseObject);
-        UIRefreshControl *ref = (UIRefreshControl *)[_hotelTableView viewWithTag:10004];
-        [ref endRefreshing];
+        //NSLog(@"登录 = %@",responseObject);
         //当网络请求成功时让蒙层消失
         [_aiv stopAnimating];
+        [ref endRefreshing];
         if([responseObject[@"result"]intValue] == 1){
             NSDictionary *content = responseObject[@"content"];
             //酒店列表信息
             NSDictionary *hotel = content[@"hotel"];
             NSArray *list = hotel[@"list"];
+            isLastPage = [hotel[@"isLastPage"] boolValue];
+            
+            if (PageNum == 1) {
+                [_hotelArr removeAllObjects];
+            }
             for (NSDictionary *dict in  list){
                 
                 HotelListModel *model = [[HotelListModel alloc] initWithDict:dict];
@@ -222,11 +230,6 @@
             [_fourImg sd_setImageWithURL:[NSURL URLWithString:_advImgArr[4]] placeholderImage:[UIImage imageNamed:@"白云"]];
             
             
-           /* isLastPage = [result[@"isLastPage"] boolValue];
-            if (PageNum == 1) {
-                [_hotelArr removeAllObjects];
-            }*/
-            
             [_homeScrollView reloadInputViews];
             [_hotelTableView reloadData];
         } else {
@@ -238,8 +241,6 @@
     } failure:^(NSInteger statusCode, NSError *error) {
         //当网络请求失败时让蒙层消失
         [_aiv stopAnimating];
-        UIRefreshControl *ref = (UIRefreshControl *)[_hotelTableView viewWithTag:10004];
-        [ref endRefreshing];
         [Utilities
          popUpAlertViewWithMsg:@"请保持网络连接畅通" andTitle:nil onView:self];
     }];
@@ -290,15 +291,15 @@
 
 //当一个细胞将要出现的时候要做的事情
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-   /* [tableView deselectRowAtIndexPath:indexPath animated:YES];
     //判断将要出现的细胞是不是当前最后一行
+    NSLog(@"%ld,,,%lu",(long)indexPath.row,(unsigned long)_hotelArr.count);
     if (indexPath.row == _hotelArr.count - 1) {
         //当存在下一页的时候，页码自增，请求下一页数据
-        if (!isLastPage) {
+        if (isLastPage) {
             PageNum ++;
-            [self hotel];
+            [self hotelAdv];
         }
-    }*/
+    }
 }
 
 //设置每一组中每一行细胞的高度
@@ -328,7 +329,11 @@
     return  cell;
 }
 
-
+//细胞选中后调用
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    //点击某行细胞变色
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
 #pragma mark - location
 //定位失败时
 - (void)locationManager:(CLLocationManager *)manager
