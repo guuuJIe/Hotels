@@ -40,6 +40,7 @@
 		841E379A1F495AE90057D58A /* MyHotelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841E37991F495AE90057D58A /* MyHotelViewController.m */; };
 		841E379D1F4960710057D58A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841E379C1F4960710057D58A /* ViewController.m */; };
 		841E37A11F4965F30057D58A /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 841E37A01F4965F30057D58A /* HMSegmentedControl.m */; };
+		843AF6E41F526E9400C7878B /* HotelListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 843AF6E31F526E9400C7878B /* HotelListModel.m */; };
 		8445AD861F4C535000417B79 /* AllOrdersTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8445AD851F4C535000417B79 /* AllOrdersTableViewCell.m */; };
 		8445AD8A1F4C53BD00417B79 /* UseableOrderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8445AD891F4C53BD00417B79 /* UseableOrderTableViewCell.m */; };
 		8445AD8E1F4C53DE00417B79 /* DatedOrderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8445AD8D1F4C53DE00417B79 /* DatedOrderTableViewCell.m */; };
@@ -140,6 +141,8 @@
 		841E379C1F4960710057D58A /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		841E379F1F4965F30057D58A /* HMSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSegmentedControl.h; sourceTree = "<group>"; };
 		841E37A01F4965F30057D58A /* HMSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSegmentedControl.m; sourceTree = "<group>"; };
+		843AF6E21F526E9400C7878B /* HotelListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotelListModel.h; sourceTree = "<group>"; };
+		843AF6E31F526E9400C7878B /* HotelListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotelListModel.m; sourceTree = "<group>"; };
 		8445AD841F4C535000417B79 /* AllOrdersTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllOrdersTableViewCell.h; sourceTree = "<group>"; };
 		8445AD851F4C535000417B79 /* AllOrdersTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllOrdersTableViewCell.m; sourceTree = "<group>"; };
 		8445AD881F4C53BD00417B79 /* UseableOrderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UseableOrderTableViewCell.h; sourceTree = "<group>"; };
@@ -456,6 +459,8 @@
 		8459DB2C1F5100D7003EAF92 /* HomeHotel */ = {
 			isa = PBXGroup;
 			children = (
+				843AF6E21F526E9400C7878B /* HotelListModel.h */,
+				843AF6E31F526E9400C7878B /* HotelListModel.m */,
 			);
 			name = HomeHotel;
 			sourceTree = "<group>";
@@ -733,6 +738,7 @@
 				045E655D1F485F4D001A8263 /* ErrorHandler.m in Sources */,
 				8445AD8A1F4C53BD00417B79 /* UseableOrderTableViewCell.m in Sources */,
 				045E64E71F485CA3001A8263 /* AppDelegate.m in Sources */,
+				843AF6E41F526E9400C7878B /* HotelListModel.m in Sources */,
 				84A3467F1F4C42C60051BDFB /* MyInfoViewController.m in Sources */,
 				045E65601F485F4D001A8263 /* NSDate+Utility.m in Sources */,
 				FEACC78C1F4AF4A6002EC5F8 /* HotelDetailViewController.m in Sources */,

@@ -10,6 +10,7 @@
 #import "HotelTableViewCell.h"
 #import <CoreLocation/CoreLocation.h>
 #import <UIImageView+WebCache.h>
+#import "HotelListModel.h"
 @interface HotelViewController ()<UITableViewDataSource,UITableViewDelegate,CLLocationManagerDelegate>
 {
     BOOL firstVisit;
@@ -170,7 +171,7 @@
 
 }
 
-//广告
+//广告,酒店
 - (void)hotelAdv{
     //初始化日期格式器
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
@@ -183,7 +184,7 @@
     NSString *dateStr = [formatter stringFromDate:date];
     NSString *dateTomStr= [formatter stringFromDate:dateTom];
     //参数
-    NSDictionary *para = @{@"city_name" : @"无锡", @"pageNum" :@(PageNum), @"pageSize" :  @(pageSize), @"startId" :  @1, @"priceId" :@1, @"sortingId" :@1 ,@"inTime" :  @0,@"outTime" : @0,@"wxlongitude" :@"", @"wxlatitude" :@""};
+    NSDictionary *para = @{@"city_name" : @"无锡", @"pageNum" :@(PageNum), @"pageSize" :  @(pageSize), @"startId" :  @1, @"priceId" :@1, @"sortingId" :@1 ,@"inTime" : dateStr ,@"outTime" : dateTomStr,@"wxlongitude" :@"", @"wxlatitude" :@""};
     //网络请求
     [RequestAPI requestURL:@"/findHotelByCity_edu" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
         NSLog(@"登录 = %@",responseObject);
@@ -193,6 +194,7 @@
         [_aiv stopAnimating];
         if([responseObject[@"result"]intValue] == 1){
             NSDictionary *content = responseObject[@"content"];
+            //广告图片
             NSArray *advertising = content[@"advertising"];
             for (NSDictionary *imgUrl in advertising){
                 NSString *str = imgUrl[@"ad_img"];
@@ -202,71 +204,20 @@
             [_secondImg sd_setImageWithURL:[NSURL URLWithString:_advImgArr[2]] placeholderImage:[UIImage imageNamed:@"白云"]];
             [_threeImg sd_setImageWithURL:[NSURL URLWithString:_advImgArr[3]] placeholderImage:[UIImage imageNamed:@"白云"]];
             [_fourImg sd_setImageWithURL:[NSURL URLWithString:_advImgArr[4]] placeholderImage:[UIImage imageNamed:@"白云"]];
+            //酒店列表信息
+            NSArray *hotel = content[@"hotel"];
+            for (NSDictionary *dict in  hotel){
+                HotelListModel *model = [[HotelListModel alloc] initWithDict:dict];
+                [_hotelArr addObject:model];
+            }
+            
            /* isLastPage = [result[@"isLastPage"] boolValue];
             if (PageNum == 1) {
                 [_hotelArr removeAllObjects];
-            }
+            }*/
             
-            
-            
-            [_hotelTableView reloadData];*/
-        } else {
-            [_aiv stopAnimating];
-            //业务逻辑失败的情况下
-            NSString *errorMsg = [ErrorHandler getProperErrorString:[responseObject[@"result"] integerValue]];
-            [Utilities popUpAlertViewWithMsg:errorMsg andTitle:nil onView:self];
-        }
-    } failure:^(NSInteger statusCode, NSError *error) {
-        //当网络请求失败时让蒙层消失
-        [_aiv stopAnimating];
-        UIRefreshControl *ref = (UIRefreshControl *)[_hotelTableView viewWithTag:10004];
-        [ref endRefreshing];
-        [Utilities
-         popUpAlertViewWithMsg:@"请保持网络连接畅通" andTitle:nil onView:self];
-    }];
-}
-
-//酒店
-- (void)hotelList{
-    //初始化日期格式器
-    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    //定义日期格式
-    formatter.dateFormat = @"yyyy-MM-dd";
-    //当前时间
-    NSDate *date = [NSDate date];
-    //明天的日期
-    NSDate *dateTom = [NSDate dateTomorrow];
-    NSString *dateStr = [formatter stringFromDate:date];
-    NSString *dateTomStr= [formatter stringFromDate:dateTom];
-    //参数
-    NSDictionary *para = @{@"city_name" :  @"无锡", @"page" :@(PageNum), @"startId" :  @1, @"priceId" :@1, @"sortingId" :@1 ,@"inTime" :  dateStr,@"outTime" : dateTomStr};//,@"wxlongitude" :@"", @"wxlatitude" :@""};
-    
-    //网络请求
-    [RequestAPI requestURL:@"/findHotelByCity" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
-        NSLog(@"登录 = %@",responseObject);
-//        UIRefreshControl *ref = (UIRefreshControl *)[_hotelTableView viewWithTag:10004];
-//        [ref endRefreshing];
-        //当网络请求成功时让蒙层消失
-        [_aiv stopAnimating];
-        if([responseObject[@"result"]intValue] == 1){
-            NSDictionary *content = responseObject[@"content"];
-//            NSArray *advertising = content[@"advertising"];
-//            for (NSDictionary *imgUrl in advertising){
-//                NSString *str = imgUrl[@"ad_img"];
-//                [_advImgArr addObject:str];
-//            }
-//            [_firstImg sd_setImageWithURL:[NSURL URLWithString:_advImgArr[0]] placeholderImage:[UIImage imageNamed:@"白云"]];
-//            [_secondImg sd_setImageWithURL:[NSURL URLWithString:_advImgArr[2]] placeholderImage:[UIImage imageNamed:@"白云"]];
-//            [_threeImg sd_setImageWithURL:[NSURL URLWithString:_advImgArr[3]] placeholderImage:[UIImage imageNamed:@"白云"]];
-//            [_fourImg sd_setImageWithURL:[NSURL URLWithString:_advImgArr[4]] placeholderImage:[UIImage imageNamed:@"白云"]];
-            /* isLastPage = [result[@"isLastPage"] boolValue];
-             if (PageNum == 1) {
-             [_hotelArr removeAllObjects];
-             }
-             
-             
-             
-             [_hotelTableView reloadData];*/
+            [_homeScrollView reloadInputViews];
+            [_hotelTableView reloadData];
         } else {
             [_aiv stopAnimating];
             //业务逻辑失败的情况下
@@ -323,7 +274,7 @@
 }
 //设置表格视图中每一组有多少行
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 5;
+    return _hotelArr.count;
 }
 
 //当一个细胞将要出现的时候要做的事情
@@ -347,6 +298,16 @@
 //设置每一组中每一行的细胞长什么样
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     HotelTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HomeHotelCell" forIndexPath:indexPath];
+    HotelListModel *model = _hotelArr[indexPath.row];
+    cell.hotelNameLabel.text = model.name;
+    cell.hotelLocLabel.text = model.address;
+    NSURL *URL = [NSURL URLWithString:model.imgUrl];
+    [cell.hotelImg sd_setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"酒店-1"]];
+    //计算距离
+     CLLocation *otherLocation = [[CLLocation alloc] initWithLatitude:[model.latitude doubleValue] longitude:[model.longitude doubleValue]];
+    
+    CLLocationDistance kilometers=[_location distanceFromLocation:otherLocation]/1000;
+    NSLog(@"距离:%f",kilometers);
     return  cell;
 }
 
@@ -377,6 +338,7 @@
     didUpdateToLocation:(CLLocation *)newLocation
            fromLocation:(CLLocation *)oldLocation{
     _location = newLocation;
+    
     if (firstVisit) {
         firstVisit = !firstVisit;
         //根据定位拿到城市
