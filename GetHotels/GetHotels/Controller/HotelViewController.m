@@ -11,6 +11,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import <UIImageView+WebCache.h>
 #import "HotelListModel.h"
+#import "HotelDetailViewController.h"
 
 @interface HotelViewController ()<UITableViewDataSource,UITableViewDelegate,CLLocationManagerDelegate>
 {
@@ -185,7 +186,7 @@
     NSString *dateStr = [formatter stringFromDate:date];
     NSString *dateTomStr= [formatter stringFromDate:dateTom];
     //参数
-    NSDictionary *para = @{@"city_name" : @"无锡", @"pageNum" :@(PageNum), @"pageSize" :  @(pageSize), @"startId" :  @1, @"priceId" :@1, @"sortingId" :@1 ,@"inTime" : dateStr ,@"outTime" : dateTomStr,@"wxlongitude" :@"", @"wxlatitude" :@""};
+    NSDictionary *para = @{@"city_name" : _cityBtn.titleLabel.text, @"pageNum" :@(PageNum), @"pageSize" :  @(pageSize), @"startId" :  @1, @"priceId" :@1, @"sortingId" :@1 ,@"inTime" : dateStr ,@"outTime" : dateTomStr,@"wxlongitude" :@"", @"wxlatitude" :@""};
     //网络请求
     [RequestAPI requestURL:@"/findHotelByCity_edu" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
         NSLog(@"登录 = %@",responseObject);
@@ -306,13 +307,18 @@
     cell.hotelNameLabel.text = model.name;
     cell.hotelLocLabel.text = _cityBtn.titleLabel.text;
     cell.hotelPriceLabel.text =   [NSString stringWithFormat:@"¥%ld" ,(long)model.price] ;
-    NSURL *URL = [NSURL URLWithString:model.imgUrl];
-    [cell.hotelImg sd_setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"酒店-1"]];
+    //NSURL *URL = [NSURL URLWithString:model.imgUrl ];
+   // NSString *strUrl = [NSString stringWithFormat:@"%@png",[model.imgUrl substringToIndex:model.imgUrl.length - 3]];
+    //NSURL *URL = [NSURL URLWithString:@"http://ww3.sinaimg.cn/mw690/51f76ed7jw1e3ohzmmnffj.jpg"];
+    
+    cell.hotelImg.image = [UIImage imageWithData:[[NSData alloc]initWithContentsOfURL:[NSURL URLWithString:model.imgUrl]]];
+    //[cell.hotelImg sd_setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"酒店-1"]];
     //计算距离
      CLLocation *otherLocation = [[CLLocation alloc] initWithLatitude:[model.latitude doubleValue] longitude:[model.longitude doubleValue]];
     
     CLLocationDistance kilometers=[_location distanceFromLocation:otherLocation]/1000;
-    cell.hotelDistanceLabel.text = [NSString stringWithFormat:@"%f公里",kilometers];
+    cell.hotelDistanceLabel.text = [NSString stringWithFormat:@"距离我%.1f公里",kilometers];
+   // [_hotelTableView reloadData];
     return  cell;
 }
 
@@ -403,6 +409,20 @@
         [Utilities removeUserDefaults:@"UserCity"];
         //修改用户选择城市的记忆体
         [Utilities setUserDefaults:@"UserCity" content:cityStr];
+    }
+}
+
+//当某一个页面跳转行为将要发生的时候
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if([segue.identifier isEqualToString:@"ListToDetail"]){
+        //当从列表页到详情页的这个跳转要发生的时候
+        //1.获取要传递到下一页的数据
+        NSIndexPath *indexPath = [_hotelTableView indexPathForSelectedRow];
+        HotelListModel *model = _hotelArr[indexPath.row];
+        //2.获取下一页这个实例
+        HotelDetailViewController *detailVC = segue.destinationViewController;
+        //3、把数据给下一页预备好的接受容器
+        detailVC.activity = [NSString stringWithFormat:@"%ld",(long)model.id];
     }
 }
 @end
