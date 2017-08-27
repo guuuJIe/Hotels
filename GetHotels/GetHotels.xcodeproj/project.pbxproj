@@ -233,7 +233,6 @@
 				045E651B1F485D9B001A8263 /* Model */,
 				045E651D1F485D9B001A8263 /* View */,
 				045E651A1F485D9B001A8263 /* Controller */,
-				045E64EE1F485CA3001A8263 /* GetHotels.xcdatamodeld */,
 				045E64E21F485CA3001A8263 /* Supporting Files */,
 			);
 			path = GetHotels;
@@ -371,6 +370,7 @@
 		0477F5281F4C34A600B16FB3 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				045E64EE1F485CA3001A8263 /* GetHotels.xcdatamodeld */,
 				0477F5291F4C34C300B16FB3 /* LoginViewController.h */,
 				0477F52A1F4C34C300B16FB3 /* LoginViewController.m */,
 			);
@@ -1011,7 +1011,8 @@
 				045E64EF1F485CA3001A8263 /* GetHotels.xcdatamodel */,
 			);
 			currentVersion = 045E64EF1F485CA3001A8263 /* GetHotels.xcdatamodel */;
-			path = GetHotels.xcdatamodeld;
+			name = GetHotels.xcdatamodeld;
+			path = ../GetHotels.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

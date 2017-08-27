@@ -46,16 +46,18 @@
 @property (weak, nonatomic) IBOutlet UIToolbar *tooBar;
 - (IBAction)cancelAction:(UIBarButtonItem *)sender;
 - (IBAction)confirmAction:(UIBarButtonItem *)sender;
+@property (strong,nonatomic) NSMutableArray *arr;
 
 @end
 
 @implementation HotelDetailViewController
 
 - (void)viewDidLoad {
-    [self naviConfig];
     [super viewDidLoad];
-    [self addZLImageViewDisPlayView];
+    [self naviConfig];
+    _arr = [NSMutableArray new];
     [self hotelDetailRequest];
+   
     // Do any additional setup after loading the view.
     //状态栏变成白色
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
@@ -101,15 +103,23 @@
         if([responseObject[@"result"]intValue] == 1){
             NSDictionary *content = responseObject[@"content"];
             
-         // NSArray *hotel_facilities = content[@"hotel_facilities"];
-        //NSArray *hotel_types = content[@"hotel_types"];
-         hotelDetailModel *detailModel = [[hotelDetailModel alloc]initWithDictionary:content];
+        NSArray *hotel_facilities = content[@"hotel_facilities"];
+        NSArray *hotel_types = content[@"hotel_types"];
+            NSArray *image = content[@"hotel_imgs"];
+            for(NSString *string in image){
+                [_arr addObject:string];
+
+            }
+            NSLog(@"string=%@",_arr);
+        hotelDetailModel *detailModel = [[hotelDetailModel alloc]initWithDictionary:content];
          _nameLabel.text = detailModel.hotel_name;
             _adressLabel.text = detailModel.hotel_address;
             _priceLabel.text = detailModel.now_price;
             _priceLabel.text =[NSString stringWithFormat:@"¥%@",_priceLabel.text];
-        //UIImage *_decodedImage = [UIImage imageWithData:detailModel.hotel_imgs];
-        }else{
+            
+         [self addZLImageViewDisPlayView];
+        }
+        else{
             
         }
     }
@@ -126,11 +136,11 @@ failure:^(NSInteger statusCode, NSError *error) {
     
     CGRect frame = CGRectMake(0, self.navigationController.navigationBar.frame.size.height + 20, screenFrame.size.width, 180);
     
-    NSArray *imageArray = @[@"酒店1.jpg", @"酒店2.jpg", @"酒店3.jpg"];
+    //NSArray *imageArray = @[@"酒店1.jpg", @"酒店2.jpg", @"酒店3.jpg"];
     
     //初始化控件
     ZLImageViewDisplayView *imageViewDisplay = [ZLImageViewDisplayView zlImageViewDisplayViewWithFrame:frame];
-    imageViewDisplay.imageViewArray = imageArray;
+    imageViewDisplay.imageViewArray =_arr;
     imageViewDisplay.scrollInterval = 2;
     imageViewDisplay.animationInterVale = 0.6;
     [self.view addSubview:imageViewDisplay];

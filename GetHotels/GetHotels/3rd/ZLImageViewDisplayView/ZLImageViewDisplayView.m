@@ -141,7 +141,7 @@
             if ([self verifyURL:imageName]) {
                 NSURL *url = [NSURL URLWithString:imageName];
                 [tempImageView sd_setImageWithURL:url
-                                 placeholderImage:[UIImage imageNamed:@"001.jpg"]];
+                                 placeholderImage:[UIImage imageNamed:@""]];
             } else {
                 UIImage *imageTemp = [UIImage imageNamed:imageName];
                 [tempImageView setImage:imageTemp];
