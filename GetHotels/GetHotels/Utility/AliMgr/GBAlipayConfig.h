@@ -11,7 +11,7 @@
 
 #import <AlipaySDK/AlipaySDK.h>     // 导入AlipaySDK
 #import "Order.h"                   // 导入订单类
-//#import "DataSigner.h"              // 生成signer的类
+#import "DataSigner.h"              // 生成signer的类
 /**
  *  合作者身份id，以2088开头的16位纯数字
  */

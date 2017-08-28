@@ -35,6 +35,9 @@
     [self naviConfig];
     [self uiLayout];
     [self dataInitilize];
+    
+    //监听通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(purchaseResultAction:) name:@"AlipayResult" object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -49,14 +52,39 @@
     self.navigationItem.title = @"支付";
     //为导航条右上角创建一个按钮
     UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithTitle:@"支付" style:UIBarButtonItemStylePlain target:self action:@selector(payAction)];
+    
     self.navigationItem.rightBarButtonItem = right;
     
 }
 
+- (void)payAction {
+    switch (self.tableView.indexPathForSelectedRow.row) {
+        case 0: {
+            //生成订单号
+            NSString *tradeNo = [GBAlipayManager generateTradeNO];
+            [GBAlipayManager alipayWithProductName:_hotelModel.hotel_name amount:_hotelModel.now_price tradeNO:tradeNo notifyURL:nil productDescription:[NSString stringWithFormat:@"%@的酒店入住费",_hotelModel.hotel_name] itBPay:_hotelModel.now_price];
+        }
+            break;
+        case 1: {
+            
+        }
+            break;
+        case 2: {
+            
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+
 //专门做界面
 - (void)uiLayout {
+     NSString *starTimeStr = [Utilities dateStrFromCstampTime:[_hotelModel.start_time integerValue] withDateFormat:@"MM月dd日"];
+    NSString *outTimeStr = [Utilities dateStrFromCstampTime:[_hotelModel.start_time integerValue] withDateFormat:@"MM月dd日"];
     _hotelNameLabel.text = _hotelModel.hotel_name;
-    _dateLabel.text = [NSString stringWithFormat:@"%@--%@",_hotelModel.start_time,_hotelModel.out_time];
+    _dateLabel.text = [NSString stringWithFormat:@"%@--%@",starTimeStr,outTimeStr];
     _priceLabel.text = [NSString stringWithFormat:@"%@元",_hotelModel.now_price];
     self.tableView.tableFooterView = [UIView new];
     //将表格视图设置为"编辑中"
@@ -71,6 +99,24 @@
 
 - (void)dataInitilize {
     _arr = @[@"支付宝支付",@"微信支付",@"银联支付"];
+}
+
+
+//当收到通知后要执行的方法
+- (void)purchaseResultAction: (NSNotification *)note {
+    NSString *result = note.object;
+    if ([result isEqualToString:@"9000"]) {
+        //成功
+        UIAlertController *alertView = [UIAlertController alertControllerWithTitle:@"支付成功" message:@"恭喜你，你成功完成报名" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"知道了" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
+        [alertView addAction:okAction];
+        [self presentViewController:alertView animated:YES completion:nil];
+    } else {
+        //失败
+        [Utilities popUpAlertViewWithMsg:[result isEqualToString:@"4000"] ? @"未能成功支付，请确保账户余额充足" : @"你已取消支付" andTitle:@"支付失败" onView:self];
+    }
 }
 
 
