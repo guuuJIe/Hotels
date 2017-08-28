@@ -35,6 +35,7 @@
 		045E65741F486133001A8263 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 045E65731F486133001A8263 /* CoreTelephony.framework */; };
 		045E65761F48613D001A8263 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 045E65751F48613D001A8263 /* libz.tbd */; };
 		0464CC331F52D101006260CE /* ContactServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0464CC321F52D101006260CE /* ContactServiceViewController.m */; };
+		046F32301F54206000157DD3 /* PurchaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046F322F1F54206000157DD3 /* PurchaseTableViewController.m */; };
 		0477F52B1F4C34C300B16FB3 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0477F52A1F4C34C300B16FB3 /* LoginViewController.m */; };
 		0477F5301F4C36DB00B16FB3 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0477F52F1F4C36DB00B16FB3 /* SignupViewController.m */; };
 		3D8A9503E1C97F83257C6E00 /* libPods-GetHotels.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55FE6991657D1891A74110DA /* libPods-GetHotels.a */; };
@@ -133,6 +134,8 @@
 		045E65751F48613D001A8263 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		0464CC311F52D101006260CE /* ContactServiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactServiceViewController.h; sourceTree = "<group>"; };
 		0464CC321F52D101006260CE /* ContactServiceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactServiceViewController.m; sourceTree = "<group>"; };
+		046F322E1F54206000157DD3 /* PurchaseTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PurchaseTableViewController.h; sourceTree = "<group>"; };
+		046F322F1F54206000157DD3 /* PurchaseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PurchaseTableViewController.m; sourceTree = "<group>"; };
 		0477F5291F4C34C300B16FB3 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		0477F52A1F4C34C300B16FB3 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		0477F52E1F4C36DB00B16FB3 /* SignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupViewController.h; sourceTree = "<group>"; };
@@ -311,6 +314,7 @@
 		045E651A1F485D9B001A8263 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				046F322D1F54200D00157DD3 /* Purchase */,
 				0464CC301F52D07C006260CE /* ContactService */,
 				04587C831F519986005A7569 /* AccountSetting */,
 				8445AD8F1F4C546C00417B79 /* MyHotelOrder */,
@@ -406,6 +410,15 @@
 				0464CC321F52D101006260CE /* ContactServiceViewController.m */,
 			);
 			name = ContactService;
+			sourceTree = "<group>";
+		};
+		046F322D1F54200D00157DD3 /* Purchase */ = {
+			isa = PBXGroup;
+			children = (
+				046F322E1F54206000157DD3 /* PurchaseTableViewController.h */,
+				046F322F1F54206000157DD3 /* PurchaseTableViewController.m */,
+			);
+			name = Purchase;
 			sourceTree = "<group>";
 		};
 		0477F5281F4C34A600B16FB3 /* Login */ = {
@@ -752,6 +765,7 @@
 				04587C861F5199C3005A7569 /* AccountSettingViewController.m in Sources */,
 				045E65261F485F34001A8263 /* Order.m in Sources */,
 				0477F52B1F4C34C300B16FB3 /* LoginViewController.m in Sources */,
+				046F32301F54206000157DD3 /* PurchaseTableViewController.m in Sources */,
 				045E655C1F485F4D001A8263 /* AppAPIClient.m in Sources */,
 				84A346831F4C443D0051BDFB /* HotelTableViewCell.m in Sources */,
 				846DB0251F4DA09300578D22 /* CityTableViewController.m in Sources */,
