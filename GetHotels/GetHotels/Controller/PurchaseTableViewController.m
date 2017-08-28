@@ -9,6 +9,9 @@
 #import "PurchaseTableViewController.h"
 
 @interface PurchaseTableViewController ()
+@property (weak, nonatomic) IBOutlet UILabel *hotelNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 
 @end
 
