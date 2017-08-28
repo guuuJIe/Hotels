@@ -10,6 +10,7 @@
 #import "HotelViewController.h"
 #import "ZLImageViewDisplayView.h"
 #import "hotelDetailModel.h"
+#import "PurchaseTableViewController.h"
 @interface HotelDetailViewController (){
     NSTimeInterval followUpTime;
     NSUInteger flag;
@@ -57,6 +58,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *sixLabel;
 @property (weak, nonatomic) IBOutlet UILabel *sevenLabel;
 @property (weak, nonatomic) IBOutlet UILabel *eigtLabel;
+@property (strong,nonatomic) hotelDetailModel *detailModel;
 @end
 
 @implementation HotelDetailViewController
@@ -116,7 +118,6 @@
         
         if([responseObject[@"result"]intValue] == 1){
             NSDictionary *content = responseObject[@"content"];
-         
         NSArray *hotel_facilities = content[@"hotel_facilities"];
             for(NSInteger i = 0 ; i < hotel_facilities.count ; i ++){
                 NSString *string = hotel_facilities[i];
@@ -137,24 +138,30 @@
                 }if(i == 7){
                     _eigtLabel.text = string;
                 }
-
-
-
             }
+            NSArray *remark = content[@"remarks"];
+              for(NSInteger j = 0 ; j < remark.count ; j ++){
+                  NSString *rem = remark[j];
+                  if(j==0){
+                      _comeLabel.text = rem;
+                  }if(j==1){
+                      _leaveLabel.text = rem;
+                  }
+              }
         NSArray *hotel_types = content[@"hotel_types"];
             NSArray *image = content[@"hotel_imgs"];
             for(NSString *string in image){
               NSString *img = [NSHomeDirectory()stringByAppendingString:string];
                 [_arr addObject:img];
             }
-        hotelDetailModel *detailModel = [[hotelDetailModel alloc]initWithDictionary:content];
-         _nameLabel.text = detailModel.hotel_name;
-            _adressLabel.text = detailModel.hotel_address;
-            _priceLabel.text = detailModel.now_price;
+          _detailModel = [[hotelDetailModel alloc]initWithDictionary:content];
+         _nameLabel.text = _detailModel.hotel_name;
+            _adressLabel.text = _detailModel.hotel_address;
+            _priceLabel.text = _detailModel.now_price;
             _priceLabel.text = [NSString stringWithFormat:@"¥%@",_priceLabel.text];
-            _petLabel.text = detailModel.is_pet;
+            _petLabel.text = _detailModel.is_pet;
             
-            NSString *starTimeStr = [Utilities dateStrFromCstampTime:[detailModel.start_time integerValue] withDateFormat:@"MM-dd"];
+            NSString *starTimeStr = [Utilities dateStrFromCstampTime:[_detailModel.start_time integerValue] withDateFormat:@"MM-dd"];
             _startBtn.titleLabel.text = starTimeStr;
             [self addZLImageViewDisPlayView];
             
@@ -169,6 +176,16 @@ failure:^(NSInteger statusCode, NSError *error) {
     }];
 
    }
+//当某一个页面跳转行为将要发生的时候
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if([segue.identifier isEqualToString:@"purchaseNavi"]){
+        //当从列表页到详情页的这个跳转要发生的时候
+        //2.获取下一页这个实例
+        PurchaseTableViewController *detailVC = segue.destinationViewController;
+        //3、把数据给下一页预备好的接受容器
+        detailVC.hotelModel =_detailModel;
+    }
+}
 -(void) addZLImageViewDisPlayView{
     
     //获取要显示的位置
