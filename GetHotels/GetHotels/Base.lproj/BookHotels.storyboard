@@ -629,6 +629,7 @@
                             <constraint firstItem="dBt-H5-3Hj" firstAttribute="top" secondItem="KqH-w8-eu5" secondAttribute="top" id="uz8-6w-rsB"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="rRQ-V9-et1"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="dateLabel" destination="3XG-CR-TX6" id="eNF-od-gHY"/>
@@ -637,6 +638,24 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZuZ-HU-57f" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2932" y="131.78410794602701"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="cz2-Jp-ILE">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="YxY-F4-4uf" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Rz9-P0-zVo">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="7iF-S5-Yi4" kind="relationship" relationship="rootViewController" id="LgN-XB-A8Q"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vgv-y7-8ge" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1992.8" y="131.78410794602701"/>
         </scene>

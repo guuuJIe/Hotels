@@ -189,16 +189,6 @@ failure:^(NSInteger statusCode, NSError *error) {
     }];
 
    }
-//当某一个页面跳转行为将要发生的时候
-- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    if([segue.identifier isEqualToString:@"purchaseNavi"]){
-        //当从列表页到详情页的这个跳转要发生的时候
-        //2.获取下一页这个实例
-        PurchaseTableViewController *detailVC = segue.destinationViewController;
-        //3、把数据给下一页预备好的接受容器
-        detailVC.hotelModel =_detailModel;
-    }
-}
 -(void) addZLImageViewDisPlayView{
     
     //获取要显示的位置
@@ -246,6 +236,19 @@ failure:^(NSInteger statusCode, NSError *error) {
 
 }
 - (IBAction)buyAction:(UIButton *)sender forEvent:(UIEvent *)event {
+    if([Utilities loginCheck]){
+        PurchaseTableViewController *purchaseVC = [Utilities getStoryboardInstance:@"BookHotels" byIdentity:@"purchaseNavi"];
+        //传参
+        purchaseVC.hotelModel =_detailModel;
+        //push跳转
+        [self.navigationController pushViewController:purchaseVC animated:YES];
+    }else{
+        //获取要跳转过去的页面
+        UINavigationController *signNavi = [Utilities getStoryboardInstance:@"Login" byIdentity:@"LoginNavi"];
+        //执行跳转
+        [self presentViewController:signNavi animated:YES completion:nil];
+    }
+
 }
 //取消事件
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
