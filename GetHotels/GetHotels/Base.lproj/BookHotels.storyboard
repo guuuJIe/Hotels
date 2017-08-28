@@ -546,7 +546,6 @@
                         <outlet property="startBtn" destination="07D-9d-nOr" id="r2e-CC-QTl"/>
                         <outlet property="tooBar" destination="bMI-z5-lk6" id="hbE-pw-AjP"/>
                         <outlet property="twoLabel" destination="Obw-nc-9n7" id="atX-PZ-y77"/>
-                        <segue destination="7iF-S5-Yi4" kind="show" identifier="purchaseNavi" id="FMH-0e-noj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mbk-n8-ZpK" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -556,7 +555,7 @@
         <!--Purchase Table View Controller-->
         <scene sceneID="ghW-Rb-HT3">
             <objects>
-                <viewController id="7iF-S5-Yi4" customClass="PurchaseTableViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="purchaseNavi" useStoryboardIdentifierAsRestorationIdentifier="YES" id="7iF-S5-Yi4" customClass="PurchaseTableViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="xHi-2L-Twy"/>
                         <viewControllerLayoutGuide type="bottom" id="6UA-NN-BEI"/>
@@ -620,10 +619,6 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="7iF-S5-Yi4" id="rYT-02-ZUk"/>
-                                    <outlet property="delegate" destination="7iF-S5-Yi4" id="qVA-7x-6u8"/>
-                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
