@@ -155,7 +155,6 @@
             _petLabel.text = detailModel.is_pet;
             
             NSString *starTimeStr = [Utilities dateStrFromCstampTime:[detailModel.start_time integerValue] withDateFormat:@"MM-dd"];
-            //NSString *star = [starTimeStr substringFromIndex:starTimeStr.length]
             _startBtn.titleLabel.text = starTimeStr;
             [self addZLImageViewDisPlayView];
             
@@ -177,7 +176,7 @@ failure:^(NSInteger statusCode, NSError *error) {
     
     CGRect frame = CGRectMake(0, self.navigationController.navigationBar.frame.size.height + 20, screenFrame.size.width, 180);
     
-    NSArray *imageArray = _arr;
+    NSArray *imageArray =@[@"酒店1.jpg",@"酒店2.jpg",@"酒店3.jpg"];
     
     //初始化控件
     ZLImageViewDisplayView *imageViewDisplay = [ZLImageViewDisplayView zlImageViewDisplayViewWithFrame:frame];
