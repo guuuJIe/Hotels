@@ -194,7 +194,7 @@ failure:^(NSInteger statusCode, NSError *error) {
     //获取要显示的位置
     CGRect screenFrame = [[UIScreen mainScreen] bounds];
     
-    CGRect frame = CGRectMake(0, self.navigationController.navigationBar.frame.size.height + 20, screenFrame.size.width, 180);
+    CGRect frame = CGRectMake(0, -65, screenFrame.size.width, 180);
     
     NSArray *imageArray =@[@"酒店1.jpg",@"酒店2.jpg",@"酒店3.jpg"];
     
@@ -203,7 +203,7 @@ failure:^(NSInteger statusCode, NSError *error) {
     imageViewDisplay.imageViewArray =imageArray;
     imageViewDisplay.scrollInterval = 2;
     imageViewDisplay.animationInterVale = 0.6;
-    [self.view addSubview:imageViewDisplay];
+    [self.DetailScrollView addSubview:imageViewDisplay];
 }
 
 
