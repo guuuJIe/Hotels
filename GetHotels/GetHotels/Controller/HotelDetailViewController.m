@@ -149,6 +149,19 @@
                   }
               }
         NSArray *hotel_types = content[@"hotel_types"];
+            for(NSInteger s = 0 ; s < hotel_types.count ; s ++){
+                NSString *type = hotel_types[s];
+                if(s==0){
+                    _roomLabel.text = type;
+                }if(s==1){
+                     _earlyLabel.text = type;
+                }if(s==2){
+                    _bigBedLabel.text = type;
+                }if(s==3){
+                    _sizeLabel.text = type;
+                }
+
+            }
             NSArray *image = content[@"hotel_imgs"];
             for(NSString *string in image){
               NSString *img = [NSHomeDirectory()stringByAppendingString:string];
