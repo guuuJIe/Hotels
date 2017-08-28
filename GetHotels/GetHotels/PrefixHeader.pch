@@ -22,5 +22,7 @@
 #import "HMSegmentedControl.h"
 #import "NSString+Crypt.h"
 #import "NSDate+Utility.h"
+#import "GBAlipayManager.h"
+#import <Foundation/Foundation.h>
 
 #endif /* PrefixHeader_pch */
