@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -349,6 +348,9 @@
                                     <constraint firstAttribute="bottom" secondItem="9qH-OQ-roy" secondAttribute="bottom" id="uwI-le-sw7"/>
                                     <constraint firstItem="9qH-OQ-roy" firstAttribute="height" secondItem="mss-Dz-M9I" secondAttribute="height" id="wW8-y5-FH0"/>
                                 </constraints>
+                                <connections>
+                                    <outlet property="delegate" destination="hZ6-hR-QAN" id="J2V-wG-YqR"/>
+                                </connections>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

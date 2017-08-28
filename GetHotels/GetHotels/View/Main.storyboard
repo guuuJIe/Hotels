@@ -130,9 +130,9 @@
                                     <constraint firstItem="nqP-7j-HUV" firstAttribute="height" secondItem="20Z-43-IDW" secondAttribute="height" multiplier="9:20" id="xfZ-Jn-hn6"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Y3o-2W-CpP">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Y3o-2W-CpP">
                                 <rect key="frame" x="0.0" y="205" width="375" height="413"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="HomeMyInfoCell" id="ZPD-j6-c0x" customClass="MyInfoTableViewCell">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
@@ -162,10 +162,10 @@
                                                 <constraint firstItem="iKE-Ev-l6d" firstAttribute="leading" secondItem="Yhy-nK-2gI" secondAttribute="trailing" constant="10" id="rcx-yA-J0t"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
                                             <outlet property="myInfoCellImg" destination="Yhy-nK-2gI" id="YQB-lH-nej"/>
                                             <outlet property="myInfoCellLabel" destination="iKE-Ev-l6d" id="95P-Up-dYN"/>
-                                            <segue destination="fpM-G6-g2A" kind="presentation" id="wKH-ac-CVN"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -191,10 +191,12 @@
                     <connections>
                         <outlet property="headerImg" destination="nqP-7j-HUV" id="n7v-Dk-cYh"/>
                         <outlet property="loginBtn" destination="fNh-HD-bpM" id="95s-gm-sPu"/>
+                        <outlet property="myInfoTableView" destination="Y3o-2W-CpP" id="D80-YS-0q3"/>
                         <outlet property="oneStarImg" destination="dtw-Wf-svh" id="oyy-rc-Zm2"/>
                         <outlet property="threeStarImg" destination="q7F-d9-dFH" id="tX2-XO-6yh"/>
                         <outlet property="twoStarImg" destination="06z-sY-ygh" id="m2N-Sb-3HN"/>
                         <outlet property="usernameLabel" destination="2Yj-yC-GmV" id="LgY-ev-Tq6"/>
+                        <segue destination="fpM-G6-g2A" kind="show" identifier="HomeToOrder" id="fLU-2s-YjL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lUF-HS-zYI" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -233,7 +235,7 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="111"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Get Hotels" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Clp-Da-fn6">
-                                        <rect key="frame" x="146.5" y="30" width="81.5" height="21"/>
+                                        <rect key="frame" x="146.5" y="30.5" width="81.5" height="20.5"/>
                                         <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
@@ -346,11 +348,11 @@
                                         <rect key="frame" x="0.0" y="122" width="375" height="365.5"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <stackView key="tableHeaderView" opaque="NO" contentMode="scaleToFill" id="IAl-fv-qex">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="27"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kOr-D4-A4a">
-                                                    <rect key="frame" x="0.0" y="0.0" width="94" height="44"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="94" height="27"/>
                                                     <state key="normal">
                                                         <attributedString key="attributedTitle">
                                                             <fragment content="入住">
@@ -378,7 +380,7 @@
                                                     </state>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ccb-Tm-0Az">
-                                                    <rect key="frame" x="94" y="0.0" width="93.5" height="44"/>
+                                                    <rect key="frame" x="94" y="0.0" width="93.5" height="27"/>
                                                     <state key="normal">
                                                         <attributedString key="attributedTitle">
                                                             <fragment content="离店03-28">
@@ -406,7 +408,7 @@
                                                     </state>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ldO-Ip-7p4">
-                                                    <rect key="frame" x="187.5" y="0.0" width="94" height="44"/>
+                                                    <rect key="frame" x="187.5" y="0.0" width="94" height="27"/>
                                                     <state key="normal">
                                                         <attributedString key="attributedTitle">
                                                             <fragment content="智能排序">
@@ -434,7 +436,7 @@
                                                     </state>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4M8-7w-2gU">
-                                                    <rect key="frame" x="281.5" y="0.0" width="93.5" height="44"/>
+                                                    <rect key="frame" x="281.5" y="0.0" width="93.5" height="27"/>
                                                     <state key="normal">
                                                         <attributedString key="attributedTitle">
                                                             <fragment content="筛选">
@@ -472,7 +474,7 @@
                                         </stackView>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="HomeHotelCell" rowHeight="73" id="Iiy-ci-afm" customClass="HotelTableViewCell">
-                                                <rect key="frame" x="0.0" y="72" width="375" height="73"/>
+                                                <rect key="frame" x="0.0" y="55" width="375" height="73"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Iiy-ci-afm" id="PQq-Rn-gAA">
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="73"/>
