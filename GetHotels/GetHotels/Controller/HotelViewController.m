@@ -12,9 +12,11 @@
 #import <UIImageView+WebCache.h>
 #import "HotelListModel.h"
 #import "HotelDetailViewController.h"
+#import "HomeMarkTableViewCell.h"
 
 @interface HotelViewController ()<UITableViewDataSource,UITableViewDelegate,CLLocationManagerDelegate>
 {
+    NSInteger flag;
     BOOL firstVisit;
     NSInteger PageNum;
     NSInteger pageSize;
@@ -36,8 +38,22 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *homeScrollView;
 @property (weak, nonatomic) IBOutlet UIScrollView *bottmScrollView;
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
+@property (weak, nonatomic) IBOutlet UIButton *inTime;
+@property (weak, nonatomic) IBOutlet UIButton *outTime;
+@property (weak, nonatomic) IBOutlet UIView *markView;
+@property (weak, nonatomic) IBOutlet UITableView *markTabelView;
 
 @property (weak, nonatomic) IBOutlet UIButton *cityBtn;
+@property (weak, nonatomic) IBOutlet UIToolbar *toolBar;
+@property (weak, nonatomic) IBOutlet UIDatePicker *datePick;
+
+
+- (IBAction)inTimeAction:(UIButton *)sender forEvent:(UIEvent *)event;
+- (IBAction)outTimeAction:(UIButton *)sender forEvent:(UIEvent *)event;
+- (IBAction)sortAction:(UIButton *)sender forEvent:(UIEvent *)event;
+- (IBAction)selectAction:(UIButton *)sender forEvent:(UIEvent *)event;
+- (IBAction)cancelAction:(UIBarButtonItem *)sender;
+- (IBAction)doneAction:(UIBarButtonItem *)sender;
 
 @property (strong,nonatomic)CLLocationManager *locMgr;
 @property (strong,nonatomic)CLLocation *location;
@@ -45,6 +61,10 @@
 @property (strong,nonatomic)UIActivityIndicatorView *aiv;
 @property (strong, nonatomic) NSMutableArray *hotelArr;
 @property (strong, nonatomic) NSMutableArray *advImgArr;
+@property (strong,nonatomic) NSString *inTimeDate;
+@property (strong,nonatomic) NSString *outTimeDate;
+@property (strong,nonatomic) NSArray *sortArr;
+@property (strong,nonatomic) HomeMarkTableViewCell *mCell;
 //@property (strong, nonatomic) NSString *longitude;      //经度
 //@property (strong, nonatomic) NSString *latitude;       //纬度
 @end
@@ -57,22 +77,26 @@
     firstVisit = YES;
     // Do any additional setup after loading the view.
     _hotelArr = [NSMutableArray new];
-    [self.navigationController setNavigationBarHidden:YES animated:NO];
+   
     PageNum = 1;
-    pageSize = 15;
+    pageSize = 5;
     //去掉tableview底部多余的线
     _hotelTableView.tableFooterView = [UIView new];
     
    // [self weatherRequest];          //天气网络请求
+    [self setDefaultDateForButton];
     
     [self locationConfig];          //开始定位
     [self enterApp];                //判断是否第一次进入app
     [[NSNotificationCenter defaultCenter ] addObserver:self selector:@selector(chooseCity:) name:@"ResetCity" object:nil];
+    //调用蒙层和刷新指示器
     [self initializeData];
+    [self refresh];
     //去掉scrollView横向滚动标示
     _homeScrollView.showsHorizontalScrollIndicator = NO;
     //滑动点设为4个
     _pageControl.numberOfPages = 4;
+    _sortArr = @[@"智能排序",@"价格低到高",@"价格高到低",@"离我从近到远"];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -81,7 +105,9 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
     self.tabBarController.tabBar.hidden = NO;
+    //[[UIApplication sharedApplication]setStatusBarHidden:NO];
     [self locationStart];
 }
 
@@ -138,23 +164,43 @@
 }
 
  //=========================================================================
+//默认时间
+- (void)setDefaultDateForButton{
+    //初始化日期格式器
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    //定义日期格式
+    formatter.dateFormat = @"MM-dd";
+    //当前时间
+    NSDate *date = [NSDate date];
+    //明天的日期
+    NSDate *dateTom = [NSDate dateTomorrow];
+    
+    NSString *dateStr = [formatter stringFromDate:date];
+    NSString *dateTomStr= [formatter stringFromDate:dateTom];
+    //将处理好的字符串设置给两个Button
+    [_inTime setTitle:[NSString stringWithFormat:@"入住%@ ▼",dateStr] forState:UIControlStateNormal];
+    [_outTime setTitle:[NSString stringWithFormat:@"离店%@ ▼",dateTomStr] forState:UIControlStateNormal];
+    _inTimeDate = dateStr;
+    _outTimeDate = dateTomStr;
+    
+}
 //创建一个刷新指示器
 - (void)refresh{
     //创建一个刷新指示器放在tableview中
     UIRefreshControl *ref = [UIRefreshControl new];
     [ref addTarget:self action:@selector(refreshRequest) forControlEvents:UIControlEventValueChanged];
     ref.tag = 10004;
-    [_bottmScrollView addSubview:ref];
+    [_hotelTableView addSubview:ref];
+}
+
+- (void)initializeData{
+    _aiv = [Utilities getCoverOnView:self.view];
+    [self refreshRequest];
 }
 
 - (void)refreshRequest{
     PageNum = 1;
     [self hotelAdv];
-    //[self hotelList];
-}
-- (void)initializeData{
-    _aiv = [Utilities getCoverOnView:self.view];
-    [self refreshRequest];
 }
 #pragma  mark - request
 //天气
@@ -181,30 +227,36 @@
 
 //广告,酒店
 - (void)hotelAdv{
-    //初始化日期格式器
-    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    //定义日期格式
-    formatter.dateFormat = @"yyyy-MM-dd";
-    //当前时间
-    NSDate *date = [NSDate date];
-    //明天的日期
-    NSDate *dateTom = [NSDate dateTomorrow];
-    NSString *dateStr = [formatter stringFromDate:date];
-    NSString *dateTomStr= [formatter stringFromDate:dateTom];
+    //拿到刷新指示器
+    UIRefreshControl *ref = (UIRefreshControl *)[_hotelTableView viewWithTag:10004];
+    //开始日期
+    NSTimeInterval startTime = [Utilities cTimestampFromString:_inTimeDate format:@"MM-dd"];
+    //开始日期
+    NSTimeInterval endTime = [Utilities cTimestampFromString:_outTimeDate format:@"MM-dd"];
+    if (startTime >= endTime){
+        
+        [_aiv stopAnimating];
+        [Utilities popUpAlertViewWithMsg:@"请正确设置日期" andTitle:nil onView:self];
+    }
     //参数
-    NSDictionary *para = @{@"city_name" : _cityBtn.titleLabel.text, @"pageNum" :@(PageNum), @"pageSize" :  @(pageSize), @"startId" :  @1, @"priceId" :@1, @"sortingId" :@1 ,@"inTime" : dateStr ,@"outTime" : dateTomStr,@"wxlongitude" :@"", @"wxlatitude" :@""};
+    NSDictionary *para = @{@"city_name" : _cityBtn.titleLabel.text, @"pageNum" :@(PageNum), @"pageSize" :  @(pageSize), @"startId" :  @1, @"priceId" :@1, @"sortingId" :@1 ,@"inTime" : [NSString stringWithFormat:@"2017-%@",_inTimeDate] ,@"outTime" : [NSString stringWithFormat:@"2017-%@",_outTimeDate] ,@"wxlongitude" :@"", @"wxlatitude" :@""};
+    
     //网络请求
     [RequestAPI requestURL:@"/findHotelByCity_edu" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
-        NSLog(@"登录 = %@",responseObject);
-        UIRefreshControl *ref = (UIRefreshControl *)[_hotelTableView viewWithTag:10004];
-        [ref endRefreshing];
+        //NSLog(@"登录 = %@",responseObject);
         //当网络请求成功时让蒙层消失
         [_aiv stopAnimating];
+        [ref endRefreshing];
         if([responseObject[@"result"]intValue] == 1){
             NSDictionary *content = responseObject[@"content"];
             //酒店列表信息
             NSDictionary *hotel = content[@"hotel"];
             NSArray *list = hotel[@"list"];
+            isLastPage = [hotel[@"isLastPage"] boolValue];
+            
+            if (PageNum == 1) {
+                [_hotelArr removeAllObjects];
+            }
             for (NSDictionary *dict in  list){
                 
                 HotelListModel *model = [[HotelListModel alloc] initWithDict:dict];
@@ -222,11 +274,6 @@
             [_fourImg sd_setImageWithURL:[NSURL URLWithString:_advImgArr[4]] placeholderImage:[UIImage imageNamed:@"白云"]];
             
             
-           /* isLastPage = [result[@"isLastPage"] boolValue];
-            if (PageNum == 1) {
-                [_hotelArr removeAllObjects];
-            }*/
-            
             [_homeScrollView reloadInputViews];
             [_hotelTableView reloadData];
         } else {
@@ -238,8 +285,6 @@
     } failure:^(NSInteger statusCode, NSError *error) {
         //当网络请求失败时让蒙层消失
         [_aiv stopAnimating];
-        UIRefreshControl *ref = (UIRefreshControl *)[_hotelTableView viewWithTag:10004];
-        [ref endRefreshing];
         [Utilities
          popUpAlertViewWithMsg:@"请保持网络连接畅通" andTitle:nil onView:self];
     }];
@@ -254,11 +299,18 @@
 }
 //scrollView已经开始减速
 - (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView{
-    if (scrollPage == 3){
-        scrollPageC = 0;
-    }else {
-        scrollPageC = 1;
+    if (scrollView.contentOffset.x > 3 * UI_SCREEN_W){
+        if (scrollPage == 3){
+            scrollPageC = 0;
+        }
+    } else if(scrollView.contentOffset.x < 0){
+        if (scrollPage == 0){
+            scrollPageC = 3;
+        }
+    } else {
+       scrollPageC = 2;
     }
+    
 }
 
 //判断scrollView滑动到哪里了
@@ -267,6 +319,9 @@
     if (scrollPageC == 0){
         scrollPage = scrollPageC;
         scrollView.contentOffset = CGPointMake(0, 0);
+    } else if(scrollPageC == 3){
+        scrollPage = scrollPageC;
+        scrollView.contentOffset = CGPointMake(3 * UI_SCREEN_W, 0);
     }
     return scrollPage;
 }
@@ -285,50 +340,48 @@
 }
 //设置表格视图中每一组有多少行
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return _hotelArr.count;
+        return _hotelArr.count;
 }
 
 //当一个细胞将要出现的时候要做的事情
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-   /* [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    //判断将要出现的细胞是不是当前最后一行
-    if (indexPath.row == _hotelArr.count - 1) {
-        //当存在下一页的时候，页码自增，请求下一页数据
-        if (!isLastPage) {
-            PageNum ++;
-            [self hotel];
+        //判断将要出现的细胞是不是当前最后一行
+        if (indexPath.row == _hotelArr.count - 1) {
+            //当存在下一页的时候，页码自增，请求下一页数据
+            if (isLastPage) {
+                PageNum ++;
+                [self hotelAdv];
+            }
         }
-    }*/
 }
 
 //设置每一组中每一行细胞的高度
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 100;
+        return 100;
 }
 
 //设置每一组中每一行的细胞长什么样
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    HotelTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HomeHotelCell" forIndexPath:indexPath];
-    HotelListModel *model = _hotelArr[indexPath.row];
-    cell.hotelNameLabel.text = model.name;
-    cell.hotelLocLabel.text = _cityBtn.titleLabel.text;
-    cell.hotelPriceLabel.text =   [NSString stringWithFormat:@"¥%ld" ,(long)model.price] ;
-    //NSURL *URL = [NSURL URLWithString:model.imgUrl ];
-   // NSString *strUrl = [NSString stringWithFormat:@"%@png",[model.imgUrl substringToIndex:model.imgUrl.length - 3]];
-    //NSURL *URL = [NSURL URLWithString:@"http://ww3.sinaimg.cn/mw690/51f76ed7jw1e3ohzmmnffj.jpg"];
+        HotelTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HomeHotelCell" forIndexPath:indexPath];
+        HotelListModel *model = _hotelArr[indexPath.row];
+        cell.hotelNameLabel.text = model.name;
+        cell.hotelLocLabel.text = _cityBtn.titleLabel.text;
+        cell.hotelPriceLabel.text =   [NSString stringWithFormat:@"¥%ld" ,(long)model.price] ;
     
-    cell.hotelImg.image = [UIImage imageWithData:[[NSData alloc]initWithContentsOfURL:[NSURL URLWithString:model.imgUrl]]];
-    //[cell.hotelImg sd_setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"酒店-1"]];
-    //计算距离
-     CLLocation *otherLocation = [[CLLocation alloc] initWithLatitude:[model.latitude doubleValue] longitude:[model.longitude doubleValue]];
+        NSURL *URL = [NSURL URLWithString:model.imgUrl ];
+        [cell.hotelImg sd_setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"酒店-1"]];
+        //计算距离
+        CLLocation *otherLocation = [[CLLocation alloc] initWithLatitude:[model.latitude doubleValue] longitude:[model.longitude doubleValue]];
     
-    CLLocationDistance kilometers=[_location distanceFromLocation:otherLocation]/1000;
-    cell.hotelDistanceLabel.text = [NSString stringWithFormat:@"距离我%.1f公里",kilometers];
-   // [_hotelTableView reloadData];
-    return  cell;
+        CLLocationDistance kilometers=[_location distanceFromLocation:otherLocation]/1000;
+        cell.hotelDistanceLabel.text = [NSString stringWithFormat:@"距离我%.1f公里",kilometers];
+        return  cell;
 }
 
-
+//细胞选中后调用
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+        [tableView deselectRowAtIndexPath:indexPath animated:YES]; 
+}
 #pragma mark - location
 //定位失败时
 - (void)locationManager:(CLLocationManager *)manager
@@ -430,5 +483,54 @@
         //3、把数据给下一页预备好的接受容器
         detailVC.hotelId = model.hotelId;
     }
+}
+- (IBAction)inTimeAction:(UIButton *)sender forEvent:(UIEvent *)event {
+    flag = 0;
+    _markView.hidden = NO;
+    _toolBar.hidden = NO;
+    _datePick.hidden = NO;
+}
+
+- (IBAction)outTimeAction:(UIButton *)sender forEvent:(UIEvent *)event {
+    flag = 1;
+    _markView.hidden = NO;
+    _toolBar.hidden = NO;
+    _datePick.hidden = NO;
+}
+
+- (IBAction)sortAction:(UIButton *)sender forEvent:(UIEvent *)event {
+    _markView.hidden = NO;
+    _toolBar.hidden = YES;
+    _datePick.hidden = YES;
+}
+
+- (IBAction)selectAction:(UIButton *)sender forEvent:(UIEvent *)event {
+    _markView.hidden = NO;
+    _toolBar.hidden = YES;
+    _datePick.hidden = YES;
+}
+
+- (IBAction)cancelAction:(UIBarButtonItem *)sender {
+    _markView.hidden = YES;
+}
+
+- (IBAction)doneAction:(UIBarButtonItem *)sender {
+    NSDate *date = _datePick.date;
+    NSDateFormatter *formatter = [NSDateFormatter new];
+    formatter.dateFormat = @"MM-dd";
+    NSString *thDate = [formatter stringFromDate:date];
+    //followUptime = [date timeIntervalSince1970];
+    if (flag == 0){
+        [_inTime setTitle:[NSString stringWithFormat:@"入住%@ ▼",thDate] forState:UIControlStateNormal];
+        _inTimeDate = thDate;
+    }else{
+        [_outTime setTitle:[NSString stringWithFormat:@"离店%@ ▼",thDate] forState:UIControlStateNormal];
+        _outTimeDate = thDate;
+    }
+    _markView.hidden = YES;
+    [self hotelAdv];
+}
+- (void) touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    _markView.hidden = YES; 
 }
 @end

@@ -10,6 +10,7 @@
 #import "HotelViewController.h"
 #import "ZLImageViewDisplayView.h"
 #import "hotelDetailModel.h"
+#import "PurchaseTableViewController.h"
 @interface HotelDetailViewController (){
     NSTimeInterval followUpTime;
     NSUInteger flag;
@@ -49,7 +50,15 @@
 - (IBAction)confirmAction:(UIBarButtonItem *)sender;
 @property (strong,nonatomic) NSMutableArray *arr;
 @property (weak, nonatomic) IBOutlet UILabel *petLabel;
-
+@property (weak, nonatomic) IBOutlet UILabel *oneLabel;
+@property (weak, nonatomic) IBOutlet UILabel *twoLabel;
+@property (weak, nonatomic) IBOutlet UILabel *secondLabel;
+@property (weak, nonatomic) IBOutlet UILabel *fourLabel;
+@property (weak, nonatomic) IBOutlet UILabel *fiveLabel;
+@property (weak, nonatomic) IBOutlet UILabel *sixLabel;
+@property (weak, nonatomic) IBOutlet UILabel *sevenLabel;
+@property (weak, nonatomic) IBOutlet UILabel *eigtLabel;
+@property (strong,nonatomic) hotelDetailModel *detailModel;
 @end
 
 @implementation HotelDetailViewController
@@ -63,6 +72,8 @@
     // Do any additional setup after loading the view.
     //状态栏变成白色
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+
+    
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -107,23 +118,63 @@
         
         if([responseObject[@"result"]intValue] == 1){
             NSDictionary *content = responseObject[@"content"];
-            
         NSArray *hotel_facilities = content[@"hotel_facilities"];
+            for(NSInteger i = 0 ; i < hotel_facilities.count ; i ++){
+                NSString *string = hotel_facilities[i];
+                if (i == 0){
+                   _oneLabel.text = string;
+                }if(i == 1){
+                    _twoLabel.text = string;
+                }if(i == 2){
+                    _secondLabel.text = string;
+                }if(i == 3){
+                    _fourLabel.text = string;
+                }if(i == 4){
+                    _fiveLabel.text = string;
+                }if(i == 5){
+                    _sixLabel.text = string;
+                }if(i == 6){
+                    _sevenLabel.text = string;
+                }if(i == 7){
+                    _eigtLabel.text = string;
+                }
+            }
+            NSArray *remark = content[@"remarks"];
+              for(NSInteger j = 0 ; j < remark.count ; j ++){
+                  NSString *rem = remark[j];
+                  if(j==0){
+                      _comeLabel.text = rem;
+                  }if(j==1){
+                      _leaveLabel.text = rem;
+                  }
+              }
         NSArray *hotel_types = content[@"hotel_types"];
+            for(NSInteger s = 0 ; s < hotel_types.count ; s ++){
+                NSString *type = hotel_types[s];
+                if(s==0){
+                    _roomLabel.text = type;
+                }if(s==1){
+                     _earlyLabel.text = type;
+                }if(s==2){
+                    _bigBedLabel.text = type;
+                }if(s==3){
+                    _sizeLabel.text = type;
+                }
+
+            }
             NSArray *image = content[@"hotel_imgs"];
             for(NSString *string in image){
               NSString *img = [NSHomeDirectory()stringByAppendingString:string];
                 [_arr addObject:img];
             }
-        hotelDetailModel *detailModel = [[hotelDetailModel alloc]initWithDictionary:content];
-         _nameLabel.text = detailModel.hotel_name;
-            _adressLabel.text = detailModel.hotel_address;
-            _priceLabel.text = detailModel.now_price;
+          _detailModel = [[hotelDetailModel alloc]initWithDictionary:content];
+         _nameLabel.text = _detailModel.hotel_name;
+            _adressLabel.text = _detailModel.hotel_address;
+            _priceLabel.text = _detailModel.now_price;
             _priceLabel.text = [NSString stringWithFormat:@"¥%@",_priceLabel.text];
-            _petLabel.text = detailModel.is_pet;
+            _petLabel.text = _detailModel.is_pet;
             
-            NSString *starTimeStr = [Utilities dateStrFromCstampTime:[detailModel.start_time integerValue] withDateFormat:@"YYYY-MM-dd"];
-            //NSString *star = [starTimeStr substringFromIndex:starTimeStr.length]
+            NSString *starTimeStr = [Utilities dateStrFromCstampTime:[_detailModel.start_time integerValue] withDateFormat:@"MM-dd"];
             _startBtn.titleLabel.text = starTimeStr;
             [self addZLImageViewDisPlayView];
             
@@ -143,16 +194,16 @@ failure:^(NSInteger statusCode, NSError *error) {
     //获取要显示的位置
     CGRect screenFrame = [[UIScreen mainScreen] bounds];
     
-    CGRect frame = CGRectMake(0, self.navigationController.navigationBar.frame.size.height + 20, screenFrame.size.width, 180);
+    CGRect frame = CGRectMake(0, -65, screenFrame.size.width, 170);
     
-    NSArray *imageArray = _arr;
+    NSArray *imageArray =@[@"酒店1.jpg",@"酒店2.jpg",@"酒店3.jpg"];
     
     //初始化控件
     ZLImageViewDisplayView *imageViewDisplay = [ZLImageViewDisplayView zlImageViewDisplayViewWithFrame:frame];
     imageViewDisplay.imageViewArray =imageArray;
     imageViewDisplay.scrollInterval = 2;
     imageViewDisplay.animationInterVale = 0.6;
-    [self.view addSubview:imageViewDisplay];
+    [self.DetailScrollView addSubview:imageViewDisplay];
 }
 
 
@@ -176,17 +227,28 @@ failure:^(NSInteger statusCode, NSError *error) {
     flag=0;
     _tooBar.hidden = NO;
     _datePicker.hidden = NO;
-    NSLog(@"我被按了");
  
 }
 - (IBAction)nextDateActionBtn:(UIButton *)sender forEvent:(UIEvent *)event {
     flag=1;
     _tooBar.hidden = NO;
     _datePicker.hidden = NO;
-    NSLog(@"我被按了");
 
 }
 - (IBAction)buyAction:(UIButton *)sender forEvent:(UIEvent *)event {
+    if([Utilities loginCheck]){
+        PurchaseTableViewController *purchaseVC = [Utilities getStoryboardInstance:@"BookHotels" byIdentity:@"purchaseNavi"];
+        //传参
+        purchaseVC.hotelModel =_detailModel;
+        //push跳转
+        [self.navigationController pushViewController:purchaseVC animated:YES];
+    }else{
+        //获取要跳转过去的页面
+        UINavigationController *signNavi = [Utilities getStoryboardInstance:@"Login" byIdentity:@"LoginNavi"];
+        //执行跳转
+        [self presentViewController:signNavi animated:YES completion:nil];
+    }
+
 }
 //取消事件
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
@@ -202,9 +264,9 @@ failure:^(NSInteger statusCode, NSError *error) {
     _datePicker.hidden = YES;
     NSDate *date = _datePicker.date;
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    formatter.dateFormat = @"MM月dd日";
+    formatter.dateFormat = @"MM-dd";
     NSString *thDate = [formatter stringFromDate:date];
-    followUpTime = [Utilities cTimestampFromString:thDate format:@"MMdd"];
+    followUpTime = [Utilities cTimestampFromString:thDate format:@"MM-dd"];
     if(flag == 0){
         [_dateBtn setTitle:thDate forState:UIControlStateNormal];
     }else{

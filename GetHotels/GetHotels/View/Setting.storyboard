@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -14,7 +13,7 @@
         <!--联系客服-->
         <scene sceneID="YzB-SJ-6FX">
             <objects>
-                <viewController title="联系客服" id="wri-ss-33Y" sceneMemberID="viewController">
+                <viewController title="联系客服" id="wri-ss-33Y" customClass="ContactServiceViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="vmw-Mr-o6o"/>
                         <viewControllerLayoutGuide type="bottom" id="srf-Nj-d8w"/>
@@ -29,42 +28,63 @@
                                     <constraint firstAttribute="width" secondItem="YP4-mr-6nz" secondAttribute="height" multiplier="5:2" id="j2Q-Rz-No9"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="公司地址:江苏省无锡市滨湖区雪浪街道99号" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tXz-uq-Y9e">
-                                <rect key="frame" x="58.5" y="576" width="259" height="16"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" 客服电话:15797659486" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z5x-wQ-ZNc">
-                                <rect key="frame" x="60" y="364" width="146" height="16"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" 客服邮箱:gao2550484979@gmail.com" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YfR-DL-qq3">
-                                <rect key="frame" x="60" y="410" width="237" height="16"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="uDT-de-RAo">
+                                <rect key="frame" x="0.0" y="294" width="375" height="373"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="contactServiceCell" id="nNV-hf-n42">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nNV-hf-n42" id="RQF-he-Ilk">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="酒店官方网站" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7zk-eh-KqY">
+                                                    <rect key="frame" x="15" y="13.5" width="92" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="https://gethotels.fisheep.com.cn" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gXb-gC-GHL">
+                                                    <rect key="frame" x="137.5" y="13.5" width="222.5" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="gXb-gC-GHL" secondAttribute="trailing" constant="15" id="BhI-kY-kw8"/>
+                                                <constraint firstItem="7zk-eh-KqY" firstAttribute="centerY" secondItem="RQF-he-Ilk" secondAttribute="centerY" id="Otc-Ac-8mj"/>
+                                                <constraint firstItem="7zk-eh-KqY" firstAttribute="leading" secondItem="RQF-he-Ilk" secondAttribute="leading" constant="15" id="ha5-cs-qPp"/>
+                                                <constraint firstItem="gXb-gC-GHL" firstAttribute="centerY" secondItem="RQF-he-Ilk" secondAttribute="centerY" id="rBm-d0-nGw"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="wri-ss-33Y" id="Ug8-bE-H6m"/>
+                                    <outlet property="delegate" destination="wri-ss-33Y" id="VDR-el-51S"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="z5x-wQ-ZNc" firstAttribute="leading" secondItem="czu-1Z-2tg" secondAttribute="leading" constant="60" id="84C-t7-P7b"/>
+                            <constraint firstItem="uDT-de-RAo" firstAttribute="top" secondItem="YP4-mr-6nz" secondAttribute="bottom" constant="80" id="33B-gn-Uvy"/>
+                            <constraint firstAttribute="trailing" secondItem="uDT-de-RAo" secondAttribute="trailing" id="Bws-mB-j4d"/>
+                            <constraint firstAttribute="bottom" secondItem="uDT-de-RAo" secondAttribute="bottom" id="H60-HP-dW7"/>
                             <constraint firstItem="YP4-mr-6nz" firstAttribute="width" secondItem="czu-1Z-2tg" secondAttribute="width" multiplier="3:5" id="Ie9-Oe-MEi"/>
-                            <constraint firstItem="tXz-uq-Y9e" firstAttribute="centerX" secondItem="czu-1Z-2tg" secondAttribute="centerX" id="M9P-xH-GQd"/>
-                            <constraint firstItem="tXz-uq-Y9e" firstAttribute="top" secondItem="YfR-DL-qq3" secondAttribute="bottom" constant="150" id="Rht-0D-Kom"/>
-                            <constraint firstItem="YfR-DL-qq3" firstAttribute="top" secondItem="z5x-wQ-ZNc" secondAttribute="bottom" constant="30" id="dri-HF-Oog"/>
-                            <constraint firstItem="z5x-wQ-ZNc" firstAttribute="top" secondItem="YP4-mr-6nz" secondAttribute="bottom" constant="150" id="nfd-r5-Fjm"/>
                             <constraint firstItem="YP4-mr-6nz" firstAttribute="centerX" secondItem="czu-1Z-2tg" secondAttribute="centerX" id="o1r-Bk-ZB6"/>
                             <constraint firstItem="YP4-mr-6nz" firstAttribute="top" secondItem="vmw-Mr-o6o" secondAttribute="bottom" constant="60" id="pbL-yt-7Cz"/>
-                            <constraint firstItem="YfR-DL-qq3" firstAttribute="leading" secondItem="z5x-wQ-ZNc" secondAttribute="leading" id="uST-zf-Ofr"/>
+                            <constraint firstItem="uDT-de-RAo" firstAttribute="leading" secondItem="czu-1Z-2tg" secondAttribute="leading" id="xau-nr-2og"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="contactServiceTableView" destination="uDT-de-RAo" id="efv-M1-0ej"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qV8-zE-bRW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="249" y="1207"/>
+            <point key="canvasLocation" x="248.80000000000001" y="1206.7466266866568"/>
         </scene>
         <!--账户设置-->
         <scene sceneID="fr8-f0-ylO">
