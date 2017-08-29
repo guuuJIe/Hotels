@@ -37,14 +37,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *leaveLabel;
 @property (weak, nonatomic) IBOutlet UIButton *buyBtn;
 - (IBAction)buyAction:(UIButton *)sender forEvent:(UIEvent *)event;
-@property (weak, nonatomic) IBOutlet UIButton *SmallTalkBtn;
 @property (weak, nonatomic) IBOutlet UIImageView *internalImageView;
 @property (weak, nonatomic) IBOutlet UILabel *roomLabel;
 @property (weak, nonatomic) IBOutlet UILabel *earlyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *bigBedLabel;
 @property (weak, nonatomic) IBOutlet UILabel *sizeLabel;
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
-@property (weak, nonatomic) IBOutlet UIButton *startBtn;
 @property (weak, nonatomic) IBOutlet UIToolbar *tooBar;
 - (IBAction)cancelAction:(UIBarButtonItem *)sender;
 - (IBAction)confirmAction:(UIBarButtonItem *)sender;
@@ -59,6 +57,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *sevenLabel;
 @property (weak, nonatomic) IBOutlet UILabel *eigtLabel;
 @property (strong,nonatomic) hotelDetailModel *detailModel;
+@property (strong,nonatomic)NSDate *afterTomorrow;
 @end
 
 @implementation HotelDetailViewController
@@ -174,9 +173,22 @@
             _priceLabel.text = [NSString stringWithFormat:@"¥%@",_priceLabel.text];
             _petLabel.text = _detailModel.is_pet;
             
-            NSString *starTimeStr = [Utilities dateStrFromCstampTime:[_detailModel.start_time integerValue] withDateFormat:@"MM-dd"];
-            _startBtn.titleLabel.text = starTimeStr;
+            
             [self addZLImageViewDisPlayView];
+            //初始化日期格式器
+            NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+            //定义日期格式
+            formatter.dateFormat = @"MM-dd";
+            //当前时间
+            NSDate *date = [NSDate date];
+            //后天的日期
+            NSDate *dateAfterdays = [NSDate dateWithDaysFromNow:2];
+            NSString *dateStr = [formatter stringFromDate:date];
+            NSString *dateTomStr= [formatter stringFromDate:dateAfterdays];
+            //将处理好的字符串设置给两个Button
+            [_dateBtn setTitle:dateStr forState:UIControlStateNormal];
+            [_nextDateBtn setTitle:dateTomStr forState:UIControlStateNormal];
+
             
         }
         else{
@@ -257,12 +269,11 @@ failure:^(NSInteger statusCode, NSError *error) {
     
 }
 //确定事件
-
 - (IBAction)confirmAction:(UIBarButtonItem *)sender {
     
     _tooBar.hidden = YES;
     _datePicker.hidden = YES;
-    NSDate *date = _datePicker.date;
+     NSDate *date = _datePicker.date;
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     formatter.dateFormat = @"MM-dd";
     NSString *thDate = [formatter stringFromDate:date];
