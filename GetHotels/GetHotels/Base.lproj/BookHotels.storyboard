@@ -421,6 +421,7 @@
                                     </view>
                                     <datePicker hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="Xde-qc-B0g">
                                         <rect key="frame" x="0.0" y="294" width="375" height="216"/>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <date key="date" timeIntervalSinceReferenceDate="525619799.25620198">
                                             <!--2017-08-28 13:29:59 +0000-->
                                         </date>
@@ -536,7 +537,6 @@
                         <outlet property="sevenLabel" destination="Q0d-8j-A5F" id="TQT-Kp-d0c"/>
                         <outlet property="sixLabel" destination="EkI-tK-ZF6" id="rhU-DH-LkL"/>
                         <outlet property="sizeLabel" destination="gGA-xV-irJ" id="4Em-Gc-29T"/>
-                        <outlet property="startBtn" destination="07D-9d-nOr" id="r2e-CC-QTl"/>
                         <outlet property="tooBar" destination="biQ-EN-h5c" id="2p7-3P-Cg9"/>
                         <outlet property="twoLabel" destination="Obw-nc-9n7" id="atX-PZ-y77"/>
                     </connections>
