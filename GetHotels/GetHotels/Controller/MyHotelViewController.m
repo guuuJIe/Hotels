@@ -48,7 +48,11 @@
     _AllOrderTableView.tableFooterView = [UIView new];
     _UseableOrderTableView.tableFooterView = [UIView new];
     _DatedOrderTableView.tableFooterView = [UIView new];
+    if (![Utilities loginCheck]) {
+        
+    }
     [self AllOrdersRequest];
+    
 }
 
 - (void)didReceiveMemoryWarning {
