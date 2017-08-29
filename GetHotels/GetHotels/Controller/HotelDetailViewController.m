@@ -194,7 +194,7 @@ failure:^(NSInteger statusCode, NSError *error) {
     //获取要显示的位置
     CGRect screenFrame = [[UIScreen mainScreen] bounds];
     
-    CGRect frame = CGRectMake(0, -65, screenFrame.size.width, 180);
+    CGRect frame = CGRectMake(0, -65, screenFrame.size.width, 170);
     
     NSArray *imageArray =@[@"酒店1.jpg",@"酒店2.jpg",@"酒店3.jpg"];
     
