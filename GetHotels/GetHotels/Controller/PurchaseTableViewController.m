@@ -10,6 +10,7 @@
 
 @interface PurchaseTableViewController ()
 
+@property (strong, nonatomic) IBOutlet UITableView *payTableView;
 @property (weak, nonatomic) IBOutlet UILabel *hotelNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
@@ -35,6 +36,7 @@
     [self naviConfig];
     [self uiLayout];
     [self dataInitilize];
+    [self setFootViewForTableView];
     
     //监听通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(purchaseResultAction:) name:@"AlipayResult" object:nil];
@@ -50,14 +52,35 @@
 -(void)naviConfig {
     //设置导航条的标题文字
     self.navigationItem.title = @"支付";
-    //为导航条右上角创建一个按钮
-    UIBarButtonItem *right = [[UIBarButtonItem alloc] initWithTitle:@"支付" style:UIBarButtonItemStylePlain target:self action:@selector(payAction)];
-    
-    self.navigationItem.rightBarButtonItem = right;
-    
+    //设置导航条的标题颜色
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
+    //设置导航栏的背景颜色
+    [self.navigationController.navigationBar setBarTintColor:UIColorFromRGB(23, 115, 232)];
+    //self.navigationController.navigationBar.backgroundColor = [UIColor blueColor];
+    //实例化一个button，类型为UIButtonTypeSystem
+    UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+    //设置位置大小
+    leftBtn.frame = CGRectMake(0, 0, 20, 20);
+    //设置导航条是否隐藏
+    self.navigationController.navigationBar.hidden = NO;
+    //设置是否需要毛玻璃效果
+    self.navigationController.navigationBar.translucent = YES;
+    //设置背景图片为返回图片
+    [leftBtn setBackgroundImage:[UIImage imageNamed:@"返回3"] forState:UIControlStateNormal];
+    //给按钮添加事件
+    [leftBtn addTarget:self action:@selector(leftButtonAction:) forControlEvents: UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:leftBtn];
 }
 
-- (void)payAction {
+//自定义的返回按钮的事件
+- (void)leftButtonAction:(UIButton *)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+//确认支付按钮事件
+- (void)payAction: (UIButton *)button {
     switch (self.tableView.indexPathForSelectedRow.row) {
         case 0: {
             //生成订单号
@@ -81,10 +104,10 @@
 
 //专门做界面
 - (void)uiLayout {
-     NSString *starTimeStr = [Utilities dateStrFromCstampTime:[_hotelModel.start_time integerValue] withDateFormat:@"MM月dd日"];
-    NSString *outTimeStr = [Utilities dateStrFromCstampTime:[_hotelModel.start_time integerValue] withDateFormat:@"MM月dd日"];
+     NSString *starTimeStr = [Utilities dateStrFromCstampTime:[_hotelModel.start_time integerValue] withDateFormat:@"M月dd日"];
+    NSString *outTimeStr = [Utilities dateStrFromCstampTime:[_hotelModel.start_time integerValue] withDateFormat:@"M月dd日"];
     _hotelNameLabel.text = _hotelModel.hotel_name;
-    _dateLabel.text = [NSString stringWithFormat:@"%@--%@",starTimeStr,outTimeStr];
+    _dateLabel.text = [NSString stringWithFormat:@"%@ -- %@",starTimeStr,outTimeStr];
     _priceLabel.text = [NSString stringWithFormat:@"%@元",_hotelModel.now_price];
     self.tableView.tableFooterView = [UIView new];
     //将表格视图设置为"编辑中"
@@ -164,6 +187,27 @@
         }
     }
 }
+
+
+//设置tableview的底部视图
+- (void)setFootViewForTableView {
+    
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, UI_SCREEN_W, 45)];
+    
+    UIButton *payBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+    payBtn.frame = CGRectMake(0, 75, UI_SCREEN_W, 40.f);
+    [payBtn setTitle:@"确认支付" forState:UIControlStateNormal];
+    //设置按钮标题的字体大小
+    payBtn.titleLabel.font = [UIFont systemFontOfSize:17.f];
+    [payBtn setTitleColor:UIColorFromRGB(23, 115, 232) forState:UIControlStateNormal];
+    payBtn.backgroundColor = [UIColor whiteColor];
+    [payBtn addTarget:self action:@selector(payAction:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [view addSubview:payBtn];
+    
+    [_payTableView setTableFooterView:view];
+}
+
 
 
 /*

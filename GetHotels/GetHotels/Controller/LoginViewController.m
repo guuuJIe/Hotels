@@ -49,7 +49,7 @@
     
     //登录按钮禁用
     _loginBtn.enabled = NO;
-    _loginBtn.backgroundColor = UIColorFromRGB(200, 200, 200);
+    //_loginBtn.backgroundColor = UIColorFromRGB(200, 200, 200);
     
     //添加事件监听当输入框文本内容改变时，调用textChange:方法
     [_phoneTextField addTarget:self action:@selector(textChange:) forControlEvents:UIControlEventEditingChanged];
@@ -129,7 +129,7 @@
     } else {
         //登录按钮禁用
         _loginBtn.enabled = NO;
-        _loginBtn.backgroundColor = UIColorFromRGB(200, 200, 200);
+        //_loginBtn.backgroundColor = UIColorFromRGB(200, 200, 200);
     }
 }
 
@@ -175,7 +175,7 @@
             _pwdTextField.text = @"";
             //登录成功后按钮禁用
             _loginBtn.enabled = NO;
-            _loginBtn.backgroundColor = UIColorFromRGB(200, 200, 200);
+            //_loginBtn.backgroundColor = UIColorFromRGB(200, 200, 200);
             //记忆用户名
             [Utilities setUserDefaults:@"Username" content:_phoneTextField.text];
             //登录成功后返回上一页
