@@ -21,13 +21,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ellipse副本" translatesAutoresizingMaskIntoConstraints="NO" id="N5R-PX-S0y">
-                                <rect key="frame" x="158" y="94" width="60" height="60"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="aFD-Lh-KXk"/>
-                                    <constraint firstAttribute="width" secondItem="N5R-PX-S0y" secondAttribute="height" multiplier="1:1" id="vKw-kQ-TQu"/>
-                                </constraints>
-                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OBW-ep-BMT">
                                 <rect key="frame" x="120" y="526" width="135" height="30"/>
                                 <color key="backgroundColor" red="0.25940886759999998" green="0.63428873119999996" blue="0.91410156249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -216,6 +209,25 @@
                                             <constraint firstAttribute="height" constant="1" id="3id-C7-8k2"/>
                                         </constraints>
                                     </view>
+                                    <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="ZJ7-y1-IyI">
+                                        <rect key="frame" x="-15" y="279" width="375" height="216"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <date key="date" timeIntervalSinceReferenceDate="462606871.28727698">
+                                            <!--2015-08-30 05:54:31 +0000-->
+                                        </date>
+                                        <date key="minimumDate" timeIntervalSinceReferenceDate="-978267600">
+                                            <!--1970-01-01 11:00:00 +0000-->
+                                        </date>
+                                        <locale key="locale" localeIdentifier="zh-Hans"/>
+                                    </datePicker>
+                                    <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vLy-or-KIR">
+                                        <rect key="frame" x="0.0" y="256" width="345" height="44"/>
+                                        <items>
+                                            <barButtonItem title="取消" id="HKd-wV-no4"/>
+                                            <barButtonItem style="plain" systemItem="flexibleSpace" id="nQg-oC-rcM"/>
+                                            <barButtonItem title="确定" id="RlL-pv-ZAK"/>
+                                        </items>
+                                    </toolbar>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -264,6 +276,7 @@
                                     <constraint firstItem="B75-5s-ePu" firstAttribute="top" secondItem="7wp-Tp-tm2" secondAttribute="bottom" constant="5" id="ZJf-ck-HQ9"/>
                                     <constraint firstAttribute="trailing" secondItem="5VW-F8-wjw" secondAttribute="trailing" constant="260" id="ZzJ-c3-zox"/>
                                     <constraint firstAttribute="trailing" secondItem="M8n-9e-elf" secondAttribute="trailing" constant="260" id="afE-Y0-Ig3"/>
+                                    <constraint firstItem="M8n-9e-elf" firstAttribute="top" secondItem="vLy-or-KIR" secondAttribute="bottom" id="ark-sj-CXf"/>
                                     <constraint firstItem="6cH-jr-oJi" firstAttribute="top" secondItem="AHm-AG-aIt" secondAttribute="bottom" constant="15" id="bGW-L4-Zxc"/>
                                     <constraint firstAttribute="trailing" secondItem="AHm-AG-aIt" secondAttribute="trailing" constant="18" id="boc-5x-WB5"/>
                                     <constraint firstItem="IvA-UR-hZX" firstAttribute="top" secondItem="M8n-9e-elf" secondAttribute="bottom" constant="15" id="cG8-sr-bqc"/>
@@ -282,6 +295,7 @@
                                     <constraint firstItem="NCW-cq-HoI" firstAttribute="top" secondItem="XUc-O3-bjO" secondAttribute="bottom" constant="5" id="muv-aB-LvH"/>
                                     <constraint firstItem="vgf-yx-AOU" firstAttribute="centerX" secondItem="k7M-f0-lnY" secondAttribute="centerX" id="oJj-Ob-EB0"/>
                                     <constraint firstItem="lUB-qy-SUA" firstAttribute="leading" secondItem="W8n-yX-Bxr" secondAttribute="leading" constant="15" id="oe3-dD-yg7"/>
+                                    <constraint firstAttribute="trailing" secondItem="vLy-or-KIR" secondAttribute="trailing" id="q4H-yE-Z46"/>
                                     <constraint firstItem="z9e-7B-xm3" firstAttribute="top" secondItem="W8n-yX-Bxr" secondAttribute="top" constant="40" id="qD8-9Z-rlY"/>
                                     <constraint firstItem="k7M-f0-lnY" firstAttribute="leading" secondItem="IaA-mH-epe" secondAttribute="trailing" constant="25" id="rB2-Hy-nnJ"/>
                                     <constraint firstItem="nUu-7f-96q" firstAttribute="top" secondItem="B75-5s-ePu" secondAttribute="bottom" constant="45" id="rRK-8g-b1y"/>
@@ -294,12 +308,20 @@
                                     <constraint firstAttribute="bottom" secondItem="jHu-g9-JTL" secondAttribute="bottom" constant="23" id="ugi-UO-Fp8"/>
                                     <constraint firstAttribute="trailing" secondItem="B75-5s-ePu" secondAttribute="trailing" constant="200" id="v2h-9i-leB"/>
                                     <constraint firstItem="x4d-rh-lvj" firstAttribute="centerX" secondItem="gIf-QY-HqV" secondAttribute="centerX" id="x02-ap-HyR"/>
+                                    <constraint firstItem="vLy-or-KIR" firstAttribute="leading" secondItem="W8n-yX-Bxr" secondAttribute="leading" id="xPo-cf-SnH"/>
                                     <constraint firstItem="AHm-AG-aIt" firstAttribute="top" secondItem="ET6-kO-zAo" secondAttribute="bottom" constant="8" symbolic="YES" id="y6f-b9-cGF"/>
                                     <constraint firstItem="B75-5s-ePu" firstAttribute="top" secondItem="7wp-Tp-tm2" secondAttribute="bottom" constant="5" id="yIW-GA-lXn"/>
                                     <constraint firstItem="Tj8-fO-xdb" firstAttribute="trailing" secondItem="AHm-AG-aIt" secondAttribute="trailing" id="yMd-yw-HTy"/>
                                     <constraint firstItem="M8n-9e-elf" firstAttribute="leading" secondItem="W8n-yX-Bxr" secondAttribute="leading" constant="15" id="ydB-Bz-WGY"/>
                                 </constraints>
                             </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ellipse副本" translatesAutoresizingMaskIntoConstraints="NO" id="N5R-PX-S0y">
+                                <rect key="frame" x="158" y="94" width="60" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="aFD-Lh-KXk"/>
+                                    <constraint firstAttribute="width" secondItem="N5R-PX-S0y" secondAttribute="height" multiplier="1:1" id="vKw-kQ-TQu"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
@@ -346,6 +368,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="e1q-3O-ROY" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="9P1-hf-Q5V">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
