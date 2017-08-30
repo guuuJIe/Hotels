@@ -58,6 +58,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *eigtLabel;
 @property (strong,nonatomic) hotelDetailModel *detailModel;
 @property (strong,nonatomic)NSDate *afterTomorrow;
+
 @end
 
 @implementation HotelDetailViewController
@@ -65,8 +66,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self naviConfig];
+    _datePicker.backgroundColor = UIColorFromRGB(235, 235, 241);
+    _datePicker.minimumDate = [NSDate date];
     _arr = [NSMutableArray new];
     [self hotelDetailRequest];
+    
    
     // Do any additional setup after loading the view.
     //状态栏变成白色
