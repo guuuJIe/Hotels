@@ -123,7 +123,7 @@
                                 </userDefinedRuntimeAttributes>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qm5-hk-6TK">
-                                <rect key="frame" x="60" y="424" width="255" height="33"/>
+                                <rect key="frame" x="120" y="424" width="135" height="33"/>
                                 <color key="backgroundColor" red="0.25940886759999998" green="0.63428873119999996" blue="0.91410156249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="登录">
@@ -141,13 +141,13 @@
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="Qm5-hk-6TK" secondAttribute="trailing" constant="60" id="Bra-PK-YLz"/>
+                            <constraint firstAttribute="trailing" secondItem="Qm5-hk-6TK" secondAttribute="trailing" constant="120" id="Bra-PK-YLz"/>
                             <constraint firstItem="Qm5-hk-6TK" firstAttribute="top" secondItem="s7z-h0-TYH" secondAttribute="bottom" constant="80" id="FaA-Nr-YBA"/>
                             <constraint firstItem="s7z-h0-TYH" firstAttribute="centerX" secondItem="E40-PC-kav" secondAttribute="centerX" id="U3U-uM-i6m"/>
                             <constraint firstItem="s7z-h0-TYH" firstAttribute="centerX" secondItem="eW6-pI-kpz" secondAttribute="centerX" id="Vv5-CW-ijr"/>
                             <constraint firstItem="s7z-h0-TYH" firstAttribute="leading" secondItem="E40-PC-kav" secondAttribute="leading" constant="15" id="b2Z-vb-3vF"/>
                             <constraint firstItem="eW6-pI-kpz" firstAttribute="top" secondItem="Sgu-Zf-20e" secondAttribute="bottom" constant="50" id="dZz-KN-vx3"/>
-                            <constraint firstItem="Qm5-hk-6TK" firstAttribute="leading" secondItem="E40-PC-kav" secondAttribute="leading" constant="60" id="jV7-4s-p4L"/>
+                            <constraint firstItem="Qm5-hk-6TK" firstAttribute="leading" secondItem="E40-PC-kav" secondAttribute="leading" constant="120" id="jV7-4s-p4L"/>
                             <constraint firstItem="s7z-h0-TYH" firstAttribute="top" secondItem="Sgu-Zf-20e" secondAttribute="bottom" constant="80" id="n1I-fY-ybQ"/>
                             <constraint firstAttribute="trailing" secondItem="s7z-h0-TYH" secondAttribute="trailing" constant="15" id="tiV-ox-HpI"/>
                             <constraint firstItem="Qm5-hk-6TK" firstAttribute="centerX" secondItem="E40-PC-kav" secondAttribute="centerX" id="trb-Ub-HvG"/>
@@ -303,7 +303,7 @@
                                 </userDefinedRuntimeAttributes>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SaM-8S-7om">
-                                <rect key="frame" x="60" y="424" width="255" height="33"/>
+                                <rect key="frame" x="120" y="424" width="135" height="33"/>
                                 <color key="backgroundColor" red="0.25940886759999998" green="0.63428873119999996" blue="0.91410156249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="注册">
@@ -329,8 +329,8 @@
                             <constraint firstItem="vh3-Q8-DLo" firstAttribute="centerX" secondItem="k0g-yZ-pyP" secondAttribute="centerX" id="eCu-UZ-yja"/>
                             <constraint firstItem="vh3-Q8-DLo" firstAttribute="centerX" secondItem="Suc-xs-h86" secondAttribute="centerX" id="fVA-NN-Pj1"/>
                             <constraint firstAttribute="trailing" secondItem="vh3-Q8-DLo" secondAttribute="trailing" constant="15" id="m8k-EO-eZa"/>
-                            <constraint firstAttribute="trailing" secondItem="SaM-8S-7om" secondAttribute="trailing" constant="60" id="mOb-Ho-xuV"/>
-                            <constraint firstItem="SaM-8S-7om" firstAttribute="leading" secondItem="Suc-xs-h86" secondAttribute="leading" constant="60" id="sKm-ZA-Nq5"/>
+                            <constraint firstAttribute="trailing" secondItem="SaM-8S-7om" secondAttribute="trailing" constant="120" id="mOb-Ho-xuV"/>
+                            <constraint firstItem="SaM-8S-7om" firstAttribute="leading" secondItem="Suc-xs-h86" secondAttribute="leading" constant="120" id="sKm-ZA-Nq5"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Vac-Sd-n2y"/>
