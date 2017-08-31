@@ -1,5 +1,5 @@
 //
-//  AviationViewController.h
+//  DidRealeseTableViewCell.h
 //  GetHotels
 //
 //  Created by admin on 2017/8/31.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AviationViewController : UIViewController
+@interface DidRealeseTableViewCell : UITableViewCell
 
 @end
