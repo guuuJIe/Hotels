@@ -19,7 +19,12 @@
 //颜色函数
 #define UIColorFromRGB(r,g,b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0]
 #define UIColorFromRGBA(r,g,b,a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a/1.0]
+//字体颜色
 
+#define UNSELECT_TITLECOLOR [UIColor colorWithRed:150/255.0 green:152/255.0 blue: 152/255.0 alpha:1.0]
+#define UNSELECT_BORDER_COLOR [UIColor colorWithRed:150/255.0 green:152/255.0 blue: 152/255.0 alpha:1.0]
+#define SELECT_COLOR [UIColor colorWithRed:81.0/255.0 green:167.0/255.0 blue: 235.0/255.0 alpha:1.0]
+#define SELECTE_BORDER_COLOR [UIColor colorWithRed:150/255.0 green:183/255.0 blue: 228/255.0 alpha:1.0]
 //屏幕尺寸
 #define UI_SCREEN_W [[UIScreen mainScreen] bounds].size.width
 #define UI_SCREEN_H [[UIScreen mainScreen] bounds].size.height
