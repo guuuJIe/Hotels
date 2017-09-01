@@ -9,8 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface HomeMarkTableViewCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UILabel *firstCellLabel;
-@property (weak, nonatomic) IBOutlet UILabel *secondCellLabel;
-@property (weak, nonatomic) IBOutlet UILabel *threeCellLabel;
-@property (weak, nonatomic) IBOutlet UILabel *fourCellLabel;
+@property (weak, nonatomic) IBOutlet UILabel *markSortCellText;
+
 @end
