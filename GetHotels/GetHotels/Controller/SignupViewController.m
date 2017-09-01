@@ -46,7 +46,7 @@
     
     //注册按钮禁用
     _signupBtn.enabled = NO;
-    _signupBtn.backgroundColor = UIColorFromRGB(200, 200, 200);
+    //_signupBtn.backgroundColor = UIColorFromRGB(200, 200, 200);
     
     //添加事件监听当输入框文本内容改变时，调用textChange:方法
     [_phoneTextField addTarget:self action:@selector(textChange:) forControlEvents:UIControlEventEditingChanged];
@@ -115,7 +115,7 @@
     } else {
         //注册按钮禁用
         _signupBtn.enabled = NO;
-        _signupBtn.backgroundColor = UIColorFromRGB(200, 200, 200);
+        //_signupBtn.backgroundColor = UIColorFromRGB(200, 200, 200);
         
     }
 }

@@ -33,7 +33,7 @@
     
     //用户不能启用（不能点击确认按钮）
     _confirmBtn.enabled = NO;
-    _confirmBtn.backgroundColor = UIColorFromRGB(200, 200, 200);
+    //_confirmBtn.backgroundColor = UIColorFromRGB(200, 200, 200);
 
 }
 

@@ -34,7 +34,7 @@
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="147" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="mss-Dz-M9I" userLabel="First Table View">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="553"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AllOrderCell" rowHeight="147" id="2g2-x1-Hg3" customClass="AllOrderTableViewCell">
                                                 <rect key="frame" x="0.0" y="28" width="375" height="147"/>
@@ -133,7 +133,7 @@
                                     </tableView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9qH-OQ-roy" userLabel="secondTable View">
                                         <rect key="frame" x="375" y="0.0" width="375" height="553"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="UseableOrderCell" rowHeight="147" id="mbU-1Y-bMa" customClass="UseableOrderTableViewCell">
                                                 <rect key="frame" x="0.0" y="28" width="375" height="147"/>
@@ -232,7 +232,7 @@
                                     </tableView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9LD-d7-hXy" userLabel="Third Table View">
                                         <rect key="frame" x="750" y="0.0" width="375" height="553"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DatedOrderCell" rowHeight="147" id="BZ6-di-z1l" customClass="DatedOrderTableViewCell">
                                                 <rect key="frame" x="0.0" y="28" width="375" height="147"/>

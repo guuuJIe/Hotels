@@ -48,7 +48,11 @@
     _AllOrderTableView.tableFooterView = [UIView new];
     _UseableOrderTableView.tableFooterView = [UIView new];
     _DatedOrderTableView.tableFooterView = [UIView new];
+    if (![Utilities loginCheck]) {
+        
+    }
     [self AllOrdersRequest];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -111,6 +115,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
     
 }
+
 -(void)refreshControl{
     UIRefreshControl *allorderRefresh = [UIRefreshControl new];
     [allorderRefresh addTarget:self action:@selector(refreshAllOrder) forControlEvents:UIControlEventValueChanged];

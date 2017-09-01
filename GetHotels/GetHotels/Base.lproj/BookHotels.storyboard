@@ -421,6 +421,7 @@
                                     </view>
                                     <datePicker hidden="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="Xde-qc-B0g">
                                         <rect key="frame" x="0.0" y="294" width="375" height="216"/>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <date key="date" timeIntervalSinceReferenceDate="525619799.25620198">
                                             <!--2017-08-28 13:29:59 +0000-->
                                         </date>
@@ -536,7 +537,6 @@
                         <outlet property="sevenLabel" destination="Q0d-8j-A5F" id="TQT-Kp-d0c"/>
                         <outlet property="sixLabel" destination="EkI-tK-ZF6" id="rhU-DH-LkL"/>
                         <outlet property="sizeLabel" destination="gGA-xV-irJ" id="4Em-Gc-29T"/>
-                        <outlet property="startBtn" destination="07D-9d-nOr" id="r2e-CC-QTl"/>
                         <outlet property="tooBar" destination="biQ-EN-h5c" id="2p7-3P-Cg9"/>
                         <outlet property="twoLabel" destination="Obw-nc-9n7" id="atX-PZ-y77"/>
                     </connections>
@@ -559,13 +559,13 @@
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="酒店名称" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZkX-0T-lLo">
                                     <rect key="frame" x="15" y="20" width="77.5" height="23"/>
-                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="19"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                     <color key="textColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="入住时间--离开时间" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZnG-9V-NJd">
                                     <rect key="frame" x="15" y="63" width="154" height="21"/>
-                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
                                 </label>
@@ -614,6 +614,7 @@
                     <connections>
                         <outlet property="dateLabel" destination="ZnG-9V-NJd" id="yeI-1p-bAI"/>
                         <outlet property="hotelNameLabel" destination="ZkX-0T-lLo" id="zpp-1U-Gmi"/>
+                        <outlet property="payTableView" destination="Hwa-gk-k1S" id="vRs-X0-5To"/>
                         <outlet property="priceLabel" destination="qHJ-t5-VXm" id="4YE-eY-1Zg"/>
                     </connections>
                 </tableViewController>
