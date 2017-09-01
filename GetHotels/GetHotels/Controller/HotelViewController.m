@@ -829,8 +829,7 @@
     _markView.hidden = YES;
     otherPreIdxOne = otherIndexOne;
     otherPreIdxTwo = otherIndexTwo;
-    [self initializeData];
-    [self selectStar];
+    [self initializeData]; 
 }
 - (void) touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     _markView.hidden = YES; 
