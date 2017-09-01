@@ -73,6 +73,8 @@
 		84A3467F1F4C42C60051BDFB /* MyInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A3467E1F4C42C60051BDFB /* MyInfoViewController.m */; };
 		84A346831F4C443D0051BDFB /* HotelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A346821F4C443D0051BDFB /* HotelTableViewCell.m */; };
 		84A346861F4C44510051BDFB /* MyInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A346851F4C44510051BDFB /* MyInfoTableViewCell.m */; };
+		84BDAA051F5909EC008152FF /* Aviation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84BDAA041F5909EC008152FF /* Aviation.storyboard */; };
+		84BDAA091F590A22008152FF /* AviationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BDAA081F590A22008152FF /* AviationViewController.m */; };
 		84CD441B1F49777D0074A42A /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84CD441A1F49777D0074A42A /* Launch Screen.storyboard */; };
 		84F729DB1F48661D00E7E773 /* BookHotels.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84F729D91F48661D00E7E773 /* BookHotels.storyboard */; };
 		84F729DE1F48663400E7E773 /* Myself.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84F729DC1F48663400E7E773 /* Myself.storyboard */; };
@@ -225,6 +227,9 @@
 		84A346821F4C443D0051BDFB /* HotelTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotelTableViewCell.m; sourceTree = "<group>"; };
 		84A346841F4C44510051BDFB /* MyInfoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyInfoTableViewCell.h; sourceTree = "<group>"; };
 		84A346851F4C44510051BDFB /* MyInfoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyInfoTableViewCell.m; sourceTree = "<group>"; };
+		84BDAA041F5909EC008152FF /* Aviation.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Aviation.storyboard; sourceTree = "<group>"; };
+		84BDAA071F590A22008152FF /* AviationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AviationViewController.h; sourceTree = "<group>"; };
+		84BDAA081F590A22008152FF /* AviationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AviationViewController.m; sourceTree = "<group>"; };
 		84CD441A1F49777D0074A42A /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		84F729DA1F48661D00E7E773 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = GetHotels/Base.lproj/BookHotels.storyboard; sourceTree = SOURCE_ROOT; };
 		84F729DD1F48663400E7E773 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = GetHotels/Base.lproj/Myself.storyboard; sourceTree = SOURCE_ROOT; };
@@ -370,6 +375,7 @@
 		045E651A1F485D9B001A8263 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				84BDAA061F590A04008152FF /* Aviation */,
 				842DB6161F57A1F600AFE2AE /* MyRelease */,
 				046F322D1F54200D00157DD3 /* Purchase */,
 				0464CC301F52D07C006260CE /* ContactService */,
@@ -444,6 +450,7 @@
 				84A346751F4C3BCD0051BDFB /* Main.storyboard */,
 				844745841F516F2D001D2E2F /* setting.storyboard */,
 				84A346771F4C3BE60051BDFB /* Login.storyboard */,
+				84BDAA041F5909EC008152FF /* Aviation.storyboard */,
 				84673DFC1F5904C000338A2E /* MyRelease.storyboard */,
 			);
 			path = View;
@@ -683,6 +690,15 @@
 			name = HomeCell;
 			sourceTree = "<group>";
 		};
+		84BDAA061F590A04008152FF /* Aviation */ = {
+			isa = PBXGroup;
+			children = (
+				84BDAA071F590A22008152FF /* AviationViewController.h */,
+				84BDAA081F590A22008152FF /* AviationViewController.m */,
+			);
+			name = Aviation;
+			sourceTree = "<group>";
+		};
 		FE9C941A1F4E7BAE00252250 /* ZLImageViewDisplayView */ = {
 			isa = PBXGroup;
 			children = (
@@ -836,6 +852,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				846DB0221F4D9EE700578D22 /* Cities.plist in Resources */,
+				84BDAA051F5909EC008152FF /* Aviation.storyboard in Resources */,
 				84CD441B1F49777D0074A42A /* Launch Screen.storyboard in Resources */,
 				84673DFD1F5904C000338A2E /* MyRelease.storyboard in Resources */,
 				84A346761F4C3BCD0051BDFB /* Main.storyboard in Resources */,
@@ -917,6 +934,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				045E655F1F485F4D001A8263 /* NSData+Base64.m in Sources */,
+				84BDAA091F590A22008152FF /* AviationViewController.m in Sources */,
 				841E379A1F495AE90057D58A /* MyHotelViewController.m in Sources */,
 				045E65621F485F4D001A8263 /* NSString+Crypt.m in Sources */,
 				04587C861F5199C3005A7569 /* AccountSettingViewController.m in Sources */,
