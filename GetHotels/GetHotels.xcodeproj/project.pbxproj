@@ -69,6 +69,9 @@
 		84A3467F1F4C42C60051BDFB /* MyInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A3467E1F4C42C60051BDFB /* MyInfoViewController.m */; };
 		84A346831F4C443D0051BDFB /* HotelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A346821F4C443D0051BDFB /* HotelTableViewCell.m */; };
 		84A346861F4C44510051BDFB /* MyInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A346851F4C44510051BDFB /* MyInfoTableViewCell.m */; };
+		84BDA9F51F58F0A4008152FF /* MyRelease.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84BDA9F41F58F0A4008152FF /* MyRelease.storyboard */; };
+		84BDA9F91F58F996008152FF /* Aviation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84BDA9F81F58F996008152FF /* Aviation.storyboard */; };
+		84BDA9FD1F58FB40008152FF /* AviationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BDA9FC1F58FB40008152FF /* AviationViewController.m */; };
 		84F729DB1F48661D00E7E773 /* BookHotels.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84F729D91F48661D00E7E773 /* BookHotels.storyboard */; };
 		84F729DE1F48663400E7E773 /* Myself.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84F729DC1F48663400E7E773 /* Myself.storyboard */; };
 		FE9C941D1F4E7BAE00252250 /* ZLImageViewDisplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C941C1F4E7BAE00252250 /* ZLImageViewDisplayView.m */; };
@@ -212,6 +215,10 @@
 		84A346821F4C443D0051BDFB /* HotelTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotelTableViewCell.m; sourceTree = "<group>"; };
 		84A346841F4C44510051BDFB /* MyInfoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyInfoTableViewCell.h; sourceTree = "<group>"; };
 		84A346851F4C44510051BDFB /* MyInfoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyInfoTableViewCell.m; sourceTree = "<group>"; };
+		84BDA9F41F58F0A4008152FF /* MyRelease.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MyRelease.storyboard; sourceTree = "<group>"; };
+		84BDA9F81F58F996008152FF /* Aviation.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Aviation.storyboard; path = ../../../../../../../var/folders/7c/2sn4g4wd5vj2cgv2gsg7vrkc0000gp/T/Aviation.storyboard; sourceTree = "<group>"; };
+		84BDA9FB1F58FB04008152FF /* AviationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AviationViewController.h; path = ../../../../../../../var/folders/7c/2sn4g4wd5vj2cgv2gsg7vrkc0000gp/T/AviationViewController.h; sourceTree = "<group>"; };
+		84BDA9FC1F58FB40008152FF /* AviationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AviationViewController.m; sourceTree = "<group>"; };
 		84F729DA1F48661D00E7E773 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = GetHotels/Base.lproj/BookHotels.storyboard; sourceTree = SOURCE_ROOT; };
 		84F729DD1F48663400E7E773 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = GetHotels/Base.lproj/Myself.storyboard; sourceTree = SOURCE_ROOT; };
 		930E5F009C5987E6FC36A05C /* Pods-GetHotels.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GetHotels.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GetHotels/Pods-GetHotels.debug.xcconfig"; sourceTree = "<group>"; };
@@ -356,6 +363,7 @@
 		045E651A1F485D9B001A8263 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				84BDA9FA1F58FA84008152FF /* Aviation */,
 				046F322D1F54200D00157DD3 /* Purchase */,
 				0464CC301F52D07C006260CE /* ContactService */,
 				04587C831F519986005A7569 /* AccountSetting */,
@@ -426,6 +434,8 @@
 				844745841F516F2D001D2E2F /* setting.storyboard */,
 				84A346771F4C3BE60051BDFB /* Login.storyboard */,
 				842D4D561F56C081001F2B81 /* LaunchScreen.storyboard */,
+				84BDA9F81F58F996008152FF /* Aviation.storyboard */,
+				84BDA9F41F58F0A4008152FF /* MyRelease.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -628,6 +638,15 @@
 			name = HomeCell;
 			sourceTree = "<group>";
 		};
+		84BDA9FA1F58FA84008152FF /* Aviation */ = {
+			isa = PBXGroup;
+			children = (
+				84BDA9FB1F58FB04008152FF /* AviationViewController.h */,
+				84BDA9FC1F58FB40008152FF /* AviationViewController.m */,
+			);
+			name = Aviation;
+			sourceTree = "<group>";
+		};
 		FE9C941A1F4E7BAE00252250 /* ZLImageViewDisplayView */ = {
 			isa = PBXGroup;
 			children = (
@@ -781,7 +800,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				846DB0221F4D9EE700578D22 /* Cities.plist in Resources */,
+				84BDA9F91F58F996008152FF /* Aviation.storyboard in Resources */,
 				84A346761F4C3BCD0051BDFB /* Main.storyboard in Resources */,
+				84BDA9F51F58F0A4008152FF /* MyRelease.storyboard in Resources */,
 				842D4D571F56C081001F2B81 /* LaunchScreen.storyboard in Resources */,
 				84A346781F4C3BE60051BDFB /* Login.storyboard in Resources */,
 				84F729DB1F48661D00E7E773 /* BookHotels.storyboard in Resources */,
@@ -863,6 +884,7 @@
 				045E655F1F485F4D001A8263 /* NSData+Base64.m in Sources */,
 				841E379A1F495AE90057D58A /* MyHotelViewController.m in Sources */,
 				045E65621F485F4D001A8263 /* NSString+Crypt.m in Sources */,
+				84BDA9FD1F58FB40008152FF /* AviationViewController.m in Sources */,
 				04587C861F5199C3005A7569 /* AccountSettingViewController.m in Sources */,
 				046F32791F5445C400157DD3 /* GBAlipayManager.m in Sources */,
 				045E65261F485F34001A8263 /* Order.m in Sources */,
