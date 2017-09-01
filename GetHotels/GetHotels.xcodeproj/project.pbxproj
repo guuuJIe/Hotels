@@ -51,15 +51,16 @@
 		841E379A1F495AE90057D58A /* MyHotelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841E37991F495AE90057D58A /* MyHotelViewController.m */; };
 		841E379D1F4960710057D58A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 841E379C1F4960710057D58A /* ViewController.m */; };
 		841E37A11F4965F30057D58A /* HMSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 841E37A01F4965F30057D58A /* HMSegmentedControl.m */; };
-		842D4D531F56B578001F2B81 /* SKTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 842D4D4E1F56B578001F2B81 /* SKTag.m */; };
-		842D4D541F56B579001F2B81 /* SKTagButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 842D4D501F56B578001F2B81 /* SKTagButton.m */; };
-		842D4D551F56B579001F2B81 /* SKTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = 842D4D521F56B578001F2B81 /* SKTagView.m */; };
-		842D4D571F56C081001F2B81 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 842D4D561F56C081001F2B81 /* LaunchScreen.storyboard */; };
+		842DB61D1F57A39800AFE2AE /* DidRealeseTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 842DB61C1F57A39800AFE2AE /* DidRealeseTableViewCell.m */; };
+		842DB6201F57A41C00AFE2AE /* MyReleaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 842DB61F1F57A41C00AFE2AE /* MyReleaseViewController.m */; };
+		842DB6241F57ECA100AFE2AE /* IsReleasedTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 842DB6231F57ECA100AFE2AE /* IsReleasedTableViewCell.m */; };
+		842DB6281F5819CB00AFE2AE /* HistoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 842DB6271F5819CB00AFE2AE /* HistoryTableViewCell.m */; };
 		843AF6E41F526E9400C7878B /* HotelListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 843AF6E31F526E9400C7878B /* HotelListModel.m */; };
 		8445AD861F4C535000417B79 /* AllOrdersTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8445AD851F4C535000417B79 /* AllOrdersTableViewCell.m */; };
 		8445AD8A1F4C53BD00417B79 /* UseableOrderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8445AD891F4C53BD00417B79 /* UseableOrderTableViewCell.m */; };
 		8445AD8E1F4C53DE00417B79 /* DatedOrderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8445AD8D1F4C53DE00417B79 /* DatedOrderTableViewCell.m */; };
 		844745851F516F2D001D2E2F /* setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 844745841F516F2D001D2E2F /* setting.storyboard */; };
+		84673DFB1F58FA4000338A2E /* MyRelease.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84673DFA1F58FA4000338A2E /* MyRelease.storyboard */; };
 		846DB0221F4D9EE700578D22 /* Cities.plist in Resources */ = {isa = PBXBuildFile; fileRef = 846DB0211F4D9EE700578D22 /* Cities.plist */; };
 		846DB0251F4DA09300578D22 /* CityTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 846DB0241F4DA09300578D22 /* CityTableViewController.m */; };
 		8497D00D1F544E2400B495C6 /* HomeMarkTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8497D00C1F544E2400B495C6 /* HomeMarkTableViewCell.m */; };
@@ -69,6 +70,8 @@
 		84A3467F1F4C42C60051BDFB /* MyInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A3467E1F4C42C60051BDFB /* MyInfoViewController.m */; };
 		84A346831F4C443D0051BDFB /* HotelTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A346821F4C443D0051BDFB /* HotelTableViewCell.m */; };
 		84A346861F4C44510051BDFB /* MyInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A346851F4C44510051BDFB /* MyInfoTableViewCell.m */; };
+		84BDA9A91F55784E008152FF /* Aviation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84BDA9A81F55784E008152FF /* Aviation.storyboard */; };
+		84CD441B1F49777D0074A42A /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84CD441A1F49777D0074A42A /* Launch Screen.storyboard */; };
 		84F729DB1F48661D00E7E773 /* BookHotels.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84F729D91F48661D00E7E773 /* BookHotels.storyboard */; };
 		84F729DE1F48663400E7E773 /* Myself.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84F729DC1F48663400E7E773 /* Myself.storyboard */; };
 		FE9C941D1F4E7BAE00252250 /* ZLImageViewDisplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C941C1F4E7BAE00252250 /* ZLImageViewDisplayView.m */; };
@@ -181,13 +184,14 @@
 		841E379C1F4960710057D58A /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		841E379F1F4965F30057D58A /* HMSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMSegmentedControl.h; sourceTree = "<group>"; };
 		841E37A01F4965F30057D58A /* HMSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMSegmentedControl.m; sourceTree = "<group>"; };
-		842D4D4D1F56B578001F2B81 /* SKTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKTag.h; sourceTree = "<group>"; };
-		842D4D4E1F56B578001F2B81 /* SKTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKTag.m; sourceTree = "<group>"; };
-		842D4D4F1F56B578001F2B81 /* SKTagButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKTagButton.h; sourceTree = "<group>"; };
-		842D4D501F56B578001F2B81 /* SKTagButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKTagButton.m; sourceTree = "<group>"; };
-		842D4D511F56B578001F2B81 /* SKTagView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKTagView.h; sourceTree = "<group>"; };
-		842D4D521F56B578001F2B81 /* SKTagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKTagView.m; sourceTree = "<group>"; };
-		842D4D561F56C081001F2B81 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		842DB61B1F57A39800AFE2AE /* DidRealeseTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DidRealeseTableViewCell.h; sourceTree = "<group>"; };
+		842DB61C1F57A39800AFE2AE /* DidRealeseTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DidRealeseTableViewCell.m; sourceTree = "<group>"; };
+		842DB61E1F57A41C00AFE2AE /* MyReleaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyReleaseViewController.h; sourceTree = "<group>"; };
+		842DB61F1F57A41C00AFE2AE /* MyReleaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyReleaseViewController.m; sourceTree = "<group>"; };
+		842DB6221F57ECA100AFE2AE /* IsReleasedTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IsReleasedTableViewCell.h; sourceTree = "<group>"; };
+		842DB6231F57ECA100AFE2AE /* IsReleasedTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IsReleasedTableViewCell.m; sourceTree = "<group>"; };
+		842DB6261F5819CB00AFE2AE /* HistoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryTableViewCell.h; sourceTree = "<group>"; };
+		842DB6271F5819CB00AFE2AE /* HistoryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryTableViewCell.m; sourceTree = "<group>"; };
 		843AF6E21F526E9400C7878B /* HotelListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotelListModel.h; sourceTree = "<group>"; };
 		843AF6E31F526E9400C7878B /* HotelListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotelListModel.m; sourceTree = "<group>"; };
 		8445AD841F4C535000417B79 /* AllOrdersTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllOrdersTableViewCell.h; sourceTree = "<group>"; };
@@ -197,6 +201,7 @@
 		8445AD8C1F4C53DE00417B79 /* DatedOrderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatedOrderTableViewCell.h; sourceTree = "<group>"; };
 		8445AD8D1F4C53DE00417B79 /* DatedOrderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatedOrderTableViewCell.m; sourceTree = "<group>"; };
 		844745841F516F2D001D2E2F /* setting.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = setting.storyboard; sourceTree = "<group>"; };
+		84673DFA1F58FA4000338A2E /* MyRelease.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = MyRelease.storyboard; path = ../../../../../../../var/folders/6k/l6m1q6b926b2rv7n5tm5phrm0000gp/T/MyRelease.storyboard; sourceTree = "<group>"; };
 		846DB0211F4D9EE700578D22 /* Cities.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Cities.plist; sourceTree = "<group>"; };
 		846DB0231F4DA09300578D22 /* CityTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityTableViewController.h; sourceTree = "<group>"; };
 		846DB0241F4DA09300578D22 /* CityTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityTableViewController.m; sourceTree = "<group>"; };
@@ -212,6 +217,8 @@
 		84A346821F4C443D0051BDFB /* HotelTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotelTableViewCell.m; sourceTree = "<group>"; };
 		84A346841F4C44510051BDFB /* MyInfoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyInfoTableViewCell.h; sourceTree = "<group>"; };
 		84A346851F4C44510051BDFB /* MyInfoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyInfoTableViewCell.m; sourceTree = "<group>"; };
+		84BDA9A81F55784E008152FF /* Aviation.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Aviation.storyboard; sourceTree = "<group>"; };
+		84CD441A1F49777D0074A42A /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		84F729DA1F48661D00E7E773 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = GetHotels/Base.lproj/BookHotels.storyboard; sourceTree = SOURCE_ROOT; };
 		84F729DD1F48663400E7E773 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = GetHotels/Base.lproj/Myself.storyboard; sourceTree = SOURCE_ROOT; };
 		930E5F009C5987E6FC36A05C /* Pods-GetHotels.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GetHotels.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GetHotels/Pods-GetHotels.debug.xcconfig"; sourceTree = "<group>"; };
@@ -337,7 +344,6 @@
 		045E65181F485D6E001A8263 /* 3rd */ = {
 			isa = PBXGroup;
 			children = (
-				842D4D4C1F56B578001F2B81 /* SKTagView */,
 				FE9C941A1F4E7BAE00252250 /* ZLImageViewDisplayView */,
 				841E379E1F4965F30057D58A /* HMSegmentedControl */,
 				045E651F1F485F1A001A8263 /* SCZBasicEncodingRules */,
@@ -356,6 +362,7 @@
 		045E651A1F485D9B001A8263 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				842DB6161F57A1F600AFE2AE /* MyRelease */,
 				046F322D1F54200D00157DD3 /* Purchase */,
 				0464CC301F52D07C006260CE /* ContactService */,
 				04587C831F519986005A7569 /* AccountSetting */,
@@ -414,6 +421,9 @@
 		045E651D1F485D9B001A8263 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				842DB6251F5819A000AFE2AE /* HistoryTableViewCell */,
+				842DB6211F57EC4700AFE2AE /* IsReleasedTableViewCell */,
+				842DB61A1F57A34500AFE2AE /* DidRealeseTableViewCell */,
 				8497D00A1F544DEB00B495C6 /* HomeMarkCell */,
 				8445AD8B1F4C53C300417B79 /* DatedOrderTableViewCell */,
 				8445AD871F4C535800417B79 /* UseableOrderTableViewCell */,
@@ -422,10 +432,12 @@
 				84F729D91F48661D00E7E773 /* BookHotels.storyboard */,
 				84F729DC1F48663400E7E773 /* Myself.storyboard */,
 				FE9CAA7E1F49645C0064E327 /* Assets.xcassets */,
+				84CD441A1F49777D0074A42A /* Launch Screen.storyboard */,
 				84A346751F4C3BCD0051BDFB /* Main.storyboard */,
 				844745841F516F2D001D2E2F /* setting.storyboard */,
 				84A346771F4C3BE60051BDFB /* Login.storyboard */,
-				842D4D561F56C081001F2B81 /* LaunchScreen.storyboard */,
+				84BDA9A81F55784E008152FF /* Aviation.storyboard */,
+				84673DFA1F58FA4000338A2E /* MyRelease.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -537,17 +549,40 @@
 			path = HMSegmentedControl;
 			sourceTree = "<group>";
 		};
-		842D4D4C1F56B578001F2B81 /* SKTagView */ = {
+		842DB6161F57A1F600AFE2AE /* MyRelease */ = {
 			isa = PBXGroup;
 			children = (
-				842D4D4D1F56B578001F2B81 /* SKTag.h */,
-				842D4D4E1F56B578001F2B81 /* SKTag.m */,
-				842D4D4F1F56B578001F2B81 /* SKTagButton.h */,
-				842D4D501F56B578001F2B81 /* SKTagButton.m */,
-				842D4D511F56B578001F2B81 /* SKTagView.h */,
-				842D4D521F56B578001F2B81 /* SKTagView.m */,
+				842DB61E1F57A41C00AFE2AE /* MyReleaseViewController.h */,
+				842DB61F1F57A41C00AFE2AE /* MyReleaseViewController.m */,
 			);
-			path = SKTagView;
+			name = MyRelease;
+			sourceTree = "<group>";
+		};
+		842DB61A1F57A34500AFE2AE /* DidRealeseTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				842DB61B1F57A39800AFE2AE /* DidRealeseTableViewCell.h */,
+				842DB61C1F57A39800AFE2AE /* DidRealeseTableViewCell.m */,
+			);
+			name = DidRealeseTableViewCell;
+			sourceTree = "<group>";
+		};
+		842DB6211F57EC4700AFE2AE /* IsReleasedTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				842DB6221F57ECA100AFE2AE /* IsReleasedTableViewCell.h */,
+				842DB6231F57ECA100AFE2AE /* IsReleasedTableViewCell.m */,
+			);
+			name = IsReleasedTableViewCell;
+			sourceTree = "<group>";
+		};
+		842DB6251F5819A000AFE2AE /* HistoryTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				842DB6261F5819CB00AFE2AE /* HistoryTableViewCell.h */,
+				842DB6271F5819CB00AFE2AE /* HistoryTableViewCell.m */,
+			);
+			name = HistoryTableViewCell;
 			sourceTree = "<group>";
 		};
 		8445AD831F4C533400417B79 /* AllOrderCell */ = {
@@ -781,11 +816,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				846DB0221F4D9EE700578D22 /* Cities.plist in Resources */,
+				84CD441B1F49777D0074A42A /* Launch Screen.storyboard in Resources */,
 				84A346761F4C3BCD0051BDFB /* Main.storyboard in Resources */,
-				842D4D571F56C081001F2B81 /* LaunchScreen.storyboard in Resources */,
+				84673DFB1F58FA4000338A2E /* MyRelease.storyboard in Resources */,
 				84A346781F4C3BE60051BDFB /* Login.storyboard in Resources */,
 				84F729DB1F48661D00E7E773 /* BookHotels.storyboard in Resources */,
 				84F729DE1F48663400E7E773 /* Myself.storyboard in Resources */,
+				84BDA9A91F55784E008152FF /* Aviation.storyboard in Resources */,
 				FE9CAA7F1F49645C0064E327 /* Assets.xcassets in Resources */,
 				844745851F516F2D001D2E2F /* setting.storyboard in Resources */,
 			);
@@ -869,6 +906,7 @@
 				046F32801F5445C400157DD3 /* RSADataSigner.m in Sources */,
 				0477F52B1F4C34C300B16FB3 /* LoginViewController.m in Sources */,
 				046F32301F54206000157DD3 /* PurchaseTableViewController.m in Sources */,
+				842DB61D1F57A39800AFE2AE /* DidRealeseTableViewCell.m in Sources */,
 				046F327F1F5445C400157DD3 /* openssl_wrapper.m in Sources */,
 				045E655C1F485F4D001A8263 /* AppAPIClient.m in Sources */,
 				046F327B1F5445C400157DD3 /* DataSigner.m in Sources */,
@@ -878,19 +916,19 @@
 				045E65221F485F1A001A8263 /* BasicEncodingRules.m in Sources */,
 				84A346861F4C44510051BDFB /* MyInfoTableViewCell.m in Sources */,
 				045E65641F485F4D001A8263 /* StorageMgr.m in Sources */,
-				842D4D531F56B578001F2B81 /* SKTag.m in Sources */,
 				046F327C1F5445C400157DD3 /* DataVerifier.m in Sources */,
 				0464CC331F52D101006260CE /* ContactServiceViewController.m in Sources */,
 				841E379D1F4960710057D58A /* ViewController.m in Sources */,
 				84A3467C1F4C42A20051BDFB /* HotelViewController.m in Sources */,
 				8445AD861F4C535000417B79 /* AllOrdersTableViewCell.m in Sources */,
+				842DB6241F57ECA100AFE2AE /* IsReleasedTableViewCell.m in Sources */,
 				0459D82C1F4EED2600ED7943 /* UserModel.m in Sources */,
 				045E65631F485F4D001A8263 /* RequestAPI.m in Sources */,
 				046F327E1F5445C400157DD3 /* NSDataEx.m in Sources */,
 				045E65611F485F4D001A8263 /* NSDateFormatter+Category.m in Sources */,
 				045E655E1F485F4D001A8263 /* JSONS.m in Sources */,
+				842DB6281F5819CB00AFE2AE /* HistoryTableViewCell.m in Sources */,
 				0477F5301F4C36DB00B16FB3 /* SignupViewController.m in Sources */,
-				842D4D541F56B579001F2B81 /* SKTagButton.m in Sources */,
 				FE9C941D1F4E7BAE00252250 /* ZLImageViewDisplayView.m in Sources */,
 				8445AD8E1F4C53DE00417B79 /* DatedOrderTableViewCell.m in Sources */,
 				045E64F01F485CA3001A8263 /* GetHotels.xcdatamodeld in Sources */,
@@ -899,6 +937,7 @@
 				045E64E71F485CA3001A8263 /* AppDelegate.m in Sources */,
 				843AF6E41F526E9400C7878B /* HotelListModel.m in Sources */,
 				046F327A1F5445C400157DD3 /* base64.m in Sources */,
+				842DB6201F57A41C00AFE2AE /* MyReleaseViewController.m in Sources */,
 				84A3467F1F4C42C60051BDFB /* MyInfoViewController.m in Sources */,
 				8497D00D1F544E2400B495C6 /* HomeMarkTableViewCell.m in Sources */,
 				045E65601F485F4D001A8263 /* NSDate+Utility.m in Sources */,
@@ -906,7 +945,6 @@
 				046F32811F5445C400157DD3 /* RSADataVerifier.m in Sources */,
 				FEA94EBC1F52757B00F37096 /* hotelDetailModel.m in Sources */,
 				841E37A11F4965F30057D58A /* HMSegmentedControl.m in Sources */,
-				842D4D551F56B579001F2B81 /* SKTagView.m in Sources */,
 				045E65661F485F4D001A8263 /* Utilities.m in Sources */,
 				045E64E41F485CA3001A8263 /* main.m in Sources */,
 			);
