@@ -140,6 +140,9 @@
                 case 0:
                     [self performSegueWithIdentifier:@"HomeToOrder" sender:self];
                     break;
+                case 1:
+                    [self performSegueWithIdentifier:@"MyInfoToMyRelease" sender:self];
+                    break;
                 }
             }
         }

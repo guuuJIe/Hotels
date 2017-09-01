@@ -208,6 +208,15 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //取消选中
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (tableView == _didReleaseTableView) {
+        
+    }
+    else if(tableView == _isReleasedTableView){
+        [self performSegueWithIdentifier:@"MyReleaseToOffer" sender:self];
+    }
+    else{
+        
+    }
 }
 //每组有几行
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
