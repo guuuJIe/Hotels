@@ -60,6 +60,9 @@
 		8445AD8A1F4C53BD00417B79 /* UseableOrderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8445AD891F4C53BD00417B79 /* UseableOrderTableViewCell.m */; };
 		8445AD8E1F4C53DE00417B79 /* DatedOrderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8445AD8D1F4C53DE00417B79 /* DatedOrderTableViewCell.m */; };
 		844745851F516F2D001D2E2F /* setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 844745841F516F2D001D2E2F /* setting.storyboard */; };
+		845F5A2F1F59010B00D163C0 /* SKTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 845F5A2A1F59010B00D163C0 /* SKTag.m */; };
+		845F5A301F59010B00D163C0 /* SKTagButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 845F5A2C1F59010B00D163C0 /* SKTagButton.m */; };
+		845F5A311F59010B00D163C0 /* SKTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = 845F5A2E1F59010B00D163C0 /* SKTagView.m */; };
 		84673DFB1F58FA4000338A2E /* MyRelease.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84673DFA1F58FA4000338A2E /* MyRelease.storyboard */; };
 		846DB0221F4D9EE700578D22 /* Cities.plist in Resources */ = {isa = PBXBuildFile; fileRef = 846DB0211F4D9EE700578D22 /* Cities.plist */; };
 		846DB0251F4DA09300578D22 /* CityTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 846DB0241F4DA09300578D22 /* CityTableViewController.m */; };
@@ -201,6 +204,12 @@
 		8445AD8C1F4C53DE00417B79 /* DatedOrderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatedOrderTableViewCell.h; sourceTree = "<group>"; };
 		8445AD8D1F4C53DE00417B79 /* DatedOrderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatedOrderTableViewCell.m; sourceTree = "<group>"; };
 		844745841F516F2D001D2E2F /* setting.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = setting.storyboard; sourceTree = "<group>"; };
+		845F5A291F59010B00D163C0 /* SKTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKTag.h; sourceTree = "<group>"; };
+		845F5A2A1F59010B00D163C0 /* SKTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKTag.m; sourceTree = "<group>"; };
+		845F5A2B1F59010B00D163C0 /* SKTagButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKTagButton.h; sourceTree = "<group>"; };
+		845F5A2C1F59010B00D163C0 /* SKTagButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKTagButton.m; sourceTree = "<group>"; };
+		845F5A2D1F59010B00D163C0 /* SKTagView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKTagView.h; sourceTree = "<group>"; };
+		845F5A2E1F59010B00D163C0 /* SKTagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKTagView.m; sourceTree = "<group>"; };
 		84673DFA1F58FA4000338A2E /* MyRelease.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = MyRelease.storyboard; path = ../../../../../../../var/folders/6k/l6m1q6b926b2rv7n5tm5phrm0000gp/T/MyRelease.storyboard; sourceTree = "<group>"; };
 		846DB0211F4D9EE700578D22 /* Cities.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Cities.plist; sourceTree = "<group>"; };
 		846DB0231F4DA09300578D22 /* CityTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityTableViewController.h; sourceTree = "<group>"; };
@@ -344,6 +353,7 @@
 		045E65181F485D6E001A8263 /* 3rd */ = {
 			isa = PBXGroup;
 			children = (
+				845F5A281F59010B00D163C0 /* SKTagView */,
 				FE9C941A1F4E7BAE00252250 /* ZLImageViewDisplayView */,
 				841E379E1F4965F30057D58A /* HMSegmentedControl */,
 				045E651F1F485F1A001A8263 /* SCZBasicEncodingRules */,
@@ -628,6 +638,19 @@
 				843AF6E31F526E9400C7878B /* HotelListModel.m */,
 			);
 			name = HomeHotel;
+			sourceTree = "<group>";
+		};
+		845F5A281F59010B00D163C0 /* SKTagView */ = {
+			isa = PBXGroup;
+			children = (
+				845F5A291F59010B00D163C0 /* SKTag.h */,
+				845F5A2A1F59010B00D163C0 /* SKTag.m */,
+				845F5A2B1F59010B00D163C0 /* SKTagButton.h */,
+				845F5A2C1F59010B00D163C0 /* SKTagButton.m */,
+				845F5A2D1F59010B00D163C0 /* SKTagView.h */,
+				845F5A2E1F59010B00D163C0 /* SKTagView.m */,
+			);
+			path = SKTagView;
 			sourceTree = "<group>";
 		};
 		8497D00A1F544DEB00B495C6 /* HomeMarkCell */ = {
@@ -918,6 +941,7 @@
 				045E65641F485F4D001A8263 /* StorageMgr.m in Sources */,
 				046F327C1F5445C400157DD3 /* DataVerifier.m in Sources */,
 				0464CC331F52D101006260CE /* ContactServiceViewController.m in Sources */,
+				845F5A2F1F59010B00D163C0 /* SKTag.m in Sources */,
 				841E379D1F4960710057D58A /* ViewController.m in Sources */,
 				84A3467C1F4C42A20051BDFB /* HotelViewController.m in Sources */,
 				8445AD861F4C535000417B79 /* AllOrdersTableViewCell.m in Sources */,
@@ -934,6 +958,7 @@
 				045E64F01F485CA3001A8263 /* GetHotels.xcdatamodeld in Sources */,
 				045E655D1F485F4D001A8263 /* ErrorHandler.m in Sources */,
 				8445AD8A1F4C53BD00417B79 /* UseableOrderTableViewCell.m in Sources */,
+				845F5A311F59010B00D163C0 /* SKTagView.m in Sources */,
 				045E64E71F485CA3001A8263 /* AppDelegate.m in Sources */,
 				843AF6E41F526E9400C7878B /* HotelListModel.m in Sources */,
 				046F327A1F5445C400157DD3 /* base64.m in Sources */,
@@ -946,6 +971,7 @@
 				FEA94EBC1F52757B00F37096 /* hotelDetailModel.m in Sources */,
 				841E37A11F4965F30057D58A /* HMSegmentedControl.m in Sources */,
 				045E65661F485F4D001A8263 /* Utilities.m in Sources */,
+				845F5A301F59010B00D163C0 /* SKTagButton.m in Sources */,
 				045E64E41F485CA3001A8263 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

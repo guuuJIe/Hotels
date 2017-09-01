@@ -18,6 +18,7 @@
 @interface HotelViewController ()<UITableViewDataSource,UITableViewDelegate,CLLocationManagerDelegate>
 {
     NSInteger flag;
+    BOOL scrollFlag;
     BOOL firstVisit;
     BOOL isLastPage;
     BOOL selectBool;
@@ -33,6 +34,10 @@
     NSInteger starID;
     NSInteger priceID;
     NSInteger priceTestID;
+    NSInteger otherPreIdxOne;
+    NSInteger otherPreIdxTwo;
+    NSInteger otherIndexOne;
+    NSInteger otherIndexTwo;
 }
 @property (weak, nonatomic) IBOutlet UIButton *homeLocation;
 @property (weak, nonatomic) IBOutlet UIButton *
@@ -97,7 +102,7 @@
     _advImgArr = [NSMutableArray new];
     firstVisit = YES;
     selectBool = YES;
-    selectCirfimBool = YES;
+    selectCirfimBool = NO;
     // Do any additional setup after loading the view.
     _hotelArr = [NSMutableArray new];
    
@@ -119,7 +124,7 @@
     [self enterApp];                //判断是否第一次进入app
     [[NSNotificationCenter defaultCenter ] addObserver:self selector:@selector(chooseCity:) name:@"ResetCity" object:nil];
     //调用蒙层和刷新指示器
-//    [self initializeData];
+    [self initializeData];
     [self refresh];
     
     [self selectStar];
@@ -384,7 +389,7 @@
  - (void)timerMethod:(id)sender
  {
  // _pageController.currentPage = _scrollView.contentOffset.x /(_scrollView.frame.size.width);
- if (flag) {
+ if (scrollFlag) {
  _pageControl.currentPage++;
  }
  else
@@ -392,10 +397,10 @@
      _pageControl.currentPage--;
  }
  if (_pageControl.currentPage == 0) {
-     flag = YES;
+     scrollFlag = YES;
  }
  if (_pageControl.currentPage == (_pageControl.numberOfPages - 1)) {
-     flag = NO;
+     scrollFlag = NO;
  }
  [_homeScrollView setContentOffset:CGPointMake(_pageControl.currentPage * _homeScrollView.frame.size.width, 0) animated:YES];
  }
@@ -511,7 +516,7 @@
                  _mCell.textLabel.textColor = SELECT_COLOR;
                  _mCell.accessoryType = UITableViewCellAccessoryCheckmark;
                  sortID = eachIP.row;
-                 _sortBtn.titleLabel.text =  [NSString stringWithFormat:@"%@  ▼", _mCell.textLabel.text];
+                 [_sortBtn setTitle:[NSString stringWithFormat:@"%@  ▼", _mCell.textLabel.text] forState:UIControlStateNormal];
                  _markView.hidden = YES;
                  [self initializeData];
              } else {
@@ -588,6 +593,9 @@
         tag.borderColor = SELECTE_BORDER_COLOR;
         [weakView removeTagAtIndex:index];
         [weakView insertTag:tag atIndex:index];
+        selectCirfimBool = NO;
+        otherIndexOne = index;
+        
     };
     //=================er==========er==================er==========================
     //根据数组中的文字创建按钮，同时设置默认的按钮长什么样
@@ -615,6 +623,10 @@
             preIdx = 0;
             selectBool = NO;
         }
+        if (selectCirfimBool == YES){
+            preIdx = index;
+            index = otherPreIdxTwo;
+        }
         //判断当前要选中按钮时，有没有已选中的按钮
         if (preIdx != -1){
             //通过上次选中按钮的preIdx下表拿到一个按钮preTag
@@ -636,6 +648,8 @@
         [weakView1 removeTagAtIndex:index];
         [weakView1 insertTag:tag atIndex:index];
         //NSLog(@"%ld############%ld",(long)starID,(long)priceID);
+        selectCirfimBool = NO;
+        otherIndexTwo = index;
     };
     
 }
@@ -811,9 +825,12 @@
     PageNum = 1;
     starID = starTestID;
     priceID = priceTestID;
-    //selectCirfimBool = YES;
-    _markView.hidden = YES; 
+    selectCirfimBool = YES;
+    _markView.hidden = YES;
+    otherPreIdxOne = otherIndexOne;
+    otherPreIdxTwo = otherIndexTwo;
     [self initializeData];
+    [self selectStar];
 }
 - (void) touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     _markView.hidden = YES; 
