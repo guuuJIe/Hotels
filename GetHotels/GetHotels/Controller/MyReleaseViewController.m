@@ -119,12 +119,12 @@
     
     UIRefreshControl *isReleasedRefresh = [UIRefreshControl new];
     [isReleasedRefresh addTarget:self action:@selector(refreshIsReleased) forControlEvents:UIControlEventValueChanged];
-    didRelaseRefresh.tag = 201;
+    isReleasedRefresh.tag = 201;
     [_isReleasedTableView addSubview:isReleasedRefresh];
     
     UIRefreshControl *histroyRefresh = [UIRefreshControl new];
     [histroyRefresh addTarget:self action:@selector(refreshHistroy) forControlEvents:UIControlEventValueChanged];
-    didRelaseRefresh.tag = 202;
+    histroyRefresh.tag = 202;
     [_histroyTableView addSubview:histroyRefresh];
 }
 
@@ -152,7 +152,27 @@
     // Pass the selected object to the new view controller.
 }
 */
-
+//正在发布
+/*-(void)isReleasedRequest{
+    //UserModel *model = [[StorageMgr singletonStorageMgr] objectForKey:@"UserInfo"];
+    //NSDictionary *para = @{@"openid": model.openid,@"id" : @1};
+    [RequestAPI requestURL:@"/findOrders_edu" withParameters:nil andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
+        
+        [_aiv stopAnimating];
+        UIRefreshControl *ref = (UIRefreshControl *)[_isReleasedTableView viewWithTag:201];
+        [ref endRefreshing];
+        NSLog(@"Orders:%@",responseObject);
+        if ([responseObject[@"result"] integerValue] == 1) {
+            
+        }
+        else{
+            [Utilities popUpAlertViewWithMsg:@"网络错误,请稍后再试" andTitle:@"提示" onView:self];
+        }
+    }failure:^(NSInteger statusCode, NSError *error) {
+        
+    }];
+    
+}*/
 #pragma mark - tableView
 //一共多少组
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

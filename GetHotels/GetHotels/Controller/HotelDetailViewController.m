@@ -14,6 +14,7 @@
 @interface HotelDetailViewController (){
     NSTimeInterval followUpTime;
     NSUInteger flag;
+    NSTimeInterval  date;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *DetailScrollView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -58,6 +59,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *eigtLabel;
 @property (strong,nonatomic) hotelDetailModel *detailModel;
 @property (strong,nonatomic)NSDate *afterTomorrow;
+@property (weak, nonatomic) IBOutlet UIView *pickerview;
 
 @end
 
@@ -182,7 +184,7 @@
             //初始化日期格式器
             NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
             //定义日期格式
-            formatter.dateFormat = @"MM-dd";
+            formatter.dateFormat = @"yyyy-MM-dd";
             //当前时间
             NSDate *date = [NSDate date];
             //后天的日期
@@ -192,8 +194,6 @@
             //将处理好的字符串设置给两个Button
             [_dateBtn setTitle:dateStr forState:UIControlStateNormal];
             [_nextDateBtn setTitle:dateTomStr forState:UIControlStateNormal];
-
-            
         }
         else{
             
@@ -243,12 +243,14 @@ failure:^(NSInteger statusCode, NSError *error) {
     flag=0;
     _tooBar.hidden = NO;
     _datePicker.hidden = NO;
+    _pickerview.hidden= NO;
  
 }
 - (IBAction)nextDateActionBtn:(UIButton *)sender forEvent:(UIEvent *)event {
     flag=1;
     _tooBar.hidden = NO;
     _datePicker.hidden = NO;
+    _pickerview.hidden= NO;
 
 }
 - (IBAction)buyAction:(UIButton *)sender forEvent:(UIEvent *)event {
@@ -268,28 +270,58 @@ failure:^(NSInteger statusCode, NSError *error) {
 }
 //取消事件
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
+    _pickerview.hidden= YES;
     _tooBar.hidden = YES;
     _datePicker.hidden = YES;
     
 }
 //确定事件
 - (IBAction)confirmAction:(UIBarButtonItem *)sender {
-    
+     _pickerview.hidden= YES;
     _tooBar.hidden = YES;
     _datePicker.hidden = YES;
      NSDate *date = _datePicker.date;
-    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    formatter.dateFormat = @"MM-dd";
-    NSString *thDate = [formatter stringFromDate:date];
-    followUpTime = [Utilities cTimestampFromString:thDate format:@"MM-dd"];
+        NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    formatter.dateFormat = @"yyyy-MM-dd";
+   NSString *thDate = [formatter stringFromDate:date];
+    NSTimeInterval  day = [Utilities cTimestampFromString:thDate format:@"yyyy-MM-dd"];
+    //获取默认时间
+    //当前时间
+    NSDate *dateToday = [NSDate date];
+    NSString *dateStr = [formatter stringFromDate:dateToday];
+    NSTimeInterval startTime = [Utilities cTimestampFromString:dateStr format:@"MM-dd"];
+    NSDate *dateAfterdays = [NSDate dateWithDaysFromNow:2];
+    NSDate *tomorrowdays = [NSDate dateWithDaysFromNow:1];
+    NSString *aftertomorrow= [formatter stringFromDate:dateAfterdays];
+    NSString *tomorrowStr= [formatter stringFromDate:tomorrowdays];
+     NSTimeInterval  dateAfter = [Utilities cTimestampFromString:aftertomorrow format:@"yyyy-MM-dd"];
+     NSTimeInterval  tomorrow = [Utilities cTimestampFromString:tomorrowStr format:@"yyyy-MM-dd"];
     if(flag == 0){
-        [_dateBtn setTitle:thDate forState:UIControlStateNormal];
+        if(day < startTime){
+            [Utilities popUpAlertViewWithMsg:@"请正确选择日期" andTitle:@"提示" onView:self];
+        }else{
+            [_dateBtn setTitle:thDate forState:UIControlStateNormal];
+            startTime = [Utilities cTimestampFromString:thDate format:@"yyyy-MM-dd"];
+        }
+        
     }else{
-        [_nextDateBtn setTitle:thDate forState:UIControlStateNormal];
+        if(day<= startTime){
+            [Utilities popUpAlertViewWithMsg:@"请正确选择日期" andTitle:@"提示" onView:self];
+        }else{
+            if(day > dateAfter){
+                _nextDayLabel.text = nil;
+            }else{
+                 _nextDayLabel.text =[NSString stringWithFormat:@"后天"] ;
+            }
+            if(day == tomorrow){
+                _nextDayLabel.text =[NSString stringWithFormat:@"明天"] ;
+            }
+        }
+         [_nextDateBtn setTitle:thDate forState:UIControlStateNormal];
+        
+        
     }
-    _tooBar.hidden = YES;
-    _datePicker.hidden = YES;
-    
 }
+ 
 
 @end
