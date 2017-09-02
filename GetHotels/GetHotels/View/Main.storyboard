@@ -11,25 +11,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="VeK-4x-PmQ">
-            <objects>
-                <viewController id="Wgn-96-c62" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="cdS-pI-VUS"/>
-                        <viewControllerLayoutGuide type="bottom" id="mlu-Wi-NWa"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="coN-gm-APt">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="ELw-M4-3z5"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="hvR-7k-oOK" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1224.8" y="289.20539730134936"/>
-        </scene>
         <!--My Info View Controller-->
         <scene sceneID="tlB-E0-6as">
             <objects>
@@ -249,13 +230,13 @@
                                             <constraint firstAttribute="width" secondItem="6Vi-x9-CBg" secondAttribute="height" multiplier="4:3" id="bcT-BX-kuR"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="6°" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PU2-2W-Gfi">
-                                        <rect key="frame" x="325.5" y="70" width="11" height="11"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="℃" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PU2-2W-Gfi">
+                                        <rect key="frame" x="326" y="70" width="10.5" height="11"/>
                                         <fontDescription key="fontDescription" name=".PingFangSC-Regular" family=".PingFang SC" pointSize="11"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="多云" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JOB-rU-7HD">
-                                        <rect key="frame" x="314" y="84" width="22.5" height="11"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="tq" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JOB-rU-7HD">
+                                        <rect key="frame" x="325.5" y="84" width="11" height="11"/>
                                         <fontDescription key="fontDescription" name=".PingFangSC-Regular" family=".PingFang SC" pointSize="11"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     </label>
@@ -842,9 +823,6 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="Wgn-96-c62" kind="relationship" relationship="rootViewController" id="cok-Rw-8bg"/>
-                    </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qkG-tU-2gy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

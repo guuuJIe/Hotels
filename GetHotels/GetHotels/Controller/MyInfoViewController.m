@@ -151,7 +151,7 @@
                     [self performSegueWithIdentifier:@"MyInfoToDeleget" sender:self];
                     break;
                 case 2:
-                    [self performSegueWithIdentifier:@"MyInfoToCall " sender:self];
+                    [self performSegueWithIdentifier:@"MyInfoToCall" sender:self];
                     break;
             }
         }
