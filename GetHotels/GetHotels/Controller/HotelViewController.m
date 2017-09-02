@@ -104,7 +104,10 @@
     [super viewDidLoad];
     //把状态栏变成白色
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+    //将输入框变为无边框样式
     _searchTextView.borderStyle = UITextBorderStyleNone;
+    //设置最小时间
+    _datePick.minimumDate = [NSDate date];
     
     _advImgArr = [NSMutableArray new];
     firstVisit = YES;
@@ -339,10 +342,12 @@
     //开始日期
     NSTimeInterval endTime = [Utilities cTimestampFromString:_outTimeDate format:@"MM-dd"];
     if (startTime >= endTime){
-        
-        [_aiv stopAnimating];
+        [_aiv stopAnimating]; 
         [Utilities popUpAlertViewWithMsg:@"请正确设置日期" andTitle:nil onView:self];
+        [ref endRefreshing];
+        return;
     }
+    
     //NSLog(@"%ld>>>",(long)PageNum);
     //参数
     NSDictionary *para = @{@"city_name" : _cityBtn.titleLabel.text, @"pageNum" :@(PageNum), @"pageSize" :  @(pageSize), @"startId" :  @(starID), @"priceId" :@(priceID), @"sortingId" :@(sortID) ,@"inTime" : [NSString stringWithFormat:@"2017-%@",_inTimeDate] ,@"outTime" : [NSString stringWithFormat:@"2017-%@",_outTimeDate] ,@"wxlongitude" :@"", @"wxlatitude" :@""};
@@ -404,15 +409,7 @@
 - (void)selectRequest{
     //拿到刷新指示器
     UIRefreshControl *ref = (UIRefreshControl *)[_hotelTableView viewWithTag:10004];
-    //开始日期
-    NSTimeInterval startTime = [Utilities cTimestampFromString:_inTimeDate format:@"MM-dd"];
-    //开始日期
-    NSTimeInterval endTime = [Utilities cTimestampFromString:_outTimeDate format:@"MM-dd"];
-    if (startTime >= endTime){
-        
-        [_aiv stopAnimating];
-        [Utilities popUpAlertViewWithMsg:@"请正确设置日期" andTitle:nil onView:self];
-    }
+   
     //参数
     NSDictionary *para = @{@"hotel_name" : _searchTextView.text, @"inTime" : [NSString stringWithFormat:@"2017-%@",_inTimeDate] ,@"outTime" : [NSString stringWithFormat:@"2017-%@",_outTimeDate]};
     
@@ -886,20 +883,42 @@
 }
 
 - (IBAction)doneAction:(UIBarButtonItem *)sender {
+    
     NSDate *date = _datePick.date;
     NSDateFormatter *formatter = [NSDateFormatter new];
     formatter.dateFormat = @"MM-dd";
     NSString *thDate = [formatter stringFromDate:date];
-    //followUptime = [date timeIntervalSince1970];
+    NSTimeInterval thDateTime = [Utilities cTimestampFromString:thDate format:@"MM-dd"];
+    //获取默认时间
+    //当前时间
+    NSDate *dateToday = [NSDate date];
+    //明天的日期
+//    NSDate *dateTom = [NSDate dateTomorrow];
+    NSString *dateStr = [formatter stringFromDate:dateToday];
+//    NSString *dateTomStr= [formatter stringFromDate:dateTom];
+    NSTimeInterval startTime = [Utilities cTimestampFromString:dateStr format:@"MM-dd"];
+ 
+    
     if (flag == 0){
-        [_inTime setTitle:[NSString stringWithFormat:@"入住%@ ▼",thDate] forState:UIControlStateNormal];
-        _inTimeDate = thDate;
+             [_inTime setTitle:[NSString stringWithFormat:@"入住%@ ▼",thDate] forState:UIControlStateNormal];
+            _inTimeDate = thDate;
+            //开始日期
+            startTime = [Utilities cTimestampFromString:thDate format:@"MM-dd"];
     }else{
-        [_outTime setTitle:[NSString stringWithFormat:@"离店%@ ▼",thDate] forState:UIControlStateNormal];
-        _outTimeDate = thDate;
+        if (thDateTime <= startTime) {
+            [Utilities popUpAlertViewWithMsg:@"请正确设置日期" andTitle:nil onView:self];
+            
+        }else{
+            [_outTime setTitle:[NSString stringWithFormat:@"离店%@ ▼",thDate] forState:UIControlStateNormal];
+            _outTimeDate = thDate;
+            [self initializeData];
+        }
     }
+    
+    //followUptime = [date timeIntervalSince2017];
+ 
     _markView.hidden = YES;
-    [self initializeData];
+    
 }
 
 - (IBAction)selectTagCfirmAction:(UIButton *)sender forEvent:(UIEvent *)event {
