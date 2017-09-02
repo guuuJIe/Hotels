@@ -25,8 +25,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    //把状态栏变成白色
-    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+    
     
     //调用设置导航样式
     [self setNavigationItem];
@@ -51,13 +50,11 @@
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
     //设置导航栏的背景颜色
     [self.navigationController.navigationBar setBarTintColor:UIColorFromRGB(23, 115, 232)];
-    //self.navigationController.navigationBar.backgroundColor = [UIColor blueColor];
+    
     //实例化一个button，类型为UIButtonTypeSystem
     UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeSystem];
     //设置位置大小
-    leftBtn.frame = CGRectMake(0, 0, 20, 20);
-    //设置导航条是否隐藏
-    self.navigationController.navigationBar.hidden = NO;
+    leftBtn.frame = CGRectMake(0, 0, 20, 20); 
     //设置是否需要毛玻璃效果
     self.navigationController.navigationBar.translucent = YES;
     //设置背景图片为返回图片
