@@ -69,6 +69,7 @@
 		847526371F5A497D001B9D9C /* MyReleaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 847526361F5A497D001B9D9C /* MyReleaseViewController.m */; };
 		8475263B1F5A4A15001B9D9C /* OfferViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8475263A1F5A4A15001B9D9C /* OfferViewController.m */; };
 		8475263F1F5A4A79001B9D9C /* OfferCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8475263E1F5A4A79001B9D9C /* OfferCollectionViewCell.m */; };
+		847526431F5A869C001B9D9C /* ReleaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 847526421F5A869C001B9D9C /* ReleaseModel.m */; };
 		847BA8E31F5A47E600B0EA8A /* Aviation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 847BA8E21F5A47E600B0EA8A /* Aviation.storyboard */; };
 		847BA8E71F5A481B00B0EA8A /* AviationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 847BA8E61F5A481B00B0EA8A /* AviationViewController.m */; };
 		8497D00D1F544E2400B495C6 /* HomeMarkTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8497D00C1F544E2400B495C6 /* HomeMarkTableViewCell.m */; };
@@ -223,6 +224,8 @@
 		8475263A1F5A4A15001B9D9C /* OfferViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OfferViewController.m; sourceTree = "<group>"; };
 		8475263D1F5A4A79001B9D9C /* OfferCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OfferCollectionViewCell.h; sourceTree = "<group>"; };
 		8475263E1F5A4A79001B9D9C /* OfferCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OfferCollectionViewCell.m; sourceTree = "<group>"; };
+		847526411F5A869C001B9D9C /* ReleaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReleaseModel.h; sourceTree = "<group>"; };
+		847526421F5A869C001B9D9C /* ReleaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReleaseModel.m; sourceTree = "<group>"; };
 		847BA8E21F5A47E600B0EA8A /* Aviation.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Aviation.storyboard; sourceTree = "<group>"; };
 		847BA8E51F5A481B00B0EA8A /* AviationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AviationViewController.h; sourceTree = "<group>"; };
 		847BA8E61F5A481B00B0EA8A /* AviationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AviationViewController.m; sourceTree = "<group>"; };
@@ -403,6 +406,7 @@
 		045E651B1F485D9B001A8263 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				847526401F5A8655001B9D9C /* ReleaseModel */,
 				0464CC2F1F52D042006260CE /* UserModel */,
 				FEA94EB91F5274A600F37096 /* HoteDetaillModel */,
 				8459DB2C1F5100D7003EAF92 /* HomeHotel */,
@@ -684,6 +688,15 @@
 				8475263E1F5A4A79001B9D9C /* OfferCollectionViewCell.m */,
 			);
 			name = OfferCell;
+			sourceTree = "<group>";
+		};
+		847526401F5A8655001B9D9C /* ReleaseModel */ = {
+			isa = PBXGroup;
+			children = (
+				847526411F5A869C001B9D9C /* ReleaseModel.h */,
+				847526421F5A869C001B9D9C /* ReleaseModel.m */,
+			);
+			name = ReleaseModel;
 			sourceTree = "<group>";
 		};
 		847BA8E41F5A47F600B0EA8A /* Aviation */ = {
@@ -1017,6 +1030,7 @@
 				FEA94EBC1F52757B00F37096 /* hotelDetailModel.m in Sources */,
 				841E37A11F4965F30057D58A /* HMSegmentedControl.m in Sources */,
 				045E65661F485F4D001A8263 /* Utilities.m in Sources */,
+				847526431F5A869C001B9D9C /* ReleaseModel.m in Sources */,
 				845F5A301F59010B00D163C0 /* SKTagButton.m in Sources */,
 				045E64E41F485CA3001A8263 /* main.m in Sources */,
 			);
