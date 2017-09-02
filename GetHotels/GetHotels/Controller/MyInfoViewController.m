@@ -132,7 +132,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     //点击某行细胞变色
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (![Utilities loginCheck] && indexPath.section == 0){
+    if (![Utilities loginCheck]){
         [Utilities popUpAlertViewWithMsg:@"请先登录" andTitle:nil onView:self];
     } else {
         if (indexPath.section == 0){
@@ -140,9 +140,24 @@
                 case 0:
                     [self performSegueWithIdentifier:@"HomeToOrder" sender:self];
                     break;
+                case 1:
+                    [self performSegueWithIdentifier:@"MyInfoToMyRelease" sender:self];
+                    break; 
                 }
+        } else {
+            switch (indexPath.row) {
+                case 0:
+                    [self performSegueWithIdentifier:@"MyInfoToSet" sender:self];
+                    break;
+                case 1:
+                    [self performSegueWithIdentifier:@"MyInfoToDeleget" sender:self];
+                    break;
+                case 2:
+                    [self performSegueWithIdentifier:@"MyInfoToCall " sender:self];
+                    break;
             }
         }
+    }
         
 }
 

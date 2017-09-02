@@ -14,6 +14,7 @@
 #import "HotelDetailViewController.h"
 #import "HomeMarkTableViewCell.h"
 #import "SKTagView.h"
+#import "JSONS.h"
 
 @interface HotelViewController ()<UITableViewDataSource,UITableViewDelegate,CLLocationManagerDelegate>
 {
@@ -22,7 +23,7 @@
     BOOL firstVisit;
     BOOL isLastPage;
     BOOL selectBool;
-    BOOL selectCirfimBool;
+    NSInteger selectCirfimBool;
     
     NSInteger PageNum;
     NSInteger pageSize;
@@ -89,16 +90,21 @@
 @property (strong,nonatomic) NSString *outTimeDate;
 @property (strong,nonatomic) NSArray *sortArr;
 @property (strong,nonatomic) HomeMarkTableViewCell *mCell;
+@property (strong,nonatomic) HotelListModel *model;
 
 @property (strong,nonatomic) NSIndexPath *indexPath;
 //@property (strong, nonatomic) NSString *longitude;      //经度
 //@property (strong, nonatomic) NSString *latitude;       //纬度
+
 @end
 
 @implementation HotelViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //把状态栏变成白色
+    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+    
     _advImgArr = [NSMutableArray new];
     firstVisit = YES;
     selectBool = YES;
@@ -110,6 +116,7 @@
     pageSize = 8;
     starID = 1;
     priceID = 1;
+    selectCirfimBool = 0;
     
     _datePick.backgroundColor = UIColorFromRGB(235, 235, 241);
     //去掉tableview底部多余的线
@@ -125,6 +132,7 @@
     [[NSNotificationCenter defaultCenter ] addObserver:self selector:@selector(chooseCity:) name:@"ResetCity" object:nil];
     //调用蒙层和刷新指示器
     [self initializeData];
+    
     [self refresh];
     
     [self selectStar];
@@ -134,6 +142,7 @@
     //滑动点设为4个
     _pageControl.numberOfPages = 4;
     _sortArr = @[@"智能排序",@"价格低到高",@"价格高到低",@"离我从近到远"];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -152,6 +161,7 @@
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:NO];
 }
+
 
 //================================================================定位相关
 -(void)locationConfig{
@@ -238,7 +248,10 @@
     _aiv = [Utilities getCoverOnView:self.view];
     [self selectRequest];
 }
-
+- (void)weatherInitializeData{
+    _aiv = [Utilities getCoverOnView:self.view];
+    [self weatherRequest];
+}
 - (void)refreshRequest{
     PageNum = 1;
     [self hotelAdv];
@@ -246,24 +259,74 @@
 #pragma  mark - request
 //天气
 -(void)weatherRequest{
-    
-    
-    NSDictionary *parameters = @{@"cityname" : @"%E5%A4%AA%E5%8E%9F&dtype=&format=&key=9c44df781a01d4f579aa8c782a578ea5"};
-    
-    [RequestAPI requestURL:@"http://op.juhe.cn/onebox/weather/query" withParameters:nil andHeader:nil byMethod:kGet andSerializer:kJson success:^(id responseObject) {
-        [_aiv stopAnimating];
-        NSLog(@"pp:%@",responseObject);
-        if ([responseObject[@"resultFlag"] integerValue] == 8001){
-            
-        }else {
-            
-        }
-    } failure:^(NSInteger statusCode, NSError *error) {
-        [_aiv stopAnimating];
-        [Utilities
-         popUpAlertViewWithMsg:@"请保持网络连接畅通" andTitle:nil onView:self];
-    }];
+ 
 
+
+    //获得全宇宙天气的接口（当前这一刻的天气）（http://api.openweathermap.org是一个开放天气接口提供商）
+    NSString *weatherURLStr =  [NSString stringWithFormat:@"http://api.yytianqi.com/observe?city=%@,%@&key=ed497bous144g6lo",_model.latitude,_model.longitude];
+    
+    //将字符串转换成NSURL对象lat=29&lon=120.444
+    NSURL *weatherURL = [NSURL URLWithString:weatherURLStr];
+    //初始化单例化的NSURLSession对象b864044bb95a790134d17b43a9a14d70
+    NSURLSession *session = [NSURLSession sharedSession];
+    //创建一个基于NSURLSession的请求（除了请求任务还有上传和下载任务可以选择）任务并处理完成后的回调
+    NSURLSessionDataTask *jsonDataTask = [session dataTaskWithURL:weatherURL completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        //当网络请求成功时让蒙层消失
+        [_aiv stopAnimating];
+        //NSLog(@"请求完成，开始做事");
+        if (!error) {
+            NSHTTPURLResponse *httpRes = (NSHTTPURLResponse *)response;
+            if (httpRes.statusCode == 200) {
+                //NSLog(@"网络请求成功，真的开始做事");
+                //将JSON格式的数据流data用JSONS工具包里的NSData下的Category中的JSONCol方法转化为OC对象（Array或Dictionary）
+                id jsonObject = [data JSONCol];
+                NSLog(@"%@", jsonObject);
+                NSDictionary *data = jsonObject[@"data"];
+                NSString *tq = data[@"tq"];
+                NSString *qw = data[@"qw"];
+                NSString *numtq = data[@"numtq"];
+                
+                if ([numtq isEqualToString:@"00"]){
+                    _weatherImg.image = [UIImage imageNamed:@"晴"];
+                }else if ([numtq isEqualToString:@"01"]){
+                    _weatherImg.image = [UIImage imageNamed:@"多云"];
+                }else if ([numtq isEqualToString:@"02"]){
+                    _weatherImg.image = [UIImage imageNamed:@"阴"];
+                }else{
+                    _weatherImg.image = [UIImage imageNamed:@"小雨"];
+                }
+                _tempLabel.text = qw;
+                _weatherLabel.text = tq;
+                
+            } else {
+                //NSLog(@"%ld", (long)httpRes.statusCode);
+            }
+        } else {
+            //NSLog(@"%@", error.description);
+        }
+    }];
+    //让任务开始执行
+    [jsonDataTask resume];
+//
+//    NSDictionary *parameters = @{@"city" : @"CHBJ000000",@"key":@"ed497bous144g6lo"};
+//    
+//    NSString *requesturl = [NSString stringWithFormat:@"http://samples.openweathermap.org/data/2.5/weather?q=Wuxi,cn&appid=b1b15e88fa797225412429c1c50c122a1"];
+//    
+//    [RequestAPI requestURL:requesturl withParameters:nil andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
+//        [_aiv stopAnimating];
+//        NSLog(@"pp:%@",responseObject);
+//        if ([responseObject[@"resultFlag"] integerValue] == 8001){
+//            
+//        }else {
+//            
+//        }
+//    } failure:^(NSInteger statusCode, NSError *error) {
+//        [_aiv stopAnimating];
+//        [Utilities
+//         popUpAlertViewWithMsg:@"请保持网络连接畅通" andTitle:nil onView:self];
+//        NSLog(@"statusCode:%ld",(long)statusCode);
+//    }];
+//
 }
 
 //广告,酒店
@@ -279,13 +342,13 @@
         [_aiv stopAnimating];
         [Utilities popUpAlertViewWithMsg:@"请正确设置日期" andTitle:nil onView:self];
     }
-    NSLog(@"%ld>>>",(long)PageNum);
+    //NSLog(@"%ld>>>",(long)PageNum);
     //参数
     NSDictionary *para = @{@"city_name" : _cityBtn.titleLabel.text, @"pageNum" :@(PageNum), @"pageSize" :  @(pageSize), @"startId" :  @(starID), @"priceId" :@(priceID), @"sortingId" :@(sortID) ,@"inTime" : [NSString stringWithFormat:@"2017-%@",_inTimeDate] ,@"outTime" : [NSString stringWithFormat:@"2017-%@",_outTimeDate] ,@"wxlongitude" :@"", @"wxlatitude" :@""};
     
     //网络请求
     [RequestAPI requestURL:@"/findHotelByCity_edu" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
-        NSLog(@"登录 = %@",responseObject);
+        //NSLog(@"登录 = %@",responseObject);
         //当网络请求成功时让蒙层消失
         [_aiv stopAnimating];
         [ref endRefreshing];
@@ -301,19 +364,23 @@
             }
             for (NSDictionary *dict in  list){
                 
-                HotelListModel *model = [[HotelListModel alloc] initWithDict:dict];
-                [_hotelArr addObject:model];
+                _model = [[HotelListModel alloc] initWithDict:dict];
+                [_hotelArr addObject:_model];
             }
+            
+            //调用天气接口
+            [self weatherInitializeData];
+            NSLog(@"<><>:<>%@,%@",_model.latitude,_model.longitude);
             //广告图片
             NSArray *advertising = content[@"advertising"];
             for (NSDictionary *imgUrl in advertising){
                 NSString *str = imgUrl[@"ad_img"];
                 [_advImgArr addObject:str];
             }
-            [_firstImg sd_setImageWithURL:[NSURL URLWithString:_advImgArr[0]] placeholderImage:[UIImage imageNamed:@"白云"]];
-            [_secondImg sd_setImageWithURL:[NSURL URLWithString:_advImgArr[2]] placeholderImage:[UIImage imageNamed:@"白云"]];
-            [_threeImg sd_setImageWithURL:[NSURL URLWithString:_advImgArr[3]] placeholderImage:[UIImage imageNamed:@"白云"]];
-            [_fourImg sd_setImageWithURL:[NSURL URLWithString:_advImgArr[4]] placeholderImage:[UIImage imageNamed:@"白云"]];
+            [_firstImg sd_setImageWithURL:[NSURL URLWithString:_advImgArr[0]] placeholderImage:[UIImage imageNamed:@"多云"]];
+            [_secondImg sd_setImageWithURL:[NSURL URLWithString:_advImgArr[2]] placeholderImage:[UIImage imageNamed:@"多云"]];
+            [_threeImg sd_setImageWithURL:[NSURL URLWithString:_advImgArr[3]] placeholderImage:[UIImage imageNamed:@"多云"]];
+            [_fourImg sd_setImageWithURL:[NSURL URLWithString:_advImgArr[4]] placeholderImage:[UIImage imageNamed:@"多云"]];
             
             
             [_homeScrollView reloadInputViews];
@@ -500,9 +567,9 @@
         [cell.hotelImg sd_setImageWithURL:URL placeholderImage:[UIImage imageNamed:@"酒店5"]];
         //计算距离
         CLLocation *otherLocation = [[CLLocation alloc] initWithLatitude:[model.latitude doubleValue] longitude:[model.longitude doubleValue]];
-    
         CLLocationDistance kilometers=[_location distanceFromLocation:otherLocation]/1000;
         cell.hotelDistanceLabel.text = [NSString stringWithFormat:@"距离我%.1f公里",kilometers];
+    
         return  cell;
     }
 }
@@ -539,8 +606,9 @@
 }
 
 #pragma mark - SKTagView
-//设置一级结果
+//设置筛选条件
 - (void)selectStar{
+ 
     NSArray *res = @[@"全部",@"四星",@"五星"];
     NSArray *resp = @[@"不限",@"300以下",@"301-500",@"501-1000",@"1000以上"];
     
@@ -551,6 +619,27 @@
     _selectTwoTagView.interitemSpacing = 20;
     //根据数组中的文字创建按钮，同时设置默认的按钮长什么样
     [res enumerateObjectsUsingBlock:^(NSString *text, NSUInteger idx, BOOL * _Nonnull stop) {
+       
+          SKTag *tag = [SKTag tagWithText:text];
+        if (idx == 0){
+            tag.textColor = SELECT_COLOR;
+            tag.borderColor = SELECTE_BORDER_COLOR;
+        }else{
+            tag.textColor = UNSELECT_TITLECOLOR; //设置字体颜色
+            tag.borderColor = UNSELECT_BORDER_COLOR;           //边框颜色
+        }
+
+        tag.fontSize = 13;                      //设置字体大小
+        tag.padding = UIEdgeInsetsMake(5, 10, 5, 10);   //文字上下左右的间距
+        tag.borderWidth = 0.5f;                              //边框宽度
+        tag.cornerRadius = 5.f;                            //边框圆角
+        [_selectTagView addTag:tag];
+    }];
+
+    //=================er==========er==================er==========================
+    //根据数组中的文字创建按钮，同时设置默认的按钮长什么样
+    [resp enumerateObjectsUsingBlock:^(NSString *text, NSUInteger idx, BOOL * _Nonnull stop) {
+        
         SKTag *tag = [SKTag tagWithText:text];
         if (idx == 0){
             tag.textColor = SELECT_COLOR;
@@ -558,22 +647,30 @@
         }else{
             tag.textColor = UNSELECT_TITLECOLOR; //设置字体颜色
             tag.borderColor = UNSELECT_BORDER_COLOR;           //边框颜色
-            
         }
+        
         tag.fontSize = 13;                      //设置字体大小
         tag.padding = UIEdgeInsetsMake(5, 10, 5, 10);   //文字上下左右的间距
         tag.borderWidth = 0.5f;                              //边框宽度
         tag.cornerRadius = 5.f;                            //边框圆角
-        [_selectTagView addTag:tag];
+        [_selectTwoTagView addTag:tag];
     }];
+    [self weakSelect];
+}
+
+- (void) weakSelect{
     //防止循环引用，把块变成弱指针
     //选中一个按钮的时候，
     __weak SKTagView *weakView = _selectTagView;
+//    if (selectCirfimBool == 1){
+//        weakView.didTapTagAtIndex(otherIndexOne, otherPreIdxOne);
+//    }
     _selectTagView.didTapTagAtIndex = ^(NSUInteger preIdx, NSUInteger index) {
-        if (selectBool == YES){
-            preIdx = 0;
-            selectBool = NO;
-        }
+
+//        if (selectCirfimBool == 1){
+//            preIdx = otherIndexOne;
+//            index = otherPreIdxOne;
+//        }
         //判断当前要选中按钮时，有没有已选中的按钮
         if (preIdx != -1){
             //通过上次选中按钮的preIdx下表拿到一个按钮preTag
@@ -593,40 +690,23 @@
         tag.borderColor = SELECTE_BORDER_COLOR;
         [weakView removeTagAtIndex:index];
         [weakView insertTag:tag atIndex:index];
-        selectCirfimBool = NO;
-        otherIndexOne = index;
+//        selectCirfimBool = 1;
+//        otherIndexOne = index;
         
     };
-    //=================er==========er==================er==========================
-    //根据数组中的文字创建按钮，同时设置默认的按钮长什么样
-    [resp enumerateObjectsUsingBlock:^(NSString *text, NSUInteger idx, BOOL * _Nonnull stop) {
-        SKTag *tag = [SKTag tagWithText:text];
-        if (idx == 0){
-            tag.textColor = SELECT_COLOR;
-            tag.borderColor = SELECTE_BORDER_COLOR;
-        }else{
-            tag.textColor = UNSELECT_TITLECOLOR; //设置字体颜色
-            tag.borderColor = UNSELECT_BORDER_COLOR;           //边框颜色
-        }
-        tag.fontSize = 13;                      //设置字体大小
-        tag.padding = UIEdgeInsetsMake(5, 10, 5, 10);   //文字上下左右的间距
-        tag.borderWidth = 0.5f;                              //边框宽度
-        tag.cornerRadius = 5.f;                            //边框圆角
-        [_selectTwoTagView addTag:tag];
-    }];
     //防止循环引用，把块变成弱指针
     //选中一个按钮的时候，
     __weak SKTagView *weakView1 = _selectTwoTagView;
+//    if (selectCirfimBool == 2){
+//        weakView1.didTapTagAtIndex(otherIndexTwo, otherPreIdxTwo);
+//    }
     _selectTwoTagView.didTapTagAtIndex = ^(NSUInteger preIdx, NSUInteger index) {
-        //第一次进来数组第一个设为选中状态
-        if (selectBool == YES){
-            preIdx = 0;
-            selectBool = NO;
-        }
-        if (selectCirfimBool == YES){
-            preIdx = index;
-            index = otherPreIdxTwo;
-        }
+ 
+//        if (selectCirfimBool == 2){
+//            preIdx = otherIndexTwo;
+//            index = otherPreIdxTwo;
+//        }
+        
         //判断当前要选中按钮时，有没有已选中的按钮
         if (preIdx != -1){
             //通过上次选中按钮的preIdx下表拿到一个按钮preTag
@@ -647,9 +727,8 @@
         tag.borderColor = SELECTE_BORDER_COLOR;
         [weakView1 removeTagAtIndex:index];
         [weakView1 insertTag:tag atIndex:index];
-        //NSLog(@"%ld############%ld",(long)starID,(long)priceID);
-        selectCirfimBool = NO;
-        otherIndexTwo = index;
+//        selectCirfimBool = 2;
+//        otherIndexTwo = index;
     };
     
 }
@@ -735,6 +814,7 @@
 -(void)chooseCity:(NSNotification *)note{
     NSString *cityStr = note.object;
     if (![cityStr isEqualToString:_cityBtn.titleLabel.text]) {
+        [self initializeData];
         //修改城市按钮标题
         [_cityBtn setTitle:cityStr forState:UIControlStateNormal];
         [Utilities removeUserDefaults:@"UserCity"];
@@ -825,14 +905,21 @@
     PageNum = 1;
     starID = starTestID;
     priceID = priceTestID;
-    selectCirfimBool = YES;
+    selectCirfimBool = 0;
     _markView.hidden = YES;
-    otherPreIdxOne = otherIndexOne;
-    otherPreIdxTwo = otherIndexTwo;
+//    otherPreIdxOne = otherIndexOne;
+//    otherPreIdxTwo = otherIndexTwo;
     [self initializeData];
-    [self selectStar];
 }
+
+
 - (void) touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    _markView.hidden = YES; 
+    _markView.hidden = YES;
+//    if (selectCirfimBool != 0){
+//        [self weakSelect];
+//       // _selectTagView.didTapTagAtIndex(otherPreIdxOne, otherIndexOne);
+//    }
 }
+
+
 @end

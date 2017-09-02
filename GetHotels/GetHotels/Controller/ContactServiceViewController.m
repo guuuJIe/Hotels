@@ -27,8 +27,7 @@
     //去掉tableview底部多余的线
      _contactServiceTableView.tableFooterView = [UIView new];
     
-    //把状态栏变成白色
-    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+   
     
     //调用设置导航样式
     [self setNavigationItem];
@@ -52,9 +51,7 @@
     //实例化一个button，类型为UIButtonTypeSystem
     UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeSystem];
     //设置位置大小
-    leftBtn.frame = CGRectMake(0, 0, 20, 20);
-    //设置导航条是否隐藏
-    self.navigationController.navigationBar.hidden = NO;
+    leftBtn.frame = CGRectMake(0, 0, 20, 20); 
     //设置是否需要毛玻璃效果
     self.navigationController.navigationBar.translucent = YES;
     //设置背景图片为返回图片

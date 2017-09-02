@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="nBd-82-uJf">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -13,7 +13,6 @@
         <!--我的发布-->
         <scene sceneID="Q0b-XD-TGp">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gLF-kZ-fuI" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="LaS-rf-wG3" customClass="MyReleaseViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Q8F-rM-5CI"/>
@@ -30,12 +29,12 @@
                                     <constraint firstAttribute="height" constant="40" id="Xn1-wF-Rbx"/>
                                 </constraints>
                             </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xaN-0C-oZQ">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xaN-0C-oZQ">
                                 <rect key="frame" x="0.0" y="104" width="375" height="563"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="160" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="x4f-cg-765" userLabel="DidReleaseTable View">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="563"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="didReleaseCell" rowHeight="160" id="kQx-Zj-JnJ">
                                                 <rect key="frame" x="0.0" y="28" width="375" height="160"/>
@@ -161,7 +160,7 @@
                                     </tableView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="159" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Ro8-HH-cUK" userLabel="IsReleasedTable View">
                                         <rect key="frame" x="375" y="0.0" width="375" height="563"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="isReleasedCell" rowHeight="159" id="WWf-po-HRs" customClass="IsReleasedTableViewCell">
                                                 <rect key="frame" x="0.0" y="28" width="375" height="159"/>
@@ -293,7 +292,7 @@
                                     </tableView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="138" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="xcq-Zj-xUK" userLabel="HistoryTable View">
                                         <rect key="frame" x="750" y="0.0" width="375" height="563"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="historyCell" rowHeight="138" id="azS-0L-LIB" customClass="HistoryTableViewCell">
                                                 <rect key="frame" x="0.0" y="28" width="375" height="138"/>
@@ -420,6 +419,7 @@
                                     <constraint firstItem="xcq-Zj-xUK" firstAttribute="bottom" secondItem="Ro8-HH-cUK" secondAttribute="bottom" id="44J-1j-yeb"/>
                                     <constraint firstItem="x4f-cg-765" firstAttribute="leading" secondItem="xaN-0C-oZQ" secondAttribute="leading" id="7Wh-r8-REE"/>
                                     <constraint firstItem="xcq-Zj-xUK" firstAttribute="height" secondItem="xaN-0C-oZQ" secondAttribute="height" id="8Hw-Ok-BaB"/>
+                                    <constraint firstAttribute="trailing" secondItem="xcq-Zj-xUK" secondAttribute="trailing" id="JLe-Lp-BAS"/>
                                     <constraint firstItem="Ro8-HH-cUK" firstAttribute="leading" secondItem="x4f-cg-765" secondAttribute="trailing" id="Ma1-J9-svf"/>
                                     <constraint firstItem="Ro8-HH-cUK" firstAttribute="height" secondItem="x4f-cg-765" secondAttribute="height" id="OAx-Fk-SNy"/>
                                     <constraint firstItem="xcq-Zj-xUK" firstAttribute="width" secondItem="xaN-0C-oZQ" secondAttribute="width" id="WPE-W2-YHz"/>
@@ -429,7 +429,6 @@
                                     <constraint firstItem="x4f-cg-765" firstAttribute="height" secondItem="xaN-0C-oZQ" secondAttribute="height" id="hOQ-Sv-Xl2"/>
                                     <constraint firstItem="xcq-Zj-xUK" firstAttribute="top" secondItem="Ro8-HH-cUK" secondAttribute="top" id="lLb-vm-Bcw"/>
                                     <constraint firstItem="x4f-cg-765" firstAttribute="top" secondItem="xaN-0C-oZQ" secondAttribute="top" id="nv6-Va-ly1"/>
-                                    <constraint firstAttribute="trailing" secondItem="x4f-cg-765" secondAttribute="trailing" id="qup-Ic-VcJ"/>
                                     <constraint firstItem="x4f-cg-765" firstAttribute="width" secondItem="xaN-0C-oZQ" secondAttribute="width" id="tgU-pY-Qdp"/>
                                     <constraint firstItem="Ro8-HH-cUK" firstAttribute="width" secondItem="x4f-cg-765" secondAttribute="width" id="vmN-tN-cm7"/>
                                     <constraint firstItem="Ro8-HH-cUK" firstAttribute="bottom" secondItem="x4f-cg-765" secondAttribute="bottom" id="xb0-ZC-MyG"/>
@@ -453,10 +452,20 @@
                         <outlet property="histroyTableView" destination="xcq-Zj-xUK" id="zZ0-3x-jqG"/>
                         <outlet property="isReleasedTableView" destination="Ro8-HH-cUK" id="rwZ-zi-1WB"/>
                         <outlet property="scrollView" destination="xaN-0C-oZQ" id="FFm-Jt-1TV"/>
+                        <segue destination="JVX-XA-AJN" kind="show" identifier="MyReleaseToOffer" id="7rB-Hx-ktV"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gLF-kZ-fuI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1016.8" y="127.28635682158921"/>
+        </scene>
+        <!--Offer-->
+        <scene sceneID="BUM-0m-UkP">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Offer" id="JVX-XA-AJN" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="E77-qc-R6K" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1842" y="144"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Fz5-iA-9sh">

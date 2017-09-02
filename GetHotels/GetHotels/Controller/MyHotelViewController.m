@@ -273,6 +273,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     //取消选中
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
 }
 //每组有几行
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
