@@ -777,7 +777,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="3p1-44-DLa">
             <objects>
-                <tabBarController id="ByU-sw-0sm" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBar" useStoryboardIdentifierAsRestorationIdentifier="YES" id="ByU-sw-0sm" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" id="rEN-Oh-6dw">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -940,7 +940,7 @@
         <!--账户设置-->
         <scene sceneID="vxY-Aj-xvK">
             <objects>
-                <viewController title="账户设置" id="Qux-On-UgP" customClass="AccountSettingViewController" sceneMemberID="viewController">
+                <viewController title="账户设置" hidesBottomBarWhenPushed="YES" id="Qux-On-UgP" customClass="AccountSettingViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="net-vB-i9e"/>
                         <viewControllerLayoutGuide type="bottom" id="PeU-6Z-jh0"/>
@@ -984,7 +984,7 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pwdIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Jzc-HR-G1t">
                                 <rect key="frame" x="60" y="189" width="19" height="21"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_locked-1" translatesAutoresizingMaskIntoConstraints="NO" id="OTC-ep-lKu">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_locked" translatesAutoresizingMaskIntoConstraints="NO" id="OTC-ep-lKu">
                                 <rect key="frame" x="60" y="246" width="19" height="21"/>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="确认新密码" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="wqA-hh-97F">
@@ -1004,11 +1004,12 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lw4-fR-r66">
-                                <rect key="frame" x="60" y="353" width="255" height="40"/>
-                                <color key="backgroundColor" red="0.38823529410000002" green="0.63921568630000003" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="120" y="353" width="135" height="35"/>
+                                <color key="backgroundColor" red="0.25882352941176467" green="0.63529411764705879" blue="0.9137254901960784" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="lIe-nn-Qpr"/>
+                                    <constraint firstAttribute="height" constant="35" id="lIe-nn-Qpr"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="确认">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -1021,27 +1022,9 @@
                                     <action selector="confirmAction:forEvent:" destination="Qux-On-UgP" eventType="touchUpInside" id="coh-vk-QeQ"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_locked-1" translatesAutoresizingMaskIntoConstraints="NO" id="aLG-Sf-WIe">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_unlock" translatesAutoresizingMaskIntoConstraints="NO" id="aLG-Sf-WIe">
                                 <rect key="frame" x="60" y="120" width="19" height="21"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M3V-65-nqA">
-                                <rect key="frame" x="60" y="443" width="255" height="40"/>
-                                <color key="backgroundColor" red="0.38823529410000002" green="0.63921568630000003" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="oTq-Sc-pPm"/>
-                                </constraints>
-                                <state key="normal" title="退出登录">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="5"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="exitAction:forEvent:" destination="Qux-On-UgP" eventType="touchUpInside" id="se8-E7-AYv"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
@@ -1054,15 +1037,15 @@
                             <constraint firstItem="BbK-fe-tag" firstAttribute="top" secondItem="aLG-Sf-WIe" secondAttribute="bottom" constant="17" id="Akj-sh-d06"/>
                             <constraint firstItem="OTC-ep-lKu" firstAttribute="leading" secondItem="aLG-Sf-WIe" secondAttribute="leading" id="CH1-m2-kR2"/>
                             <constraint firstItem="3RD-n5-aOE" firstAttribute="trailing" secondItem="guO-4r-e4c" secondAttribute="trailing" id="CmA-Az-ntp"/>
-                            <constraint firstAttribute="trailing" secondItem="M3V-65-nqA" secondAttribute="trailing" constant="60" id="Dzu-01-ed9"/>
                             <constraint firstItem="guO-4r-e4c" firstAttribute="trailing" secondItem="9wL-rN-2T3" secondAttribute="trailing" id="Fst-Ll-Cgy"/>
-                            <constraint firstItem="BbK-fe-tag" firstAttribute="trailing" secondItem="lw4-fR-r66" secondAttribute="trailing" id="GnG-LM-n9d"/>
                             <constraint firstItem="BbK-fe-tag" firstAttribute="leading" secondItem="aLG-Sf-WIe" secondAttribute="leading" id="Iqz-6Z-rag"/>
                             <constraint firstItem="lw4-fR-r66" firstAttribute="top" secondItem="jRL-EZ-6yw" secondAttribute="bottom" constant="80" id="KeF-gY-8n4"/>
+                            <constraint firstItem="lw4-fR-r66" firstAttribute="leading" secondItem="s2z-Ka-up9" secondAttribute="leading" constant="120" id="Q67-mp-yqo"/>
                             <constraint firstItem="BbK-fe-tag" firstAttribute="trailing" secondItem="9wL-rN-2T3" secondAttribute="trailing" id="QYl-cN-pw8"/>
                             <constraint firstItem="jRL-EZ-6yw" firstAttribute="trailing" secondItem="wqA-hh-97F" secondAttribute="trailing" id="R4K-7i-AW7"/>
                             <constraint firstItem="guO-4r-e4c" firstAttribute="leading" secondItem="9wL-rN-2T3" secondAttribute="leading" id="RKD-xD-eXh"/>
                             <constraint firstItem="OTC-ep-lKu" firstAttribute="top" secondItem="3RD-n5-aOE" secondAttribute="bottom" constant="30" id="STC-e2-BTH"/>
+                            <constraint firstItem="lw4-fR-r66" firstAttribute="centerX" secondItem="s2z-Ka-up9" secondAttribute="centerX" id="TkH-N1-y3c"/>
                             <constraint firstItem="wqA-hh-97F" firstAttribute="leading" secondItem="9wL-rN-2T3" secondAttribute="leading" id="YoU-MJ-5FV"/>
                             <constraint firstItem="aLG-Sf-WIe" firstAttribute="leading" secondItem="s2z-Ka-up9" secondAttribute="leading" constant="60" id="dFW-tY-CfL"/>
                             <constraint firstItem="aLG-Sf-WIe" firstAttribute="top" secondItem="net-vB-i9e" secondAttribute="bottom" constant="100" id="dgI-Ow-PUJ"/>
@@ -1073,14 +1056,12 @@
                             <constraint firstAttribute="trailing" secondItem="9wL-rN-2T3" secondAttribute="trailing" constant="60" id="fvO-Gp-zCS"/>
                             <constraint firstItem="guO-4r-e4c" firstAttribute="centerY" secondItem="Jzc-HR-G1t" secondAttribute="centerY" id="iaH-JO-mMV"/>
                             <constraint firstItem="9wL-rN-2T3" firstAttribute="centerY" secondItem="aLG-Sf-WIe" secondAttribute="centerY" id="kbV-ta-syl"/>
+                            <constraint firstAttribute="trailing" secondItem="lw4-fR-r66" secondAttribute="trailing" constant="120" id="mA5-gb-fa8"/>
                             <constraint firstItem="9wL-rN-2T3" firstAttribute="leading" secondItem="aLG-Sf-WIe" secondAttribute="trailing" constant="15" id="mDQ-vE-UDZ"/>
                             <constraint firstItem="OTC-ep-lKu" firstAttribute="leading" secondItem="s2z-Ka-up9" secondAttribute="leading" constant="60" id="njT-bB-MPJ"/>
                             <constraint firstItem="BbK-fe-tag" firstAttribute="leading" secondItem="3RD-n5-aOE" secondAttribute="leading" id="oX7-pk-llp"/>
                             <constraint firstItem="BbK-fe-tag" firstAttribute="leading" secondItem="jRL-EZ-6yw" secondAttribute="leading" id="qNs-89-JEi"/>
                             <constraint firstAttribute="trailing" secondItem="guO-4r-e4c" secondAttribute="trailing" constant="60" id="qUA-tj-itT"/>
-                            <constraint firstItem="BbK-fe-tag" firstAttribute="leading" secondItem="lw4-fR-r66" secondAttribute="leading" id="sJz-nV-iNx"/>
-                            <constraint firstItem="M3V-65-nqA" firstAttribute="leading" secondItem="s2z-Ka-up9" secondAttribute="leading" constant="60" id="skE-uR-503"/>
-                            <constraint firstItem="M3V-65-nqA" firstAttribute="top" secondItem="lw4-fR-r66" secondAttribute="bottom" constant="50" id="wZd-IQ-72G"/>
                             <constraint firstItem="jRL-EZ-6yw" firstAttribute="top" secondItem="OTC-ep-lKu" secondAttribute="bottom" constant="5" id="xxU-YL-NRf"/>
                             <constraint firstItem="Jzc-HR-G1t" firstAttribute="leading" secondItem="aLG-Sf-WIe" secondAttribute="leading" id="y7T-QK-Eaa"/>
                         </constraints>
@@ -1134,7 +1115,8 @@
     </scenes>
     <resources>
         <image name="2" width="169" height="169"/>
-        <image name="ic_locked-1" width="18" height="21"/>
+        <image name="ic_locked" width="18" height="21"/>
+        <image name="ic_unlock" width="18" height="21"/>
         <image name="logo2" width="129" height="40"/>
         <image name="pwdIcon" width="18" height="21"/>
         <image name="refresh.png" width="22" height="22"/>
