@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="e1q-3O-ROY">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -388,11 +388,20 @@
                         <outlet property="targetCityBtn" destination="Ofu-QT-zXK" id="JJr-wg-36O"/>
                         <outlet property="titleTextField" destination="w2M-XL-Iat" id="e7J-Ad-GTR"/>
                         <outlet property="tooBar" destination="0Xv-LI-n40" id="AIV-cX-7T4"/>
+                        <segue destination="w0F-8m-qMa" kind="show" identifier="AviationToMyRelease" id="Roa-fL-OuL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ltB-0a-6aN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2522.4000000000001" y="109.29535232383809"/>
+        </scene>
+        <!--MyRelease-->
+        <scene sceneID="NA7-dP-3gS">
+            <objects>
+                <viewControllerPlaceholder storyboardName="MyRelease" id="w0F-8m-qMa" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ry8-BR-Dvv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3156" y="118"/>
         </scene>
         <!--航空-->
         <scene sceneID="8I9-j7-1Qn">
