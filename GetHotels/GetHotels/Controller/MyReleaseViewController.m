@@ -11,6 +11,7 @@
 #import "DidRealeseTableViewCell.h"
 #import "IsReleasedTableViewCell.h"
 #import "HistoryTableViewCell.h"
+#import "ReleaseModel.h"
 @interface MyReleaseViewController ()<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>{
     NSInteger isReleasedFlag;
     NSInteger histroyFlag;
@@ -150,13 +151,13 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-}
-*/
+}*/
+
 //正在发布
-/*-(void)isReleasedRequest{
-    //UserModel *model = [[StorageMgr singletonStorageMgr] objectForKey:@"UserInfo"];
-    //NSDictionary *para = @{@"openid": model.openid,@"id" : @1};
-    [RequestAPI requestURL:@"/findOrders_edu" withParameters:nil andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
+-(void)isReleasedRequest{
+    ReleaseModel *model = [[StorageMgr singletonStorageMgr] objectForKey:@"UserInfo"];
+    NSDictionary *para = @{@"openid": model.openid,@"page" : @(model.page),@"state" : @(model.state)};
+    [RequestAPI requestURL:@"/findAllIssue_edu" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
         
         [_aiv stopAnimating];
         UIRefreshControl *ref = (UIRefreshControl *)[_isReleasedTableView viewWithTag:201];
@@ -172,7 +173,28 @@
         
     }];
     
-}*/
+}
+//已发布
+-(void)didReleasedRequest{
+    ReleaseModel *model = [[StorageMgr singletonStorageMgr] objectForKey:@"UserInfo"];
+    NSDictionary *para = @{@"Id" : @(model.Id)};
+    [RequestAPI requestURL:@"/finddemandById" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
+        
+        [_aiv stopAnimating];
+        UIRefreshControl *ref = (UIRefreshControl *)[_didReleaseTableView viewWithTag:200];
+        [ref endRefreshing];
+        NSLog(@"Orders:%@",responseObject);
+        if ([responseObject[@"result"] integerValue] == 1) {
+            
+        }
+        else{
+            [Utilities popUpAlertViewWithMsg:@"网络错误,请稍后再试" andTitle:@"提示" onView:self];
+        }
+    }failure:^(NSInteger statusCode, NSError *error) {
+        
+    }];
+    
+}
 #pragma mark - tableView
 //一共多少组
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
