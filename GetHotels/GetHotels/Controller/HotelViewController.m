@@ -102,53 +102,54 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //textField协议
     _searchTextView.delegate = self;
     //把状态栏变成白色
-    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+    //
+    //半透明开关
+    self.navigationController.navigationBar.translucent = NO;
+    //导航栏toolBar隐藏开关
+    self.navigationController.toolbarHidden = NO;
+    //设置datePick背景色
+    _datePick.backgroundColor = UIColorFromRGB(235, 235, 241);
+    //去掉tableview底部多余的线
+    _hotelTableView.tableFooterView = [UIView new];
     //将输入框变为无边框样式
     _searchTextView.borderStyle = UITextBorderStyleNone;
+    //去掉scrollView横向滚动标示
+    _homeScrollView.showsHorizontalScrollIndicator = NO;
+    [self duration];
+    //滑动点设为4个
+    _pageControl.numberOfPages = 4;
     //设置最小时间
     _datePick.minimumDate = [NSDate date];
+    _searchTextView.text = @"";
     
+    // Do any additional setup after loading the view.
+    
+    //初始化数组
+    _hotelArr = [NSMutableArray new];
     _advImgArr = [NSMutableArray new];
     firstVisit = YES;
     selectBool = YES;
     selectCirfimBool = NO;
-    // Do any additional setup after loading the view.
-    //初始化酒店网络请求数组
-    _hotelArr = [NSMutableArray new];
     //各种赋初值
     PageNum = 1;
     pageSize = 8;
     starID = 1;
     priceID = 1;
     selectCirfimBool = 0;
-    //设置datePick背景色
-    _datePick.backgroundColor = UIColorFromRGB(235, 235, 241);
-    //去掉tableview底部多余的线
-    _hotelTableView.tableFooterView = [UIView new];
     
-    _searchTextView.text = @"";
-    
-   // [self weatherRequest];          //天气网络请求
     [self setDefaultDateForButton];
-    
     [self locationConfig];          //开始定位
     [self enterApp];                //判断是否第一次进入app
     [[NSNotificationCenter defaultCenter ] addObserver:self selector:@selector(chooseCity:) name:@"ResetCity" object:nil];
     //调用蒙层和刷新指示器
     [self initializeData];
-    
     [self refresh];
-    
     [self selectStar];
-    //去掉scrollView横向滚动标示
-    _homeScrollView.showsHorizontalScrollIndicator = NO;
-    [self duration];
-    //滑动点设为4个
-    _pageControl.numberOfPages = 4;
     _sortArr = @[@"智能排序",@"价格低到高",@"价格高到低",@"离我从近到远"];
-    
 }
 
 - (void)didReceiveMemoryWarning {
