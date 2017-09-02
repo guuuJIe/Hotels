@@ -179,12 +179,18 @@
             //记忆用户名
             [Utilities setUserDefaults:@"Username" content:_phoneTextField.text];
             //登录成功后返回上一页
-            [self dismissViewControllerAnimated:YES completion:nil];
+            //[self dismissViewControllerAnimated:YES completion:nil];
+            UINavigationController *tabBar = [Utilities getStoryboardInstance:@"Main" byIdentity:@"TabBar"];
+            //执行跳转
+            [self presentViewController:tabBar animated:YES completion:nil];
         } else {
             [_aiv stopAnimating];
             //业务逻辑失败的情况下
             NSString *errorMsg = [ErrorHandler getProperErrorString:[responseObject[@"result"] integerValue]];
-            [Utilities popUpAlertViewWithMsg:errorMsg andTitle:nil onView:self];        }
+            [Utilities popUpAlertViewWithMsg:errorMsg andTitle:nil onView:self];
+            //清空密码
+            _pwdTextField.text = @"";
+        }
     } failure:^(NSInteger statusCode, NSError *error) {
         //当网络请求成功的时候停止动画(菊花膜/蒙层停止转动消失)
         [_aiv stopAnimating];
@@ -229,7 +235,7 @@
 
 //注册按钮事件
 - (IBAction)signupAction:(UIButton *)sender forEvent:(UIEvent *)event {
-     //[self performSegueWithIdentifier:@"signupToLogin" sender:self];
+     [self performSegueWithIdentifier:@"signupToLogin" sender:self];
 }
      
 @end

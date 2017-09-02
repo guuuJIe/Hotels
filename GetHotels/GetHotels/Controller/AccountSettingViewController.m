@@ -15,7 +15,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *confirmPwdTextField;
 @property (weak, nonatomic) IBOutlet UIButton *confirmBtn;
 - (IBAction)confirmAction:(UIButton *)sender forEvent:(UIEvent *)event;
-- (IBAction)exitAction:(UIButton *)sender forEvent:(UIEvent *)event;
+//- (IBAction)exitAction:(UIButton *)sender forEvent:(UIEvent *)event;
 
 @end
 
@@ -26,6 +26,10 @@
     // Do any additional setup after loading the view.
     
     
+    //添加事件监听当输入框文本内容改变时，调用textChange:方法
+    [_oldPwdTextField addTarget:self action:@selector(textChange:) forControlEvents:UIControlEventEditingChanged];
+    [_nowPwdTextField addTarget:self action:@selector(textChange:) forControlEvents:UIControlEventEditingChanged];
+    [_confirmPwdTextField addTarget:self action:@selector(textChange:) forControlEvents:UIControlEventEditingChanged];
     
     //调用设置导航样式
     [self setNavigationItem];
@@ -71,17 +75,22 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-//当textfield结束编辑的时候调用
-- (void)textFieldDidEndEditing:(UITextField *)textField {
-    //当旧密码、新密码和确认密码都输入了之后，按钮才能被点击
-    if (textField == _oldPwdTextField || textField == _nowPwdTextField || textField == _confirmPwdTextField) {
-        if (_oldPwdTextField.text.length != 0 && _nowPwdTextField.text.length != 0 && _confirmPwdTextField.text.length != 0) {
-            //确认按钮启用
-            _confirmBtn.enabled = YES;
-            _confirmBtn.backgroundColor = UIColorFromRGB(66, 162, 233);
-        }
+
+//输入框内容改变的监听事件
+- (void)textChange: (UITextField *)textField {
+    //当文本框中的内容改变时判断内容长度是否为0，是：禁用按钮，否：启用按钮
+    if (_oldPwdTextField.text.length != 0 && _nowPwdTextField.text.length != 0 && _confirmPwdTextField.text.length != 0) {
+        //确认按钮启用
+        _confirmBtn.enabled = YES;
+        //_confirmBtn.backgroundColor = UIColorFromRGB(66, 162, 233);
+    } else {
+        //确认按钮禁用
+        _confirmBtn.enabled = NO;
+        
     }
 }
+
+
 
 //按键盘return收回按钮
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -125,9 +134,13 @@
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"密码修改成功，请重新登录" preferredStyle:UIAlertControllerStyleAlert];
         //创建确定按钮
         UIAlertAction *actionA = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            //注册成功后返回上一页
-            //[self performSegueWithIdentifier:@"returnLogin" sender:self];
-            [self dismissViewControllerAnimated:YES completion:nil];
+            //密码修改成功返回登录页
+            UINavigationController *loginNavi = [Utilities getStoryboardInstance:@"Login" byIdentity:@"LoginNavi"];
+            //执行跳转
+            [self presentViewController:loginNavi animated:YES completion:nil];
+            
+            //[self dismissViewControllerAnimated:YES completion:nil];
+            
             //清空用户名、密码和确认密码
             _oldPwdTextField.text = @"";
             _nowPwdTextField.text = @"";
@@ -151,25 +164,25 @@
 }
 
 
-//退出登录按钮事件
-- (IBAction)exitAction:(UIButton *)sender forEvent:(UIEvent *)event {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"是否退出登录？" preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *actionA = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        //调用确定退出登录返回登录页
-        [self exit];
-        
-    }];
-    UIAlertAction *actionB= [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-    [alert addAction:actionA];
-    [alert addAction:actionB];
-    [self presentViewController:alert animated:YES completion:nil];
-    
-}
-
-//确定退出登录返回登录页
-- (void)exit {
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
+////退出登录按钮事件
+//- (IBAction)exitAction:(UIButton *)sender forEvent:(UIEvent *)event {
+//    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"是否退出登录？" preferredStyle:UIAlertControllerStyleAlert];
+//    UIAlertAction *actionA = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//        //调用确定退出登录返回登录页
+//        [self exit];
+//        
+//    }];
+//    UIAlertAction *actionB= [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+//    [alert addAction:actionA];
+//    [alert addAction:actionB];
+//    [self presentViewController:alert animated:YES completion:nil];
+//    
+//}
+//
+////确定退出登录返回登录页
+//- (void)exit {
+//    [self dismissViewControllerAnimated:YES completion:nil];
+//}
 
 
 

@@ -16,7 +16,7 @@
 #import "SKTagView.h"
 #import "JSONS.h"
 
-@interface HotelViewController ()<UITableViewDataSource,UITableViewDelegate,CLLocationManagerDelegate>
+@interface HotelViewController ()<UITableViewDataSource,UITableViewDelegate,CLLocationManagerDelegate,UITextFieldDelegate>
 {
     NSInteger flag;
     BOOL scrollFlag;
@@ -43,7 +43,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *homeLocation;
 @property (weak, nonatomic) IBOutlet UIButton *
     searchBtn;
-@property (weak, nonatomic) IBOutlet UITextView *searchTextView;
+@property (weak, nonatomic) IBOutlet UITextField *searchTextView;
 @property (weak, nonatomic) IBOutlet UILabel *tempLabel;
 @property (weak, nonatomic) IBOutlet UILabel *weatherLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *weatherImg;
@@ -102,22 +102,28 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _searchTextView.delegate = self;
     //把状态栏变成白色
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+    //将输入框变为无边框样式
+    _searchTextView.borderStyle = UITextBorderStyleNone;
+    //设置最小时间
+    _datePick.minimumDate = [NSDate date];
     
     _advImgArr = [NSMutableArray new];
     firstVisit = YES;
     selectBool = YES;
     selectCirfimBool = NO;
     // Do any additional setup after loading the view.
+    //初始化酒店网络请求数组
     _hotelArr = [NSMutableArray new];
-   
+    //各种赋初值
     PageNum = 1;
     pageSize = 8;
     starID = 1;
     priceID = 1;
     selectCirfimBool = 0;
-    
+    //设置datePick背景色
     _datePick.backgroundColor = UIColorFromRGB(235, 235, 241);
     //去掉tableview底部多余的线
     _hotelTableView.tableFooterView = [UIView new];
@@ -338,10 +344,12 @@
     //开始日期
     NSTimeInterval endTime = [Utilities cTimestampFromString:_outTimeDate format:@"MM-dd"];
     if (startTime >= endTime){
-        
         [_aiv stopAnimating];
         [Utilities popUpAlertViewWithMsg:@"请正确设置日期" andTitle:nil onView:self];
+        [ref endRefreshing];
+        return;
     }
+    
     //NSLog(@"%ld>>>",(long)PageNum);
     //参数
     NSDictionary *para = @{@"city_name" : _cityBtn.titleLabel.text, @"pageNum" :@(PageNum), @"pageSize" :  @(pageSize), @"startId" :  @(starID), @"priceId" :@(priceID), @"sortingId" :@(sortID) ,@"inTime" : [NSString stringWithFormat:@"2017-%@",_inTimeDate] ,@"outTime" : [NSString stringWithFormat:@"2017-%@",_outTimeDate] ,@"wxlongitude" :@"", @"wxlatitude" :@""};
@@ -369,7 +377,7 @@
             }
             
             //调用天气接口
-            [self weatherInitializeData];
+            [self weatherRequest];
             NSLog(@"<><>:<>%@,%@",_model.latitude,_model.longitude);
             //广告图片
             NSArray *advertising = content[@"advertising"];
@@ -403,22 +411,14 @@
 - (void)selectRequest{
     //拿到刷新指示器
     UIRefreshControl *ref = (UIRefreshControl *)[_hotelTableView viewWithTag:10004];
-    //开始日期
-    NSTimeInterval startTime = [Utilities cTimestampFromString:_inTimeDate format:@"MM-dd"];
-    //开始日期
-    NSTimeInterval endTime = [Utilities cTimestampFromString:_outTimeDate format:@"MM-dd"];
-    if (startTime >= endTime){
-        
-        [_aiv stopAnimating];
-        [Utilities popUpAlertViewWithMsg:@"请正确设置日期" andTitle:nil onView:self];
-    }
+   
     //参数
     NSDictionary *para = @{@"hotel_name" : _searchTextView.text, @"inTime" : [NSString stringWithFormat:@"2017-%@",_inTimeDate] ,@"outTime" : [NSString stringWithFormat:@"2017-%@",_outTimeDate]};
     
     //网络请求
     [RequestAPI requestURL:@"/selectHotel" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
         //NSLog(@"登录 = %@",responseObject);
-        //当网络请求成功时让蒙层消失
+        //当网络请求成功时让蒙层消失三国
         [_aiv stopAnimating];
         [ref endRefreshing];
         if([responseObject[@"result"]intValue] == 1){
@@ -436,7 +436,7 @@
             [_aiv stopAnimating];
             //业务逻辑失败的情况下
             NSString *errorMsg = [ErrorHandler getProperErrorString:[responseObject[@"result"] integerValue]];
-            [Utilities popUpAlertViewWithMsg:errorMsg andTitle:nil onView:self];
+           // [Utilities popUpAlertViewWithMsg:errorMsg andTitle:nil onView:self];
         }
     } failure:^(NSInteger statusCode, NSError *error) {
         //当网络请求失败时让蒙层消失
@@ -582,7 +582,7 @@
              if (eachIP ==  indexPath){
                  _mCell.textLabel.textColor = SELECT_COLOR;
                  _mCell.accessoryType = UITableViewCellAccessoryCheckmark;
-                 sortID = eachIP.row;
+                 sortID = eachIP.row + 1;
                  [_sortBtn setTitle:[NSString stringWithFormat:@"%@  ▼", _mCell.textLabel.text] forState:UIControlStateNormal];
                  _markView.hidden = YES;
                  [self initializeData];
@@ -885,20 +885,42 @@
 }
 
 - (IBAction)doneAction:(UIBarButtonItem *)sender {
+    
     NSDate *date = _datePick.date;
     NSDateFormatter *formatter = [NSDateFormatter new];
     formatter.dateFormat = @"MM-dd";
     NSString *thDate = [formatter stringFromDate:date];
-    //followUptime = [date timeIntervalSince1970];
+    NSTimeInterval thDateTime = [Utilities cTimestampFromString:thDate format:@"MM-dd"];
+    //获取默认时间
+    //当前时间
+    NSDate *dateToday = [NSDate date];
+    //明天的日期
+//    NSDate *dateTom = [NSDate dateTomorrow];
+    NSString *dateStr = [formatter stringFromDate:dateToday];
+//    NSString *dateTomStr= [formatter stringFromDate:dateTom];
+    NSTimeInterval startTime = [Utilities cTimestampFromString:dateStr format:@"MM-dd"];
+ 
+    
     if (flag == 0){
-        [_inTime setTitle:[NSString stringWithFormat:@"入住%@ ▼",thDate] forState:UIControlStateNormal];
-        _inTimeDate = thDate;
+             [_inTime setTitle:[NSString stringWithFormat:@"入住%@ ▼",thDate] forState:UIControlStateNormal];
+            _inTimeDate = thDate;
+            //开始日期
+            startTime = [Utilities cTimestampFromString:thDate format:@"MM-dd"];
     }else{
-        [_outTime setTitle:[NSString stringWithFormat:@"离店%@ ▼",thDate] forState:UIControlStateNormal];
-        _outTimeDate = thDate;
+        if (thDateTime <= startTime) {
+            [Utilities popUpAlertViewWithMsg:@"请正确设置日期" andTitle:nil onView:self];
+            
+        }else{
+            [_outTime setTitle:[NSString stringWithFormat:@"离店%@ ▼",thDate] forState:UIControlStateNormal];
+            _outTimeDate = thDate;
+            [self initializeData];
+        }
     }
+    
+    //followUptime = [date timeIntervalSince2017];
+ 
     _markView.hidden = YES;
-    [self initializeData];
+    
 }
 
 - (IBAction)selectTagCfirmAction:(UIButton *)sender forEvent:(UIEvent *)event {
@@ -912,9 +934,17 @@
     [self initializeData];
 }
 
-
+//按键盘上的Return键收起键盘
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (textField == _searchTextView){
+        [textField resignFirstResponder];
+    }
+    
+    return YES;
+}
 - (void) touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     _markView.hidden = YES;
+    [self.view endEditing:YES];
 //    if (selectCirfimBool != 0){
 //        [self weakSelect];
 //       // _selectTagView.didTapTagAtIndex(otherPreIdxOne, otherIndexOne);

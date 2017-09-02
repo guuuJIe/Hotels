@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="e1q-3O-ROY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="9YQ-rc-UfD">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -22,7 +22,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OBW-ep-BMT">
-                                <rect key="frame" x="120" y="526" width="135" height="30"/>
+                                <rect key="frame" x="120" y="575" width="135" height="30"/>
                                 <color key="backgroundColor" red="0.25940886759999998" green="0.63428873119999996" blue="0.91410156249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="发布">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -37,7 +37,7 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W8n-yX-Bxr">
-                                <rect key="frame" x="15" y="124" width="345" height="372"/>
+                                <rect key="frame" x="15" y="80" width="345" height="465"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="出发时间段" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z9e-7B-xm3">
                                         <rect key="frame" x="15" y="40" width="52" height="12"/>
@@ -199,27 +199,27 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NCW-cq-HoI">
-                                        <rect key="frame" x="15" y="288" width="315" height="1"/>
+                                        <rect key="frame" x="15" y="381" width="315" height="1"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="qfm-Va-UnZ"/>
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="详情" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M8n-9e-elf">
-                                        <rect key="frame" x="15" y="309" width="70" height="12"/>
+                                        <rect key="frame" x="15" y="402" width="70" height="12"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jHu-g9-JTL">
-                                        <rect key="frame" x="15" y="348" width="315" height="1"/>
+                                        <rect key="frame" x="15" y="441" width="315" height="1"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="3id-C7-8k2"/>
                                         </constraints>
                                     </view>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="选填，可以补充细节详情" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8o4-6Y-w4c">
-                                        <rect key="frame" x="15" y="328" width="315" height="16"/>
+                                        <rect key="frame" x="15" y="421" width="315" height="16"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -236,40 +236,12 @@
                                             <outlet property="delegate" destination="9YQ-rc-UfD" id="pYb-xk-Rrq"/>
                                         </connections>
                                     </textField>
-                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="Rf7-wQ-XLq">
-                                        <rect key="frame" x="0.0" y="276" width="345" height="216"/>
-                                        <date key="date" timeIntervalSinceReferenceDate="462606871.28727698">
-                                            <!--2015-08-30 05:54:31 +0000-->
-                                        </date>
-                                        <date key="minimumDate" timeIntervalSinceReferenceDate="-978267600">
-                                            <!--1970-01-01 11:00:00 +0000-->
-                                        </date>
-                                        <locale key="locale" localeIdentifier="zh-Hans"/>
-                                    </datePicker>
-                                    <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Xv-LI-n40">
-                                        <rect key="frame" x="0.0" y="244" width="345" height="44"/>
-                                        <items>
-                                            <barButtonItem title="取消" id="Wff-E3-eOq">
-                                                <connections>
-                                                    <action selector="cancelAction:" destination="9YQ-rc-UfD" id="W8i-ws-2b1"/>
-                                                </connections>
-                                            </barButtonItem>
-                                            <barButtonItem style="plain" systemItem="flexibleSpace" id="fIH-uY-Lcw"/>
-                                            <barButtonItem title="确定" id="k3i-KW-dFh">
-                                                <connections>
-                                                    <action selector="confirmAction:" destination="9YQ-rc-UfD" id="Zoc-y1-4py"/>
-                                                </connections>
-                                            </barButtonItem>
-                                        </items>
-                                    </toolbar>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="Rf7-wQ-XLq" firstAttribute="top" secondItem="5VW-F8-wjw" secondAttribute="bottom" constant="28" id="08k-0Y-0NA"/>
                                     <constraint firstItem="x4d-rh-lvj" firstAttribute="top" secondItem="vgf-yx-AOU" secondAttribute="top" id="0TN-dY-V9L"/>
                                     <constraint firstItem="5VW-F8-wjw" firstAttribute="top" secondItem="sWr-0v-JQh" secondAttribute="bottom" constant="20" id="1BI-mi-blA"/>
                                     <constraint firstItem="k0y-aZ-ZJ4" firstAttribute="trailing" secondItem="k7M-f0-lnY" secondAttribute="trailing" id="1fP-BQ-Fef"/>
-                                    <constraint firstItem="0Xv-LI-n40" firstAttribute="bottom" secondItem="NCW-cq-HoI" secondAttribute="top" id="1iR-jN-7KR"/>
                                     <constraint firstAttribute="trailing" secondItem="lUB-qy-SUA" secondAttribute="trailing" constant="280" id="1us-gX-6jd"/>
                                     <constraint firstItem="1EW-Zk-w8M" firstAttribute="centerY" secondItem="sWr-0v-JQh" secondAttribute="centerY" id="2Ff-Me-laL"/>
                                     <constraint firstItem="nUu-7f-96q" firstAttribute="leading" secondItem="W8n-yX-Bxr" secondAttribute="leading" constant="115" id="2Ss-yX-Uvs"/>
@@ -279,7 +251,6 @@
                                     <constraint firstAttribute="trailing" secondItem="nUu-7f-96q" secondAttribute="trailing" constant="205" id="4OA-mq-pVT"/>
                                     <constraint firstItem="8o4-6Y-w4c" firstAttribute="top" secondItem="M8n-9e-elf" secondAttribute="bottom" constant="7" id="4bU-6k-i5K"/>
                                     <constraint firstItem="Tj8-fO-xdb" firstAttribute="top" secondItem="B75-5s-ePu" secondAttribute="top" id="4hv-Be-oHT"/>
-                                    <constraint firstItem="Rf7-wQ-XLq" firstAttribute="top" secondItem="5VW-F8-wjw" secondAttribute="bottom" constant="28" id="5Ev-eM-xS2"/>
                                     <constraint firstItem="1EW-Zk-w8M" firstAttribute="leading" secondItem="sWr-0v-JQh" secondAttribute="trailing" constant="50" id="5yg-H9-qZq"/>
                                     <constraint firstItem="ET6-kO-zAo" firstAttribute="centerY" secondItem="CsB-HI-cOh" secondAttribute="centerY" id="9cI-du-XT2"/>
                                     <constraint firstItem="w2M-XL-Iat" firstAttribute="leading" secondItem="W8n-yX-Bxr" secondAttribute="leading" constant="15" id="AiS-L0-wIV"/>
@@ -297,7 +268,6 @@
                                     <constraint firstItem="Tj8-fO-xdb" firstAttribute="top" secondItem="x4d-rh-lvj" secondAttribute="bottom" constant="11" id="IKd-Bt-AMo"/>
                                     <constraint firstItem="gIf-QY-HqV" firstAttribute="leading" secondItem="ET6-kO-zAo" secondAttribute="trailing" constant="25" id="KmF-km-dXc"/>
                                     <constraint firstItem="k7M-f0-lnY" firstAttribute="centerY" secondItem="UxC-Iv-QCo" secondAttribute="centerY" id="KsK-Pk-9FQ"/>
-                                    <constraint firstItem="Rf7-wQ-XLq" firstAttribute="leading" secondItem="W8n-yX-Bxr" secondAttribute="leading" id="LZX-En-4kZ"/>
                                     <constraint firstItem="k0y-aZ-ZJ4" firstAttribute="top" secondItem="UxC-Iv-QCo" secondAttribute="bottom" constant="5" id="LhO-m9-ncV"/>
                                     <constraint firstAttribute="trailing" secondItem="x4d-rh-lvj" secondAttribute="trailing" constant="15" id="OZ4-NZ-tKz"/>
                                     <constraint firstItem="AHm-AG-aIt" firstAttribute="top" secondItem="W8n-yX-Bxr" secondAttribute="top" constant="93" id="QRE-XQ-j2b"/>
@@ -312,11 +282,9 @@
                                     <constraint firstItem="Tj8-fO-xdb" firstAttribute="top" secondItem="W8n-yX-Bxr" secondAttribute="top" constant="155" id="ZEe-LX-jLn"/>
                                     <constraint firstItem="B75-5s-ePu" firstAttribute="top" secondItem="7wp-Tp-tm2" secondAttribute="bottom" constant="5" id="ZJf-ck-HQ9"/>
                                     <constraint firstAttribute="trailing" secondItem="5VW-F8-wjw" secondAttribute="trailing" constant="260" id="ZzJ-c3-zox"/>
-                                    <constraint firstItem="0Xv-LI-n40" firstAttribute="leading" secondItem="W8n-yX-Bxr" secondAttribute="leading" id="aKA-kW-W4z"/>
                                     <constraint firstAttribute="trailing" secondItem="M8n-9e-elf" secondAttribute="trailing" constant="260" id="afE-Y0-Ig3"/>
                                     <constraint firstItem="6cH-jr-oJi" firstAttribute="top" secondItem="AHm-AG-aIt" secondAttribute="bottom" constant="15" id="bGW-L4-Zxc"/>
                                     <constraint firstAttribute="trailing" secondItem="AHm-AG-aIt" secondAttribute="trailing" constant="18" id="boc-5x-WB5"/>
-                                    <constraint firstItem="0Xv-LI-n40" firstAttribute="trailing" secondItem="Rf7-wQ-XLq" secondAttribute="trailing" id="cUp-De-uZX"/>
                                     <constraint firstItem="8o4-6Y-w4c" firstAttribute="leading" secondItem="W8n-yX-Bxr" secondAttribute="leading" constant="15" id="dAQ-0g-nPg"/>
                                     <constraint firstItem="M8n-9e-elf" firstAttribute="leading" secondItem="5VW-F8-wjw" secondAttribute="leading" id="gJ4-g1-JXu"/>
                                     <constraint firstAttribute="trailing" secondItem="jHu-g9-JTL" secondAttribute="trailing" constant="15" id="gas-Il-HNl"/>
@@ -336,14 +304,12 @@
                                     <constraint firstItem="nUu-7f-96q" firstAttribute="top" secondItem="B75-5s-ePu" secondAttribute="bottom" constant="45" id="rRK-8g-b1y"/>
                                     <constraint firstItem="gIf-QY-HqV" firstAttribute="centerY" secondItem="CsB-HI-cOh" secondAttribute="centerY" id="rda-9q-oBb"/>
                                     <constraint firstItem="w2M-XL-Iat" firstAttribute="top" secondItem="5VW-F8-wjw" secondAttribute="bottom" constant="18" id="s3U-Yw-TWE"/>
-                                    <constraint firstAttribute="bottom" secondItem="Rf7-wQ-XLq" secondAttribute="bottom" constant="-120" id="tEa-Am-0Zd"/>
                                     <constraint firstItem="Ofu-QT-zXK" firstAttribute="leading" secondItem="6cH-jr-oJi" secondAttribute="leading" id="tKt-2r-PtL"/>
                                     <constraint firstItem="NCW-cq-HoI" firstAttribute="leading" secondItem="W8n-yX-Bxr" secondAttribute="leading" constant="15" id="thw-XE-2gU"/>
                                     <constraint firstItem="7wp-Tp-tm2" firstAttribute="leading" secondItem="7Pn-qe-ziS" secondAttribute="leading" id="toJ-wi-CaH"/>
                                     <constraint firstItem="B75-5s-ePu" firstAttribute="top" secondItem="7wp-Tp-tm2" secondAttribute="bottom" constant="5" id="ts0-JA-bwy"/>
                                     <constraint firstAttribute="bottom" secondItem="jHu-g9-JTL" secondAttribute="bottom" constant="23" id="ugi-UO-Fp8"/>
                                     <constraint firstAttribute="trailing" secondItem="B75-5s-ePu" secondAttribute="trailing" constant="200" id="v2h-9i-leB"/>
-                                    <constraint firstAttribute="trailing" secondItem="Rf7-wQ-XLq" secondAttribute="trailing" id="wMG-85-DoS"/>
                                     <constraint firstItem="x4d-rh-lvj" firstAttribute="centerX" secondItem="gIf-QY-HqV" secondAttribute="centerX" id="x02-ap-HyR"/>
                                     <constraint firstItem="AHm-AG-aIt" firstAttribute="top" secondItem="ET6-kO-zAo" secondAttribute="bottom" constant="8" symbolic="YES" id="y6f-b9-cGF"/>
                                     <constraint firstItem="B75-5s-ePu" firstAttribute="top" secondItem="7wp-Tp-tm2" secondAttribute="bottom" constant="5" id="yIW-GA-lXn"/>
@@ -351,8 +317,34 @@
                                     <constraint firstItem="M8n-9e-elf" firstAttribute="leading" secondItem="W8n-yX-Bxr" secondAttribute="leading" constant="15" id="ydB-Bz-WGY"/>
                                 </constraints>
                             </view>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Xv-LI-n40">
+                                <rect key="frame" x="15" y="407" width="345" height="44"/>
+                                <items>
+                                    <barButtonItem title="取消" id="Wff-E3-eOq">
+                                        <connections>
+                                            <action selector="cancelAction:" destination="9YQ-rc-UfD" id="W8i-ws-2b1"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="fIH-uY-Lcw"/>
+                                    <barButtonItem title="确定" id="k3i-KW-dFh">
+                                        <connections>
+                                            <action selector="confirmAction:" destination="9YQ-rc-UfD" id="Zoc-y1-4py"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="Rf7-wQ-XLq">
+                                <rect key="frame" x="0.0" y="451" width="375" height="216"/>
+                                <date key="date" timeIntervalSinceReferenceDate="462606871.28727698">
+                                    <!--2015-08-30 05:54:31 +0000-->
+                                </date>
+                                <date key="minimumDate" timeIntervalSinceReferenceDate="-978267600">
+                                    <!--1970-01-01 11:00:00 +0000-->
+                                </date>
+                                <locale key="locale" localeIdentifier="zh-Hans"/>
+                            </datePicker>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ellipse副本" translatesAutoresizingMaskIntoConstraints="NO" id="N5R-PX-S0y">
-                                <rect key="frame" x="158" y="94" width="60" height="60"/>
+                                <rect key="frame" x="158" y="50" width="60" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="aFD-Lh-KXk"/>
                                     <constraint firstAttribute="width" secondItem="N5R-PX-S0y" secondAttribute="height" multiplier="1:1" id="vKw-kQ-TQu"/>
@@ -364,11 +356,17 @@
                             <constraint firstItem="hsO-WN-WLa" firstAttribute="top" secondItem="OBW-ep-BMT" secondAttribute="bottom" constant="62" id="3oV-cT-2EZ"/>
                             <constraint firstItem="W8n-yX-Bxr" firstAttribute="centerX" secondItem="XqN-Lc-98g" secondAttribute="centerX" id="Fln-XE-Fc1"/>
                             <constraint firstItem="W8n-yX-Bxr" firstAttribute="top" secondItem="McT-rQ-hoN" secondAttribute="bottom" constant="60" id="JFd-P4-Dgb"/>
+                            <constraint firstItem="0Xv-LI-n40" firstAttribute="leading" secondItem="XqN-Lc-98g" secondAttribute="leading" constant="15" id="LVQ-6Z-2Ul"/>
                             <constraint firstItem="N5R-PX-S0y" firstAttribute="centerX" secondItem="W8n-yX-Bxr" secondAttribute="centerX" id="YCW-eH-14f"/>
                             <constraint firstItem="OBW-ep-BMT" firstAttribute="top" secondItem="W8n-yX-Bxr" secondAttribute="bottom" constant="30" id="ZrK-AE-HOB"/>
+                            <constraint firstItem="Rf7-wQ-XLq" firstAttribute="leading" secondItem="XqN-Lc-98g" secondAttribute="leading" id="cBl-nG-KzZ"/>
+                            <constraint firstItem="OBW-ep-BMT" firstAttribute="top" secondItem="Rf7-wQ-XLq" secondAttribute="bottom" constant="-92" id="haR-TM-voj"/>
+                            <constraint firstAttribute="trailing" secondItem="Rf7-wQ-XLq" secondAttribute="trailing" id="k9t-Kd-K0P"/>
                             <constraint firstAttribute="trailing" secondItem="OBW-ep-BMT" secondAttribute="trailing" constant="120" id="o1w-Wk-Q6z"/>
                             <constraint firstItem="OBW-ep-BMT" firstAttribute="leading" secondItem="XqN-Lc-98g" secondAttribute="leading" constant="120" id="pEY-Fs-4fb"/>
+                            <constraint firstAttribute="trailing" secondItem="0Xv-LI-n40" secondAttribute="trailing" constant="15" id="rUe-3K-wRN"/>
                             <constraint firstItem="N5R-PX-S0y" firstAttribute="top" secondItem="McT-rQ-hoN" secondAttribute="bottom" constant="30" id="v9S-Gb-hlF"/>
+                            <constraint firstItem="Rf7-wQ-XLq" firstAttribute="top" secondItem="0Xv-LI-n40" secondAttribute="bottom" id="vAV-qv-3G9"/>
                             <constraint firstAttribute="trailing" secondItem="W8n-yX-Bxr" secondAttribute="trailing" constant="15" id="w8v-Bh-BXQ"/>
                             <constraint firstItem="W8n-yX-Bxr" firstAttribute="leading" secondItem="XqN-Lc-98g" secondAttribute="leading" constant="15" id="xpL-fa-IBk"/>
                         </constraints>
@@ -403,47 +401,9 @@
             </objects>
             <point key="canvasLocation" x="3156" y="118"/>
         </scene>
-        <!--航空-->
-        <scene sceneID="8I9-j7-1Qn">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="z53-54-vVo" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="航空" image="飞机" id="2eR-vY-GXc"/>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="WPl-9C-KAq">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="9YQ-rc-UfD" kind="relationship" relationship="rootViewController" id="3HV-jQ-mGo"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="IdD-ts-z6Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1583.2" y="109.29535232383809"/>
-        </scene>
-        <!--Tab Bar Controller-->
-        <scene sceneID="4dt-9a-HI7">
-            <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="e1q-3O-ROY" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" id="9P1-hf-Q5V">
-                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    </tabBar>
-                    <connections>
-                        <segue destination="z53-54-vVo" kind="relationship" relationship="viewControllers" id="nyA-jA-43T"/>
-                    </connections>
-                </tabBarController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4XA-Dt-IGk" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="644" y="109.29535232383809"/>
-        </scene>
     </scenes>
     <resources>
         <image name="ellipse副本" width="87" height="87"/>
         <image name="返回1" width="22" height="22"/>
-        <image name="飞机" width="22" height="22"/>
     </resources>
 </document>
