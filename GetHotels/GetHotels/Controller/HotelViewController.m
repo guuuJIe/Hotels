@@ -16,7 +16,7 @@
 #import "SKTagView.h"
 #import "JSONS.h"
 
-@interface HotelViewController ()<UITableViewDataSource,UITableViewDelegate,CLLocationManagerDelegate,UITextViewDelegate>
+@interface HotelViewController ()<UITableViewDataSource,UITableViewDelegate,CLLocationManagerDelegate,UITextFieldDelegate>
 {
     NSInteger flag;
     BOOL scrollFlag;
@@ -102,6 +102,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _searchTextView.delegate = self;
     //把状态栏变成白色
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     //将输入框变为无边框样式
@@ -114,14 +115,15 @@
     selectBool = YES;
     selectCirfimBool = NO;
     // Do any additional setup after loading the view.
+    //初始化酒店网络请求数组
     _hotelArr = [NSMutableArray new];
-   
+    //各种赋初值
     PageNum = 1;
     pageSize = 8;
     starID = 1;
     priceID = 1;
     selectCirfimBool = 0;
-    
+    //设置datePick背景色
     _datePick.backgroundColor = UIColorFromRGB(235, 235, 241);
     //去掉tableview底部多余的线
     _hotelTableView.tableFooterView = [UIView new];
@@ -342,7 +344,7 @@
     //开始日期
     NSTimeInterval endTime = [Utilities cTimestampFromString:_outTimeDate format:@"MM-dd"];
     if (startTime >= endTime){
-        [_aiv stopAnimating]; 
+        [_aiv stopAnimating];
         [Utilities popUpAlertViewWithMsg:@"请正确设置日期" andTitle:nil onView:self];
         [ref endRefreshing];
         return;
