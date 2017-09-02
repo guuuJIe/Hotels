@@ -76,7 +76,6 @@
                                         <state key="normal" title="注册新用户"/>
                                         <connections>
                                             <action selector="signupAction:forEvent:" destination="X5B-8L-Bha" eventType="touchUpInside" id="aLU-1g-d7W"/>
-                                            <segue destination="Gjz-D1-vcX" kind="presentation" id="aqi-PI-jQn"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -162,6 +161,7 @@
                         <outlet property="pwdTextField" destination="II4-fE-Yd9" id="Zba-S4-qNb"/>
                         <outlet property="signupBtn" destination="tFV-ku-oHt" id="Hhh-Xm-1Ac"/>
                         <outlet property="userImageView" destination="eW6-pI-kpz" id="Nqq-he-1KA"/>
+                        <segue destination="rF1-EG-XHm" kind="push" identifier="signupToLogin" id="Wmb-Zr-6J1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="plZ-z6-mWF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -346,7 +346,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zY8-xY-BXV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2591.1999999999998" y="-298.2008995502249"/>
+            <point key="canvasLocation" x="1639" y="-298"/>
         </scene>
         <!--Item-->
         <scene sceneID="VxU-qC-ghN">
@@ -366,25 +366,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="prY-qh-Kxt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-274.39999999999998" y="-298.2008995502249"/>
-        </scene>
-        <!--Item-->
-        <scene sceneID="U28-gG-yQh">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Gjz-D1-vcX" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="COe-nY-OMb"/>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ewl-Yp-f8L">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="rF1-EG-XHm" kind="relationship" relationship="rootViewController" id="dGv-du-YK9"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="RF5-6y-Euj" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1652" y="-298.2008995502249"/>
         </scene>
     </scenes>
     <resources>
