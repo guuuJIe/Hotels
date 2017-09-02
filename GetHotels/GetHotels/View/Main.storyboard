@@ -197,9 +197,13 @@
                         <outlet property="twoStarImg" destination="06z-sY-ygh" id="m2N-Sb-3HN"/>
                         <outlet property="usernameLabel" destination="2Yj-yC-GmV" id="LgY-ev-Tq6"/>
                         <segue destination="fpM-G6-g2A" kind="show" identifier="HomeToOrder" id="fLU-2s-YjL"/>
+<<<<<<< HEAD
                         <segue destination="Qux-On-UgP" kind="show" identifier="MyInfoToSet" id="luM-sM-3rs"/>
                         <segue destination="osj-it-dUr" kind="show" identifier="MyInfoToCall" id="xQn-7h-6eM"/>
                         <segue destination="oNS-BX-s1X" kind="show" identifier="MyInfoToDeleget" id="SpN-ab-LNS"/>
+=======
+                        <segue destination="vsf-t6-it0" kind="show" identifier="MyInfoToMyRelease" id="1Oy-9C-Fm8"/>
+>>>>>>> d826fa845f862346c96117907af02701d6dd729a
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lUF-HS-zYI" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -221,6 +225,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fhb-To-cbc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-206" y="1625"/>
+        </scene>
+        <!--MyRelease-->
+        <scene sceneID="JUY-tL-r7T">
+            <objects>
+                <viewControllerPlaceholder storyboardName="MyRelease" id="vsf-t6-it0" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1ln-yL-O7a" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1116" y="1061"/>
         </scene>
         <!--Hotel View Controller-->
         <scene sceneID="BE1-Wb-faE">
