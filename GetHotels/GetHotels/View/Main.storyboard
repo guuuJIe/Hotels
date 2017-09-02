@@ -267,23 +267,23 @@
                                                     <action selector="searchAction:forEvent:" destination="GKM-U3-8e4" eventType="touchUpInside" id="ard-Yg-Pnq"/>
                                                 </connections>
                                             </button>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="搜" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="XVt-tk-JvM">
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="b" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UR2-KH-JCn">
                                                 <rect key="frame" x="31.5" y="0.0" width="188.5" height="30"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <color key="textColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                            </textView>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
                                         </subviews>
                                         <color key="backgroundColor" red="0.1215686275" green="0.12941176469999999" blue="0.14117647059999999" alpha="0.19510380993150686" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstItem="PQ0-hS-DLB" firstAttribute="centerY" secondItem="A8w-sC-0FD" secondAttribute="centerY" id="3lm-Qs-4Nj"/>
-                                            <constraint firstItem="XVt-tk-JvM" firstAttribute="width" secondItem="A8w-sC-0FD" secondAttribute="width" multiplier="6:7" id="D7L-79-66R"/>
                                             <constraint firstAttribute="width" constant="220" id="DQc-yC-t74"/>
-                                            <constraint firstAttribute="bottom" secondItem="XVt-tk-JvM" secondAttribute="bottom" id="DmY-I2-LuL"/>
-                                            <constraint firstAttribute="trailing" secondItem="XVt-tk-JvM" secondAttribute="trailing" id="I5e-BS-cLI"/>
+                                            <constraint firstAttribute="trailing" secondItem="UR2-KH-JCn" secondAttribute="trailing" id="DfC-o9-LOh"/>
+                                            <constraint firstItem="UR2-KH-JCn" firstAttribute="width" secondItem="A8w-sC-0FD" secondAttribute="width" multiplier="6:7" id="FbP-Sh-wdi"/>
+                                            <constraint firstAttribute="bottom" secondItem="UR2-KH-JCn" secondAttribute="bottom" id="I3B-al-9ky"/>
                                             <constraint firstAttribute="height" constant="30" id="Iww-HZ-MiE"/>
-                                            <constraint firstItem="XVt-tk-JvM" firstAttribute="top" secondItem="A8w-sC-0FD" secondAttribute="top" id="Lqq-Sx-pb9"/>
+                                            <constraint firstItem="UR2-KH-JCn" firstAttribute="top" secondItem="A8w-sC-0FD" secondAttribute="top" id="jaQ-vw-omY"/>
                                             <constraint firstItem="PQ0-hS-DLB" firstAttribute="leading" secondItem="A8w-sC-0FD" secondAttribute="leading" constant="10" id="jq5-IV-wP7"/>
                                         </constraints>
                                         <userDefinedRuntimeAttributes>
@@ -680,7 +680,7 @@
                         <outlet property="outTime" destination="Ccb-Tm-0Az" id="azi-gE-DNQ"/>
                         <outlet property="pageControl" destination="L9G-jp-pBX" id="VTk-3Q-sRD"/>
                         <outlet property="searchBtn" destination="PQ0-hS-DLB" id="zC0-lY-Mpi"/>
-                        <outlet property="searchTextView" destination="XVt-tk-JvM" id="hcQ-Ms-Z7g"/>
+                        <outlet property="searchTextView" destination="UR2-KH-JCn" id="dHV-lh-vJR"/>
                         <outlet property="secondImg" destination="jff-JJ-o1D" id="IeB-Zh-w9E"/>
                         <outlet property="selectTagView" destination="jiv-bp-WLX" id="rzt-5i-vWT"/>
                         <outlet property="selectTwoTagView" destination="nJh-S8-GHV" id="mYW-Ep-MBY"/>
