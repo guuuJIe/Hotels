@@ -89,6 +89,7 @@
 @property (strong,nonatomic) NSString *inTimeDate;
 @property (strong,nonatomic) NSString *outTimeDate;
 @property (strong,nonatomic) NSArray *sortArr;
+@property (strong,nonatomic)UIView *mark;
 @property (strong,nonatomic) HomeMarkTableViewCell *mCell;
 @property (strong,nonatomic) HotelListModel *model;
 
@@ -108,9 +109,9 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     //
     //半透明开关
-    self.navigationController.navigationBar.translucent = NO;
-    //导航栏toolBar隐藏开关
-    self.navigationController.toolbarHidden = NO;
+    //self.navigationController.navigationBar.translucent = NO;
+    [[UINavigationBar appearance] setTranslucent:NO];
+    
     //设置datePick背景色
     _datePick.backgroundColor = UIColorFromRGB(235, 235, 241);
     //去掉tableview底部多余的线
@@ -149,6 +150,8 @@
     [self initializeData];
     [self refresh];
     [self selectStar];
+    //调用键盘监听通知
+    [self keyboard];
     _sortArr = @[@"智能排序",@"价格低到高",@"价格高到低",@"离我从近到远"];
 }
 
@@ -793,16 +796,18 @@
                     UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault  handler:^(UIAlertAction * _Nonnull action) {
                         //修改城市按钮标题
                         [_cityBtn setTitle:city  forState:UIControlStateNormal];
-                        
+                        NSLog(@"%@",_cityBtn.titleLabel.text);
                         [Utilities removeUserDefaults:@"UserCity"];
                         //修改用户选择城市的记忆体
                         [Utilities setUserDefaults:@"UserCity" content:city];
-                       
+                        //更改城市重新调用网络请求
+                        [self initializeData];
                     }];
                     UIAlertAction *noAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel  handler:nil];
                     [alertView addAction:yesAction];
                     [alertView addAction:noAction];
                     [self presentViewController:alertView animated:YES completion:nil];
+                    
                 }
             }
         }];
@@ -821,6 +826,12 @@
         [Utilities removeUserDefaults:@"UserCity"];
         //修改用户选择城市的记忆体
         [Utilities setUserDefaults:@"UserCity" content:cityStr];
+        
+        //更改城市重新调用网络请求
+        dispatch_time_t duration = dispatch_time(DISPATCH_TIME_NOW, 0.5*NSEC_PER_SEC);
+        dispatch_after(duration, dispatch_get_main_queue(), ^{
+            [self initializeData];
+        });
     }
 }
 
@@ -950,7 +961,26 @@
 //        [self weakSelect];
 //       // _selectTagView.didTapTagAtIndex(otherPreIdxOne, otherIndexOne);
 //    }
+    
 }
 
+-(void)keyboard{
+    //监听键盘将要打开这一操作,打开后执行keyboardWillShow:方法
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    //监听键盘将要隐藏这一操作,打开后执行keyboardWillHide:方法
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+}
+//键盘出现
+- (void)keyboardWillShow: (NSNotification *)notification {
+    _mark = [UIView new];
+    _mark.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    _mark.backgroundColor = UIColorFromRGBA(104, 104, 104, 0.4);
+    [[UIApplication sharedApplication].keyWindow addSubview:_mark];
+}
 
+//键盘隐藏
+- (void)keyboardWillHide: (NSNotification *)notification {
+    [_mark removeFromSuperview];
+    _mark = nil;
+}
 @end
