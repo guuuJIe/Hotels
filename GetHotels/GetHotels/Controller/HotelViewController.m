@@ -18,18 +18,19 @@
 
 @interface HotelViewController ()<UITableViewDataSource,UITableViewDelegate,CLLocationManagerDelegate,UITextFieldDelegate>
 {
-    NSInteger flag;
     BOOL scrollFlag;
     BOOL firstVisit;
     BOOL isLastPage;
     BOOL selectBool;
+    double longitude;
+    double latitude;
+    NSInteger flag;
     NSInteger selectCirfimBool;
     
     NSInteger PageNum;
     NSInteger pageSize;
     
     NSInteger scrollPage;
-    NSInteger scrollPageC;
     NSInteger sortID;
     NSInteger starTestID;
     NSInteger starID;
@@ -94,8 +95,6 @@
 @property (strong,nonatomic) HotelListModel *model;
 
 @property (strong,nonatomic) NSIndexPath *indexPath;
-//@property (strong, nonatomic) NSString *longitude;      //经度
-//@property (strong, nonatomic) NSString *latitude;       //纬度
 
 @end
 
@@ -141,6 +140,7 @@
     starID = 1;
     priceID = 1;
     selectCirfimBool = 0;
+    scrollPage = 0;
     
     [self setDefaultDateForButton];
     [self locationConfig];          //开始定位
@@ -153,6 +153,7 @@
     //调用键盘监听通知
     [self keyboard];
     _sortArr = @[@"智能排序",@"价格低到高",@"价格高到低",@"离我从近到远"];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -165,7 +166,7 @@
     self.tabBarController.tabBar.hidden = NO;
     //[[UIApplication sharedApplication]setStatusBarHidden:NO];
     [self locationStart];
-    [self weatherRequest];
+    [self geocodeAddressString];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -218,7 +219,7 @@
             ;
             //不是第一次打开到APP将默认城市与按钮上的城市名反向同步
             NSString *userCity =[Utilities getUserDefaults:@"UserCity"];
-            NSLog(@"城市标题%@",userCity);
+            //NSLog(@"城市标题%@",userCity);
             [_cityBtn setTitle:userCity forState:UIControlStateNormal];
         }
     }
@@ -262,10 +263,8 @@
     _aiv = [Utilities getCoverOnView:self.view];
     [self selectRequest];
 }
-- (void)weatherInitializeData{
-    _aiv = [Utilities getCoverOnView:self.view];
-    [self weatherRequest];
-}
+
+
 - (void)refreshRequest{
     PageNum = 1;
     [self hotelAdv];
@@ -273,11 +272,9 @@
 #pragma  mark - request
 //天气
 -(void)weatherRequest{
- 
-
 
     //获得全宇宙天气的接口（当前这一刻的天气）（http://api.openweathermap.org是一个开放天气接口提供商）
-    NSString *weatherURLStr =  [NSString stringWithFormat:@"http://api.yytianqi.com/observe?city=%@,%@&key=ed497bous144g6lo",_model.latitude,_model.longitude];
+    NSString *weatherURLStr =  [NSString stringWithFormat:@"http://api.yytianqi.com/observe?city=%f,%f&key=ed497bous144g6lo",latitude,longitude];
     
     //将字符串转换成NSURL对象lat=29&lon=120.444
     NSURL *weatherURL = [NSURL URLWithString:weatherURLStr];
@@ -285,8 +282,6 @@
     NSURLSession *session = [NSURLSession sharedSession];
     //创建一个基于NSURLSession的请求（除了请求任务还有上传和下载任务可以选择）任务并处理完成后的回调
     NSURLSessionDataTask *jsonDataTask = [session dataTaskWithURL:weatherURL completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        //当网络请求成功时让蒙层消失
-        [_aiv stopAnimating];
         //NSLog(@"请求完成，开始做事");
         if (!error) {
             NSHTTPURLResponse *httpRes = (NSHTTPURLResponse *)response;
@@ -294,7 +289,7 @@
                 //NSLog(@"网络请求成功，真的开始做事");
                 //将JSON格式的数据流data用JSONS工具包里的NSData下的Category中的JSONCol方法转化为OC对象（Array或Dictionary）
                 id jsonObject = [data JSONCol];
-                NSLog(@"%@", jsonObject);
+                //NSLog(@"%@", jsonObject);
                 NSDictionary *data = jsonObject[@"data"];
                 NSString *tq = data[@"tq"];
                 NSString *qw = data[@"qw"];
@@ -321,26 +316,6 @@
     }];
     //让任务开始执行
     [jsonDataTask resume];
-//
-//    NSDictionary *parameters = @{@"city" : @"CHBJ000000",@"key":@"ed497bous144g6lo"};
-//    
-//    NSString *requesturl = [NSString stringWithFormat:@"http://samples.openweathermap.org/data/2.5/weather?q=Wuxi,cn&appid=b1b15e88fa797225412429c1c50c122a1"];
-//    
-//    [RequestAPI requestURL:requesturl withParameters:nil andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
-//        [_aiv stopAnimating];
-//        NSLog(@"pp:%@",responseObject);
-//        if ([responseObject[@"resultFlag"] integerValue] == 8001){
-//            
-//        }else {
-//            
-//        }
-//    } failure:^(NSInteger statusCode, NSError *error) {
-//        [_aiv stopAnimating];
-//        [Utilities
-//         popUpAlertViewWithMsg:@"请保持网络连接畅通" andTitle:nil onView:self];
-//        NSLog(@"statusCode:%ld",(long)statusCode);
-//    }];
-//
 }
 
 //广告,酒店
@@ -386,7 +361,6 @@
             
             //调用天气接口
             [self weatherRequest];
-            NSLog(@"<><>:<>%@,%@",_model.latitude,_model.longitude);
             //广告图片
             NSArray *advertising = content[@"advertising"];
             for (NSDictionary *imgUrl in advertising){
@@ -458,63 +432,57 @@
 //================================================================滚动广告相关
 #pragma mark scrollView
 -(void)duration{
- [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(timerMethod:) userInfo:nil repeats:YES];
+    NSTimer *dt = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(timerMethod:) userInfo:nil repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:dt forMode:NSRunLoopCommonModes];
  }
  
  - (void)timerMethod:(id)sender
  {
- // _pageController.currentPage = _scrollView.contentOffset.x /(_scrollView.frame.size.width);
- if (scrollFlag) {
- _pageControl.currentPage++;
- }
- else
- {
-     _pageControl.currentPage--;
- }
- if (_pageControl.currentPage == 0) {
-     scrollFlag = YES;
- }
- if (_pageControl.currentPage == (_pageControl.numberOfPages - 1)) {
-     scrollFlag = NO;
- }
- [_homeScrollView setContentOffset:CGPointMake(_pageControl.currentPage * _homeScrollView.frame.size.width, 0) animated:YES];
+     scrollPage ++;
+     if (scrollPage == (_pageControl.numberOfPages - 1)) {
+         [_homeScrollView setContentSize:CGSizeMake((_pageControl.numberOfPages + 1) * self.view.frame.size.width,_homeScrollView.frame.size.height)];
+         UIImageView *img = [UIImageView new];
+         img.frame =CGRectMake(_homeScrollView.frame.size.width * _pageControl.   numberOfPages, 0, _homeScrollView.frame.size.width, _homeScrollView.frame.size.height);
+         [img sd_setImageWithURL:[NSURL URLWithString:_advImgArr[0]] placeholderImage:[UIImage imageNamed:@"多云"]];
+         [_homeScrollView addSubview:img];
+     }
+     
+     [_homeScrollView setContentOffset:CGPointMake(scrollPage * _homeScrollView.frame.size.width, 0) animated:YES];
+     
+     if (scrollPage == _pageControl.numberOfPages){
+         scrollPage = 0;
+         dispatch_time_t duration = dispatch_time(DISPATCH_TIME_NOW, 1.5 *NSEC_PER_SEC);
+         //用duration这个设置好的策略去执行下列方法
+         dispatch_after(duration, dispatch_get_main_queue(), ^{
+             [_homeScrollView setContentOffset:CGPointMake(0, 0) animated:NO];
+         });
+     }
+     _pageControl.currentPage = scrollPage;
  }
 
 //scrollView已经停止减速
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     scrollPage = [self scrollCheck:scrollView];
-    _pageControl.currentPage = scrollPage;
-    
-}
-//scrollView已经开始减速
-- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView{
-    if (scrollView.contentOffset.x > 3 * UI_SCREEN_W){
-        if (scrollPage == 3){
-            scrollPageC = 0;
-        }
-    } else if(scrollView.contentOffset.x < 0){
-        if (scrollPage == 0){
-            scrollPageC = 3;
-        }
-    } else {
-       scrollPageC = 2;
-    }
-    
 }
 
 //判断scrollView滑动到哪里了
 -(NSInteger)scrollCheck:(UIScrollView *)scrollView{
     scrollPage = scrollView.contentOffset.x /(scrollView.frame.size.width);
-    if (scrollPageC == 0){
-        scrollPage = scrollPageC;
-        scrollView.contentOffset = CGPointMake(0, 0);
-    } else if(scrollPageC == 3){
-        scrollPage = scrollPageC;
-        scrollView.contentOffset = CGPointMake(3 * UI_SCREEN_W, 0);
+    _pageControl.currentPage = scrollPage;
+    if (scrollPage == _pageControl.numberOfPages - 1){
+        [scrollView setContentSize:CGSizeMake((_pageControl.numberOfPages + 1) * self.view.frame.size.width,scrollView.frame.size.height)];
+        UIImageView *img = [UIImageView new];
+        img.frame =CGRectMake(scrollView.frame.size.width * _pageControl.numberOfPages, 0, scrollView.frame.size.width, scrollView.frame.size.height);
+        [img sd_setImageWithURL:[NSURL URLWithString:_advImgArr[0]] placeholderImage:[UIImage imageNamed:@"多云"]];
+        [scrollView addSubview:img];
+    }
+    if (scrollPage == _pageControl.numberOfPages){
+        scrollPage = 0;
+        [scrollView setContentOffset:CGPointMake(0, 0) animated:NO];
     }
     return scrollPage;
 }
-/*
+ /*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -775,6 +743,7 @@
     }
 
 }
+
 -(void)getRegionCoordinate{
     //duration表示从Now开始过3秒
     dispatch_time_t duration = dispatch_time(DISPATCH_TIME_NOW, 3*NSEC_PER_SEC);
@@ -830,6 +799,8 @@
         [Utilities removeUserDefaults:@"UserCity"];
         //修改用户选择城市的记忆体
         [Utilities setUserDefaults:@"UserCity" content:cityStr];
+        [self geocodeAddressString];
+        
         //更改城市重新调用网络请求
         dispatch_time_t duration = dispatch_time(DISPATCH_TIME_NOW, 0.5*NSEC_PER_SEC);
         dispatch_after(duration, dispatch_get_main_queue(), ^{
@@ -838,6 +809,24 @@
     }
 }
 
+- (void)geocodeAddressString{
+    NSString *oreillyAddress = [Utilities getUserDefaults:@"UserCity"];
+    if ([oreillyAddress isKindOfClass:[NSNull class]]){
+        oreillyAddress = _cityBtn.titleLabel.text;
+    }
+    CLGeocoder *geo = [CLGeocoder new];
+    //反向地理编码
+    [geo geocodeAddressString:oreillyAddress completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+        if (!error) {
+            CLPlacemark *first = placemarks.firstObject;
+            longitude = first.location.coordinate.longitude;
+            latitude = first.location.coordinate.latitude;
+            [self weatherRequest];
+        } else {
+            
+        }
+    }];
+}
 //当某一个页面跳转行为将要发生的时候
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if([segue.identifier isEqualToString:@"ListToDetail"]){

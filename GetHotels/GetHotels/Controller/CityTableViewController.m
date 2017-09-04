@@ -9,7 +9,7 @@
 #import "CityTableViewController.h"
 #import <CoreLocation/CoreLocation.h>
 @interface CityTableViewController ()<CLLocationManagerDelegate>{
-    BOOL firstVisit;
+    BOOL firstVisit; 
 }
 @property (weak, nonatomic) IBOutlet UIButton *cityBtn;
 @property (strong,nonatomic)NSDictionary *cities;
@@ -97,7 +97,7 @@
         NSDictionary *fileContent = [NSDictionary dictionaryWithContentsOfFile:filePath];
         //判断读取到的内容是否存在（判断文件是否损坏）
         if (fileContent) {
-            NSLog(@"fileContent = %@", fileContent);
+            //NSLog(@"fileContent = %@", fileContent);
             _cities = fileContent;
             //提取字典中所有的键
             NSArray *rawKeys = [fileContent allKeys];
@@ -218,7 +218,8 @@
             if (!error) {
                 CLPlacemark *first = placemarks.firstObject;
                 NSDictionary *locDict = first.addressDictionary;
-                NSLog(@"locDict = %@",locDict);
+                //NSLog(@"locDict = %@",locDict);
+                //NSLog(@"%@",locDict);
                 NSString *city = locDict[@"City"];
                 city = [city substringToIndex:city.length - 1];
                 //NSLog(@"%@",city);
@@ -231,7 +232,6 @@
                 _cityBtn.enabled = YES;
                 //修改用户选择城市的记忆体
                 [Utilities setUserDefaults:@"UserCity" content:city];
-                
                 //[self presentViewController:alertView animated:YES completion:nil];
                 
             }
