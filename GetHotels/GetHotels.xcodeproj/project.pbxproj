@@ -58,6 +58,7 @@
 		8445AD861F4C535000417B79 /* AllOrdersTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8445AD851F4C535000417B79 /* AllOrdersTableViewCell.m */; };
 		8445AD8A1F4C53BD00417B79 /* UseableOrderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8445AD891F4C53BD00417B79 /* UseableOrderTableViewCell.m */; };
 		8445AD8E1F4C53DE00417B79 /* DatedOrderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8445AD8D1F4C53DE00417B79 /* DatedOrderTableViewCell.m */; };
+		845DB9451F5CEBCD00EF7BBB /* AviationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 845DB9441F5CEBCD00EF7BBB /* AviationModel.m */; };
 		845F5A2F1F59010B00D163C0 /* SKTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 845F5A2A1F59010B00D163C0 /* SKTag.m */; };
 		845F5A301F59010B00D163C0 /* SKTagButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 845F5A2C1F59010B00D163C0 /* SKTagButton.m */; };
 		845F5A311F59010B00D163C0 /* SKTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = 845F5A2E1F59010B00D163C0 /* SKTagView.m */; };
@@ -205,6 +206,8 @@
 		8445AD891F4C53BD00417B79 /* UseableOrderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UseableOrderTableViewCell.m; sourceTree = "<group>"; };
 		8445AD8C1F4C53DE00417B79 /* DatedOrderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DatedOrderTableViewCell.h; sourceTree = "<group>"; };
 		8445AD8D1F4C53DE00417B79 /* DatedOrderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DatedOrderTableViewCell.m; sourceTree = "<group>"; };
+		845DB9431F5CEBCD00EF7BBB /* AviationModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AviationModel.h; sourceTree = "<group>"; };
+		845DB9441F5CEBCD00EF7BBB /* AviationModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AviationModel.m; sourceTree = "<group>"; };
 		845F5A291F59010B00D163C0 /* SKTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKTag.h; sourceTree = "<group>"; };
 		845F5A2A1F59010B00D163C0 /* SKTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SKTag.m; sourceTree = "<group>"; };
 		845F5A2B1F59010B00D163C0 /* SKTagButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SKTagButton.h; sourceTree = "<group>"; };
@@ -404,6 +407,7 @@
 		045E651B1F485D9B001A8263 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				845DB93F1F5CEB6B00EF7BBB /* AviationModel */,
 				847526401F5A8655001B9D9C /* ReleaseModel */,
 				0464CC2F1F52D042006260CE /* UserModel */,
 				FEA94EB91F5274A600F37096 /* HoteDetaillModel */,
@@ -654,6 +658,15 @@
 				843AF6E31F526E9400C7878B /* HotelListModel.m */,
 			);
 			name = HomeHotel;
+			sourceTree = "<group>";
+		};
+		845DB93F1F5CEB6B00EF7BBB /* AviationModel */ = {
+			isa = PBXGroup;
+			children = (
+				845DB9431F5CEBCD00EF7BBB /* AviationModel.h */,
+				845DB9441F5CEBCD00EF7BBB /* AviationModel.m */,
+			);
+			name = AviationModel;
 			sourceTree = "<group>";
 		};
 		845F5A281F59010B00D163C0 /* SKTagView */ = {
@@ -976,6 +989,7 @@
 				847BA8E71F5A481B00B0EA8A /* AviationViewController.m in Sources */,
 				841E379A1F495AE90057D58A /* MyHotelViewController.m in Sources */,
 				045E65621F485F4D001A8263 /* NSString+Crypt.m in Sources */,
+				845DB9451F5CEBCD00EF7BBB /* AviationModel.m in Sources */,
 				04587C861F5199C3005A7569 /* AccountSettingViewController.m in Sources */,
 				046F32791F5445C400157DD3 /* GBAlipayManager.m in Sources */,
 				045E65261F485F34001A8263 /* Order.m in Sources */,

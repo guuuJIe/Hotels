@@ -80,6 +80,33 @@
     //[leftBtn addTarget:self action:@selector(leftButtonAction:) forControlEvents: UIControlEventTouchUpInside];
     //self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:leftBtn];
 }
+//英文键盘默认高度216
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    //重写textField这个方法
+    NSLog(@"开始编辑");
+    CGFloat offset = self.view.frame.size.height - (textField.frame.origin.y+textField.frame.size.height+216+50);
+    NSLog(@"偏移高度为 --- %f",offset);
+    if (offset<=0) {
+        [UIView animateWithDuration:0.3 animations:^{
+            CGRect frame = self.view.frame;
+            frame.origin.y = offset;
+            self.view.frame = frame;
+        }];
+    }
+    return YES;
+}
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+{
+    //重写textField这个方法
+    //NSLog(@"将要结束编辑");
+    [UIView animateWithDuration:0.3 animations:^{
+        CGRect frame = self.view.frame;
+        frame.origin.y = 0.0;
+        self.view.frame = frame;
+    }];
+    return YES;
+}
 //当textfield结束编辑的时候调用
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     //当旧密码、新密码和确认密码都输入了之后，按钮才能被点击
@@ -171,8 +198,10 @@
 }
 - (IBAction)departureCityActionBtn:(UIButton *)sender forEvent:(UIEvent *)event {
     
+    
 }
 - (IBAction)targetCitiesActionBtn:(UIButton *)sender forEvent:(UIEvent *)event {
+    
     
 }
 - (IBAction)releaseActionButton:(UIButton *)sender forEvent:(UIEvent *)event {
@@ -186,9 +215,11 @@
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
     
+    
 }
 
 - (IBAction)confirmAction:(UIBarButtonItem *)sender {
+    
     
 }
 @end

@@ -27,6 +27,9 @@
 @property (strong,nonatomic)UIActivityIndicatorView *aiv;
 @property ( nonatomic)CGRect rectStatus;
 @property ( nonatomic)CGRect rectNav;
+@property (strong,nonatomic)UIImageView *allorderImg;
+@property (strong,nonatomic)UIImageView *useableorderImg;
+@property (strong,nonatomic)UIImageView *datedorderImg;
 @end
 
 @implementation MyHotelViewController
@@ -48,11 +51,9 @@
     _AllOrderTableView.tableFooterView = [UIView new];
     _UseableOrderTableView.tableFooterView = [UIView new];
     _DatedOrderTableView.tableFooterView = [UIView new];
-    if (![Utilities loginCheck]) {
-        
-    }
+  
     [self AllOrdersRequest];
-    
+    [self SetImgForThreeTableView];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -218,7 +219,18 @@
     }];
     
 }
-
+-(void)SetImgForThreeTableView{
+    _allorderImg = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"no_things"]];
+    _allorderImg.frame = CGRectMake((UI_SCREEN_W-100)/2, 50, 100, 100);
+    _useableorderImg = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"no_things"]];
+    _useableorderImg.frame = CGRectMake(UI_SCREEN_W+(UI_SCREEN_W-100)/2, 50, 100, 100);
+    _datedorderImg = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"no_things"]];
+    _datedorderImg.frame = CGRectMake(UI_SCREEN_W*2+(UI_SCREEN_W-100)/2, 50, 100, 100 );
+    
+    [_scrollView addSubview:_allorderImg];
+    [_scrollView addSubview:_useableorderImg];
+    [_scrollView addSubview:_datedorderImg];
+}
 #pragma mark - tableView
 //一共多少组
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
