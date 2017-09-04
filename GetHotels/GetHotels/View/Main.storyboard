@@ -181,6 +181,7 @@
                         <segue destination="Qux-On-UgP" kind="show" identifier="MyInfoToSet" id="luM-sM-3rs"/>
                         <segue destination="osj-it-dUr" kind="show" identifier="MyInfoToCall" id="xQn-7h-6eM"/>
                         <segue destination="oNS-BX-s1X" kind="show" identifier="MyInfoToDeleget" id="SpN-ab-LNS"/>
+                        <segue destination="UUx-jJ-hUW" kind="show" identifier="MyInfoToIssue" id="Egg-1s-27V"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lUF-HS-zYI" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -194,6 +195,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7bS-9q-QU6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-127" y="1760"/>
+        </scene>
+        <!--MyRelease-->
+        <scene sceneID="dze-W0-U3N">
+            <objects>
+                <viewControllerPlaceholder storyboardName="MyRelease" id="UUx-jJ-hUW" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VQ9-Yl-NiN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="230" y="1716"/>
         </scene>
         <!--Login-->
         <scene sceneID="zoy-11-eVR">
@@ -1110,7 +1119,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tEc-27-jNF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="430" y="1958"/>
+            <point key="canvasLocation" x="1225" y="2348"/>
         </scene>
     </scenes>
     <resources>

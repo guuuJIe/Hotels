@@ -70,7 +70,7 @@
     //设置菜单栏主题字体
     _segmentcontrol = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"全部订单",@"可使用",@"已过期"]];
     //设置位置，原点是模拟器左上角
-    _segmentcontrol.frame = CGRectMake(0,_rectStatus.size.height+_rectNav.size.height , UI_SCREEN_W, 40);
+    _segmentcontrol.frame = CGRectMake(0,0, UI_SCREEN_W, 40);//_rectStatus.size.height+_rectNav.size.height
     //设置默认选中项为下标为 0 ；
     _segmentcontrol.selectedSegmentIndex = 0;
     //设置背景颜色
