@@ -17,6 +17,21 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+//    self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
+//    self.window.backgroundColor = [UIColor whiteColor];
+//    UITabBarController *tb = [[UITabBarController alloc]init];
+//    UIStoryboard *airline = [UIStoryboard storyboardWithName:@"Aviation" bundle:nil];
+//    UINavigationController *airnavi = [airline instantiateInitialViewController];
+//    UIViewController *airvc = airnavi.topViewController;
+//    airvc.title =@"航空发布";
+//    UIStoryboard *myselfSB = [UIStoryboard storyboardWithName:@"Aviation" bundle:nil];
+//    UINavigationController *myselfnavi = [myselfSB instantiateInitialViewController];
+//    UIViewController *myselfvc = myselfnavi.topViewController;
+//    myselfvc.title =@"我的";
+//
+//    tb.viewControllers = @[airnavi,myselfSB];
+//    self.window.rootViewController = tb;
+//    [self.window makeKeyAndVisible];
     return YES;
 }
 

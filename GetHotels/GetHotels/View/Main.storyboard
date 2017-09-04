@@ -181,6 +181,7 @@
                         <segue destination="Qux-On-UgP" kind="show" identifier="MyInfoToSet" id="luM-sM-3rs"/>
                         <segue destination="osj-it-dUr" kind="show" identifier="MyInfoToCall" id="xQn-7h-6eM"/>
                         <segue destination="oNS-BX-s1X" kind="show" identifier="MyInfoToDeleget" id="SpN-ab-LNS"/>
+                        <segue destination="UUx-jJ-hUW" kind="show" identifier="MyInfoToIssue" id="Egg-1s-27V"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lUF-HS-zYI" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -193,7 +194,15 @@
                 <viewControllerPlaceholder storyboardName="Myself" id="fpM-G6-g2A" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7bS-9q-QU6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-127" y="1760"/>
+            <point key="canvasLocation" x="-130" y="1616"/>
+        </scene>
+        <!--MyRelease-->
+        <scene sceneID="dze-W0-U3N">
+            <objects>
+                <viewControllerPlaceholder storyboardName="MyRelease" id="UUx-jJ-hUW" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VQ9-Yl-NiN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="53" y="1616"/>
         </scene>
         <!--Login-->
         <scene sceneID="zoy-11-eVR">
@@ -201,7 +210,7 @@
                 <viewControllerPlaceholder storyboardName="Login" id="seM-2e-Vea" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fhb-To-cbc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-206" y="1625"/>
+            <point key="canvasLocation" x="-130" y="1473"/>
         </scene>
         <!--Hotel View Controller-->
         <scene sceneID="BE1-Wb-faE">
@@ -785,7 +794,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="lWU-B8-G33" kind="relationship" relationship="viewControllers" id="Uac-Sm-aLf"/>
-                        <segue destination="BoR-uH-kny" kind="relationship" relationship="viewControllers" id="zqm-8h-4iW"/>
+                        <segue destination="SWU-k6-ElD" kind="relationship" relationship="viewControllers" id="WcC-VA-jUz"/>
                         <segue destination="S6s-qq-Dob" kind="relationship" relationship="viewControllers" id="4fj-wu-Klk"/>
                     </connections>
                 </tabBarController>
@@ -812,21 +821,32 @@
             </objects>
             <point key="canvasLocation" x="-684" y="1102"/>
         </scene>
-        <!--航空-->
-        <scene sceneID="xnv-jR-lMk">
+        <!--Item-->
+        <scene sceneID="hHb-QM-LX7">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="BoR-uH-kny" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="航空" image="飞机" id="2UK-Vi-xZe"/>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="AXI-ey-xT6">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="qkG-tU-2gy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="SWU-k6-ElD" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="vIj-Gq-UE6"/>
+                        <viewControllerLayoutGuide type="bottom" id="ljT-x9-3Aw"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="eu9-3V-omv">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="x9Y-pH-hSW"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aq6-kc-uK3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="285.60000000000002" y="289.20539730134936"/>
+            <point key="canvasLocation" x="247" y="273"/>
+        </scene>
+        <!--Aviation-->
+        <scene sceneID="D97-PD-ApC">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Aviation" id="7od-hK-vHB" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3Q6-jw-yxr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1038" y="289"/>
         </scene>
         <!--酒店-->
         <scene sceneID="TJk-fU-egA">
@@ -1110,7 +1130,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tEc-27-jNF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="430" y="1958"/>
+            <point key="canvasLocation" x="1225" y="2348"/>
         </scene>
     </scenes>
     <resources>
@@ -1130,7 +1150,6 @@
         <image name="路标" width="30" height="30"/>
         <image name="酒店" width="30" height="30"/>
         <image name="酒店-1" width="22" height="22"/>
-        <image name="飞机" width="22" height="22"/>
         <image name="首页2" width="411" height="468"/>
     </resources>
 </document>
