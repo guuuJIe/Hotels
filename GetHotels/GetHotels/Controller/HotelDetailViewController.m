@@ -94,8 +94,6 @@
     self.navigationController.navigationBar.hidden = NO;
     //设置导航条上按钮的风格颜色
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    //设置是否需要毛玻璃效果
-    self.navigationController.navigationBar.translucent = YES;
     //实例化一个button，类型为UIButtonTypeSystem
     UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeSystem];
     //设置位置大小

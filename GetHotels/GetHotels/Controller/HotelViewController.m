@@ -165,6 +165,7 @@
     self.tabBarController.tabBar.hidden = NO;
     //[[UIApplication sharedApplication]setStatusBarHidden:NO];
     [self locationStart];
+    [self weatherRequest];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -210,11 +211,14 @@
         }
         if (AppInit) {
             //第一次打开到APP将默认城市与记忆城市同步
+            
             NSString *userCity = _cityBtn.titleLabel.text;
             [Utilities setUserDefaults:@"UserCity" content:userCity];
         }else {
+            ;
             //不是第一次打开到APP将默认城市与按钮上的城市名反向同步
             NSString *userCity =[Utilities getUserDefaults:@"UserCity"];
+            NSLog(@"城市标题%@",userCity);
             [_cityBtn setTitle:userCity forState:UIControlStateNormal];
         }
     }
@@ -796,7 +800,8 @@
                     UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault  handler:^(UIAlertAction * _Nonnull action) {
                         //修改城市按钮标题
                         [_cityBtn setTitle:city  forState:UIControlStateNormal];
-                        NSLog(@"%@",_cityBtn.titleLabel.text);
+                       // _cityBtn.titleLabel.text = city;
+                        
                         [Utilities removeUserDefaults:@"UserCity"];
                         //修改用户选择城市的记忆体
                         [Utilities setUserDefaults:@"UserCity" content:city];
@@ -820,13 +825,11 @@
 -(void)chooseCity:(NSNotification *)note{
     NSString *cityStr = note.object;
     if (![cityStr isEqualToString:_cityBtn.titleLabel.text]) {
-        [self initializeData];
         //修改城市按钮标题
         [_cityBtn setTitle:cityStr forState:UIControlStateNormal];
         [Utilities removeUserDefaults:@"UserCity"];
         //修改用户选择城市的记忆体
         [Utilities setUserDefaults:@"UserCity" content:cityStr];
-        
         //更改城市重新调用网络请求
         dispatch_time_t duration = dispatch_time(DISPATCH_TIME_NOW, 0.5*NSEC_PER_SEC);
         dispatch_after(duration, dispatch_get_main_queue(), ^{
