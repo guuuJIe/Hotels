@@ -59,8 +59,7 @@
     UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeSystem];
     //设置位置大小
     leftBtn.frame = CGRectMake(0, 0, 20, 20); 
-    //设置是否需要毛玻璃效果
-    self.navigationController.navigationBar.translucent = YES;
+    
     //设置背景图片为返回图片
     [leftBtn setBackgroundImage:[UIImage imageNamed:@"返回3"] forState:UIControlStateNormal];
     //给按钮添加事件
