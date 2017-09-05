@@ -30,17 +30,17 @@
                                 </constraints>
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xaN-0C-oZQ">
-                                <rect key="frame" x="0.0" y="104" width="375" height="563"/>
+                                <rect key="frame" x="0.0" y="114" width="375" height="553"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="160" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="x4f-cg-765" userLabel="DidReleaseTable View">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="563"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="553"/>
                                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="didReleaseCell" rowHeight="160" id="kQx-Zj-JnJ">
                                                 <rect key="frame" x="0.0" y="28" width="375" height="160"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kQx-Zj-JnJ" id="aub-1A-9aj">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="160"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="159.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2-24" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gvd-Uu-3Vx">
@@ -159,14 +159,14 @@
                                         </connections>
                                     </tableView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="159" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Ro8-HH-cUK" userLabel="IsReleasedTable View">
-                                        <rect key="frame" x="375" y="0.0" width="375" height="563"/>
+                                        <rect key="frame" x="375" y="0.0" width="375" height="553"/>
                                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="isReleasedCell" rowHeight="159" id="WWf-po-HRs" customClass="IsReleasedTableViewCell">
                                                 <rect key="frame" x="0.0" y="28" width="375" height="159"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WWf-po-HRs" id="UFM-qQ-VMX">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="159"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="158.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plane" translatesAutoresizingMaskIntoConstraints="NO" id="SfH-2w-DXS">
@@ -291,14 +291,14 @@
                                         </connections>
                                     </tableView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="138" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="xcq-Zj-xUK" userLabel="HistoryTable View">
-                                        <rect key="frame" x="750" y="0.0" width="375" height="563"/>
+                                        <rect key="frame" x="750" y="0.0" width="375" height="553"/>
                                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="historyCell" rowHeight="138" id="azS-0L-LIB" customClass="HistoryTableViewCell">
                                                 <rect key="frame" x="0.0" y="28" width="375" height="138"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="azS-0L-LIB" id="44f-mQ-Epd">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="138"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="137.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plane" translatesAutoresizingMaskIntoConstraints="NO" id="PBk-7r-fSE">
@@ -433,15 +433,28 @@
                                     <constraint firstItem="Ro8-HH-cUK" firstAttribute="width" secondItem="x4f-cg-765" secondAttribute="width" id="vmN-tN-cm7"/>
                                     <constraint firstItem="Ro8-HH-cUK" firstAttribute="bottom" secondItem="x4f-cg-765" secondAttribute="bottom" id="xb0-ZC-MyG"/>
                                 </constraints>
+                                <connections>
+                                    <outlet property="delegate" destination="LaS-rf-wG3" id="0no-o0-uLj"/>
+                                </connections>
                             </scrollView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DTo-JW-awM">
+                                <rect key="frame" x="0.0" y="104" width="375" height="10"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="10" id="ZhO-vJ-tSZ"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="3vz-ya-dCg" firstAttribute="top" secondItem="xaN-0C-oZQ" secondAttribute="bottom" id="5XY-WD-NGL"/>
-                            <constraint firstItem="xaN-0C-oZQ" firstAttribute="top" secondItem="dE3-1k-tId" secondAttribute="bottom" id="5uu-Wd-x2y"/>
+                            <constraint firstItem="DTo-JW-awM" firstAttribute="top" secondItem="dE3-1k-tId" secondAttribute="bottom" id="6q7-93-sCH"/>
                             <constraint firstAttribute="trailing" secondItem="dE3-1k-tId" secondAttribute="trailing" id="IfM-aj-mXQ"/>
+                            <constraint firstItem="xaN-0C-oZQ" firstAttribute="top" secondItem="DTo-JW-awM" secondAttribute="bottom" id="IuT-H7-JcX"/>
                             <constraint firstItem="dE3-1k-tId" firstAttribute="top" secondItem="Q8F-rM-5CI" secondAttribute="bottom" id="TLe-MY-9Ve"/>
                             <constraint firstItem="xaN-0C-oZQ" firstAttribute="leading" secondItem="nBh-0L-P71" secondAttribute="leading" id="Vwh-FA-wSz"/>
+                            <constraint firstItem="DTo-JW-awM" firstAttribute="leading" secondItem="nBh-0L-P71" secondAttribute="leading" id="fVn-na-qJf"/>
+                            <constraint firstAttribute="trailing" secondItem="DTo-JW-awM" secondAttribute="trailing" id="oia-og-I7T"/>
                             <constraint firstAttribute="trailing" secondItem="xaN-0C-oZQ" secondAttribute="trailing" id="vAe-RG-PuH"/>
                             <constraint firstItem="dE3-1k-tId" firstAttribute="leading" secondItem="nBh-0L-P71" secondAttribute="leading" id="xoo-jS-HpV"/>
                         </constraints>

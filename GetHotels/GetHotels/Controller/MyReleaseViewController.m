@@ -34,6 +34,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self didReleasedRequest];
     // Do any additional setup after loading the view.
     isReleasedFlag = 1;
     histroyFlag = 1;
@@ -47,6 +48,7 @@
     _isReleasedTableView.tableFooterView = [UIView new];
     _histroyTableView.tableFooterView = [UIView new];
     [self setsegment];
+    [self refreshControl];
     
 }
 
@@ -65,7 +67,7 @@
     //设置菜单栏主题字体
     _segmentcontrol = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"已发布",@"正在发布",@"历史记录"]];
     //设置位置，原点是模拟器左上角
-    _segmentcontrol.frame = CGRectMake(0,_rectStatus.size.height+_rectNav.size.height , UI_SCREEN_W, 40);
+    _segmentcontrol.frame = CGRectMake(0,0, UI_SCREEN_W, 40);
     //设置默认选中项为下标为 0 ；
     _segmentcontrol.selectedSegmentIndex = 0;
     //设置背景颜色
@@ -132,18 +134,20 @@
 //刷新已发布
 -(void)refreshDidRelase{
     didReleaseNum = 1;
-    
+    [self didReleasedRequest];
 }
 //刷新正在发布
 -(void)refreshIsReleased{
     isReleasedNum = 1;
-   
+    [self isReleasedRequest];
 }
 //刷新历史记录
 -(void)refreshHistroy{
     histroyNum = 1;
     
 }
+
+
 /*
 #pragma mark - Navigation
 
@@ -156,7 +160,7 @@
 //正在发布
 -(void)isReleasedRequest{
     ReleaseModel *model = [[StorageMgr singletonStorageMgr] objectForKey:@"UserInfo"];
-    NSDictionary *para = @{@"openid": model.openid,@"page" : @(model.page),@"state" : @(model.state)};
+    NSDictionary *para = @{@"openid": model.openid,@"page" : @(isReleasedNum),@"state" : @(model.state)};
     [RequestAPI requestURL:@"/findAllIssue_edu" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
         
         [_aiv stopAnimating];
@@ -176,8 +180,8 @@
 }
 //已发布
 -(void)didReleasedRequest{
-    ReleaseModel *model = [[StorageMgr singletonStorageMgr] objectForKey:@"UserInfo"];
-    NSDictionary *para = @{@"Id" : @(model.Id)};
+    //ReleaseModel *model = [[StorageMgr singletonStorageMgr] objectForKey:@"UserInfo"];
+    NSDictionary *para = @{@"Id" : @1};
     [RequestAPI requestURL:@"/finddemandById" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
         
         [_aiv stopAnimating];
@@ -233,11 +237,11 @@
     // NSLog(@"scrollView.contentOffset.x = %f",scrollView.contentOffset.x);
     if (isReleasedFlag == 1  && page == 1) {
         isReleasedFlag =0;
-        
+        NSLog(@"22");
     }
     if (histroyFlag == 1 && page ==2) {
         histroyFlag = 0;
-        
+        NSLog(@"33");
     }
     return page;
 }
