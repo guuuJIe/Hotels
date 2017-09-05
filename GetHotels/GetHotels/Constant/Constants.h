@@ -38,6 +38,7 @@
 
 //设置Server
 #define kServer @"https://gethotels.fisheep.com.cn"
+//#define kServer @"http://api.yytianqi.com"
 //#define kServer @"http://121.41.18.135:8080"
 
 #endif
