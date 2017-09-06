@@ -55,11 +55,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *threeImg;
 @property (weak, nonatomic) IBOutlet UIImageView *fourImg;
 @property (weak, nonatomic) IBOutlet UIScrollView *homeScrollView;
-@property (weak, nonatomic) IBOutlet UIScrollView *bottmScrollView;
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
-@property (weak, nonatomic) IBOutlet UIButton *inTime;
-@property (weak, nonatomic) IBOutlet UIButton *outTime;
-@property (weak, nonatomic) IBOutlet UIButton *sortBtn; 
+
 @property (weak, nonatomic) IBOutlet UIView *markView;
 @property (weak, nonatomic) IBOutlet UITableView *markTabelView;
 @property (weak, nonatomic) IBOutlet SKTagView *selectTagView;
@@ -72,30 +69,31 @@
 
 
 - (IBAction)searchAction:(UIButton *)sender forEvent:(UIEvent *)event;
-- (IBAction)inTimeAction:(UIButton *)sender forEvent:(UIEvent *)event;
-- (IBAction)outTimeAction:(UIButton *)sender forEvent:(UIEvent *)event;
-- (IBAction)sortAction:(UIButton *)sender forEvent:(UIEvent *)event;
-- (IBAction)selectAction:(UIButton *)sender forEvent:(UIEvent *)event;
 - (IBAction)cancelAction:(UIBarButtonItem *)sender;
 - (IBAction)doneAction:(UIBarButtonItem *)sender;
 - (IBAction)selectTagCfirmAction:(UIButton *)sender forEvent:(UIEvent *)event;
  
 
-@property (strong,nonatomic)CLLocationManager *locMgr;
-@property (strong,nonatomic)CLLocation *location;
+@property (strong, nonatomic) CLLocationManager *locMgr;
+@property (strong, nonatomic) CLLocation *location;
 
-@property (strong,nonatomic)UIActivityIndicatorView *aiv;
+@property (strong, nonatomic) UIActivityIndicatorView *aiv;
 @property (strong, nonatomic) NSMutableArray *hotelArr;
 @property (strong, nonatomic) NSMutableArray *advImgArr;
-@property (strong,nonatomic) NSString *inTimeDate;
-@property (strong,nonatomic) NSString *outTimeDate;
-@property (strong,nonatomic) NSArray *sortArr;
-@property (strong,nonatomic)UIView *mark;
-@property (strong,nonatomic) HomeMarkTableViewCell *mCell;
-@property (strong,nonatomic) HotelListModel *model;
+@property (strong, nonatomic) NSString *inTimeDate;
+@property (strong, nonatomic) NSString *outTimeDate;
+@property (strong, nonatomic) NSArray *sortArr;
+@property (strong, nonatomic) UIView *mark;
+@property (strong, nonatomic) HomeMarkTableViewCell *mCell;
+@property (strong, nonatomic) HotelListModel *model;
 
-@property (strong,nonatomic) NSIndexPath *indexPath;
-
+@property (strong, nonatomic) UIButton *inTime;
+@property (strong, nonatomic) UIButton *outTime;
+@property (strong, nonatomic) UIButton *sortBtn;
+@property (strong, nonatomic) UIButton *selectBtn;
+@property (strong, nonatomic) UIView *cellHeaderView;
+@property (strong, nonatomic) NSIndexPath *indexPath;
+@property (strong, nonatomic) NSTimer *dt;
 @end
 
 @implementation HotelViewController
@@ -134,6 +132,7 @@
     firstVisit = YES;
     selectBool = YES;
     selectCirfimBool = NO;
+    [self buttonAtt];
     //各种赋初值
     PageNum = 1;
     pageSize = 8;
@@ -172,9 +171,14 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:NO];
+//    //取消定时器
+//    [_dt invalidate];
+//    _dt = nil;
 }
 
-
+- (void)viewDidLayoutSubviews{
+    _markView.frame = CGRectMake(0, _, UI_SCREEN_W, 400);
+}
 //================================================================定位相关
 -(void)locationConfig{
     _locMgr = [CLLocationManager new];
@@ -431,23 +435,40 @@
 
 //================================================================滚动广告相关
 #pragma mark scrollView
+
+//将要开始拖拽
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+   
+    //停止定时器
+    _dt.fireDate = [NSDate distantFuture];
+    scrollFlag = NO;
+}
+//拖拽结束时 开启计时器
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+    // 启动定时器
+    _dt.fireDate = [NSDate distantPast];
+    scrollFlag = YES;
+    //开启定时器
+    //[_dt setFireDate:[NSDate distantPast]];
+}
+
 -(void)duration{
-    NSTimer *dt = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(timerMethod:) userInfo:nil repeats:YES];
-    [[NSRunLoop currentRunLoop] addTimer:dt forMode:NSRunLoopCommonModes];
+    _dt = [NSTimer scheduledTimerWithTimeInterval:2.5 target:self selector:@selector(timerMethod:) userInfo:nil repeats:YES];
+    //[[NSRunLoop currentRunLoop] addTimer:_dt forMode:NSRunLoopCommonModes];
  }
  
  - (void)timerMethod:(id)sender
  {
-     scrollPage ++;
+          scrollPage ++;
      if (scrollPage == (_pageControl.numberOfPages - 1)) {
-         [_homeScrollView setContentSize:CGSizeMake((_pageControl.numberOfPages + 1) * self.view.frame.size.width,_homeScrollView.frame.size.height)];
+         [_homeScrollView setContentSize:CGSizeMake((_pageControl.numberOfPages + 1) * UI_SCREEN_W,_homeScrollView.frame.size.height)];
          UIImageView *img = [UIImageView new];
          img.frame =CGRectMake(_homeScrollView.frame.size.width * _pageControl.   numberOfPages, 0, _homeScrollView.frame.size.width, _homeScrollView.frame.size.height);
          [img sd_setImageWithURL:[NSURL URLWithString:_advImgArr[0]] placeholderImage:[UIImage imageNamed:@"多云"]];
          [_homeScrollView addSubview:img];
      }
      
-     [_homeScrollView setContentOffset:CGPointMake(scrollPage * _homeScrollView.frame.size.width, 0) animated:YES];
+     [_homeScrollView setContentOffset:CGPointMake(scrollPage * UI_SCREEN_W, 0) animated:YES];
      
      if (scrollPage == _pageControl.numberOfPages){
          scrollPage = 0;
@@ -470,7 +491,7 @@
     scrollPage = scrollView.contentOffset.x /(scrollView.frame.size.width);
     _pageControl.currentPage = scrollPage;
     if (scrollPage == _pageControl.numberOfPages - 1){
-        [scrollView setContentSize:CGSizeMake((_pageControl.numberOfPages + 1) * self.view.frame.size.width,scrollView.frame.size.height)];
+        [scrollView setContentSize:CGSizeMake((_pageControl.numberOfPages + 1) * UI_SCREEN_W,scrollView.frame.size.height)];
         UIImageView *img = [UIImageView new];
         img.frame =CGRectMake(scrollView.frame.size.width * _pageControl.numberOfPages, 0, scrollView.frame.size.width, scrollView.frame.size.height);
         [img sd_setImageWithURL:[NSURL URLWithString:_advImgArr[0]] placeholderImage:[UIImage imageNamed:@"多云"]];
@@ -482,6 +503,7 @@
     }
     return scrollPage;
 }
+
  /*
 #pragma mark - Navigation
 
@@ -493,9 +515,63 @@
 */
 //设置表格视图一共有多少组
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    
     return 1;
 }
+
+//设置细胞头高度
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (tableView == _hotelTableView){
+        return 40;
+    }
+    return 0;
+}
+
+//设置头部筛选栏button属性
+- (void)buttonAtt{
+    //初始化button
+    _inTime = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, UI_SCREEN_W/4.f, 40)];
+    _outTime = [[UIButton alloc] initWithFrame:CGRectMake(UI_SCREEN_W/4.f, 0, UI_SCREEN_W/4.f, 40)];
+    _sortBtn = [[UIButton alloc] initWithFrame:CGRectMake(2 * UI_SCREEN_W/4.f, 0, UI_SCREEN_W/4.f, 40)];
+    _selectBtn = [[UIButton alloc] initWithFrame:CGRectMake(3 * UI_SCREEN_W/4.f, 0, UI_SCREEN_W/4.f, 40)];
+    //字体
+    [_inTime setTitle:@"入住时间  ▼" forState:UIControlStateNormal];
+    [_outTime setTitle:@"离店时间  ▼" forState:UIControlStateNormal];
+    [_sortBtn setTitle:@"智能排序  ▼" forState:UIControlStateNormal];
+    [_selectBtn setTitle:@"筛选  ▼" forState:UIControlStateNormal];
+    //字体大小
+    _inTime.titleLabel.font =  [UIFont systemFontOfSize:C_Font];
+    _outTime.titleLabel.font = [UIFont systemFontOfSize:C_Font];
+    _sortBtn.titleLabel.font = [UIFont systemFontOfSize:C_Font];
+    _selectBtn.titleLabel.font = [UIFont systemFontOfSize:C_Font];
+    //字体颜色
+    //_inTime.titleLabel.textColor = UNSELECT_TITLECOLOR;
+    [_inTime setTitleColor:UNSELECT_TITLECOLOR forState:UIControlStateNormal];
+    [_outTime setTitleColor:UNSELECT_TITLECOLOR forState:UIControlStateNormal];//
+    [_sortBtn setTitleColor:UNSELECT_TITLECOLOR forState:UIControlStateNormal];
+    [_selectBtn setTitleColor:UNSELECT_TITLECOLOR forState:UIControlStateNormal];
+    //点击事件
+    [_inTime addTarget:self action:@selector(inTimeAction)forControlEvents:UIControlEventTouchUpInside];
+    [_outTime addTarget:self action:@selector(outTimeAction)forControlEvents:UIControlEventTouchUpInside];
+    [_sortBtn addTarget:self action:@selector(sortBtnAction)forControlEvents:UIControlEventTouchUpInside];
+    [_selectBtn addTarget:self action:@selector(selectBtnAction)forControlEvents:UIControlEventTouchUpInside];
+}
+
+//设置细胞头部视图
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if (tableView == _hotelTableView){
+        _cellHeaderView = [UIView new];
+        _cellHeaderView.frame = CGRectMake(0, 0, UI_SCREEN_W, 40);
+        _cellHeaderView.backgroundColor = [UIColor whiteColor];
+        //view.alpha = 0.8;
+        [_cellHeaderView addSubview:_inTime];
+        [_cellHeaderView addSubview:_outTime];
+        [_cellHeaderView addSubview:_sortBtn];
+        [_cellHeaderView addSubview:_selectBtn];
+        return _cellHeaderView;
+    }
+    return nil;
+}
+
 //设置表格视图中每一组有多少行
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (tableView == _markTabelView){
@@ -545,7 +621,6 @@
         CLLocation *otherLocation = [[CLLocation alloc] initWithLatitude:[model.latitude doubleValue] longitude:[model.longitude doubleValue]];
         CLLocationDistance kilometers=[_location distanceFromLocation:otherLocation]/1000;
         cell.hotelDistanceLabel.text = [NSString stringWithFormat:@"距离我%.1f公里",kilometers];
-    
         return  cell;
     }
 }
@@ -567,9 +642,9 @@
                  _mCell.accessoryType = UITableViewCellAccessoryNone;
              }
          }
-    }else{
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
 //    if (indexPath != _indexPath) {
 //        _mCell.textLabel.textColor = SELECT_COLOR;
 //        _mCell.accessoryType = UITableViewCellAccessoryCheckmark;
@@ -850,7 +925,7 @@
         }
 }
 
-- (IBAction)inTimeAction:(UIButton *)sender forEvent:(UIEvent *)event {
+- (void)inTimeAction {
     flag = 0;
     _markView.hidden = NO;
     _toolBar.hidden = NO;
@@ -859,7 +934,7 @@
     _selectView.hidden = YES;
 }
 
-- (IBAction)outTimeAction:(UIButton *)sender forEvent:(UIEvent *)event {
+- (void)outTimeAction{
     flag = 1;
     _markView.hidden = NO;
     _toolBar.hidden = NO;
@@ -868,7 +943,7 @@
     _selectView.hidden = YES;
 }
 
-- (IBAction)sortAction:(UIButton *)sender forEvent:(UIEvent *)event {
+- (void)sortBtnAction {
     _markView.hidden = NO;
     _toolBar.hidden = YES;
     _datePick.hidden = YES;
@@ -876,7 +951,7 @@
     _selectView.hidden = YES;
 }
 
-- (IBAction)selectAction:(UIButton *)sender forEvent:(UIEvent *)event {
+- (void)selectBtnAction {
     _markView.hidden = NO;
     _toolBar.hidden = YES;
     _datePick.hidden = YES;
@@ -966,7 +1041,7 @@
 - (void)keyboardWillShow: (NSNotification *)notification {
     _mark = [UIView new];
     _mark.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-    _mark.backgroundColor = UIColorFromRGBA(104, 104, 104, 0.4);
+    _mark.backgroundColor = UIColorFromRGBA(104, 104, 104, 0.3);
     [[UIApplication sharedApplication].keyWindow addSubview:_mark];
 }
 
