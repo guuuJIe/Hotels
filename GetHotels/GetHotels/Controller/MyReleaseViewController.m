@@ -34,7 +34,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self didReleasedRequest];
     // Do any additional setup after loading the view.
     isReleasedFlag = 1;
     histroyFlag = 1;
@@ -139,7 +138,7 @@
 //刷新正在发布
 -(void)refreshIsReleased{
     isReleasedNum = 1;
-    [self isReleasedRequest];
+    //[self isReleasedRequest];
 }
 //刷新历史记录
 -(void)refreshHistroy{
@@ -174,7 +173,9 @@
             [Utilities popUpAlertViewWithMsg:@"网络错误,请稍后再试" andTitle:@"提示" onView:self];
         }
     }failure:^(NSInteger statusCode, NSError *error) {
-        
+        [_aiv stopAnimating];
+        UIRefreshControl *ref = (UIRefreshControl *)[_isReleasedTableView viewWithTag:201];
+        [ref endRefreshing];
     }];
     
 }
@@ -195,6 +196,9 @@
             [Utilities popUpAlertViewWithMsg:@"网络错误,请稍后再试" andTitle:@"提示" onView:self];
         }
     }failure:^(NSInteger statusCode, NSError *error) {
+        [_aiv stopAnimating];
+        UIRefreshControl *ref = (UIRefreshControl *)[_didReleaseTableView viewWithTag:200];
+        [ref endRefreshing];
         
     }];
     
