@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -21,16 +20,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="首页5" translatesAutoresizingMaskIntoConstraints="NO" id="uP6-2f-qzb">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="首页5" translatesAutoresizingMaskIntoConstraints="NO" id="q1A-Nm-5bh">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="uP6-2f-qzb" secondAttribute="bottom" id="Wme-ev-1Gk"/>
-                            <constraint firstItem="uP6-2f-qzb" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="WpB-Dd-KNm"/>
-                            <constraint firstItem="uP6-2f-qzb" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="fSQ-BP-wj4"/>
-                            <constraint firstAttribute="trailing" secondItem="uP6-2f-qzb" secondAttribute="trailing" id="pjb-c4-tq5"/>
+                            <constraint firstItem="q1A-Nm-5bh" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="NeD-3f-fzH"/>
+                            <constraint firstItem="q1A-Nm-5bh" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="OdG-rc-fMW"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="q1A-Nm-5bh" secondAttribute="bottom" id="W1a-h5-Yx1"/>
+                            <constraint firstAttribute="trailing" secondItem="q1A-Nm-5bh" secondAttribute="trailing" id="cbl-Pz-tjg"/>
                         </constraints>
                     </view>
                 </viewController>

@@ -49,6 +49,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *weatherLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *weatherImg;
 
+@property (weak, nonatomic) IBOutlet UIView *HeadView;
 @property (weak, nonatomic) IBOutlet UITableView *hotelTableView;
 @property (weak, nonatomic) IBOutlet UIImageView *firstImg;
 @property (weak, nonatomic) IBOutlet UIImageView *secondImg;
@@ -67,6 +68,8 @@
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePick;
 @property (weak, nonatomic) IBOutlet UIView *selectView;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *transviewPosotion;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *pageTop;
 
 - (IBAction)searchAction:(UIButton *)sender forEvent:(UIEvent *)event;
 - (IBAction)cancelAction:(UIBarButtonItem *)sender;
@@ -161,6 +164,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    _markView.frame = CGRectMake(0, _HeadView.frame.size.height + 40, UI_SCREEN_W, 400);
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     self.tabBarController.tabBar.hidden = NO;
     //[[UIApplication sharedApplication]setStatusBarHidden:NO];
@@ -177,7 +181,7 @@
 }
 
 //- (void)viewDidLayoutSubviews{
-//    _markView.frame = CGRectMake(0, _, UI_SCREEN_W, 400);
+//    _markView.frame = CGRectMake(0, _HeadView.frame.size.height + 40, UI_SCREEN_W, 400);
 //}
 //================================================================定位相关
 -(void)locationConfig{
@@ -462,13 +466,14 @@
           scrollPage ++;
      if (scrollPage == (_pageControl.numberOfPages - 1)) {
          [_homeScrollView setContentSize:CGSizeMake((_pageControl.numberOfPages + 1) * UI_SCREEN_W,_homeScrollView.frame.size.height)];
+         
          UIImageView *img = [UIImageView new];
          img.frame =CGRectMake(_homeScrollView.frame.size.width * _pageControl.   numberOfPages, 0, _homeScrollView.frame.size.width, _homeScrollView.frame.size.height);
          [img sd_setImageWithURL:[NSURL URLWithString:_advImgArr[0]] placeholderImage:[UIImage imageNamed:@"多云"]];
          [_homeScrollView addSubview:img];
-     }
-     
+     } 
      [_homeScrollView setContentOffset:CGPointMake(scrollPage * UI_SCREEN_W, 0) animated:YES];
+     
      
      if (scrollPage == _pageControl.numberOfPages){
          scrollPage = 0;
@@ -915,6 +920,7 @@
         detailVC.hotelId = model.hotelId;
     }
 }
+
 - (IBAction)searchAction:(UIButton *)sender forEvent:(UIEvent *)event {
         PageNum = 1;
         isLastPage = NO;
@@ -957,6 +963,27 @@
     _datePick.hidden = YES;
     _markTabelView.hidden = YES;
     _selectView.hidden = NO;
+}
+
+//下拉菜单栏位置设置
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    if (scrollView == _hotelTableView){
+//[UIView animateWithDuration:0.1 animations:^{
+            if (_hotelTableView.contentOffset.y > _homeScrollView.frame.size.height){
+                _transviewPosotion.constant = 40;
+                //
+                _pageTop.constant = - 400;
+            } else if(_hotelTableView.contentOffset.y > 0 && _hotelTableView.contentOffset.y < _homeScrollView.frame.size.height){
+
+                _transviewPosotion.constant = _homeScrollView.frame.size.height - _hotelTableView.contentOffset.y + 40;
+                _pageTop.constant = _homeScrollView.height - _hotelTableView.contentOffset.y - 40;
+            }else{
+                _transviewPosotion.constant = _homeScrollView.frame.size.height + 40;
+                _pageTop.constant =  _homeScrollView.height - 40;
+            }
+ //       }];
+        
+    }
 }
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
