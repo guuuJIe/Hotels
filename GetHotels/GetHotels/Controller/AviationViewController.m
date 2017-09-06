@@ -8,8 +8,13 @@
 
 #import "AviationViewController.h"
 #import "UserModel.h"
-@interface AviationViewController ()<UITextFieldDelegate>
+#import "CityTableViewController.h"
+@interface AviationViewController ()<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource>{
+   NSTimeInterval followUpTime;
+    NSInteger PageNum;
+    NSInteger  flag;
 
+}
 @property (weak, nonatomic) IBOutlet UIButton *dateButton;
 - (IBAction)dateActionButton:(UIButton *)sender forEvent:(UIEvent *)event;
 @property (weak, nonatomic) IBOutlet UIButton *nextDateButton;
@@ -30,7 +35,7 @@
 - (IBAction)confirmAction:(UIBarButtonItem *)sender;
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
 @property (weak, nonatomic) IBOutlet UIToolbar *tooBar;
-
+@property (strong,nonatomic) NSString *city;
 
 
 
@@ -44,6 +49,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self setNavigationItem];
+    
     _datePicker.backgroundColor = UIColorFromRGB(235, 235, 241);
     _datePicker.minimumDate = [NSDate date];
     //_arr = [NSMutableArray new];
@@ -53,6 +59,8 @@
     
     //调用设置导航样式
     [self setNavigationItem];
+    //接收一个通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeCity:) name:@"ResetHome" object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -84,7 +92,7 @@
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
     //重写textField这个方法
-    NSLog(@"开始编辑");
+    //NSLog(@"开始编辑");
     CGFloat offset = self.view.frame.size.height - (textField.frame.origin.y+textField.frame.size.height+216+50);
     NSLog(@"偏移高度为 --- %f",offset);
     if (offset<=0) {
@@ -197,29 +205,57 @@
 
 }
 - (IBAction)departureCityActionBtn:(UIButton *)sender forEvent:(UIEvent *)event {
-    
+    flag = 1;
+    [self performSegueWithIdentifier:@"AviationToMyRelease" sender:self];
     
 }
 - (IBAction)targetCitiesActionBtn:(UIButton *)sender forEvent:(UIEvent *)event {
-    
+    flag = 0;
+    [self performSegueWithIdentifier:@"AviationToMyRelease" sender:self];
     
 }
 - (IBAction)releaseActionButton:(UIButton *)sender forEvent:(UIEvent *)event {
     
     
-    
-    
-    
-    
 }
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
-    
+    _tooBar.hidden = YES;
+    _datePicker.hidden = YES;
     
 }
 
 - (IBAction)confirmAction:(UIBarButtonItem *)sender {
+    _tooBar.hidden = YES;
+    _datePicker.hidden = YES;
+    NSDate *date = _datePicker.date;
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    formatter.dateFormat = @"yyyy-MM-dd HH:mm";
+    NSString *thDate = [formatter stringFromDate:date];
+    followUpTime = [Utilities cTimestampFromString:thDate format:@"yyyy-MM-dd HH:mm"];
+    if(flag == 1){
+        [_dateButton setTitle:thDate forState:UIControlStateNormal];
+    }else{
+        [_nextDateButton setTitle:thDate forState:UIControlStateNormal];
+    }
     
+
     
 }
+//接收通知执行的方法，将拿到的城市给相应的按钮
+-(void)changeCity:(NSNotification *)name{
+    NSString *citystr = name.object;
+    if (flag == 1) {
+        [_departureCityBtn setTitle:citystr forState:UIControlStateNormal];
+        _city = citystr;
+    }else if([_city isEqualToString:citystr]){
+        
+        [Utilities popUpAlertViewWithMsg:@"请正确选择城市" andTitle:nil onView:self];
+        
+    }else{
+        [_targetCityBtn setTitle:citystr forState:UIControlStateNormal];
+    }
+}
+
+
 @end
