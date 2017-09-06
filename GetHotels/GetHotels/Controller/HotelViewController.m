@@ -176,9 +176,9 @@
 //    _dt = nil;
 }
 
-- (void)viewDidLayoutSubviews{
-    _markView.frame = CGRectMake(0, _, UI_SCREEN_W, 400);
-}
+//- (void)viewDidLayoutSubviews{
+//    _markView.frame = CGRectMake(0, _, UI_SCREEN_W, 400);
+//}
 //================================================================定位相关
 -(void)locationConfig{
     _locMgr = [CLLocationManager new];
