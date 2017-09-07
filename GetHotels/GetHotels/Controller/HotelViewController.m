@@ -180,8 +180,8 @@
 //    _dt = nil;
 }
 
-//- (void)viewDidLayoutSubviews{
-//    _markView.frame = CGRectMake(0, _HeadView.frame.size.height + 40, UI_SCREEN_W, 400);
+//-(BOOL)isDisplayedInScreen{
+    
 //}
 //================================================================定位相关
 -(void)locationConfig{
@@ -248,8 +248,8 @@
     NSString *dateStr = [formatter stringFromDate:date];
     NSString *dateTomStr= [formatter stringFromDate:dateTom];
     //将处理好的字符串设置给两个Button
-    [_inTime setTitle:[NSString stringWithFormat:@"入住%@ ▼",dateStr] forState:UIControlStateNormal];
-    [_outTime setTitle:[NSString stringWithFormat:@"离店%@ ▼",dateTomStr] forState:UIControlStateNormal];
+    [_inTime setTitle:[NSString stringWithFormat:@"入住%@▼",dateStr] forState:UIControlStateNormal];
+    [_outTime setTitle:[NSString stringWithFormat:@"离店%@▼",dateTomStr] forState:UIControlStateNormal];
     _inTimeDate = dateStr;
     _outTimeDate = dateTomStr;
     
@@ -339,9 +339,7 @@
         [Utilities popUpAlertViewWithMsg:@"请正确设置日期" andTitle:nil onView:self];
         [ref endRefreshing];
         return;
-    }
-    
-    //NSLog(@"%ld>>>",(long)PageNum);
+    } 
     //参数
     NSDictionary *para = @{@"city_name" : _cityBtn.titleLabel.text, @"pageNum" :@(PageNum), @"pageSize" :  @(pageSize), @"startId" :  @(starID), @"priceId" :@(priceID), @"sortingId" :@(sortID) ,@"inTime" : [NSString stringWithFormat:@"2017-%@",_inTimeDate] ,@"outTime" : [NSString stringWithFormat:@"2017-%@",_outTimeDate] ,@"wxlongitude" :@"", @"wxlatitude" :@""};
     
@@ -469,8 +467,12 @@
          
          UIImageView *img = [UIImageView new];
          img.frame =CGRectMake(_homeScrollView.frame.size.width * _pageControl.   numberOfPages, 0, _homeScrollView.frame.size.width, _homeScrollView.frame.size.height);
-         [img sd_setImageWithURL:[NSURL URLWithString:_advImgArr[0]] placeholderImage:[UIImage imageNamed:@"多云"]];
-         [_homeScrollView addSubview:img];
+         if (_advImgArr.count != 0)
+         {
+             [img sd_setImageWithURL:[NSURL URLWithString:_advImgArr[0]] placeholderImage:[UIImage imageNamed:@"多云"]];
+             [_homeScrollView addSubview:img];
+         }
+         
      } 
      [_homeScrollView setContentOffset:CGPointMake(scrollPage * UI_SCREEN_W, 0) animated:YES];
      
@@ -539,21 +541,26 @@
     _sortBtn = [[UIButton alloc] initWithFrame:CGRectMake(2 * UI_SCREEN_W/4.f, 0, UI_SCREEN_W/4.f, 40)];
     _selectBtn = [[UIButton alloc] initWithFrame:CGRectMake(3 * UI_SCREEN_W/4.f, 0, UI_SCREEN_W/4.f, 40)];
     //字体
-    [_inTime setTitle:@"入住时间  ▼" forState:UIControlStateNormal];
-    [_outTime setTitle:@"离店时间  ▼" forState:UIControlStateNormal];
-    [_sortBtn setTitle:@"智能排序  ▼" forState:UIControlStateNormal];
-    [_selectBtn setTitle:@"筛选  ▼" forState:UIControlStateNormal];
+    [_inTime setTitle:[NSString stringWithFormat:@"%@▼",[_inTime.titleLabel.text substringToIndex:_inTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+    [_outTime setTitle:[NSString stringWithFormat:@"%@▼",[_outTime.titleLabel.text substringToIndex:_outTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+    [_sortBtn setTitle:@"智能排序▼" forState:UIControlStateNormal];
+    [_selectBtn setTitle:@"筛选▼" forState:UIControlStateNormal];
+    [_selectBtn setTitle:@"筛选▲" forState:UIControlStateSelected];
+    
     //字体大小
     _inTime.titleLabel.font =  [UIFont systemFontOfSize:C_Font];
     _outTime.titleLabel.font = [UIFont systemFontOfSize:C_Font];
     _sortBtn.titleLabel.font = [UIFont systemFontOfSize:C_Font];
     _selectBtn.titleLabel.font = [UIFont systemFontOfSize:C_Font];
     //字体颜色
-    //_inTime.titleLabel.textColor = UNSELECT_TITLECOLOR;
     [_inTime setTitleColor:UNSELECT_TITLECOLOR forState:UIControlStateNormal];
-    [_outTime setTitleColor:UNSELECT_TITLECOLOR forState:UIControlStateNormal];//
+    [_outTime setTitleColor:UNSELECT_TITLECOLOR forState:UIControlStateNormal];
     [_sortBtn setTitleColor:UNSELECT_TITLECOLOR forState:UIControlStateNormal];
     [_selectBtn setTitleColor:UNSELECT_TITLECOLOR forState:UIControlStateNormal];
+    [_inTime setTitleColor:SELECT_COLOR forState:UIControlStateSelected];
+    [_outTime setTitleColor:SELECT_COLOR forState:UIControlStateSelected];
+    [_sortBtn setTitleColor:SELECT_COLOR forState:UIControlStateSelected];
+    [_selectBtn setTitleColor:SELECT_COLOR forState:UIControlStateSelected];
     //点击事件
     [_inTime addTarget:self action:@selector(inTimeAction)forControlEvents:UIControlEventTouchUpInside];
     [_outTime addTarget:self action:@selector(outTimeAction)forControlEvents:UIControlEventTouchUpInside];
@@ -633,13 +640,14 @@
 //细胞选中后调用
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == _markTabelView){
-         for(NSIndexPath *eachIP in tableView.indexPathsForVisibleRows){
+        _sortBtn.selected = NO;
+        for(NSIndexPath *eachIP in tableView.indexPathsForVisibleRows){
              _mCell = [self.markTabelView cellForRowAtIndexPath:eachIP];
              if (eachIP ==  indexPath){
                  _mCell.textLabel.textColor = SELECT_COLOR;
                  _mCell.accessoryType = UITableViewCellAccessoryCheckmark;
                  sortID = eachIP.row + 1;
-                 [_sortBtn setTitle:[NSString stringWithFormat:@"%@  ▼", _mCell.textLabel.text] forState:UIControlStateNormal];
+                 [_sortBtn setTitle:[NSString stringWithFormat:@"%@▼", _mCell.textLabel.text] forState:UIControlStateNormal];
                  _markView.hidden = YES;
                  [self initializeData];
              } else {
@@ -889,6 +897,7 @@
     }
 }
 
+//获取经纬度
 - (void)geocodeAddressString{
     NSString *oreillyAddress = [Utilities getUserDefaults:@"UserCity"];
     if ([oreillyAddress isKindOfClass:[NSNull class]]){
@@ -932,6 +941,20 @@
 }
 
 - (void)inTimeAction {
+    [_inTime setTitle:[NSString stringWithFormat:@"%@▲",[_inTime.titleLabel.text substringToIndex:_inTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+    [_outTime setTitle:[NSString stringWithFormat:@"%@▼",[_outTime.titleLabel.text substringToIndex:_outTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+    [_sortBtn setTitle:[NSString stringWithFormat:@"%@▼",[_sortBtn.titleLabel.text substringToIndex:_sortBtn.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+//    [_outTime setTitle:@"离店时间▼" forState:UIControlStateNormal];
+//    [_sortBtn setTitle:@"智能排序▼" forState:UIControlStateNormal];
+//    [_selectBtn setTitle:@"筛选▼" forState:UIControlStateNormal];
+//    [_inTime setTitleColor:SELECT_COLOR forState:UIControlStateNormal];
+//    [_outTime setTitleColor:UNSELECT_TITLECOLOR forState:UIControlStateNormal];
+//    [_sortBtn setTitleColor:UNSELECT_TITLECOLOR forState:UIControlStateNormal];
+//    [_selectBtn setTitleColor:UNSELECT_TITLECOLOR forState:UIControlStateNormal];
+    _inTime.selected = YES;
+    _outTime.selected = NO;
+    _sortBtn.selected = NO;
+    _selectBtn.selected = NO;
     flag = 0;
     _markView.hidden = NO;
     _toolBar.hidden = NO;
@@ -941,6 +964,13 @@
 }
 
 - (void)outTimeAction{
+    [_outTime setTitle:[NSString stringWithFormat:@"%@▲",[_outTime.titleLabel.text substringToIndex:_outTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+     [_inTime setTitle:[NSString stringWithFormat:@"%@▼",[_inTime.titleLabel.text substringToIndex:_inTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+    [_sortBtn setTitle:[NSString stringWithFormat:@"%@▼",[_sortBtn.titleLabel.text substringToIndex:_sortBtn.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+    _outTime.selected = YES;
+    _inTime.selected = NO;
+    _sortBtn.selected = NO;
+    _selectBtn.selected = NO;
     flag = 1;
     _markView.hidden = NO;
     _toolBar.hidden = NO;
@@ -950,6 +980,13 @@
 }
 
 - (void)sortBtnAction {
+    [_sortBtn setTitle:[NSString stringWithFormat:@"%@▲",[_sortBtn.titleLabel.text substringToIndex:_sortBtn.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+    [_outTime setTitle:[NSString stringWithFormat:@"%@▼",[_outTime.titleLabel.text substringToIndex:_outTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+    [_inTime setTitle:[NSString stringWithFormat:@"%@▼",[_inTime.titleLabel.text substringToIndex:_inTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+    _sortBtn.selected = YES;
+    _inTime.selected = NO;
+    _outTime.selected = NO;
+    _selectBtn.selected = NO;
     _markView.hidden = NO;
     _toolBar.hidden = YES;
     _datePick.hidden = YES;
@@ -958,6 +995,13 @@
 }
 
 - (void)selectBtnAction {
+    [_outTime setTitle:[NSString stringWithFormat:@"%@▼",[_outTime.titleLabel.text substringToIndex:_outTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+     [_inTime setTitle:[NSString stringWithFormat:@"%@▼",[_inTime.titleLabel.text substringToIndex:_inTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+    [_sortBtn setTitle:[NSString stringWithFormat:@"%@▼",[_sortBtn.titleLabel.text substringToIndex:_sortBtn.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+    _selectBtn.selected = YES;
+    _inTime.selected = NO;
+    _outTime.selected = NO;
+    _sortBtn.selected = NO;
     _markView.hidden = NO;
     _toolBar.hidden = YES;
     _datePick.hidden = YES;
@@ -971,10 +1015,8 @@
 //[UIView animateWithDuration:0.1 animations:^{
             if (_hotelTableView.contentOffset.y > _homeScrollView.frame.size.height){
                 _transviewPosotion.constant = 40;
-                //
                 _pageTop.constant = - 400;
             } else if(_hotelTableView.contentOffset.y > 0 && _hotelTableView.contentOffset.y < _homeScrollView.frame.size.height){
-
                 _transviewPosotion.constant = _homeScrollView.frame.size.height - _hotelTableView.contentOffset.y + 40;
                 _pageTop.constant = _homeScrollView.height - _hotelTableView.contentOffset.y - 40;
             }else{
@@ -987,11 +1029,16 @@
 }
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
+    [_outTime setTitle:[NSString stringWithFormat:@"%@▼",[_outTime.titleLabel.text substringToIndex:_outTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+    [_inTime setTitle:[NSString stringWithFormat:@"%@▼",[_inTime.titleLabel.text substringToIndex:_inTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+    _inTime.selected = NO;
+    _outTime.selected = NO;
     _markView.hidden = YES;
 }
 
 - (IBAction)doneAction:(UIBarButtonItem *)sender {
-    
+    _inTime.selected = NO;
+    _outTime.selected = NO;
     NSDate *date = _datePick.date;
     NSDateFormatter *formatter = [NSDateFormatter new];
     formatter.dateFormat = @"MM-dd";
@@ -1008,16 +1055,17 @@
  
     
     if (flag == 0){
-             [_inTime setTitle:[NSString stringWithFormat:@"入住%@ ▼",thDate] forState:UIControlStateNormal];
+             [_inTime setTitle:[NSString stringWithFormat:@"入住%@▼",thDate] forState:UIControlStateNormal];
             _inTimeDate = thDate;
             //开始日期
             startTime = [Utilities cTimestampFromString:thDate format:@"MM-dd"];
     }else{
         if (thDateTime <= startTime) {
+            [_outTime setTitle:[NSString stringWithFormat:@"%@▼",[_outTime.titleLabel.text substringToIndex:_outTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
             [Utilities popUpAlertViewWithMsg:@"请正确设置日期" andTitle:nil onView:self];
             
         }else{
-            [_outTime setTitle:[NSString stringWithFormat:@"离店%@ ▼",thDate] forState:UIControlStateNormal];
+            [_outTime setTitle:[NSString stringWithFormat:@"离店%@▼",thDate] forState:UIControlStateNormal];
             _outTimeDate = thDate;
             [self initializeData];
         }
@@ -1030,6 +1078,7 @@
 }
 
 - (IBAction)selectTagCfirmAction:(UIButton *)sender forEvent:(UIEvent *)event {
+    _selectBtn.selected = NO;
     PageNum = 1;
     starID = starTestID;
     priceID = priceTestID;
@@ -1049,6 +1098,13 @@
     return YES;
 }
 - (void) touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [_outTime setTitle:[NSString stringWithFormat:@"%@▼",[_outTime.titleLabel.text substringToIndex:_outTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+    [_inTime setTitle:[NSString stringWithFormat:@"%@▼",[_inTime.titleLabel.text substringToIndex:_inTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+    [_sortBtn setTitle:[NSString stringWithFormat:@"%@▼",[_sortBtn.titleLabel.text substringToIndex:_sortBtn.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+    _inTime.selected = NO;
+    _outTime.selected = NO;
+    _sortBtn.selected = NO;
+    _selectBtn.selected = NO;
     _markView.hidden = YES;
     [self.view endEditing:YES];
 //    if (selectCirfimBool != 0){
