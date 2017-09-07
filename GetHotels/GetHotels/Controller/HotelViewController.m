@@ -561,6 +561,16 @@
     [_outTime setTitleColor:SELECT_COLOR forState:UIControlStateSelected];
     [_sortBtn setTitleColor:SELECT_COLOR forState:UIControlStateSelected];
     [_selectBtn setTitleColor:SELECT_COLOR forState:UIControlStateSelected];
+    //边框
+    
+    [_inTime.layer setBorderWidth:1];
+    [_outTime.layer setBorderWidth:1];
+    [_sortBtn.layer setBorderWidth:1];
+    [_selectBtn.layer setBorderWidth:1];
+    _inTime.layer.borderColor = [UIColor groupTableViewBackgroundColor].CGColor;
+    _outTime.layer.borderColor = [UIColor groupTableViewBackgroundColor].CGColor;
+    _sortBtn.layer.borderColor = [UIColor groupTableViewBackgroundColor].CGColor;
+    _selectBtn.layer.borderColor = [UIColor groupTableViewBackgroundColor].CGColor;
     //点击事件
     [_inTime addTarget:self action:@selector(inTimeAction)forControlEvents:UIControlEventTouchUpInside];
     [_outTime addTarget:self action:@selector(outTimeAction)forControlEvents:UIControlEventTouchUpInside];
