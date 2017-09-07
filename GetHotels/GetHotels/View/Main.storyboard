@@ -507,7 +507,7 @@
                                             <outlet property="hotelLocLabel" destination="x7c-Nj-6tC" id="T8s-J4-900"/>
                                             <outlet property="hotelNameLabel" destination="4JY-NC-aoa" id="weN-3U-HP3"/>
                                             <outlet property="hotelPriceLabel" destination="oX4-EI-9Br" id="oCk-yj-58N"/>
-                                            <segue destination="88j-Dv-Zqy" kind="show" id="SKx-SK-hB7"/>
+                                            <segue destination="88j-Dv-Zqy" kind="show" identifier="ListToDetail" id="SKx-SK-hB7"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1024,11 +1024,11 @@
             </objects>
             <point key="canvasLocation" x="1225" y="2348"/>
         </scene>
-        <!--Item-->
+        <!--酒店-->
         <scene sceneID="suC-Wv-rNC">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Kfn-Nc-OM0" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" image="酒店-1" id="8rb-ll-Quu"/>
+                    <tabBarItem key="tabBarItem" title="酒店" image="酒店-1" id="8rb-ll-Quu"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="o1c-BK-J2V">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
