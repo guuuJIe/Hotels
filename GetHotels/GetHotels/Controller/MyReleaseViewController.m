@@ -40,6 +40,7 @@
     didReleaseNum = 1;
     isReleasedNum = 1;
     histroyNum = 1;
+    [self didReleasedRequest];
     _rectStatus = [[UIApplication sharedApplication] statusBarFrame];
     // 导航栏（navigationbar）
     _rectNav = self.navigationController.navigationBar.frame;
@@ -138,7 +139,7 @@
 //刷新正在发布
 -(void)refreshIsReleased{
     isReleasedNum = 1;
-    //[self isReleasedRequest];
+    [self isReleasedRequest];
 }
 //刷新历史记录
 -(void)refreshHistroy{
@@ -165,7 +166,7 @@
         [_aiv stopAnimating];
         UIRefreshControl *ref = (UIRefreshControl *)[_isReleasedTableView viewWithTag:201];
         [ref endRefreshing];
-        NSLog(@"Orders:%@",responseObject);
+        NSLog(@"正在发布:%@",responseObject);
         if ([responseObject[@"result"] integerValue] == 1) {
             
         }
@@ -181,14 +182,13 @@
 }
 //已发布
 -(void)didReleasedRequest{
-    //ReleaseModel *model = [[StorageMgr singletonStorageMgr] objectForKey:@"UserInfo"];
     NSDictionary *para = @{@"Id" : @1};
-    [RequestAPI requestURL:@"/finddemandById" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
+    [RequestAPI requestURL:@"/findemandById" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
         
         [_aiv stopAnimating];
         UIRefreshControl *ref = (UIRefreshControl *)[_didReleaseTableView viewWithTag:200];
         [ref endRefreshing];
-        NSLog(@"Orders:%@",responseObject);
+        NSLog(@"已发布:%@",responseObject);
         if ([responseObject[@"result"] integerValue] == 1) {
             
         }
