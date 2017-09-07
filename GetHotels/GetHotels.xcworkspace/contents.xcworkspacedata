@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:UIView+Frame.h">
+   </FileRef>
+   <FileRef
+      location = "group:UIView+Frame.m">
+   </FileRef>
+   <FileRef
       location = "group:GetHotels.xcodeproj">
    </FileRef>
    <FileRef

@@ -13,7 +13,7 @@
    NSTimeInterval followUpTime;
     NSInteger PageNum;
     NSInteger  flag;
-
+    BOOL dateFlag;
 }
 @property (weak, nonatomic) IBOutlet UIButton *dateButton;
 - (IBAction)dateActionButton:(UIButton *)sender forEvent:(UIEvent *)event;
@@ -36,6 +36,7 @@
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
 @property (weak, nonatomic) IBOutlet UIToolbar *tooBar;
 @property (strong,nonatomic) NSString *city;
+@property (weak, nonatomic) IBOutlet UIView *pickerview;
 
 
 
@@ -59,6 +60,8 @@
     
     //调用设置导航样式
     [self setNavigationItem];
+    //设置默认时间
+    [self defaultDate];
     //接收一个通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeCity:) name:@"ResetHome" object:nil];
 }
@@ -89,37 +92,68 @@
     //self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:leftBtn];
 }
 //英文键盘默认高度216
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
-{
-    //重写textField这个方法
-    //NSLog(@"开始编辑");
-    CGFloat offset = self.view.frame.size.height - (textField.frame.origin.y+textField.frame.size.height+216+50);
-    NSLog(@"偏移高度为 --- %f",offset);
-    if (offset<=0) {
-        [UIView animateWithDuration:0.3 animations:^{
-            CGRect frame = self.view.frame;
-            frame.origin.y = offset;
-            self.view.frame = frame;
-        }];
-    }
-    return YES;
+//- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+//{
+//    //重写textField这个方法
+//    //NSLog(@"开始编辑");
+//    CGFloat offset = self.view.frame.size.height - (textField.frame.origin.y+textField.frame.size.height+216+50);
+//    NSLog(@"偏移高度为 --- %f",offset);
+//    if (offset<=0) {
+//        [UIView animateWithDuration:0.3 animations:^{
+//            CGRect frame = self.view.frame;
+//            frame.origin.y = offset;
+//            self.view.frame = frame;
+//        }];
+//    }
+//    return YES;
+//}
+
+-(void)defaultDate{
+    //初始化日期格式器
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    //定义日期格式
+    formatter.dateFormat = @"MM-dd";
+    //当前时间
+    NSDate *date = [NSDate date];
+    //后天的日期
+    NSDate *Tomorrow = [NSDate dateWithDaysFromNow:1];
+    NSDate *dateAfterdays = [NSDate dateWithDaysFromNow:2];
+    NSString *dateStr = [formatter stringFromDate:Tomorrow];
+    NSString *dateTomStr= [formatter stringFromDate:dateAfterdays];
+    //将处理好的字符串设置给两个Button
+    [_dateButton setTitle:dateStr forState:UIControlStateNormal];
+    [_nextDateButton setTitle:dateTomStr forState:UIControlStateNormal];
+    
 }
-- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
-{
-    //重写textField这个方法
-    //NSLog(@"将要结束编辑");
-    [UIView animateWithDuration:0.3 animations:^{
-        CGRect frame = self.view.frame;
-        frame.origin.y = 0.0;
-        self.view.frame = frame;
-    }];
-    return YES;
-}
+//-(NSString *)getNDay:(NSInteger)n{
+//    
+//        NSDate*nowDate = [NSDate date];
+//
+//        NSDate* theDate;
+//
+//        if(n!=0){
+//                 NSTimeInterval  oneDay = 24*60*60*1;  //1天的长度
+//                theDate = [nowDate initWithTimeIntervalSinceNow: oneDay*n ];//initWithTimeIntervalSinceNow是从现在往前后推的秒数
+//        
+//             }else{
+//            
+//                     theDate = nowDate;
+//                 }
+//    
+//        NSDateFormatter *date_formatter = [[NSDateFormatter alloc] init];
+//         [date_formatter setDateFormat:@"yyyy-MM-dd"];
+//         NSString *the_date_str = [date_formatter stringFromDate:theDate];
+//    
+//         return the_date_str;
+//     }
+
+
+
 //当textfield结束编辑的时候调用
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    //当旧密码、新密码和确认密码都输入了之后，按钮才能被点击
-    if (textField == _lowPriceTextField || textField == _highPriceTextField || textField == _titleTextField ) {
-        if (_lowPriceTextField.text.length != 0 && _highPriceTextField.text.length != 0 && _titleTextField.text.length != 0) {
+    //当都输入了之后，按钮才能被点击
+    if (textField == _lowPriceTextField || textField == _highPriceTextField || textField == _titleTextField || textField == _detailsTextField) {
+        if (_lowPriceTextField.text.length != 0 && _highPriceTextField.text.length != 0 && _titleTextField.text.length != 0 && _detailsTextField.text.length != 0) {
             //确认按钮启用
             _releaseButton.enabled = YES;
             _releaseButton.backgroundColor = UIColorFromRGB(66, 162, 233);
@@ -129,15 +163,13 @@
 
 //按键盘return收回按钮
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    if (textField == _lowPriceTextField || textField == _highPriceTextField || textField == _titleTextField)  {
         [textField resignFirstResponder];
-    }
     return YES;
 }
 
 //让根视图结束编辑状态，到达收起键盘的目的
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    [self.view endEditing:YES];
+    _pickerview.hidden = YES;
 }
 #pragma mark - quest
 //网络请求
@@ -153,25 +185,13 @@
             
         }
         else{
-            //初始化日期格式器
-            NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-            //定义日期格式
-            formatter.dateFormat = @"MM-dd";
-            //当前时间
-            NSDate *date = [NSDate date];
-            //后天的日期
-            NSDate *dateAfterdays = [NSDate dateWithDaysFromNow:2];
-            NSString *dateStr = [formatter stringFromDate:date];
-            NSString *dateTomStr= [formatter stringFromDate:dateAfterdays];
-            //将处理好的字符串设置给两个Button
-            [_dateButton setTitle:dateStr forState:UIControlStateNormal];
-            [_nextDateButton setTitle:dateTomStr forState:UIControlStateNormal];
+            
         }
     }
-                   failure:^(NSInteger statusCode, NSError *error) {
-                       [aiv stopAnimating];
-                       [Utilities popUpAlertViewWithMsg:@"请保持网络连接畅通" andTitle:nil onView:self];
-                   }];
+    failure:^(NSInteger statusCode, NSError *error) {
+        [aiv stopAnimating];
+        [Utilities popUpAlertViewWithMsg:@"请保持网络连接畅通" andTitle:nil onView:self];
+    }];
     
 }
 /*
@@ -185,55 +205,57 @@
 */
 
 - (IBAction)dateActionButton:(UIButton *)sender forEvent:(UIEvent *)event {
+    dateFlag = YES;
+    _pickerview.hidden = NO;
     _datePicker.hidden = NO;
     _tooBar.hidden = NO;
-    NSDate *date = _datePicker.date;
-    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    formatter.dateFormat = @"MM-dd";
-    NSString *thDate = [formatter stringFromDate:date];
-    [_dateButton setTitle:thDate forState:UIControlStateNormal];
+//    NSDate *date = _datePicker.date;
+//    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+//    formatter.dateFormat = @"MM-dd";
+//    NSString *thDate = [formatter stringFromDate:date];
+//    [_dateButton setTitle:thDate forState:UIControlStateNormal];
     
 }
 - (IBAction)nextDateActionButton:(UIButton *)sender forEvent:(UIEvent *)event {
+    dateFlag = NO;
+    _pickerview.hidden = NO;
     _datePicker.hidden = NO;
     _tooBar.hidden = NO;
-    NSDate *date = _datePicker.date;
-    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    formatter.dateFormat = @"MM-dd";
-    NSString *thDate = [formatter stringFromDate:date];
-    [_nextDateButton setTitle:thDate forState:UIControlStateNormal];
+//    NSDate *date = _datePicker.date;
+//    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+//    formatter.dateFormat = @"MM-dd";
+//    NSString *thDate = [formatter stringFromDate:date];
+//    [_nextDateButton setTitle:thDate forState:UIControlStateNormal];
 
 }
 - (IBAction)departureCityActionBtn:(UIButton *)sender forEvent:(UIEvent *)event {
     flag = 1;
-    [self performSegueWithIdentifier:@"AviationToMyRelease" sender:self];
+    [self performSegueWithIdentifier:@"" sender:self];
     
 }
 - (IBAction)targetCitiesActionBtn:(UIButton *)sender forEvent:(UIEvent *)event {
     flag = 0;
-    [self performSegueWithIdentifier:@"AviationToMyRelease" sender:self];
+    [self performSegueWithIdentifier:@"" sender:self];
     
 }
 - (IBAction)releaseActionButton:(UIButton *)sender forEvent:(UIEvent *)event {
-    
+    [self performSegueWithIdentifier:@"AviationToMyRelease" sender:self];
     
 }
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
-    _tooBar.hidden = YES;
-    _datePicker.hidden = YES;
+    _pickerview.hidden = YES; 
     
 }
 
 - (IBAction)confirmAction:(UIBarButtonItem *)sender {
-    _tooBar.hidden = YES;
-    _datePicker.hidden = YES;
+    _pickerview.hidden = YES;
     NSDate *date = _datePicker.date;
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    formatter.dateFormat = @"yyyy-MM-dd HH:mm";
+    formatter.dateFormat = @"MM-dd";
     NSString *thDate = [formatter stringFromDate:date];
     followUpTime = [Utilities cTimestampFromString:thDate format:@"yyyy-MM-dd HH:mm"];
-    if(flag == 1){
+    if(dateFlag){
         [_dateButton setTitle:thDate forState:UIControlStateNormal];
     }else{
         [_nextDateButton setTitle:thDate forState:UIControlStateNormal];
