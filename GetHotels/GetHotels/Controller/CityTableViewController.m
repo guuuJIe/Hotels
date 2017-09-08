@@ -8,6 +8,7 @@
 
 #import "CityTableViewController.h"
 #import <CoreLocation/CoreLocation.h>
+#import "AviationViewController.h"
 @interface CityTableViewController ()<CLLocationManagerDelegate>{
     BOOL firstVisit; 
 }

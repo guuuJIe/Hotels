@@ -15,7 +15,7 @@
 #import "HomeMarkTableViewCell.h"
 #import "SKTagView.h"
 #import "JSONS.h"
-
+#import "CityTableViewController.h"
 @interface HotelViewController ()<UITableViewDataSource,UITableViewDelegate,CLLocationManagerDelegate,UITextFieldDelegate>
 {
     BOOL scrollFlag;
@@ -67,6 +67,7 @@
 @property (weak, nonatomic) IBOutlet UIToolbar *toolBar;
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePick;
 @property (weak, nonatomic) IBOutlet UIView *selectView;
+@property (strong, nonatomic) IBOutlet UIView *homeView;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *transviewPosotion;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *pageTop;
@@ -152,8 +153,6 @@
     [self initializeData];
     [self refresh];
     [self selectStar];
-    //调用键盘监听通知
-    [self keyboard];
     _sortArr = @[@"智能排序",@"价格低到高",@"价格高到低",@"离我从近到远"];
     
 }
@@ -736,15 +735,15 @@
     //防止循环引用，把块变成弱指针
     //选中一个按钮的时候，
     __weak SKTagView *weakView = _selectTagView;
-//    if (selectCirfimBool == 1){
-//        weakView.didTapTagAtIndex(otherIndexOne, otherPreIdxOne);
-//    }
+    if (selectCirfimBool == 2){
+        weakView.didTapTagAtIndex(otherIndexOne, otherPreIdxOne);
+    }
     _selectTagView.didTapTagAtIndex = ^(NSUInteger preIdx, NSUInteger index) {
 
-//        if (selectCirfimBool == 1){
-//            preIdx = otherIndexOne;
-//            index = otherPreIdxOne;
-//        }
+        if (selectCirfimBool == 2){
+            preIdx = otherIndexOne;
+            index = otherPreIdxOne;
+        }
         //判断当前要选中按钮时，有没有已选中的按钮
         if (preIdx != -1){
             //通过上次选中按钮的preIdx下表拿到一个按钮preTag
@@ -764,8 +763,8 @@
         tag.borderColor = SELECTE_BORDER_COLOR;
         [weakView removeTagAtIndex:index];
         [weakView insertTag:tag atIndex:index];
-//        selectCirfimBool = 1;
-//        otherIndexOne = index;
+        selectCirfimBool = 1;
+        otherIndexOne = index;
         
     };
     //防止循环引用，把块变成弱指针
@@ -954,13 +953,7 @@
     [_inTime setTitle:[NSString stringWithFormat:@"%@▲",[_inTime.titleLabel.text substringToIndex:_inTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
     [_outTime setTitle:[NSString stringWithFormat:@"%@▼",[_outTime.titleLabel.text substringToIndex:_outTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
     [_sortBtn setTitle:[NSString stringWithFormat:@"%@▼",[_sortBtn.titleLabel.text substringToIndex:_sortBtn.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
-//    [_outTime setTitle:@"离店时间▼" forState:UIControlStateNormal];
-//    [_sortBtn setTitle:@"智能排序▼" forState:UIControlStateNormal];
-//    [_selectBtn setTitle:@"筛选▼" forState:UIControlStateNormal];
-//    [_inTime setTitleColor:SELECT_COLOR forState:UIControlStateNormal];
-//    [_outTime setTitleColor:UNSELECT_TITLECOLOR forState:UIControlStateNormal];
-//    [_sortBtn setTitleColor:UNSELECT_TITLECOLOR forState:UIControlStateNormal];
-//    [_selectBtn setTitleColor:UNSELECT_TITLECOLOR forState:UIControlStateNormal];
+    
     _inTime.selected = YES;
     _outTime.selected = NO;
     _sortBtn.selected = NO;
@@ -1094,8 +1087,8 @@
     priceID = priceTestID;
     selectCirfimBool = 0;
     _markView.hidden = YES;
-//    otherPreIdxOne = otherIndexOne;
-//    otherPreIdxTwo = otherIndexTwo;
+    otherPreIdxOne = otherIndexOne;
+    otherPreIdxTwo = otherIndexTwo;
     [self initializeData];
 }
 
@@ -1117,30 +1110,31 @@
     _selectBtn.selected = NO;
     _markView.hidden = YES;
     [self.view endEditing:YES];
-//    if (selectCirfimBool != 0){
-//        [self weakSelect];
-//       // _selectTagView.didTapTagAtIndex(otherPreIdxOne, otherIndexOne);
-//    }
+    selectCirfimBool = 2;
+    if (selectCirfimBool != 0){
+        [self weakSelect];
+       // _selectTagView.didTapTagAtIndex(otherPreIdxOne, otherIndexOne);
+    }
     
 }
 
--(void)keyboard{
-    //监听键盘将要打开这一操作,打开后执行keyboardWillShow:方法
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    //监听键盘将要隐藏这一操作,打开后执行keyboardWillHide:方法
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-}
-//键盘出现
-- (void)keyboardWillShow: (NSNotification *)notification {
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
     _mark = [UIView new];
     _mark.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     _mark.backgroundColor = UIColorFromRGBA(104, 104, 104, 0.3);
-    [[UIApplication sharedApplication].keyWindow addSubview:_mark];
+    //[[UIApplication sharedApplication].keyWindow addSubview:_mark];
+    [self.view addSubview:_mark];
+    return YES;
 }
 
-//键盘隐藏
-- (void)keyboardWillHide: (NSNotification *)notification {
+- (void)textFieldDidEndEditing:(UITextField *)textField{
     [_mark removeFromSuperview];
     _mark = nil;
 }
+//- (IBAction)choosecityAction:(UIButton *)sender forEvent:(UIEvent *)event{
+//    CityTableViewController *citylist = [Utilities getStoryboardInstance:@"Main" byIdentity:@"City"];
+//    [self.navigationController pushViewController:citylist animated:YES];
+//    citylist.tag = 1;
+//}
+
 @end
