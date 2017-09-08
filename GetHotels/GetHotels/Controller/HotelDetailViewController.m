@@ -184,10 +184,10 @@
             //定义日期格式
             formatter.dateFormat = @"yyyy-MM-dd";
             //当前时间
-            NSDate *date = [NSDate date];
+            NSDate *dates = [NSDate date];
             //后天的日期
             NSDate *dateAfterdays = [NSDate dateWithDaysFromNow:2];
-            NSString *dateStr = [formatter stringFromDate:date];
+            NSString *dateStr = [formatter stringFromDate:dates];
             NSString *dateTomStr= [formatter stringFromDate:dateAfterdays];
             //将处理好的字符串设置给两个Button
             [_dateBtn setTitle:dateStr forState:UIControlStateNormal];

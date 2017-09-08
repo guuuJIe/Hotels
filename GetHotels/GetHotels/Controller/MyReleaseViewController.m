@@ -11,7 +11,7 @@
 #import "DidRealeseTableViewCell.h"
 #import "IsReleasedTableViewCell.h"
 #import "HistoryTableViewCell.h"
-#import "ReleaseModel.h"
+#import "UserModel.h"
 @interface MyReleaseViewController ()<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>{
     NSInteger isReleasedFlag;
     NSInteger histroyFlag;
@@ -159,8 +159,9 @@
 
 //正在发布
 -(void)isReleasedRequest{
-    ReleaseModel *model = [[StorageMgr singletonStorageMgr] objectForKey:@"UserInfo"];
-    NSDictionary *para = @{@"openid": model.openid,@"page" : @(isReleasedNum),@"state" : @(model.state)};
+    UserModel *model = [[StorageMgr singletonStorageMgr] objectForKey:@"UserInfo"];
+    NSDictionary *para = @{@"openid": model.openid,@"page" : @(isReleasedNum),@"state" :@( [model.state integerValue])};
+    NSLog(@"para%@",para);
     [RequestAPI requestURL:@"/findAllIssue_edu" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
         
         [_aiv stopAnimating];
@@ -182,7 +183,7 @@
 }
 //已发布
 -(void)didReleasedRequest{
-    NSDictionary *para = @{@"Id" : @1};
+    NSDictionary *para = @{@"Id" : @2};
     [RequestAPI requestURL:@"/findemandById" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
         
         [_aiv stopAnimating];
