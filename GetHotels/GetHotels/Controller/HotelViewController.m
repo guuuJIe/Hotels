@@ -67,6 +67,7 @@
 @property (weak, nonatomic) IBOutlet UIToolbar *toolBar;
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePick;
 @property (weak, nonatomic) IBOutlet UIView *selectView;
+@property (strong, nonatomic) IBOutlet UIView *homeView;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *transviewPosotion;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *pageTop;
@@ -152,8 +153,6 @@
     [self initializeData];
     [self refresh];
     [self selectStar];
-    //调用键盘监听通知
-    [self keyboard];
     _sortArr = @[@"智能排序",@"价格低到高",@"价格高到低",@"离我从近到远"];
     
 }
@@ -954,13 +953,7 @@
     [_inTime setTitle:[NSString stringWithFormat:@"%@▲",[_inTime.titleLabel.text substringToIndex:_inTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
     [_outTime setTitle:[NSString stringWithFormat:@"%@▼",[_outTime.titleLabel.text substringToIndex:_outTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
     [_sortBtn setTitle:[NSString stringWithFormat:@"%@▼",[_sortBtn.titleLabel.text substringToIndex:_sortBtn.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
-//    [_outTime setTitle:@"离店时间▼" forState:UIControlStateNormal];
-//    [_sortBtn setTitle:@"智能排序▼" forState:UIControlStateNormal];
-//    [_selectBtn setTitle:@"筛选▼" forState:UIControlStateNormal];
-//    [_inTime setTitleColor:SELECT_COLOR forState:UIControlStateNormal];
-//    [_outTime setTitleColor:UNSELECT_TITLECOLOR forState:UIControlStateNormal];
-//    [_sortBtn setTitleColor:UNSELECT_TITLECOLOR forState:UIControlStateNormal];
-//    [_selectBtn setTitleColor:UNSELECT_TITLECOLOR forState:UIControlStateNormal];
+    
     _inTime.selected = YES;
     _outTime.selected = NO;
     _sortBtn.selected = NO;
@@ -1124,23 +1117,19 @@
     
 }
 
--(void)keyboard{
-    //监听键盘将要打开这一操作,打开后执行keyboardWillShow:方法
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    //监听键盘将要隐藏这一操作,打开后执行keyboardWillHide:方法
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-}
-//键盘出现
-- (void)keyboardWillShow: (NSNotification *)notification {
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
     _mark = [UIView new];
     _mark.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     _mark.backgroundColor = UIColorFromRGBA(104, 104, 104, 0.3);
-    [[UIApplication sharedApplication].keyWindow addSubview:_mark];
+    //[[UIApplication sharedApplication].keyWindow addSubview:_mark];
+    [self.view addSubview:_mark];
+    return YES;
 }
 
-//键盘隐藏
-- (void)keyboardWillHide: (NSNotification *)notification {
+- (void)textFieldDidEndEditing:(UITextField *)textField{
     [_mark removeFromSuperview];
     _mark = nil;
 }
+
+
 @end
