@@ -15,7 +15,7 @@
 #import "HomeMarkTableViewCell.h"
 #import "SKTagView.h"
 #import "JSONS.h"
-
+#import "CityTableViewController.h"
 @interface HotelViewController ()<UITableViewDataSource,UITableViewDelegate,CLLocationManagerDelegate,UITextFieldDelegate>
 {
     BOOL scrollFlag;
@@ -735,15 +735,15 @@
     //防止循环引用，把块变成弱指针
     //选中一个按钮的时候，
     __weak SKTagView *weakView = _selectTagView;
-//    if (selectCirfimBool == 1){
-//        weakView.didTapTagAtIndex(otherIndexOne, otherPreIdxOne);
-//    }
+    if (selectCirfimBool == 2){
+        weakView.didTapTagAtIndex(otherIndexOne, otherPreIdxOne);
+    }
     _selectTagView.didTapTagAtIndex = ^(NSUInteger preIdx, NSUInteger index) {
 
-//        if (selectCirfimBool == 1){
-//            preIdx = otherIndexOne;
-//            index = otherPreIdxOne;
-//        }
+        if (selectCirfimBool == 2){
+            preIdx = otherIndexOne;
+            index = otherPreIdxOne;
+        }
         //判断当前要选中按钮时，有没有已选中的按钮
         if (preIdx != -1){
             //通过上次选中按钮的preIdx下表拿到一个按钮preTag
@@ -763,8 +763,8 @@
         tag.borderColor = SELECTE_BORDER_COLOR;
         [weakView removeTagAtIndex:index];
         [weakView insertTag:tag atIndex:index];
-//        selectCirfimBool = 1;
-//        otherIndexOne = index;
+        selectCirfimBool = 1;
+        otherIndexOne = index;
         
     };
     //防止循环引用，把块变成弱指针
@@ -1087,8 +1087,8 @@
     priceID = priceTestID;
     selectCirfimBool = 0;
     _markView.hidden = YES;
-//    otherPreIdxOne = otherIndexOne;
-//    otherPreIdxTwo = otherIndexTwo;
+    otherPreIdxOne = otherIndexOne;
+    otherPreIdxTwo = otherIndexTwo;
     [self initializeData];
 }
 
@@ -1110,10 +1110,11 @@
     _selectBtn.selected = NO;
     _markView.hidden = YES;
     [self.view endEditing:YES];
-//    if (selectCirfimBool != 0){
-//        [self weakSelect];
-//       // _selectTagView.didTapTagAtIndex(otherPreIdxOne, otherIndexOne);
-//    }
+    selectCirfimBool = 2;
+    if (selectCirfimBool != 0){
+        [self weakSelect];
+       // _selectTagView.didTapTagAtIndex(otherPreIdxOne, otherIndexOne);
+    }
     
 }
 
@@ -1130,6 +1131,10 @@
     [_mark removeFromSuperview];
     _mark = nil;
 }
-
+//- (IBAction)choosecityAction:(UIButton *)sender forEvent:(UIEvent *)event{
+//    CityTableViewController *citylist = [Utilities getStoryboardInstance:@"Main" byIdentity:@"City"];
+//    [self.navigationController pushViewController:citylist animated:YES];
+//    citylist.tag = 1;
+//}
 
 @end
