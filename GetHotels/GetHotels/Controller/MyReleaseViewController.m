@@ -18,6 +18,7 @@
     
     NSInteger didReleaseNum;
     NSInteger isReleasedNum;
+    NSInteger pageSize;
     NSInteger histroyNum;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -35,12 +36,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    pageSize = 5;
     isReleasedFlag = 1;
     histroyFlag = 1;
     didReleaseNum = 1;
     isReleasedNum = 1;
     histroyNum = 1;
-    [self didReleasedRequest];
     _rectStatus = [[UIApplication sharedApplication] statusBarFrame];
     // 导航栏（navigationbar）
     _rectNav = self.navigationController.navigationBar.frame;
@@ -49,7 +50,9 @@
     _histroyTableView.tableFooterView = [UIView new];
     [self setsegment];
     [self refreshControl];
-    
+    [self didReleasedRequest];
+    [self isReleasedRequest];
+    [self historyRequest];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -144,7 +147,7 @@
 //刷新历史记录
 -(void)refreshHistroy{
     histroyNum = 1;
-    
+    [self historyRequest];
 }
 
 
@@ -160,8 +163,7 @@
 //正在发布
 -(void)isReleasedRequest{
     UserModel *model = [[StorageMgr singletonStorageMgr] objectForKey:@"UserInfo"];
-    NSDictionary *para = @{@"openid": model.openid,@"page" : @(isReleasedNum),@"state" :@( [model.state integerValue])};
-    NSLog(@"para%@",para);
+    NSDictionary *para = @{@"openid": model.openid,@"page" : @(isReleasedNum),@"pageSize" : @(pageSize),@"state" :@1};
     [RequestAPI requestURL:@"/findAllIssue_edu" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
         
         [_aiv stopAnimating];
@@ -181,15 +183,40 @@
     }];
     
 }
-//已发布
+//已成交
 -(void)didReleasedRequest{
-    NSDictionary *para = @{@"Id" : @2};
-    [RequestAPI requestURL:@"/findemandById" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
+    UserModel *model = [[StorageMgr singletonStorageMgr] objectForKey:@"UserInfo"];
+    NSDictionary *para = @{@"openid": model.openid,@"page" : @(isReleasedNum),@"pageSize" : @(pageSize),@"state" :@0};
+    [RequestAPI requestURL:@"/findAllIssue_edu" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
         
         [_aiv stopAnimating];
         UIRefreshControl *ref = (UIRefreshControl *)[_didReleaseTableView viewWithTag:200];
         [ref endRefreshing];
         NSLog(@"已发布:%@",responseObject);
+        if ([responseObject[@"result"] integerValue] == 1) {
+            
+        }
+        else{
+            [Utilities popUpAlertViewWithMsg:@"网络错误,请稍后再试" andTitle:@"提示" onView:self];
+        }
+    }failure:^(NSInteger statusCode, NSError *error) {
+        [_aiv stopAnimating];
+        UIRefreshControl *ref = (UIRefreshControl *)[_didReleaseTableView viewWithTag:200];
+        [ref endRefreshing];
+        
+    }];
+    
+}
+//已成交
+-(void)historyRequest{
+    UserModel *model = [[StorageMgr singletonStorageMgr] objectForKey:@"UserInfo"];
+    NSDictionary *para = @{@"openid": model.openid,@"page" : @(isReleasedNum),@"pageSize" : @(pageSize),@"state" :@2};
+    [RequestAPI requestURL:@"/findAllIssue_edu" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
+        
+        [_aiv stopAnimating];
+        UIRefreshControl *ref = (UIRefreshControl *)[_didReleaseTableView viewWithTag:200];
+        [ref endRefreshing];
+        NSLog(@"历史记录:%@",responseObject);
         if ([responseObject[@"result"] integerValue] == 1) {
             
         }

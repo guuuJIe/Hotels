@@ -10,7 +10,7 @@
 #import "OfferCollectionViewCell.h"
 @interface OfferViewController ()<UICollectionViewDelegate,UICollectionViewDataSource>
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
-
+@property (strong,nonatomic)UIActivityIndicatorView *aiv;
 
 @end
 
@@ -19,6 +19,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [self refreshControl];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -52,6 +53,41 @@
 //自定义的返回按钮的事件
 - (void)leftButtonAction:(UIButton *)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+//创建刷新指示器
+-(void)refreshControl{
+    UIRefreshControl *didRelaseRefresh = [UIRefreshControl new];
+    [didRelaseRefresh addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
+    didRelaseRefresh.tag = 300;
+    [_collectionView addSubview:didRelaseRefresh];
+}
+//刷新已发布
+-(void)refresh{
+    [self request];
+}
+
+//已发布
+-(void)request{
+    NSDictionary *para = @{@"Id" : @1};
+    [RequestAPI requestURL:@"/selectOffer_edu" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
+        
+        [_aiv stopAnimating];
+        UIRefreshControl *ref = (UIRefreshControl *)[_collectionView viewWithTag:300];
+        [ref endRefreshing];
+        NSLog(@"报价列表:%@",responseObject);
+        if ([responseObject[@"result"] integerValue] == 1) {
+            
+        }
+        else{
+            [Utilities popUpAlertViewWithMsg:@"网络错误,请稍后再试" andTitle:@"提示" onView:self];
+        }
+    }failure:^(NSInteger statusCode, NSError *error) {
+        [_aiv stopAnimating];
+        UIRefreshControl *ref = (UIRefreshControl *)[_collectionView viewWithTag:300];
+        [ref endRefreshing];
+        
+    }];
     
 }
 /*
