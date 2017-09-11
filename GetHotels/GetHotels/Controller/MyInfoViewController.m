@@ -30,6 +30,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
     //去掉tableview底部多余的线
     _myInfoTableView.tableFooterView = [UIView new];
     _arr = @[@{@"leftIcon" : @"酒店大", @"title" : @"我的酒店"}, @{@"leftIcon" : @"飞机大", @"title" : @"我的航空"}, @{@"leftIcon" : @"信息", @"title" : @"我的消息"}, @{@"leftIcon" : @"设置", @"title" : @"账户设置"}, @{@"leftIcon" : @"协议", @"title" : @"使用协议"}, @{@"leftIcon" : @"电话", @"title" : @"联系客服"}];
@@ -163,6 +164,8 @@
 }
 
 - (IBAction)loginAction:(UIButton *)sender forEvent:(UIEvent *)event {
-    LoginViewController *login = [Utilities getStoryboardInstance:@"LoginViewController" byIdentity:@""];
+    LoginViewController *login = [Utilities getStoryboardInstance:@"Login" byIdentity:@"login"];
+    UINavigationController *nc = [[UINavigationController alloc]initWithRootViewController:login];
+    [self presentViewController:nc animated:YES completion:nil];
 }
 @end
