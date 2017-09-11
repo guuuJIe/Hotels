@@ -8,9 +8,11 @@
 
 #import "AviationViewController.h"
 #import "UserModel.h"
+#import "AviationModel.h"
 #import "CityTableViewController.h"
-@interface AviationViewController ()<UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource>{
-   NSTimeInterval followUpTime;
+#import "LoginViewController.h"
+@interface AviationViewController ()<UITextFieldDelegate>{
+    NSTimeInterval followUpTime;
     NSInteger PageNum;
     NSInteger  flag;
     BOOL dateFlag;
@@ -37,8 +39,8 @@
 @property (weak, nonatomic) IBOutlet UIToolbar *tooBar;
 @property (strong,nonatomic) NSString *city;
 @property (weak, nonatomic) IBOutlet UIView *pickerview;
-
-
+@property (strong,nonatomic)NSString *dateStr;
+@property (strong,nonatomic)NSString *dateTomStr;
 
 
 
@@ -51,19 +53,20 @@
     // Do any additional setup after loading the view.
     [self setNavigationItem];
     
-    _datePicker.backgroundColor = UIColorFromRGB(235, 235, 241);
     _datePicker.minimumDate = [NSDate date];
     //_arr = [NSMutableArray new];
-
+    
+    _datePicker.backgroundColor = [UIColor whiteColor];
     //把状态栏变成白色
-    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+    //[[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     
     //调用设置导航样式
     [self setNavigationItem];
+    
     //设置默认时间
     [self defaultDate];
     //接收一个通知
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeCity:) name:@"ResetHome" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeCity:) name:@"Resetcity" object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -92,21 +95,21 @@
     //self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:leftBtn];
 }
 //英文键盘默认高度216
-//- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
-//{
-//    //重写textField这个方法
-//    //NSLog(@"开始编辑");
-//    CGFloat offset = self.view.frame.size.height - (textField.frame.origin.y+textField.frame.size.height+216+50);
-//    NSLog(@"偏移高度为 --- %f",offset);
-//    if (offset<=0) {
-//        [UIView animateWithDuration:0.3 animations:^{
-//            CGRect frame = self.view.frame;
-//            frame.origin.y = offset;
-//            self.view.frame = frame;
-//        }];
-//    }
-//    return YES;
-//}
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    //重写textField这个方法
+    //NSLog(@"开始编辑");
+    CGFloat offset = self.view.frame.size.height - (textField.frame.origin.y+textField.frame.size.height+216+50);
+    NSLog(@"偏移高度为 --- %f",offset);
+    if (offset<=0) {
+        [UIView animateWithDuration:0.3 animations:^{
+            CGRect frame = self.view.frame;
+            frame.origin.y = offset;
+            self.view.frame = frame;
+        }];
+    }
+    return YES;
+}
 
 -(void)defaultDate{
     //初始化日期格式器
@@ -118,15 +121,15 @@
     //后天的日期
     NSDate *Tomorrow = [NSDate dateWithDaysFromNow:1];
     NSDate *dateAfterdays = [NSDate dateWithDaysFromNow:2];
-    NSString *dateStr = [formatter stringFromDate:Tomorrow];
-    NSString *dateTomStr= [formatter stringFromDate:dateAfterdays];
+    _dateStr = [formatter stringFromDate:Tomorrow];
+    _dateTomStr= [formatter stringFromDate:dateAfterdays];
     //将处理好的字符串设置给两个Button
-    [_dateButton setTitle:dateStr forState:UIControlStateNormal];
-    [_nextDateButton setTitle:dateTomStr forState:UIControlStateNormal];
+    [_dateButton setTitle:_dateStr forState:UIControlStateNormal];
+    [_nextDateButton setTitle:_dateTomStr forState:UIControlStateNormal];
     
 }
 //-(NSString *)getNDay:(NSInteger)n{
-//    
+//
 //        NSDate*nowDate = [NSDate date];
 //
 //        NSDate* theDate;
@@ -134,16 +137,16 @@
 //        if(n!=0){
 //                 NSTimeInterval  oneDay = 24*60*60*1;  //1天的长度
 //                theDate = [nowDate initWithTimeIntervalSinceNow: oneDay*n ];//initWithTimeIntervalSinceNow是从现在往前后推的秒数
-//        
+//
 //             }else{
-//            
+//
 //                     theDate = nowDate;
 //                 }
-//    
+//
 //        NSDateFormatter *date_formatter = [[NSDateFormatter alloc] init];
 //         [date_formatter setDateFormat:@"yyyy-MM-dd"];
 //         NSString *the_date_str = [date_formatter stringFromDate:theDate];
-//    
+//
 //         return the_date_str;
 //     }
 
@@ -163,7 +166,8 @@
 
 //按键盘return收回按钮
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-        [textField resignFirstResponder];
+    
+    [textField resignFirstResponder];
     return YES;
 }
 
@@ -171,80 +175,100 @@
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     _pickerview.hidden = YES;
 }
+//
 #pragma mark - quest
 //网络请求
 -(void)aviationRequest{
     UserModel *user = [[StorageMgr singletonStorageMgr]objectForKey:@"UserInfo"];
     UIActivityIndicatorView *aiv = [Utilities getCoverOnView:self.view];
-    NSDictionary *para =@{@"openid" : user.openid, @"set_low_time_str": _dateButton.titleLabel.text,@"set_high_time_str":_nextDateButton.titleLabel.text,@"departure":_departureCityBtn.titleLabel.text,@"destination":_targetCityBtn.titleLabel.text,@"low_price":_lowPriceTextField.text,@"high_price":_highPriceTextField.text,@"aviation_demand_detail":_detailsTextField.text,@"aviation_demand_title":_titleTextField.text};
-    [RequestAPI requestURL:@"/findHotelById" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
+    NSDictionary *para =@{@"openid" : user.openid, @"set_low_time_str": _dateButton.titleLabel.text,@"set_high_time_str":_nextDateButton.titleLabel.text,@"set_hour":@"20",@"departure":_departureCityBtn.titleLabel.text,@"destination":_targetCityBtn.titleLabel.text,@"low_price":_lowPriceTextField.text,@"high_price":_highPriceTextField.text,@"aviation_demand_detail":_detailsTextField.text,@"aviation_demand_title":_titleTextField.text,@"is_back":@5,@"back_low_time_str":@"无",@"back_high_time_str":@"无",@"people_number":@3,@"child_number":@1,@"weight":@50.0};
+    [RequestAPI requestURL:@"/addIssue_edu" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
         [aiv stopAnimating];
         NSLog(@"responseObject:%@",responseObject);
         
         if([responseObject[@"result"]intValue] == 1){
             
+            [Utilities popUpAlertViewWithMsg:@"恭喜你发布成功，请注意接收消息" andTitle:nil onView:self ];
+            _lowPriceTextField.text = @"";
+            _highPriceTextField.text = @"";
+            _detailsTextField.text =@"";
+            _titleTextField.text =@"";
         }
         else{
-            
+            NSString *errorMsg = [ErrorHandler getProperErrorString:[responseObject[@"result"] integerValue]];
+            [Utilities popUpAlertViewWithMsg:errorMsg andTitle:nil onView:self ];
         }
     }
-    failure:^(NSInteger statusCode, NSError *error) {
-        [aiv stopAnimating];
-        [Utilities popUpAlertViewWithMsg:@"请保持网络连接畅通" andTitle:nil onView:self];
-    }];
+                   failure:^(NSInteger statusCode, NSError *error) {
+                       [aiv stopAnimating];
+                       [Utilities popUpAlertViewWithMsg:@"请保持网络连接畅通" andTitle:@"提示" onView:self ];
+                   }];
     
 }
+
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    
 }
-*/
-
 - (IBAction)dateActionButton:(UIButton *)sender forEvent:(UIEvent *)event {
     dateFlag = YES;
     _pickerview.hidden = NO;
-    _datePicker.hidden = NO;
-    _tooBar.hidden = NO;
-//    NSDate *date = _datePicker.date;
-//    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-//    formatter.dateFormat = @"MM-dd";
-//    NSString *thDate = [formatter stringFromDate:date];
-//    [_dateButton setTitle:thDate forState:UIControlStateNormal];
+    //    _datePicker.hidden = NO;
+    //    _tooBar.hidden = NO;
+    //    NSDate *date = _datePicker.date;
+    //    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    //    formatter.dateFormat = @"MM-dd";
+    //    NSString *thDate = [formatter stringFromDate:date];
+    //    [_dateButton setTitle:thDate forState:UIControlStateNormal];
     
 }
 - (IBAction)nextDateActionButton:(UIButton *)sender forEvent:(UIEvent *)event {
     dateFlag = NO;
     _pickerview.hidden = NO;
-    _datePicker.hidden = NO;
-    _tooBar.hidden = NO;
-//    NSDate *date = _datePicker.date;
-//    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-//    formatter.dateFormat = @"MM-dd";
-//    NSString *thDate = [formatter stringFromDate:date];
-//    [_nextDateButton setTitle:thDate forState:UIControlStateNormal];
-
+    //    _datePicker.hidden = NO;
+    //    _tooBar.hidden = NO;
+    //    NSDate *date = _datePicker.date;
+    //    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    //    formatter.dateFormat = @"MM-dd";
+    //    NSString *thDate = [formatter stringFromDate:date];
+    //
+    //   [_nextDateButton setTitle:thDate forState:UIControlStateNormal];
 }
 - (IBAction)departureCityActionBtn:(UIButton *)sender forEvent:(UIEvent *)event {
     flag = 1;
-    [self performSegueWithIdentifier:@"" sender:self];
+    CityTableViewController *citylist = [Utilities getStoryboardInstance:@"Main" byIdentity:@"City"];
+    [self.navigationController pushViewController:citylist animated:YES];
+    citylist.tag = 2;
     
 }
 - (IBAction)targetCitiesActionBtn:(UIButton *)sender forEvent:(UIEvent *)event {
     flag = 0;
-    [self performSegueWithIdentifier:@"" sender:self];
+    CityTableViewController *citylist = [Utilities getStoryboardInstance:@"Main" byIdentity:@"City"];
+    [self.navigationController pushViewController:citylist animated:YES];
+    citylist.tag = 2;
     
 }
 - (IBAction)releaseActionButton:(UIButton *)sender forEvent:(UIEvent *)event {
-    [self performSegueWithIdentifier:@"AviationToMyRelease" sender:self];
-    
+    if([Utilities loginCheck]){
+        [self aviationRequest];
+        [self performSegueWithIdentifier:@"AviationToMyRelease" sender:self];
+    }
+    else{
+        LoginViewController *login = [Utilities getStoryboardInstance:@"Login" byIdentity:@"login"];
+        [self.navigationController pushViewController:login animated:YES];
+    }
 }
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
-    _pickerview.hidden = YES; 
+    _pickerview.hidden = YES;
     
 }
 
@@ -261,9 +285,10 @@
         [_nextDateButton setTitle:thDate forState:UIControlStateNormal];
     }
     
-
+    
     
 }
+
 //接收通知执行的方法，将拿到的城市给相应的按钮
 -(void)changeCity:(NSNotification *)name{
     NSString *citystr = name.object;

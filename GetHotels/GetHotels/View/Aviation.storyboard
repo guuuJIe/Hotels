@@ -410,7 +410,7 @@
                 <viewControllerPlaceholder storyboardName="MyRelease" id="w0F-8m-qMa" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ry8-BR-Dvv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4782" y="212"/>
+            <point key="canvasLocation" x="4491" y="453"/>
         </scene>
         <!--航空 -->
         <scene sceneID="q6s-xx-zfP">
