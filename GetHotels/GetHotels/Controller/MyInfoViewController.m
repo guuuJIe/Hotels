@@ -9,6 +9,7 @@
 #import "MyInfoViewController.h"
 #import "MyInfoTableViewCell.h"
 #import "UserModel.h"
+#import "LoginViewController.h"
 
 @interface MyInfoViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *headerImg;
@@ -162,5 +163,6 @@
 }
 
 - (IBAction)loginAction:(UIButton *)sender forEvent:(UIEvent *)event {
+    LoginViewController *login = [Utilities getStoryboardInstance:@"LoginViewController" byIdentity:@""];
 }
 @end

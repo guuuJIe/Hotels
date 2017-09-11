@@ -377,8 +377,6 @@
             [_threeImg sd_setImageWithURL:[NSURL URLWithString:_advImgArr[3]] placeholderImage:[UIImage imageNamed:@"多云"]];
             [_fourImg sd_setImageWithURL:[NSURL URLWithString:_advImgArr[4]] placeholderImage:[UIImage imageNamed:@"多云"]];
             
-            
-            [_homeScrollView reloadInputViews];
             [_hotelTableView reloadData];
         } else {
             [_aiv stopAnimating];
@@ -735,15 +733,15 @@
     //防止循环引用，把块变成弱指针
     //选中一个按钮的时候，
     __weak SKTagView *weakView = _selectTagView;
-    if (selectCirfimBool == 2){
-        weakView.didTapTagAtIndex(otherIndexOne, otherPreIdxOne);
-    }
+//    if (selectCirfimBool == 2){
+//        weakView.didTapTagAtIndex(otherIndexOne, otherPreIdxOne);
+//    }
     _selectTagView.didTapTagAtIndex = ^(NSUInteger preIdx, NSUInteger index) {
 
-        if (selectCirfimBool == 2){
-            preIdx = otherIndexOne;
-            index = otherPreIdxOne;
-        }
+//        if (selectCirfimBool == 2){
+//            preIdx = otherIndexOne;
+//            index = otherPreIdxOne;
+//        }
         //判断当前要选中按钮时，有没有已选中的按钮
         if (preIdx != -1){
             //通过上次选中按钮的preIdx下表拿到一个按钮preTag
@@ -763,7 +761,7 @@
         tag.borderColor = SELECTE_BORDER_COLOR;
         [weakView removeTagAtIndex:index];
         [weakView insertTag:tag atIndex:index];
-        selectCirfimBool = 1;
+        selectCirfimBool = 3;
         otherIndexOne = index;
         
     };
@@ -1085,7 +1083,7 @@
     PageNum = 1;
     starID = starTestID;
     priceID = priceTestID;
-    selectCirfimBool = 0;
+    selectCirfimBool = 1;
     _markView.hidden = YES;
     otherPreIdxOne = otherIndexOne;
     otherPreIdxTwo = otherIndexTwo;
@@ -1111,10 +1109,8 @@
     _markView.hidden = YES;
     [self.view endEditing:YES];
     selectCirfimBool = 2;
-    if (selectCirfimBool != 0){
-        [self weakSelect];
+//    [self weakSelect];
        // _selectTagView.didTapTagAtIndex(otherPreIdxOne, otherIndexOne);
-    }
     
 }
 
