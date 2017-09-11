@@ -21,9 +21,9 @@
 @property (strong,nonatomic) NSString *low_price;//最低价
 @property (strong,nonatomic) NSString *back_low_time_str;//返程最早时间
 @property (strong,nonatomic) NSString *back_high_time_str;//返程最晚时间
-@property (strong,nonatomic) NSString *is_back;//是否返程
-@property (strong,nonatomic) NSString *people_number;//乘机人数(大人)
-@property (strong,nonatomic) NSString *child_number;//乘机人数(小孩)
+@property (nonatomic) NSInteger is_back;//是否返程
+@property (nonatomic) NSInteger people_number;//乘机人数(大人)
+@property (nonatomic) NSInteger child_number;//乘机人数(小孩)
 @property (strong,nonatomic) NSString *weight;//随身物品净重
 
 
