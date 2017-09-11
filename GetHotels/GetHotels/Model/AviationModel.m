@@ -23,9 +23,9 @@
         _low_price = [Utilities nullAndNilCheck:dict[@"low_price"] replaceBy:@""];
          _back_low_time_str= [Utilities nullAndNilCheck:dict[@"back_low_time_str"] replaceBy:@""];
          _back_high_time_str = [Utilities nullAndNilCheck:dict[@"back_high_time_str"] replaceBy:@""];
-         _is_back = [Utilities nullAndNilCheck:dict[@"is_back"] replaceBy:@""];
-         _people_number = [Utilities nullAndNilCheck:dict[@"people_number"] replaceBy:@""];
-         _child_number = [Utilities nullAndNilCheck:dict[@"child_number"] replaceBy:@""];
+         _is_back = [[Utilities nullAndNilCheck:dict[@"is_back"] replaceBy:@"" ]integerValue];
+         _people_number = [[Utilities nullAndNilCheck:dict[@"people_number"] replaceBy:@""]integerValue];
+         _child_number = [[Utilities nullAndNilCheck:dict[@"child_number"] replaceBy:@""]integerValue];
          _weight = [Utilities nullAndNilCheck:dict[@"weight"] replaceBy:@""];
            }
     return self;

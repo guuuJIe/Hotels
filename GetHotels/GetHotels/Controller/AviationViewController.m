@@ -181,10 +181,10 @@
 -(void)aviationRequest{
     UserModel *user = [[StorageMgr singletonStorageMgr]objectForKey:@"UserInfo"];
     UIActivityIndicatorView *aiv = [Utilities getCoverOnView:self.view];
-    NSDictionary *para =@{@"openid" : user.openid, @"set_low_time_str": _dateButton.titleLabel.text,@"set_high_time_str":_nextDateButton.titleLabel.text,@"set_hour":@"20",@"departure":_departureCityBtn.titleLabel.text,@"destination":_targetCityBtn.titleLabel.text,@"low_price":_lowPriceTextField.text,@"high_price":_highPriceTextField.text,@"aviation_demand_detail":_detailsTextField.text,@"aviation_demand_title":_titleTextField.text,@"is_back":@5,@"back_low_time_str":@"无",@"back_high_time_str":@"无",@"people_number":@3,@"child_number":@1,@"weight":@50.0};
+    NSDictionary *para =@{@"openid" : user.openid, @"set_low_time_str": _dateButton.titleLabel.text,@"set_high_time_str":_nextDateButton.titleLabel.text,@"set_hour":@"20",@"departure":@"无锡",@"destination":@"北京",@"low_price":_lowPriceTextField.text,@"high_price":_highPriceTextField.text,@"aviation_demand_detail":_detailsTextField.text,@"aviation_demand_title":_titleTextField.text,@"is_back":@5,@"back_low_time_str":@"无",@"back_high_time_str":@"无",@"people_number":@3,@"child_number":@1,@"weight":@50.0};
     [RequestAPI requestURL:@"/addIssue_edu" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
         [aiv stopAnimating];
-        NSLog(@"responseObject:%@",responseObject);
+        NSLog(@"我的需求:%@",responseObject);
         
         if([responseObject[@"result"]intValue] == 1){
             
@@ -262,7 +262,8 @@
         [self performSegueWithIdentifier:@"AviationToMyRelease" sender:self];
     }
     else{
-        LoginViewController *login = [Utilities getStoryboardInstance:@"Login" byIdentity:@"login"];
+        NSLog(@"滚");
+       LoginViewController *login = [Utilities getStoryboardInstance:@"Login" byIdentity:@"login"];
         [self.navigationController pushViewController:login animated:YES];
     }
 }
