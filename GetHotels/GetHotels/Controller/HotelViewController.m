@@ -76,6 +76,7 @@
 - (IBAction)cancelAction:(UIBarButtonItem *)sender;
 - (IBAction)doneAction:(UIBarButtonItem *)sender;
 - (IBAction)selectTagCfirmAction:(UIButton *)sender forEvent:(UIEvent *)event;
+- (IBAction)locAction:(UIButton *)sender forEvent:(UIEvent *)event;
  
 
 @property (strong, nonatomic) CLLocationManager *locMgr;
@@ -281,7 +282,7 @@
 -(void)weatherRequest{
 
     //获得全宇宙天气的接口（当前这一刻的天气）（http://api.openweathermap.org是一个开放天气接口提供商）
-    NSString *weatherURLStr =  [NSString stringWithFormat:@"http://api.yytianqi.com/observe?city=%f,%f&key=ed497bous144g6lo",latitude,longitude];
+    NSString *weatherURLStr =  [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&appid=b864044bb95a790134d17b43a9a14d70&lang=zh_cn&find?q=London&units=metric",latitude,longitude];
     
     //将字符串转换成NSURL对象lat=29&lon=120.444
     NSURL *weatherURL = [NSURL URLWithString:weatherURLStr];
@@ -296,23 +297,20 @@
                 //NSLog(@"网络请求成功，真的开始做事");
                 //将JSON格式的数据流data用JSONS工具包里的NSData下的Category中的JSONCol方法转化为OC对象（Array或Dictionary）
                 id jsonObject = [data JSONCol];
-                //NSLog(@"%@", jsonObject);
-                NSDictionary *data = jsonObject[@"data"];
-                NSString *tq = data[@"tq"];
-                NSString *qw = data[@"qw"];
-                NSString *numtq = data[@"numtq"];
-                
-                if ([numtq isEqualToString:@"00"]){
-                    _weatherImg.image = [UIImage imageNamed:@"晴"];
-                }else if ([numtq isEqualToString:@"01"]){
-                    _weatherImg.image = [UIImage imageNamed:@"多云"];
-                }else if ([numtq isEqualToString:@"02"]){
-                    _weatherImg.image = [UIImage imageNamed:@"阴"];
-                }else{
-                    _weatherImg.image = [UIImage imageNamed:@"小雨"];
+                NSLog(@"%@", jsonObject);
+                NSArray *weatherArr = jsonObject[@"weather"];
+                NSDictionary *weather = [NSDictionary new];
+                for (NSDictionary *dict in weatherArr) {
+                    weather = dict;
                 }
-                _tempLabel.text = qw;
-                _weatherLabel.text = tq;
+                
+                NSDictionary *main = jsonObject[@"main"];
+                NSString *temq = [NSString stringWithFormat:@"%@",main[@"temp"]];
+                NSString *weatherStr = weather[@"description"];
+                NSString *weatherID = [NSString stringWithFormat:@"%@",main[@"id"]];
+                //将某指定方法抛回主线程去执行
+                [self performSelectorOnMainThread:@selector(updateUI:) withObject:[NSArray arrayWithObjects:weatherID,weatherStr,temq,nil] waitUntilDone:YES];
+                
                 
             } else {
                 //NSLog(@"%ld", (long)httpRes.statusCode);
@@ -323,6 +321,21 @@
     }];
     //让任务开始执行
     [jsonDataTask resume];
+}
+
+-(void)updateUI:(NSArray *)data {
+    
+    if ([data[0] integerValue] == 800){
+        _weatherImg.image = [UIImage imageNamed:@"晴"];
+    }else if ([data[0] integerValue] > 800 && [data[0] integerValue] < 804){
+        _weatherImg.image = [UIImage imageNamed:@"多云"];
+    }else if ([data[0] integerValue] == 804){
+        _weatherImg.image = [UIImage imageNamed:@"阴"];
+    }else{
+        _weatherImg.image = [UIImage imageNamed:@"小雨"];
+    }
+    _tempLabel.text = data[2];
+    _weatherLabel.text = data[1];
 }
 
 //广告,酒店
@@ -1088,6 +1101,12 @@
     otherPreIdxOne = otherIndexOne;
     otherPreIdxTwo = otherIndexTwo;
     [self initializeData];
+}
+
+- (IBAction)locAction:(UIButton *)sender forEvent:(UIEvent *)event {
+    CityTableViewController *citylist = [Utilities getStoryboardInstance:@"Main" byIdentity:@"city"];
+    [self.navigationController pushViewController:citylist animated:YES];
+    citylist.tag = 1;
 }
 
 //按键盘上的Return键收起键盘
