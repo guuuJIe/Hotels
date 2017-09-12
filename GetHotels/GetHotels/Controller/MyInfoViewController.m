@@ -45,11 +45,9 @@
     self.tabBarController.tabBar.hidden = NO;
     
     if ([Utilities loginCheck]){
-        _usernameLabel.hidden = YES;
-        _loginBtn.hidden = NO;
+        _usernameLabel.hidden = NO;
         _menuBtn.hidden = NO;
         _loginBtn.hidden = YES;
-        _usernameLabel.hidden = NO; 
         _usernameLabel.text = [[StorageMgr singletonStorageMgr] objectForKey:@"MemberId"]; 
         UserModel *model = [[StorageMgr singletonStorageMgr] objectForKey:@"UseInfo"];
         if ([model.grade integerValue] == 1){
@@ -62,14 +60,18 @@
             _twoStarImg.image = [UIImage imageNamed:@"星级"];
             _threeStarImg.image = [UIImage imageNamed:@"星级"];
         }
-        else {
-            _usernameLabel.hidden = NO;
-            _loginBtn.hidden = YES;
-            _menuBtn.hidden = YES;
+        else { 
             _oneStarImg.image = [UIImage imageNamed:@"星级2"];
             _twoStarImg.image = [UIImage imageNamed:@"星级2"];
             _threeStarImg.image = [UIImage imageNamed:@"星级2"];
-            }
+        }
+    }else{
+        _usernameLabel.hidden = YES;
+        _loginBtn.hidden = NO;
+        _menuBtn.hidden = YES;
+        _oneStarImg.image = [UIImage imageNamed:@"星级2"];
+        _twoStarImg.image = [UIImage imageNamed:@"星级2"];
+        _threeStarImg.image = [UIImage imageNamed:@"星级2"];
     }
     
 }
@@ -211,6 +213,7 @@
 }
 
 - (void)popAction{
+    [[StorageMgr singletonStorageMgr] removeObjectForKey:@"MemberId"];
     [_markView removeFromSuperview];
     _markView = nil;
     LoginViewController *login = [Utilities getStoryboardInstance:@"Login" byIdentity:@"login"];

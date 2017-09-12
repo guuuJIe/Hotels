@@ -219,7 +219,7 @@
         <!--City Table View Controller-->
         <scene sceneID="2Wn-g8-RoS">
             <objects>
-                <tableViewController storyboardIdentifier="City" useStoryboardIdentifierAsRestorationIdentifier="YES" id="b5i-xo-unz" customClass="CityTableViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="city" useStoryboardIdentifierAsRestorationIdentifier="YES" id="b5i-xo-unz" customClass="CityTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Hye-Nf-JsS">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -343,9 +343,6 @@
                                         <state key="normal" title="苏州">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         </state>
-                                        <connections>
-                                            <segue destination="GPq-fv-o6u" kind="show" id="7mB-tQ-Me9"/>
-                                        </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GFm-K7-jjg">
                                         <rect key="frame" x="75" y="68" width="225" height="30"/>
