@@ -76,6 +76,7 @@
 - (IBAction)cancelAction:(UIBarButtonItem *)sender;
 - (IBAction)doneAction:(UIBarButtonItem *)sender;
 - (IBAction)selectTagCfirmAction:(UIButton *)sender forEvent:(UIEvent *)event;
+- (IBAction)locAction:(UIButton *)sender forEvent:(UIEvent *)event;
  
 
 @property (strong, nonatomic) CLLocationManager *locMgr;
@@ -1102,6 +1103,12 @@
     [self initializeData];
 }
 
+- (IBAction)locAction:(UIButton *)sender forEvent:(UIEvent *)event {
+    CityTableViewController *citylist = [Utilities getStoryboardInstance:@"Main" byIdentity:@"city"];
+    [self.navigationController pushViewController:citylist animated:YES];
+    citylist.tag = 1;
+}
+
 //按键盘上的Return键收起键盘
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if (textField == _searchTextView){
@@ -1139,10 +1146,10 @@
     [_mark removeFromSuperview];
     _mark = nil;
 }
-- (IBAction)choosecityAction:(UIButton *)sender forEvent:(UIEvent *)event{
-    CityTableViewController *citylist = [Utilities getStoryboardInstance:@"Main" byIdentity:@"City"];
-    [self.navigationController pushViewController:citylist animated:YES];
-    citylist.tag = 1;
-}
+//- (IBAction)choosecityAction:(UIButton *)sender forEvent:(UIEvent *)event{
+//    CityTableViewController *citylist = [Utilities getStoryboardInstance:@"Main" byIdentity:@"City"];
+//    [self.navigationController pushViewController:citylist animated:YES];
+//    citylist.tag = 1;
+//}
 
 @end
