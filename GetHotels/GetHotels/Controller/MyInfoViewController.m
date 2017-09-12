@@ -20,8 +20,12 @@
 @property (weak, nonatomic) IBOutlet UIImageView *twoStarImg;
 @property (weak, nonatomic) IBOutlet UIImageView *threeStarImg;
 @property (weak, nonatomic) IBOutlet UITableView *myInfoTableView;
+@property (weak, nonatomic) IBOutlet UIButton *menuBtn;
+
+- (IBAction)menuAction:(UIButton *)sender forEvent:(UIEvent *)event;
 
 @property (strong, nonatomic) NSArray *arr;
+@property (strong,nonatomic) UIView *markView;
 
 @end
 
@@ -41,6 +45,9 @@
     self.tabBarController.tabBar.hidden = NO;
     
     if ([Utilities loginCheck]){
+        _usernameLabel.hidden = YES;
+        _loginBtn.hidden = NO;
+        _menuBtn.hidden = NO;
         _loginBtn.hidden = YES;
         _usernameLabel.hidden = NO; 
         _usernameLabel.text = [[StorageMgr singletonStorageMgr] objectForKey:@"MemberId"]; 
@@ -56,6 +63,9 @@
             _threeStarImg.image = [UIImage imageNamed:@"星级"];
         }
         else {
+            _usernameLabel.hidden = NO;
+            _loginBtn.hidden = YES;
+            _menuBtn.hidden = YES;
             _oneStarImg.image = [UIImage imageNamed:@"星级2"];
             _twoStarImg.image = [UIImage imageNamed:@"星级2"];
             _threeStarImg.image = [UIImage imageNamed:@"星级2"];
@@ -163,6 +173,53 @@
 }
 
 - (IBAction)loginAction:(UIButton *)sender forEvent:(UIEvent *)event {
-    LoginViewController *login = [Utilities getStoryboardInstance:@"LoginViewController" byIdentity:@""];
+    LoginViewController *login = [Utilities getStoryboardInstance:@"Login" byIdentity:@"login"];
+    UINavigationController *nc = [[UINavigationController alloc]initWithRootViewController:login];
+    [self presentViewController:nc animated:YES completion:nil];
+}
+- (IBAction)menuAction:(UIButton *)sender forEvent:(UIEvent *)event {
+    _markView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, UI_SCREEN_W, UI_SCREEN_H)];
+    _markView.backgroundColor = UIColorFromRGBA(104, 104, 104, 0.3);
+    //[self.view addSubview:_markView];
+    [[UIApplication sharedApplication].keyWindow addSubview:_markView];
+    UIView *popoverView = [UIView new];
+    popoverView.layer.cornerRadius = 5;
+    popoverView.frame = CGRectMake((UI_SCREEN_W - 300)/2, (UI_SCREEN_H - 240)/2, 300, 160);
+    popoverView.backgroundColor = [UIColor whiteColor];
+    [self.markView addSubview:popoverView];
+    UILabel *popLabel = [UILabel new];
+//    popLabel.x = popoverView.width/5;
+//    popoverView.y = popoverView.height/4;
+    popLabel.frame = CGRectMake(popoverView.width/6, popoverView.height/5,200, 50);
+    popLabel.text = @"确定退出登录 ？";
+    popLabel.font = [UIFont systemFontOfSize:A_Font];
+    popLabel.textColor = [UIColor grayColor];
+    [popoverView addSubview:popLabel];
+    UIButton *popBtn = [[UIButton alloc]initWithFrame:CGRectMake(popoverView.width - 100, popoverView.height - 50, 80, 40)];
+    [popBtn setTitle:@"退出登录" forState:UIControlStateNormal];
+    popBtn.titleLabel.font = [UIFont systemFontOfSize:B_Font];
+    [popBtn setTitleColor:SELECT_COLOR forState:UIControlStateNormal];
+    [popoverView addSubview:popBtn];
+    [popBtn addTarget:self action:@selector(popAction) forControlEvents:UIControlEventTouchUpInside];
+    UIButton *cancelBtn = [[UIButton alloc]initWithFrame:CGRectMake(popoverView.width - 180, popoverView.height - 50, 80, 40)];
+    [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
+    cancelBtn.titleLabel.font = [UIFont systemFontOfSize:B_Font];
+    [cancelBtn setTitleColor:UNSELECT_TITLECOLOR forState:UIControlStateNormal];
+    [popoverView addSubview:cancelBtn];
+    [cancelBtn addTarget:self action:@selector(cancelAction) forControlEvents:UIControlEventTouchUpInside];
+    
+}
+
+- (void)popAction{
+    [_markView removeFromSuperview];
+    _markView = nil;
+    LoginViewController *login = [Utilities getStoryboardInstance:@"Login" byIdentity:@"login"];
+    UINavigationController *nc = [[UINavigationController alloc]initWithRootViewController:login];
+    [self presentViewController:nc animated:YES completion:nil];
+}
+
+- (void)cancelAction{
+    [_markView removeFromSuperview];
+    _markView = nil; 
 }
 @end
