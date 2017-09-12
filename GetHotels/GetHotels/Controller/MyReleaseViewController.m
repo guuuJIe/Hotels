@@ -68,7 +68,7 @@
 //设置菜单栏的方法
 -(void)setsegment{
     //设置菜单栏主题字体
-    _segmentcontrol = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"已发布",@"正在发布",@"历史记录"]];
+    _segmentcontrol = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"已成交",@"正在发布",@"历史记录"]];
     //设置位置，原点是模拟器左上角
     _segmentcontrol.frame = CGRectMake(0,0, UI_SCREEN_W, 40);
     //设置默认选中项为下标为 0 ；
@@ -207,14 +207,14 @@
     }];
     
 }
-//已成交
+//历史记录
 -(void)historyRequest{
     UserModel *model = [[StorageMgr singletonStorageMgr] objectForKey:@"UserInfo"];
     NSDictionary *para = @{@"openid": model.openid,@"page" : @(isReleasedNum),@"pageSize" : @(pageSize),@"state" :@2};
     [RequestAPI requestURL:@"/findAllIssue_edu" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
         
         [_aiv stopAnimating];
-        UIRefreshControl *ref = (UIRefreshControl *)[_didReleaseTableView viewWithTag:200];
+        UIRefreshControl *ref = (UIRefreshControl *)[_histroyTableView viewWithTag:202];
         [ref endRefreshing];
         NSLog(@"历史记录:%@",responseObject);
         if ([responseObject[@"result"] integerValue] == 1) {
@@ -225,7 +225,7 @@
         }
     }failure:^(NSInteger statusCode, NSError *error) {
         [_aiv stopAnimating];
-        UIRefreshControl *ref = (UIRefreshControl *)[_didReleaseTableView viewWithTag:200];
+        UIRefreshControl *ref = (UIRefreshControl *)[_histroyTableView viewWithTag:202];
         [ref endRefreshing];
         
     }];
