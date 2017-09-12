@@ -163,7 +163,7 @@
 //正在发布
 -(void)isReleasedRequest{
     UserModel *model = [[StorageMgr singletonStorageMgr] objectForKey:@"UserInfo"];
-    NSDictionary *para = @{@"openid": model.openid,@"page" : @(isReleasedNum),@"pageSize" : @(pageSize),@"state" :@1};
+    NSDictionary *para = @{@"openid": model.openid,@"pageNum" : @(isReleasedNum),@"pageSize" : @(pageSize),@"state" :@1};
     [RequestAPI requestURL:@"/findAllIssue_edu" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
         
         [_aiv stopAnimating];
@@ -186,13 +186,13 @@
 //已成交
 -(void)didReleasedRequest{
     UserModel *model = [[StorageMgr singletonStorageMgr] objectForKey:@"UserInfo"];
-    NSDictionary *para = @{@"openid": model.openid,@"page" : @(isReleasedNum),@"pageSize" : @(pageSize),@"state" :@0};
+    NSDictionary *para = @{@"openid": model.openid,@"pageNum" : @(didReleaseNum),@"pageSize" : @(pageSize),@"state" :@0};
     [RequestAPI requestURL:@"/findAllIssue_edu" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
         
         [_aiv stopAnimating];
         UIRefreshControl *ref = (UIRefreshControl *)[_didReleaseTableView viewWithTag:200];
         [ref endRefreshing];
-        NSLog(@"已发布:%@",responseObject);
+        NSLog(@"已成交:%@",responseObject);
         if ([responseObject[@"result"] integerValue] == 1) {
             
         }
@@ -210,7 +210,7 @@
 //历史记录
 -(void)historyRequest{
     UserModel *model = [[StorageMgr singletonStorageMgr] objectForKey:@"UserInfo"];
-    NSDictionary *para = @{@"openid": model.openid,@"page" : @(isReleasedNum),@"pageSize" : @(pageSize),@"state" :@2};
+    NSDictionary *para = @{@"openid": model.openid,@"pageNum" : @(histroyNum),@"pageSize" : @(pageSize),@"state" :@2};
     [RequestAPI requestURL:@"/findAllIssue_edu" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
         
         [_aiv stopAnimating];
