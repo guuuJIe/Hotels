@@ -13,5 +13,13 @@
 @property (nonatomic) NSInteger page;
 @property (nonatomic) NSInteger state;
 @property (nonatomic) NSInteger Id;
+@property(strong,nonatomic) NSString *departure;   //出发地
+@property(strong,nonatomic)NSString *destination;  //目的地
+@property(strong,nonatomic)NSString *startTime;    //发布日期
+@property(nonatomic) NSInteger lowPrice;  //最低价
+@property(nonatomic) NSInteger highPrice;  //最高价
+@property(strong,nonatomic) NSString *aviationDemandDetail;  //航空需求
+
+
 - (instancetype)initWithDict: (NSDictionary *)dict;
 @end

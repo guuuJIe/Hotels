@@ -9,5 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface DidRealeseTableViewCell : UITableViewCell
+@property (weak, nonatomic) IBOutlet UILabel *startTimeLab;
+@property (weak, nonatomic) IBOutlet UILabel *departureLab;
+@property (weak, nonatomic) IBOutlet UILabel *destinationLab;
+@property (weak, nonatomic) IBOutlet UILabel *priceLab;
+@property (weak, nonatomic) IBOutlet UILabel *detailLab;
+@property (weak, nonatomic) IBOutlet UILabel *aviationDetail;
 
 @end

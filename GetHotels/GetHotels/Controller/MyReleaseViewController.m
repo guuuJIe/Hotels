@@ -12,14 +12,21 @@
 #import "IsReleasedTableViewCell.h"
 #import "HistoryTableViewCell.h"
 #import "UserModel.h"
+#import "ReleaseModel.h"
 @interface MyReleaseViewController ()<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>{
     NSInteger isReleasedFlag;
     NSInteger histroyFlag;
     
     NSInteger didReleaseNum;
+    BOOL didReleaseLast;
+    
     NSInteger isReleasedNum;
+    BOOL isReleasedLast;
+    
     NSInteger pageSize;
+    
     NSInteger histroyNum;
+    BOOL histroyLast;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UITableView *didReleaseTableView;
@@ -29,6 +36,10 @@
 @property (strong,nonatomic)UIActivityIndicatorView *aiv;
 @property ( nonatomic)CGRect rectStatus;
 @property ( nonatomic)CGRect rectNav;
+
+@property(strong,nonatomic)NSMutableArray *isReleasedArr;
+@property(strong,nonatomic)NSMutableArray *didReleaseArr;
+@property(strong,nonatomic)NSMutableArray *histroyArr;
 @end
 
 @implementation MyReleaseViewController
@@ -42,6 +53,9 @@
     didReleaseNum = 1;
     isReleasedNum = 1;
     histroyNum = 1;
+    _isReleasedArr = [NSMutableArray new];
+    _didReleaseArr = [NSMutableArray new];
+    _histroyArr = [NSMutableArray new];
     _rectStatus = [[UIApplication sharedApplication] statusBarFrame];
     // 导航栏（navigationbar）
     _rectNav = self.navigationController.navigationBar.frame;
@@ -171,7 +185,17 @@
         [ref endRefreshing];
         NSLog(@"正在发布:%@",responseObject);
         if ([responseObject[@"result"] integerValue] == 1) {
-            
+            NSDictionary *content = responseObject[@"content"];
+            NSArray *list = content[@"list"];
+            isReleasedLast = [content[@"isLastPage"]boolValue];
+            if (isReleasedNum == 1) {
+                [_isReleasedArr removeAllObjects];
+            }
+            for (NSDictionary *dict in list) {
+                ReleaseModel *model = [[ReleaseModel alloc]initWithDict:dict];
+                [_isReleasedArr addObject:model];
+            }
+            [_isReleasedTableView reloadData];
         }
         else{
             [Utilities popUpAlertViewWithMsg:@"网络错误,请稍后再试" andTitle:@"提示" onView:self];
@@ -238,7 +262,7 @@
         return 1;
     }
     else if(tableView == _isReleasedTableView){
-        return 1;
+        return _isReleasedArr.count;
     }
     else{
         return 1;
@@ -269,11 +293,9 @@
     // NSLog(@"scrollView.contentOffset.x = %f",scrollView.contentOffset.x);
     if (isReleasedFlag == 1  && page == 1) {
         isReleasedFlag =0;
-        NSLog(@"22");
     }
     if (histroyFlag == 1 && page ==2) {
         histroyFlag = 0;
-        NSLog(@"33");
     }
     return page;
 }
@@ -300,7 +322,13 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 1;
 }
-
+//设置组的底部视图高度
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    if (section == 0){
+        return 5.f;
+    }
+    return 0;
+}
 //每行长什么样
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == _didReleaseTableView) {
@@ -308,13 +336,18 @@
         return didReleaseCell;
     }
     else if(tableView == _isReleasedTableView){
-        IsReleasedTableViewCell *isReleasedCell = [tableView dequeueReusableCellWithIdentifier:@"isReleasedCell" forIndexPath:indexPath];
-        return isReleasedCell;
+        IsReleasedTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"isReleasedCell" forIndexPath:indexPath];
+        ReleaseModel *model = _isReleasedArr[indexPath.section];
+        cell.startTime.text = model.startTime;
+        cell.departure.text = model.departure;
+        cell.destination.text = model.destination;
+        cell.price.text = [NSString stringWithFormat:@"%ld-%ld", model.lowPrice, model.highPrice];
+        cell.aviationDetail.text = model.aviationDemandDetail;
+        return cell;
     }
     else{
         HistoryTableViewCell *historyCell = [tableView dequeueReusableCellWithIdentifier:@"historyCell" forIndexPath:indexPath];
         return historyCell;
     }
-    
 }
 @end
