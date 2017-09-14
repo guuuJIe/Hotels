@@ -189,20 +189,21 @@
     popoverView.frame = CGRectMake((UI_SCREEN_W - 300)/2, (UI_SCREEN_H - 240)/2, 300, 160);
     popoverView.backgroundColor = [UIColor whiteColor];
     [self.markView addSubview:popoverView];
+    //提示
     UILabel *popLabel = [UILabel new];
-//    popLabel.x = popoverView.width/5;
-//    popoverView.y = popoverView.height/4;
     popLabel.frame = CGRectMake(popoverView.width/6, popoverView.height/5,200, 50);
     popLabel.text = @"确定退出登录 ？";
     popLabel.font = [UIFont systemFontOfSize:A_Font];
     popLabel.textColor = [UIColor grayColor];
     [popoverView addSubview:popLabel];
+    //退出登录按钮
     UIButton *popBtn = [[UIButton alloc]initWithFrame:CGRectMake(popoverView.width - 100, popoverView.height - 50, 80, 40)];
     [popBtn setTitle:@"退出登录" forState:UIControlStateNormal];
     popBtn.titleLabel.font = [UIFont systemFontOfSize:B_Font];
     [popBtn setTitleColor:SELECT_COLOR forState:UIControlStateNormal];
     [popoverView addSubview:popBtn];
     [popBtn addTarget:self action:@selector(popAction) forControlEvents:UIControlEventTouchUpInside];
+    //取消按钮
     UIButton *cancelBtn = [[UIButton alloc]initWithFrame:CGRectMake(popoverView.width - 180, popoverView.height - 50, 80, 40)];
     [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
     cancelBtn.titleLabel.font = [UIFont systemFontOfSize:B_Font];
@@ -214,6 +215,7 @@
 
 - (void)popAction{
     [[StorageMgr singletonStorageMgr] removeObjectForKey:@"MemberId"];
+    [[StorageMgr singletonStorageMgr] removeObjectForKey:@"UserInfo"];
     [_markView removeFromSuperview];
     _markView = nil;
     LoginViewController *login = [Utilities getStoryboardInstance:@"Login" byIdentity:@"login"];

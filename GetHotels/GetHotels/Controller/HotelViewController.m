@@ -305,11 +305,12 @@
                 }
                 
                 NSDictionary *main = jsonObject[@"main"];
-                NSString *temq = [NSString stringWithFormat:@"%@",main[@"temp"]];
+                NSString *temq = [NSString stringWithFormat:@"%ld",([main[@"temp"] integerValue]/1)];
                 NSString *weatherStr = weather[@"description"];
-                NSString *weatherID = [NSString stringWithFormat:@"%@",main[@"id"]];
+                //NSString *weatherID = [NSString stringWithFormat:@"%@",weather[@"id"]];
+                NSInteger weatherID = [weather[@"id"] integerValue];
                 //将某指定方法抛回主线程去执行
-                [self performSelectorOnMainThread:@selector(updateUI:) withObject:[NSArray arrayWithObjects:weatherID,weatherStr,temq,nil] waitUntilDone:YES];
+                [self performSelectorOnMainThread:@selector(updateUI:) withObject:[NSArray arrayWithObjects:@(weatherID),weatherStr,temq,nil] waitUntilDone:YES];
                 
                 
             } else {
@@ -334,7 +335,7 @@
     }else{
         _weatherImg.image = [UIImage imageNamed:@"小雨"];
     }
-    _tempLabel.text = data[2];
+    _tempLabel.text = [NSString stringWithFormat:@"%@℃",data[2]];
     _weatherLabel.text = data[1];
 }
 
@@ -357,7 +358,7 @@
     
     //网络请求
     [RequestAPI requestURL:@"/findHotelByCity_edu" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
-        //NSLog(@"登录 = %@",responseObject);
+        NSLog(@"登录 = %@",responseObject);
         //当网络请求成功时让蒙层消失
         [_aiv stopAnimating];
         [ref endRefreshing];

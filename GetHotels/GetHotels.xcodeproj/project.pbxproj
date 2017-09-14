@@ -75,6 +75,8 @@
 		847526431F5A869C001B9D9C /* ReleaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 847526421F5A869C001B9D9C /* ReleaseModel.m */; };
 		847BA8E31F5A47E600B0EA8A /* Aviation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 847BA8E21F5A47E600B0EA8A /* Aviation.storyboard */; };
 		847BA8E71F5A481B00B0EA8A /* AviationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 847BA8E61F5A481B00B0EA8A /* AviationViewController.m */; };
+		8497A7851F6924670097E022 /* HotelOrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8497A7841F6924670097E022 /* HotelOrderModel.m */; };
+		8497A7891F6A1B980097E022 /* UseDelegetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8497A7881F6A1B980097E022 /* UseDelegetViewController.m */; };
 		8497D00D1F544E2400B495C6 /* HomeMarkTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8497D00C1F544E2400B495C6 /* HomeMarkTableViewCell.m */; };
 		84A346761F4C3BCD0051BDFB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84A346751F4C3BCD0051BDFB /* Main.storyboard */; };
 		84A346781F4C3BE60051BDFB /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84A346771F4C3BE60051BDFB /* Login.storyboard */; };
@@ -235,6 +237,10 @@
 		847BA8E21F5A47E600B0EA8A /* Aviation.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Aviation.storyboard; sourceTree = "<group>"; };
 		847BA8E51F5A481B00B0EA8A /* AviationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AviationViewController.h; sourceTree = "<group>"; };
 		847BA8E61F5A481B00B0EA8A /* AviationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AviationViewController.m; sourceTree = "<group>"; };
+		8497A7831F6924670097E022 /* HotelOrderModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotelOrderModel.h; sourceTree = "<group>"; };
+		8497A7841F6924670097E022 /* HotelOrderModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotelOrderModel.m; sourceTree = "<group>"; };
+		8497A7871F6A1B980097E022 /* UseDelegetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UseDelegetViewController.h; sourceTree = "<group>"; };
+		8497A7881F6A1B980097E022 /* UseDelegetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UseDelegetViewController.m; sourceTree = "<group>"; };
 		8497D00B1F544E2400B495C6 /* HomeMarkTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeMarkTableViewCell.h; sourceTree = "<group>"; };
 		8497D00C1F544E2400B495C6 /* HomeMarkTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeMarkTableViewCell.m; sourceTree = "<group>"; };
 		84A346751F4C3BCD0051BDFB /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -306,6 +312,7 @@
 			children = (
 				045E64E11F485CA3001A8263 /* GetHotels */,
 				045E65091F485CA3001A8263 /* GetHotelsUITests */,
+				045E64FE1F485CA3001A8263 /* GetHotelsTests */,
 				045E64E01F485CA3001A8263 /* Products */,
 				553CD5B2B9994D915DB545B5 /* Pods */,
 				FF5AA0DF063D9E4B12067EE4 /* Frameworks */,
@@ -339,7 +346,6 @@
 		045E64E21F485CA3001A8263 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				045E64FE1F485CA3001A8263 /* GetHotelsTests */,
 				045E64E51F485CA3001A8263 /* AppDelegate.h */,
 				045E64E61F485CA3001A8263 /* AppDelegate.m */,
 				045E64E31F485CA3001A8263 /* main.m */,
@@ -390,6 +396,7 @@
 		045E651A1F485D9B001A8263 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				8497A7861F6A1B550097E022 /* UseDeleget */,
 				847526381F5A49FF001B9D9C /* Offer */,
 				847BA8E41F5A47F600B0EA8A /* Aviation */,
 				842DB6161F57A1F600AFE2AE /* MyRelease */,
@@ -410,6 +417,7 @@
 		045E651B1F485D9B001A8263 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				8497A7821F6923A30097E022 /* MyHotelOrderModel */,
 				845DB93F1F5CEB6B00EF7BBB /* AviationModel */,
 				847526401F5A8655001B9D9C /* ReleaseModel */,
 				0464CC2F1F52D042006260CE /* UserModel */,
@@ -723,6 +731,24 @@
 			name = Aviation;
 			sourceTree = "<group>";
 		};
+		8497A7821F6923A30097E022 /* MyHotelOrderModel */ = {
+			isa = PBXGroup;
+			children = (
+				8497A7831F6924670097E022 /* HotelOrderModel.h */,
+				8497A7841F6924670097E022 /* HotelOrderModel.m */,
+			);
+			name = MyHotelOrderModel;
+			sourceTree = "<group>";
+		};
+		8497A7861F6A1B550097E022 /* UseDeleget */ = {
+			isa = PBXGroup;
+			children = (
+				8497A7871F6A1B980097E022 /* UseDelegetViewController.h */,
+				8497A7881F6A1B980097E022 /* UseDelegetViewController.m */,
+			);
+			name = UseDeleget;
+			sourceTree = "<group>";
+		};
 		8497D00A1F544DEB00B495C6 /* HomeMarkCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -1007,6 +1033,7 @@
 				8475263F1F5A4A79001B9D9C /* OfferCollectionViewCell.m in Sources */,
 				046F327B1F5445C400157DD3 /* DataSigner.m in Sources */,
 				847526371F5A497D001B9D9C /* MyReleaseViewController.m in Sources */,
+				8497A7851F6924670097E022 /* HotelOrderModel.m in Sources */,
 				84A346831F4C443D0051BDFB /* HotelTableViewCell.m in Sources */,
 				846DB0251F4DA09300578D22 /* CityTableViewController.m in Sources */,
 				046F327D1F5445C400157DD3 /* MD5DataSigner.m in Sources */,
@@ -1018,6 +1045,7 @@
 				0464CC331F52D101006260CE /* ContactServiceViewController.m in Sources */,
 				845F5A2F1F59010B00D163C0 /* SKTag.m in Sources */,
 				845DB9471F5FDF2A00EF7BBB /* HotelViewController.m in Sources */,
+				8497A7891F6A1B980097E022 /* UseDelegetViewController.m in Sources */,
 				841E379D1F4960710057D58A /* ViewController.m in Sources */,
 				8445AD861F4C535000417B79 /* AllOrdersTableViewCell.m in Sources */,
 				842DB6241F57ECA100AFE2AE /* IsReleasedTableViewCell.m in Sources */,
