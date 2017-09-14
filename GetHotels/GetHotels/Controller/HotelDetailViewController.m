@@ -184,10 +184,10 @@
             //定义日期格式
             formatter.dateFormat = @"yyyy-MM-dd";
             //当前时间
-            NSDate *date = [NSDate date];
+            NSDate *dates = [NSDate date];
             //后天的日期
             NSDate *dateAfterdays = [NSDate dateWithDaysFromNow:2];
-            NSString *dateStr = [formatter stringFromDate:date];
+            NSString *dateStr = [formatter stringFromDate:dates];
             NSString *dateTomStr= [formatter stringFromDate:dateAfterdays];
             //将处理好的字符串设置给两个Button
             [_dateBtn setTitle:dateStr forState:UIControlStateNormal];
@@ -208,7 +208,7 @@ failure:^(NSInteger statusCode, NSError *error) {
     //获取要显示的位置
     CGRect screenFrame = [[UIScreen mainScreen] bounds];
     
-    CGRect frame = CGRectMake(0, -65, screenFrame.size.width, 170);
+    CGRect frame = CGRectMake(0, 0, screenFrame.size.width, 170);
     
     NSArray *imageArray =@[@"酒店1.jpg",@"酒店2.jpg",@"酒店3.jpg"];
     

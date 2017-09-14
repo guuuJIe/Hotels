@@ -24,5 +24,6 @@
 #import "NSDate+Utility.h"
 #import "GBAlipayManager.h"
 #import <Foundation/Foundation.h>
+#import "UIView+Frame.h"
 
 #endif /* PrefixHeader_pch */

@@ -11,14 +11,22 @@
 #import "DidRealeseTableViewCell.h"
 #import "IsReleasedTableViewCell.h"
 #import "HistoryTableViewCell.h"
+#import "UserModel.h"
 #import "ReleaseModel.h"
 @interface MyReleaseViewController ()<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>{
     NSInteger isReleasedFlag;
     NSInteger histroyFlag;
     
     NSInteger didReleaseNum;
+    BOOL didReleaseLast;
+    
     NSInteger isReleasedNum;
+    BOOL isReleasedLast;
+    
+    NSInteger pageSize;
+    
     NSInteger histroyNum;
+    BOOL histroyLast;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UITableView *didReleaseTableView;
@@ -28,6 +36,10 @@
 @property (strong,nonatomic)UIActivityIndicatorView *aiv;
 @property ( nonatomic)CGRect rectStatus;
 @property ( nonatomic)CGRect rectNav;
+
+@property(strong,nonatomic)NSMutableArray *isReleasedArr;
+@property(strong,nonatomic)NSMutableArray *didReleaseArr;
+@property(strong,nonatomic)NSMutableArray *histroyArr;
 @end
 
 @implementation MyReleaseViewController
@@ -35,11 +47,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    pageSize = 5;
     isReleasedFlag = 1;
     histroyFlag = 1;
     didReleaseNum = 1;
     isReleasedNum = 1;
     histroyNum = 1;
+    _isReleasedArr = [NSMutableArray new];
+    _didReleaseArr = [NSMutableArray new];
+    _histroyArr = [NSMutableArray new];
     _rectStatus = [[UIApplication sharedApplication] statusBarFrame];
     // 导航栏（navigationbar）
     _rectNav = self.navigationController.navigationBar.frame;
@@ -47,7 +63,10 @@
     _isReleasedTableView.tableFooterView = [UIView new];
     _histroyTableView.tableFooterView = [UIView new];
     [self setsegment];
-    
+    [self refreshControl];
+    [self didReleasedRequest];
+    [self isReleasedRequest];
+    [self historyRequest];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -63,9 +82,9 @@
 //设置菜单栏的方法
 -(void)setsegment{
     //设置菜单栏主题字体
-    _segmentcontrol = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"已发布",@"正在发布",@"历史记录"]];
+    _segmentcontrol = [[HMSegmentedControl alloc] initWithSectionTitles:@[@"已成交",@"正在发布",@"历史记录"]];
     //设置位置，原点是模拟器左上角
-    _segmentcontrol.frame = CGRectMake(0,_rectStatus.size.height+_rectNav.size.height , UI_SCREEN_W, 40);
+    _segmentcontrol.frame = CGRectMake(0,0, UI_SCREEN_W, 40);
     //设置默认选中项为下标为 0 ；
     _segmentcontrol.selectedSegmentIndex = 0;
     //设置背景颜色
@@ -132,18 +151,20 @@
 //刷新已发布
 -(void)refreshDidRelase{
     didReleaseNum = 1;
-    
+    [self didReleasedRequest];
 }
 //刷新正在发布
 -(void)refreshIsReleased{
     isReleasedNum = 1;
-   
+    [self isReleasedRequest];
 }
 //刷新历史记录
 -(void)refreshHistroy{
     histroyNum = 1;
-    
+    [self historyRequest];
 }
+
+
 /*
 #pragma mark - Navigation
 
@@ -155,35 +176,47 @@
 
 //正在发布
 -(void)isReleasedRequest{
-    ReleaseModel *model = [[StorageMgr singletonStorageMgr] objectForKey:@"UserInfo"];
-    NSDictionary *para = @{@"openid": model.openid,@"page" : @(model.page),@"state" : @(model.state)};
+    UserModel *model = [[StorageMgr singletonStorageMgr] objectForKey:@"UserInfo"];
+    NSDictionary *para = @{@"openid": model.openid,@"pageNum" : @(isReleasedNum),@"pageSize" : @(pageSize),@"state" :@1};
     [RequestAPI requestURL:@"/findAllIssue_edu" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
         
         [_aiv stopAnimating];
         UIRefreshControl *ref = (UIRefreshControl *)[_isReleasedTableView viewWithTag:201];
         [ref endRefreshing];
-        NSLog(@"Orders:%@",responseObject);
+        NSLog(@"正在发布:%@",responseObject);
         if ([responseObject[@"result"] integerValue] == 1) {
-            
+            NSDictionary *content = responseObject[@"content"];
+            NSArray *list = content[@"list"];
+            isReleasedLast = [content[@"isLastPage"]boolValue];
+            if (isReleasedNum == 1) {
+                [_isReleasedArr removeAllObjects];
+            }
+            for (NSDictionary *dict in list) {
+                ReleaseModel *model = [[ReleaseModel alloc]initWithDict:dict];
+                [_isReleasedArr addObject:model];
+            }
+            [_isReleasedTableView reloadData];
         }
         else{
             [Utilities popUpAlertViewWithMsg:@"网络错误,请稍后再试" andTitle:@"提示" onView:self];
         }
     }failure:^(NSInteger statusCode, NSError *error) {
-        
+        [_aiv stopAnimating];
+        UIRefreshControl *ref = (UIRefreshControl *)[_isReleasedTableView viewWithTag:201];
+        [ref endRefreshing];
     }];
     
 }
-//已发布
+//已成交
 -(void)didReleasedRequest{
-    ReleaseModel *model = [[StorageMgr singletonStorageMgr] objectForKey:@"UserInfo"];
-    NSDictionary *para = @{@"Id" : @(model.Id)};
-    [RequestAPI requestURL:@"/finddemandById" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
+    UserModel *model = [[StorageMgr singletonStorageMgr] objectForKey:@"UserInfo"];
+    NSDictionary *para = @{@"openid": model.openid,@"pageNum" : @(didReleaseNum),@"pageSize" : @(pageSize),@"state" :@0};
+    [RequestAPI requestURL:@"/findAllIssue_edu" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
         
         [_aiv stopAnimating];
         UIRefreshControl *ref = (UIRefreshControl *)[_didReleaseTableView viewWithTag:200];
         [ref endRefreshing];
-        NSLog(@"Orders:%@",responseObject);
+        NSLog(@"已成交:%@",responseObject);
         if ([responseObject[@"result"] integerValue] == 1) {
             
         }
@@ -191,6 +224,33 @@
             [Utilities popUpAlertViewWithMsg:@"网络错误,请稍后再试" andTitle:@"提示" onView:self];
         }
     }failure:^(NSInteger statusCode, NSError *error) {
+        [_aiv stopAnimating];
+        UIRefreshControl *ref = (UIRefreshControl *)[_didReleaseTableView viewWithTag:200];
+        [ref endRefreshing];
+        
+    }];
+    
+}
+//历史记录
+-(void)historyRequest{
+    UserModel *model = [[StorageMgr singletonStorageMgr] objectForKey:@"UserInfo"];
+    NSDictionary *para = @{@"openid": model.openid,@"pageNum" : @(histroyNum),@"pageSize" : @(pageSize),@"state" :@2};
+    [RequestAPI requestURL:@"/findAllIssue_edu" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
+        
+        [_aiv stopAnimating];
+        UIRefreshControl *ref = (UIRefreshControl *)[_histroyTableView viewWithTag:202];
+        [ref endRefreshing];
+        NSLog(@"历史记录:%@",responseObject);
+        if ([responseObject[@"result"] integerValue] == 1) {
+            
+        }
+        else{
+            [Utilities popUpAlertViewWithMsg:@"网络错误,请稍后再试" andTitle:@"提示" onView:self];
+        }
+    }failure:^(NSInteger statusCode, NSError *error) {
+        [_aiv stopAnimating];
+        UIRefreshControl *ref = (UIRefreshControl *)[_histroyTableView viewWithTag:202];
+        [ref endRefreshing];
         
     }];
     
@@ -202,7 +262,7 @@
         return 1;
     }
     else if(tableView == _isReleasedTableView){
-        return 1;
+        return _isReleasedArr.count;
     }
     else{
         return 1;
@@ -233,11 +293,9 @@
     // NSLog(@"scrollView.contentOffset.x = %f",scrollView.contentOffset.x);
     if (isReleasedFlag == 1  && page == 1) {
         isReleasedFlag =0;
-        
     }
     if (histroyFlag == 1 && page ==2) {
         histroyFlag = 0;
-        
     }
     return page;
 }
@@ -264,7 +322,13 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 1;
 }
-
+//设置组的底部视图高度
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    if (section == 0){
+        return 5.f;
+    }
+    return 0;
+}
 //每行长什么样
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == _didReleaseTableView) {
@@ -272,13 +336,18 @@
         return didReleaseCell;
     }
     else if(tableView == _isReleasedTableView){
-        IsReleasedTableViewCell *isReleasedCell = [tableView dequeueReusableCellWithIdentifier:@"isReleasedCell" forIndexPath:indexPath];
-        return isReleasedCell;
+        IsReleasedTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"isReleasedCell" forIndexPath:indexPath];
+        ReleaseModel *model = _isReleasedArr[indexPath.section];
+        cell.startTime.text = model.startTime;
+        cell.departure.text = model.departure;
+        cell.destination.text = model.destination;
+        cell.price.text = [NSString stringWithFormat:@"%ld-%ld", model.lowPrice, model.highPrice];
+        cell.aviationDetail.text = model.aviationDemandDetail;
+        return cell;
     }
     else{
         HistoryTableViewCell *historyCell = [tableView dequeueReusableCellWithIdentifier:@"historyCell" forIndexPath:indexPath];
         return historyCell;
     }
-    
 }
 @end

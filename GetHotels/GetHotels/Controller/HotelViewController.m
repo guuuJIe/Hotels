@@ -15,21 +15,22 @@
 #import "HomeMarkTableViewCell.h"
 #import "SKTagView.h"
 #import "JSONS.h"
-
+#import "CityTableViewController.h"
 @interface HotelViewController ()<UITableViewDataSource,UITableViewDelegate,CLLocationManagerDelegate,UITextFieldDelegate>
 {
-    NSInteger flag;
     BOOL scrollFlag;
     BOOL firstVisit;
     BOOL isLastPage;
     BOOL selectBool;
+    double longitude;
+    double latitude;
+    NSInteger flag;
     NSInteger selectCirfimBool;
     
     NSInteger PageNum;
     NSInteger pageSize;
     
     NSInteger scrollPage;
-    NSInteger scrollPageC;
     NSInteger sortID;
     NSInteger starTestID;
     NSInteger starID;
@@ -48,17 +49,15 @@
 @property (weak, nonatomic) IBOutlet UILabel *weatherLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *weatherImg;
 
+@property (weak, nonatomic) IBOutlet UIView *HeadView;
 @property (weak, nonatomic) IBOutlet UITableView *hotelTableView;
 @property (weak, nonatomic) IBOutlet UIImageView *firstImg;
 @property (weak, nonatomic) IBOutlet UIImageView *secondImg;
 @property (weak, nonatomic) IBOutlet UIImageView *threeImg;
 @property (weak, nonatomic) IBOutlet UIImageView *fourImg;
 @property (weak, nonatomic) IBOutlet UIScrollView *homeScrollView;
-@property (weak, nonatomic) IBOutlet UIScrollView *bottmScrollView;
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
-@property (weak, nonatomic) IBOutlet UIButton *inTime;
-@property (weak, nonatomic) IBOutlet UIButton *outTime;
-@property (weak, nonatomic) IBOutlet UIButton *sortBtn; 
+
 @property (weak, nonatomic) IBOutlet UIView *markView;
 @property (weak, nonatomic) IBOutlet UITableView *markTabelView;
 @property (weak, nonatomic) IBOutlet SKTagView *selectTagView;
@@ -68,35 +67,38 @@
 @property (weak, nonatomic) IBOutlet UIToolbar *toolBar;
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePick;
 @property (weak, nonatomic) IBOutlet UIView *selectView;
+@property (strong, nonatomic) IBOutlet UIView *homeView;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *transviewPosotion;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *pageTop;
 
 - (IBAction)searchAction:(UIButton *)sender forEvent:(UIEvent *)event;
-- (IBAction)inTimeAction:(UIButton *)sender forEvent:(UIEvent *)event;
-- (IBAction)outTimeAction:(UIButton *)sender forEvent:(UIEvent *)event;
-- (IBAction)sortAction:(UIButton *)sender forEvent:(UIEvent *)event;
-- (IBAction)selectAction:(UIButton *)sender forEvent:(UIEvent *)event;
 - (IBAction)cancelAction:(UIBarButtonItem *)sender;
 - (IBAction)doneAction:(UIBarButtonItem *)sender;
 - (IBAction)selectTagCfirmAction:(UIButton *)sender forEvent:(UIEvent *)event;
+- (IBAction)locAction:(UIButton *)sender forEvent:(UIEvent *)event;
  
 
-@property (strong,nonatomic)CLLocationManager *locMgr;
-@property (strong,nonatomic)CLLocation *location;
+@property (strong, nonatomic) CLLocationManager *locMgr;
+@property (strong, nonatomic) CLLocation *location;
 
-@property (strong,nonatomic)UIActivityIndicatorView *aiv;
+@property (strong, nonatomic) UIActivityIndicatorView *aiv;
 @property (strong, nonatomic) NSMutableArray *hotelArr;
 @property (strong, nonatomic) NSMutableArray *advImgArr;
-@property (strong,nonatomic) NSString *inTimeDate;
-@property (strong,nonatomic) NSString *outTimeDate;
-@property (strong,nonatomic) NSArray *sortArr;
-@property (strong,nonatomic)UIView *mark;
-@property (strong,nonatomic) HomeMarkTableViewCell *mCell;
-@property (strong,nonatomic) HotelListModel *model;
+@property (strong, nonatomic) NSString *inTimeDate;
+@property (strong, nonatomic) NSString *outTimeDate;
+@property (strong, nonatomic) NSArray *sortArr;
+@property (strong, nonatomic) UIView *mark;
+@property (strong, nonatomic) HomeMarkTableViewCell *mCell;
+@property (strong, nonatomic) HotelListModel *model;
 
-@property (strong,nonatomic) NSIndexPath *indexPath;
-//@property (strong, nonatomic) NSString *longitude;      //经度
-//@property (strong, nonatomic) NSString *latitude;       //纬度
-
+@property (strong, nonatomic) UIButton *inTime;
+@property (strong, nonatomic) UIButton *outTime;
+@property (strong, nonatomic) UIButton *sortBtn;
+@property (strong, nonatomic) UIButton *selectBtn;
+@property (strong, nonatomic) UIView *cellHeaderView;
+@property (strong, nonatomic) NSIndexPath *indexPath;
+@property (strong, nonatomic) NSTimer *dt;
 @end
 
 @implementation HotelViewController
@@ -135,12 +137,14 @@
     firstVisit = YES;
     selectBool = YES;
     selectCirfimBool = NO;
+    [self buttonAtt];
     //各种赋初值
     PageNum = 1;
     pageSize = 8;
     starID = 1;
     priceID = 1;
     selectCirfimBool = 0;
+    scrollPage = 0;
     
     [self setDefaultDateForButton];
     [self locationConfig];          //开始定位
@@ -150,9 +154,8 @@
     [self initializeData];
     [self refresh];
     [self selectStar];
-    //调用键盘监听通知
-    [self keyboard];
     _sortArr = @[@"智能排序",@"价格低到高",@"价格高到低",@"离我从近到远"];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -161,19 +164,25 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    _markView.frame = CGRectMake(0, _HeadView.frame.size.height + 40, UI_SCREEN_W, 400);
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     self.tabBarController.tabBar.hidden = NO;
     //[[UIApplication sharedApplication]setStatusBarHidden:NO];
     [self locationStart];
-    [self weatherRequest];
+    [self geocodeAddressString];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:NO];
+//    //取消定时器
+//    [_dt invalidate];
+//    _dt = nil;
 }
 
-
+//-(BOOL)isDisplayedInScreen{
+    
+//}
 //================================================================定位相关
 -(void)locationConfig{
     _locMgr = [CLLocationManager new];
@@ -218,7 +227,7 @@
             ;
             //不是第一次打开到APP将默认城市与按钮上的城市名反向同步
             NSString *userCity =[Utilities getUserDefaults:@"UserCity"];
-            NSLog(@"城市标题%@",userCity);
+            //NSLog(@"城市标题%@",userCity);
             [_cityBtn setTitle:userCity forState:UIControlStateNormal];
         }
     }
@@ -239,8 +248,8 @@
     NSString *dateStr = [formatter stringFromDate:date];
     NSString *dateTomStr= [formatter stringFromDate:dateTom];
     //将处理好的字符串设置给两个Button
-    [_inTime setTitle:[NSString stringWithFormat:@"入住%@ ▼",dateStr] forState:UIControlStateNormal];
-    [_outTime setTitle:[NSString stringWithFormat:@"离店%@ ▼",dateTomStr] forState:UIControlStateNormal];
+    [_inTime setTitle:[NSString stringWithFormat:@"入住%@▼",dateStr] forState:UIControlStateNormal];
+    [_outTime setTitle:[NSString stringWithFormat:@"离店%@▼",dateTomStr] forState:UIControlStateNormal];
     _inTimeDate = dateStr;
     _outTimeDate = dateTomStr;
     
@@ -262,10 +271,8 @@
     _aiv = [Utilities getCoverOnView:self.view];
     [self selectRequest];
 }
-- (void)weatherInitializeData{
-    _aiv = [Utilities getCoverOnView:self.view];
-    [self weatherRequest];
-}
+
+
 - (void)refreshRequest{
     PageNum = 1;
     [self hotelAdv];
@@ -273,11 +280,9 @@
 #pragma  mark - request
 //天气
 -(void)weatherRequest{
- 
-
 
     //获得全宇宙天气的接口（当前这一刻的天气）（http://api.openweathermap.org是一个开放天气接口提供商）
-    NSString *weatherURLStr =  [NSString stringWithFormat:@"http://api.yytianqi.com/observe?city=%@,%@&key=ed497bous144g6lo",_model.latitude,_model.longitude];
+    NSString *weatherURLStr =  [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&appid=b864044bb95a790134d17b43a9a14d70&lang=zh_cn&find?q=London&units=metric",latitude,longitude];
     
     //将字符串转换成NSURL对象lat=29&lon=120.444
     NSURL *weatherURL = [NSURL URLWithString:weatherURLStr];
@@ -285,8 +290,6 @@
     NSURLSession *session = [NSURLSession sharedSession];
     //创建一个基于NSURLSession的请求（除了请求任务还有上传和下载任务可以选择）任务并处理完成后的回调
     NSURLSessionDataTask *jsonDataTask = [session dataTaskWithURL:weatherURL completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        //当网络请求成功时让蒙层消失
-        [_aiv stopAnimating];
         //NSLog(@"请求完成，开始做事");
         if (!error) {
             NSHTTPURLResponse *httpRes = (NSHTTPURLResponse *)response;
@@ -295,22 +298,19 @@
                 //将JSON格式的数据流data用JSONS工具包里的NSData下的Category中的JSONCol方法转化为OC对象（Array或Dictionary）
                 id jsonObject = [data JSONCol];
                 NSLog(@"%@", jsonObject);
-                NSDictionary *data = jsonObject[@"data"];
-                NSString *tq = data[@"tq"];
-                NSString *qw = data[@"qw"];
-                NSString *numtq = data[@"numtq"];
-                
-                if ([numtq isEqualToString:@"00"]){
-                    _weatherImg.image = [UIImage imageNamed:@"晴"];
-                }else if ([numtq isEqualToString:@"01"]){
-                    _weatherImg.image = [UIImage imageNamed:@"多云"];
-                }else if ([numtq isEqualToString:@"02"]){
-                    _weatherImg.image = [UIImage imageNamed:@"阴"];
-                }else{
-                    _weatherImg.image = [UIImage imageNamed:@"小雨"];
+                NSArray *weatherArr = jsonObject[@"weather"];
+                NSDictionary *weather = [NSDictionary new];
+                for (NSDictionary *dict in weatherArr) {
+                    weather = dict;
                 }
-                _tempLabel.text = qw;
-                _weatherLabel.text = tq;
+                
+                NSDictionary *main = jsonObject[@"main"];
+                NSString *temq = [NSString stringWithFormat:@"%@",main[@"temp"]];
+                NSString *weatherStr = weather[@"description"];
+                NSString *weatherID = [NSString stringWithFormat:@"%@",main[@"id"]];
+                //将某指定方法抛回主线程去执行
+                [self performSelectorOnMainThread:@selector(updateUI:) withObject:[NSArray arrayWithObjects:weatherID,weatherStr,temq,nil] waitUntilDone:YES];
+                
                 
             } else {
                 //NSLog(@"%ld", (long)httpRes.statusCode);
@@ -321,26 +321,21 @@
     }];
     //让任务开始执行
     [jsonDataTask resume];
-//
-//    NSDictionary *parameters = @{@"city" : @"CHBJ000000",@"key":@"ed497bous144g6lo"};
-//    
-//    NSString *requesturl = [NSString stringWithFormat:@"http://samples.openweathermap.org/data/2.5/weather?q=Wuxi,cn&appid=b1b15e88fa797225412429c1c50c122a1"];
-//    
-//    [RequestAPI requestURL:requesturl withParameters:nil andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
-//        [_aiv stopAnimating];
-//        NSLog(@"pp:%@",responseObject);
-//        if ([responseObject[@"resultFlag"] integerValue] == 8001){
-//            
-//        }else {
-//            
-//        }
-//    } failure:^(NSInteger statusCode, NSError *error) {
-//        [_aiv stopAnimating];
-//        [Utilities
-//         popUpAlertViewWithMsg:@"请保持网络连接畅通" andTitle:nil onView:self];
-//        NSLog(@"statusCode:%ld",(long)statusCode);
-//    }];
-//
+}
+
+-(void)updateUI:(NSArray *)data {
+    
+    if ([data[0] integerValue] == 800){
+        _weatherImg.image = [UIImage imageNamed:@"晴"];
+    }else if ([data[0] integerValue] > 800 && [data[0] integerValue] < 804){
+        _weatherImg.image = [UIImage imageNamed:@"多云"];
+    }else if ([data[0] integerValue] == 804){
+        _weatherImg.image = [UIImage imageNamed:@"阴"];
+    }else{
+        _weatherImg.image = [UIImage imageNamed:@"小雨"];
+    }
+    _tempLabel.text = data[2];
+    _weatherLabel.text = data[1];
 }
 
 //广告,酒店
@@ -356,9 +351,7 @@
         [Utilities popUpAlertViewWithMsg:@"请正确设置日期" andTitle:nil onView:self];
         [ref endRefreshing];
         return;
-    }
-    
-    //NSLog(@"%ld>>>",(long)PageNum);
+    } 
     //参数
     NSDictionary *para = @{@"city_name" : _cityBtn.titleLabel.text, @"pageNum" :@(PageNum), @"pageSize" :  @(pageSize), @"startId" :  @(starID), @"priceId" :@(priceID), @"sortingId" :@(sortID) ,@"inTime" : [NSString stringWithFormat:@"2017-%@",_inTimeDate] ,@"outTime" : [NSString stringWithFormat:@"2017-%@",_outTimeDate] ,@"wxlongitude" :@"", @"wxlatitude" :@""};
     
@@ -386,7 +379,6 @@
             
             //调用天气接口
             [self weatherRequest];
-            NSLog(@"<><>:<>%@,%@",_model.latitude,_model.longitude);
             //广告图片
             NSArray *advertising = content[@"advertising"];
             for (NSDictionary *imgUrl in advertising){
@@ -398,8 +390,6 @@
             [_threeImg sd_setImageWithURL:[NSURL URLWithString:_advImgArr[3]] placeholderImage:[UIImage imageNamed:@"多云"]];
             [_fourImg sd_setImageWithURL:[NSURL URLWithString:_advImgArr[4]] placeholderImage:[UIImage imageNamed:@"多云"]];
             
-            
-            [_homeScrollView reloadInputViews];
             [_hotelTableView reloadData];
         } else {
             [_aiv stopAnimating];
@@ -457,64 +447,81 @@
 
 //================================================================滚动广告相关
 #pragma mark scrollView
+
+//将要开始拖拽
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+   
+    //停止定时器
+    _dt.fireDate = [NSDate distantFuture];
+    scrollFlag = NO;
+}
+//拖拽结束时 开启计时器
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+    // 启动定时器
+    _dt.fireDate = [NSDate distantPast];
+    scrollFlag = YES;
+    //开启定时器
+    //[_dt setFireDate:[NSDate distantPast]];
+}
+
 -(void)duration{
- [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(timerMethod:) userInfo:nil repeats:YES];
+    _dt = [NSTimer scheduledTimerWithTimeInterval:2.5 target:self selector:@selector(timerMethod:) userInfo:nil repeats:YES];
+    //[[NSRunLoop currentRunLoop] addTimer:_dt forMode:NSRunLoopCommonModes];
  }
  
  - (void)timerMethod:(id)sender
  {
- // _pageController.currentPage = _scrollView.contentOffset.x /(_scrollView.frame.size.width);
- if (scrollFlag) {
- _pageControl.currentPage++;
- }
- else
- {
-     _pageControl.currentPage--;
- }
- if (_pageControl.currentPage == 0) {
-     scrollFlag = YES;
- }
- if (_pageControl.currentPage == (_pageControl.numberOfPages - 1)) {
-     scrollFlag = NO;
- }
- [_homeScrollView setContentOffset:CGPointMake(_pageControl.currentPage * _homeScrollView.frame.size.width, 0) animated:YES];
+          scrollPage ++;
+     if (scrollPage == (_pageControl.numberOfPages - 1)) {
+         [_homeScrollView setContentSize:CGSizeMake((_pageControl.numberOfPages + 1) * UI_SCREEN_W,_homeScrollView.frame.size.height)];
+         
+         UIImageView *img = [UIImageView new];
+         img.frame =CGRectMake(_homeScrollView.frame.size.width * _pageControl.   numberOfPages, 0, _homeScrollView.frame.size.width, _homeScrollView.frame.size.height);
+         if (_advImgArr.count != 0)
+         {
+             [img sd_setImageWithURL:[NSURL URLWithString:_advImgArr[0]] placeholderImage:[UIImage imageNamed:@"多云"]];
+             [_homeScrollView addSubview:img];
+         }
+         
+     } 
+     [_homeScrollView setContentOffset:CGPointMake(scrollPage * UI_SCREEN_W, 0) animated:YES];
+     
+     
+     if (scrollPage == _pageControl.numberOfPages){
+         scrollPage = 0;
+         dispatch_time_t duration = dispatch_time(DISPATCH_TIME_NOW, 1.5 *NSEC_PER_SEC);
+         //用duration这个设置好的策略去执行下列方法
+         dispatch_after(duration, dispatch_get_main_queue(), ^{
+             [_homeScrollView setContentOffset:CGPointMake(0, 0) animated:NO];
+         });
+     }
+     _pageControl.currentPage = scrollPage;
  }
 
 //scrollView已经停止减速
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     scrollPage = [self scrollCheck:scrollView];
-    _pageControl.currentPage = scrollPage;
-    
-}
-//scrollView已经开始减速
-- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView{
-    if (scrollView.contentOffset.x > 3 * UI_SCREEN_W){
-        if (scrollPage == 3){
-            scrollPageC = 0;
-        }
-    } else if(scrollView.contentOffset.x < 0){
-        if (scrollPage == 0){
-            scrollPageC = 3;
-        }
-    } else {
-       scrollPageC = 2;
-    }
-    
 }
 
 //判断scrollView滑动到哪里了
 -(NSInteger)scrollCheck:(UIScrollView *)scrollView{
     scrollPage = scrollView.contentOffset.x /(scrollView.frame.size.width);
-    if (scrollPageC == 0){
-        scrollPage = scrollPageC;
-        scrollView.contentOffset = CGPointMake(0, 0);
-    } else if(scrollPageC == 3){
-        scrollPage = scrollPageC;
-        scrollView.contentOffset = CGPointMake(3 * UI_SCREEN_W, 0);
+    _pageControl.currentPage = scrollPage;
+    if (scrollPage == _pageControl.numberOfPages - 1){
+        [scrollView setContentSize:CGSizeMake((_pageControl.numberOfPages + 1) * UI_SCREEN_W,scrollView.frame.size.height)];
+        UIImageView *img = [UIImageView new];
+        img.frame =CGRectMake(scrollView.frame.size.width * _pageControl.numberOfPages, 0, scrollView.frame.size.width, scrollView.frame.size.height);
+        [img sd_setImageWithURL:[NSURL URLWithString:_advImgArr[0]] placeholderImage:[UIImage imageNamed:@"多云"]];
+        [scrollView addSubview:img];
+    }
+    if (scrollPage == _pageControl.numberOfPages){
+        scrollPage = 0;
+        [scrollView setContentOffset:CGPointMake(0, 0) animated:NO];
     }
     return scrollPage;
 }
-/*
+
+ /*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -525,9 +532,78 @@
 */
 //设置表格视图一共有多少组
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    
     return 1;
 }
+
+//设置细胞头高度
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (tableView == _hotelTableView){
+        return 40;
+    }
+    return 0;
+}
+
+//设置头部筛选栏button属性
+- (void)buttonAtt{
+    //初始化button
+    _inTime = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, UI_SCREEN_W/4.f, 40)];
+    _outTime = [[UIButton alloc] initWithFrame:CGRectMake(UI_SCREEN_W/4.f, 0, UI_SCREEN_W/4.f, 40)];
+    _sortBtn = [[UIButton alloc] initWithFrame:CGRectMake(2 * UI_SCREEN_W/4.f, 0, UI_SCREEN_W/4.f, 40)];
+    _selectBtn = [[UIButton alloc] initWithFrame:CGRectMake(3 * UI_SCREEN_W/4.f, 0, UI_SCREEN_W/4.f, 40)];
+    //字体
+    [_inTime setTitle:[NSString stringWithFormat:@"%@▼",[_inTime.titleLabel.text substringToIndex:_inTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+    [_outTime setTitle:[NSString stringWithFormat:@"%@▼",[_outTime.titleLabel.text substringToIndex:_outTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+    [_sortBtn setTitle:@"智能排序▼" forState:UIControlStateNormal];
+    [_selectBtn setTitle:@"筛选▼" forState:UIControlStateNormal];
+    [_selectBtn setTitle:@"筛选▲" forState:UIControlStateSelected];
+    
+    //字体大小
+    _inTime.titleLabel.font =  [UIFont systemFontOfSize:C_Font];
+    _outTime.titleLabel.font = [UIFont systemFontOfSize:C_Font];
+    _sortBtn.titleLabel.font = [UIFont systemFontOfSize:C_Font];
+    _selectBtn.titleLabel.font = [UIFont systemFontOfSize:C_Font];
+    //字体颜色
+    [_inTime setTitleColor:UNSELECT_TITLECOLOR forState:UIControlStateNormal];
+    [_outTime setTitleColor:UNSELECT_TITLECOLOR forState:UIControlStateNormal];
+    [_sortBtn setTitleColor:UNSELECT_TITLECOLOR forState:UIControlStateNormal];
+    [_selectBtn setTitleColor:UNSELECT_TITLECOLOR forState:UIControlStateNormal];
+    [_inTime setTitleColor:SELECT_COLOR forState:UIControlStateSelected];
+    [_outTime setTitleColor:SELECT_COLOR forState:UIControlStateSelected];
+    [_sortBtn setTitleColor:SELECT_COLOR forState:UIControlStateSelected];
+    [_selectBtn setTitleColor:SELECT_COLOR forState:UIControlStateSelected];
+    //边框
+    
+    [_inTime.layer setBorderWidth:1];
+    [_outTime.layer setBorderWidth:1];
+    [_sortBtn.layer setBorderWidth:1];
+    [_selectBtn.layer setBorderWidth:1];
+    _inTime.layer.borderColor = [UIColor groupTableViewBackgroundColor].CGColor;
+    _outTime.layer.borderColor = [UIColor groupTableViewBackgroundColor].CGColor;
+    _sortBtn.layer.borderColor = [UIColor groupTableViewBackgroundColor].CGColor;
+    _selectBtn.layer.borderColor = [UIColor groupTableViewBackgroundColor].CGColor;
+    //点击事件
+    [_inTime addTarget:self action:@selector(inTimeAction)forControlEvents:UIControlEventTouchUpInside];
+    [_outTime addTarget:self action:@selector(outTimeAction)forControlEvents:UIControlEventTouchUpInside];
+    [_sortBtn addTarget:self action:@selector(sortBtnAction)forControlEvents:UIControlEventTouchUpInside];
+    [_selectBtn addTarget:self action:@selector(selectBtnAction)forControlEvents:UIControlEventTouchUpInside];
+}
+
+//设置细胞头部视图
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if (tableView == _hotelTableView){
+        _cellHeaderView = [UIView new];
+        _cellHeaderView.frame = CGRectMake(0, 0, UI_SCREEN_W, 40);
+        _cellHeaderView.backgroundColor = [UIColor whiteColor];
+        //view.alpha = 0.8;
+        [_cellHeaderView addSubview:_inTime];
+        [_cellHeaderView addSubview:_outTime];
+        [_cellHeaderView addSubview:_sortBtn];
+        [_cellHeaderView addSubview:_selectBtn];
+        return _cellHeaderView;
+    }
+    return nil;
+}
+
 //设置表格视图中每一组有多少行
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (tableView == _markTabelView){
@@ -577,7 +653,6 @@
         CLLocation *otherLocation = [[CLLocation alloc] initWithLatitude:[model.latitude doubleValue] longitude:[model.longitude doubleValue]];
         CLLocationDistance kilometers=[_location distanceFromLocation:otherLocation]/1000;
         cell.hotelDistanceLabel.text = [NSString stringWithFormat:@"距离我%.1f公里",kilometers];
-    
         return  cell;
     }
 }
@@ -585,13 +660,14 @@
 //细胞选中后调用
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == _markTabelView){
-         for(NSIndexPath *eachIP in tableView.indexPathsForVisibleRows){
+        _sortBtn.selected = NO;
+        for(NSIndexPath *eachIP in tableView.indexPathsForVisibleRows){
              _mCell = [self.markTabelView cellForRowAtIndexPath:eachIP];
              if (eachIP ==  indexPath){
                  _mCell.textLabel.textColor = SELECT_COLOR;
                  _mCell.accessoryType = UITableViewCellAccessoryCheckmark;
                  sortID = eachIP.row + 1;
-                 [_sortBtn setTitle:[NSString stringWithFormat:@"%@  ▼", _mCell.textLabel.text] forState:UIControlStateNormal];
+                 [_sortBtn setTitle:[NSString stringWithFormat:@"%@▼", _mCell.textLabel.text] forState:UIControlStateNormal];
                  _markView.hidden = YES;
                  [self initializeData];
              } else {
@@ -599,9 +675,9 @@
                  _mCell.accessoryType = UITableViewCellAccessoryNone;
              }
          }
-    }else{
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
 //    if (indexPath != _indexPath) {
 //        _mCell.textLabel.textColor = SELECT_COLOR;
 //        _mCell.accessoryType = UITableViewCellAccessoryCheckmark;
@@ -670,12 +746,12 @@
     //防止循环引用，把块变成弱指针
     //选中一个按钮的时候，
     __weak SKTagView *weakView = _selectTagView;
-//    if (selectCirfimBool == 1){
+//    if (selectCirfimBool == 2){
 //        weakView.didTapTagAtIndex(otherIndexOne, otherPreIdxOne);
 //    }
     _selectTagView.didTapTagAtIndex = ^(NSUInteger preIdx, NSUInteger index) {
 
-//        if (selectCirfimBool == 1){
+//        if (selectCirfimBool == 2){
 //            preIdx = otherIndexOne;
 //            index = otherPreIdxOne;
 //        }
@@ -698,8 +774,8 @@
         tag.borderColor = SELECTE_BORDER_COLOR;
         [weakView removeTagAtIndex:index];
         [weakView insertTag:tag atIndex:index];
-//        selectCirfimBool = 1;
-//        otherIndexOne = index;
+        selectCirfimBool = 3;
+        otherIndexOne = index;
         
     };
     //防止循环引用，把块变成弱指针
@@ -775,6 +851,7 @@
     }
 
 }
+
 -(void)getRegionCoordinate{
     //duration表示从Now开始过3秒
     dispatch_time_t duration = dispatch_time(DISPATCH_TIME_NOW, 3*NSEC_PER_SEC);
@@ -830,6 +907,8 @@
         [Utilities removeUserDefaults:@"UserCity"];
         //修改用户选择城市的记忆体
         [Utilities setUserDefaults:@"UserCity" content:cityStr];
+        [self geocodeAddressString];
+        
         //更改城市重新调用网络请求
         dispatch_time_t duration = dispatch_time(DISPATCH_TIME_NOW, 0.5*NSEC_PER_SEC);
         dispatch_after(duration, dispatch_get_main_queue(), ^{
@@ -838,6 +917,25 @@
     }
 }
 
+//获取经纬度
+- (void)geocodeAddressString{
+    NSString *oreillyAddress = [Utilities getUserDefaults:@"UserCity"];
+    if ([oreillyAddress isKindOfClass:[NSNull class]]){
+        oreillyAddress = _cityBtn.titleLabel.text;
+    }
+    CLGeocoder *geo = [CLGeocoder new];
+    //反向地理编码
+    [geo geocodeAddressString:oreillyAddress completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+        if (!error) {
+            CLPlacemark *first = placemarks.firstObject;
+            longitude = first.location.coordinate.longitude;
+            latitude = first.location.coordinate.latitude;
+            [self weatherRequest];
+        } else {
+            
+        }
+    }];
+}
 //当某一个页面跳转行为将要发生的时候
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if([segue.identifier isEqualToString:@"ListToDetail"]){
@@ -851,6 +949,7 @@
         detailVC.hotelId = model.hotelId;
     }
 }
+
 - (IBAction)searchAction:(UIButton *)sender forEvent:(UIEvent *)event {
         PageNum = 1;
         isLastPage = NO;
@@ -861,7 +960,15 @@
         }
 }
 
-- (IBAction)inTimeAction:(UIButton *)sender forEvent:(UIEvent *)event {
+- (void)inTimeAction {
+    [_inTime setTitle:[NSString stringWithFormat:@"%@▲",[_inTime.titleLabel.text substringToIndex:_inTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+    [_outTime setTitle:[NSString stringWithFormat:@"%@▼",[_outTime.titleLabel.text substringToIndex:_outTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+    [_sortBtn setTitle:[NSString stringWithFormat:@"%@▼",[_sortBtn.titleLabel.text substringToIndex:_sortBtn.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+    
+    _inTime.selected = YES;
+    _outTime.selected = NO;
+    _sortBtn.selected = NO;
+    _selectBtn.selected = NO;
     flag = 0;
     _markView.hidden = NO;
     _toolBar.hidden = NO;
@@ -870,7 +977,14 @@
     _selectView.hidden = YES;
 }
 
-- (IBAction)outTimeAction:(UIButton *)sender forEvent:(UIEvent *)event {
+- (void)outTimeAction{
+    [_outTime setTitle:[NSString stringWithFormat:@"%@▲",[_outTime.titleLabel.text substringToIndex:_outTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+     [_inTime setTitle:[NSString stringWithFormat:@"%@▼",[_inTime.titleLabel.text substringToIndex:_inTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+    [_sortBtn setTitle:[NSString stringWithFormat:@"%@▼",[_sortBtn.titleLabel.text substringToIndex:_sortBtn.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+    _outTime.selected = YES;
+    _inTime.selected = NO;
+    _sortBtn.selected = NO;
+    _selectBtn.selected = NO;
     flag = 1;
     _markView.hidden = NO;
     _toolBar.hidden = NO;
@@ -879,7 +993,14 @@
     _selectView.hidden = YES;
 }
 
-- (IBAction)sortAction:(UIButton *)sender forEvent:(UIEvent *)event {
+- (void)sortBtnAction {
+    [_sortBtn setTitle:[NSString stringWithFormat:@"%@▲",[_sortBtn.titleLabel.text substringToIndex:_sortBtn.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+    [_outTime setTitle:[NSString stringWithFormat:@"%@▼",[_outTime.titleLabel.text substringToIndex:_outTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+    [_inTime setTitle:[NSString stringWithFormat:@"%@▼",[_inTime.titleLabel.text substringToIndex:_inTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+    _sortBtn.selected = YES;
+    _inTime.selected = NO;
+    _outTime.selected = NO;
+    _selectBtn.selected = NO;
     _markView.hidden = NO;
     _toolBar.hidden = YES;
     _datePick.hidden = YES;
@@ -887,7 +1008,14 @@
     _selectView.hidden = YES;
 }
 
-- (IBAction)selectAction:(UIButton *)sender forEvent:(UIEvent *)event {
+- (void)selectBtnAction {
+    [_outTime setTitle:[NSString stringWithFormat:@"%@▼",[_outTime.titleLabel.text substringToIndex:_outTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+     [_inTime setTitle:[NSString stringWithFormat:@"%@▼",[_inTime.titleLabel.text substringToIndex:_inTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+    [_sortBtn setTitle:[NSString stringWithFormat:@"%@▼",[_sortBtn.titleLabel.text substringToIndex:_sortBtn.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+    _selectBtn.selected = YES;
+    _inTime.selected = NO;
+    _outTime.selected = NO;
+    _sortBtn.selected = NO;
     _markView.hidden = NO;
     _toolBar.hidden = YES;
     _datePick.hidden = YES;
@@ -895,12 +1023,36 @@
     _selectView.hidden = NO;
 }
 
+//下拉菜单栏位置设置
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    if (scrollView == _hotelTableView){
+//[UIView animateWithDuration:0.1 animations:^{
+            if (_hotelTableView.contentOffset.y > _homeScrollView.frame.size.height){
+                _transviewPosotion.constant = 40;
+                _pageTop.constant = - 400;
+            } else if(_hotelTableView.contentOffset.y > 0 && _hotelTableView.contentOffset.y < _homeScrollView.frame.size.height){
+                _transviewPosotion.constant = _homeScrollView.frame.size.height - _hotelTableView.contentOffset.y + 40;
+                _pageTop.constant = _homeScrollView.height - _hotelTableView.contentOffset.y - 40;
+            }else{
+                _transviewPosotion.constant = _homeScrollView.frame.size.height + 40;
+                _pageTop.constant =  _homeScrollView.height - 40;
+            }
+ //       }];
+        
+    }
+}
+
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
+    [_outTime setTitle:[NSString stringWithFormat:@"%@▼",[_outTime.titleLabel.text substringToIndex:_outTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+    [_inTime setTitle:[NSString stringWithFormat:@"%@▼",[_inTime.titleLabel.text substringToIndex:_inTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+    _inTime.selected = NO;
+    _outTime.selected = NO;
     _markView.hidden = YES;
 }
 
 - (IBAction)doneAction:(UIBarButtonItem *)sender {
-    
+    _inTime.selected = NO;
+    _outTime.selected = NO;
     NSDate *date = _datePick.date;
     NSDateFormatter *formatter = [NSDateFormatter new];
     formatter.dateFormat = @"MM-dd";
@@ -917,16 +1069,17 @@
  
     
     if (flag == 0){
-             [_inTime setTitle:[NSString stringWithFormat:@"入住%@ ▼",thDate] forState:UIControlStateNormal];
+             [_inTime setTitle:[NSString stringWithFormat:@"入住%@▼",thDate] forState:UIControlStateNormal];
             _inTimeDate = thDate;
             //开始日期
             startTime = [Utilities cTimestampFromString:thDate format:@"MM-dd"];
     }else{
         if (thDateTime <= startTime) {
+            [_outTime setTitle:[NSString stringWithFormat:@"%@▼",[_outTime.titleLabel.text substringToIndex:_outTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
             [Utilities popUpAlertViewWithMsg:@"请正确设置日期" andTitle:nil onView:self];
             
         }else{
-            [_outTime setTitle:[NSString stringWithFormat:@"离店%@ ▼",thDate] forState:UIControlStateNormal];
+            [_outTime setTitle:[NSString stringWithFormat:@"离店%@▼",thDate] forState:UIControlStateNormal];
             _outTimeDate = thDate;
             [self initializeData];
         }
@@ -939,14 +1092,21 @@
 }
 
 - (IBAction)selectTagCfirmAction:(UIButton *)sender forEvent:(UIEvent *)event {
+    _selectBtn.selected = NO;
     PageNum = 1;
     starID = starTestID;
     priceID = priceTestID;
-    selectCirfimBool = 0;
+    selectCirfimBool = 1;
     _markView.hidden = YES;
-//    otherPreIdxOne = otherIndexOne;
-//    otherPreIdxTwo = otherIndexTwo;
+    otherPreIdxOne = otherIndexOne;
+    otherPreIdxTwo = otherIndexTwo;
     [self initializeData];
+}
+
+- (IBAction)locAction:(UIButton *)sender forEvent:(UIEvent *)event {
+    CityTableViewController *citylist = [Utilities getStoryboardInstance:@"Main" byIdentity:@"city"];
+    [self.navigationController pushViewController:citylist animated:YES];
+    citylist.tag = 1;
 }
 
 //按键盘上的Return键收起键盘
@@ -958,32 +1118,38 @@
     return YES;
 }
 - (void) touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [_outTime setTitle:[NSString stringWithFormat:@"%@▼",[_outTime.titleLabel.text substringToIndex:_outTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+    [_inTime setTitle:[NSString stringWithFormat:@"%@▼",[_inTime.titleLabel.text substringToIndex:_inTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+    [_sortBtn setTitle:[NSString stringWithFormat:@"%@▼",[_sortBtn.titleLabel.text substringToIndex:_sortBtn.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+    _inTime.selected = NO;
+    _outTime.selected = NO;
+    _sortBtn.selected = NO;
+    _selectBtn.selected = NO;
     _markView.hidden = YES;
     [self.view endEditing:YES];
-//    if (selectCirfimBool != 0){
-//        [self weakSelect];
-//       // _selectTagView.didTapTagAtIndex(otherPreIdxOne, otherIndexOne);
-//    }
+    selectCirfimBool = 2;
+//    [self weakSelect];
+       // _selectTagView.didTapTagAtIndex(otherPreIdxOne, otherIndexOne);
     
 }
 
--(void)keyboard{
-    //监听键盘将要打开这一操作,打开后执行keyboardWillShow:方法
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    //监听键盘将要隐藏这一操作,打开后执行keyboardWillHide:方法
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-}
-//键盘出现
-- (void)keyboardWillShow: (NSNotification *)notification {
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
     _mark = [UIView new];
     _mark.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-    _mark.backgroundColor = UIColorFromRGBA(104, 104, 104, 0.4);
-    [[UIApplication sharedApplication].keyWindow addSubview:_mark];
+    _mark.backgroundColor = UIColorFromRGBA(104, 104, 104, 0.3);
+    //[[UIApplication sharedApplication].keyWindow addSubview:_mark];
+    [self.view addSubview:_mark];
+    return YES;
 }
 
-//键盘隐藏
-- (void)keyboardWillHide: (NSNotification *)notification {
+- (void)textFieldDidEndEditing:(UITextField *)textField{
     [_mark removeFromSuperview];
     _mark = nil;
 }
+//- (IBAction)choosecityAction:(UIButton *)sender forEvent:(UIEvent *)event{
+//    CityTableViewController *citylist = [Utilities getStoryboardInstance:@"Main" byIdentity:@"City"];
+//    [self.navigationController pushViewController:citylist animated:YES];
+//    citylist.tag = 1;
+//}
+
 @end
