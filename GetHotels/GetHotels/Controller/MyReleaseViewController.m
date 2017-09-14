@@ -13,6 +13,7 @@
 #import "HistoryTableViewCell.h"
 #import "UserModel.h"
 #import "ReleaseModel.h"
+#import "OfferViewController.h"
 @interface MyReleaseViewController ()<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>{
     NSInteger isReleasedFlag;
     NSInteger histroyFlag;
@@ -218,7 +219,17 @@
         [ref endRefreshing];
         NSLog(@"已成交:%@",responseObject);
         if ([responseObject[@"result"] integerValue] == 1) {
-            
+            NSDictionary *content = responseObject[@"content"];
+            NSArray *list = content[@"list"];
+            didReleaseLast = [content[@"isLastPage"]boolValue];
+            if (didReleaseNum == 1) {
+                [_didReleaseArr removeAllObjects];
+            }
+            for (NSDictionary *dict in list) {
+                ReleaseModel *model = [[ReleaseModel alloc]initWithDictForRelease:dict];
+                [_didReleaseArr addObject:model];
+            }
+            [_didReleaseTableView reloadData];
         }
         else{
             [Utilities popUpAlertViewWithMsg:@"网络错误,请稍后再试" andTitle:@"提示" onView:self];
@@ -242,7 +253,17 @@
         [ref endRefreshing];
         NSLog(@"历史记录:%@",responseObject);
         if ([responseObject[@"result"] integerValue] == 1) {
-            
+            NSDictionary *content = responseObject[@"content"];
+            NSArray *list = content[@"list"];
+            histroyLast = [content[@"isLastPage"]boolValue];
+            if (histroyNum == 1) {
+                [_histroyArr removeAllObjects];
+            }
+            for (NSDictionary *dict in list) {
+                ReleaseModel *model = [[ReleaseModel alloc]initWithDictForHistroy:dict];
+                [_histroyArr addObject:model];
+            }
+            [_histroyTableView reloadData];
         }
         else{
             [Utilities popUpAlertViewWithMsg:@"网络错误,请稍后再试" andTitle:@"提示" onView:self];
@@ -259,13 +280,13 @@
 //一共多少组
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if (tableView == _didReleaseTableView) {
-        return 1;
+        return _didReleaseArr.count;
     }
     else if(tableView == _isReleasedTableView){
         return _isReleasedArr.count;
     }
     else{
-        return 1;
+        return _histroyArr.count;
     }
 }
 #pragma mark - scrollView
@@ -312,7 +333,12 @@
         
     }
     else if(tableView == _isReleasedTableView){
-        [self performSegueWithIdentifier:@"MyReleaseToOffer" sender:self];
+        NSIndexPath *indexPath = [_isReleasedTableView indexPathForSelectedRow];
+        ReleaseModel *model = _isReleasedArr[indexPath.row];
+        //2.获取下一页这个实例
+        //OfferViewController *detailVC;
+        //detailVC.IssueId = model.Id;
+        [self performSegueWithIdentifier:@"MyReleaseToOffer" sender:self ];
     }
     else{
         
@@ -329,11 +355,60 @@
     }
     return 0;
 }
+
+//细胞将要出现时调用
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (tableView == _didReleaseTableView) {
+        if (indexPath.section == _didReleaseArr.count -1) {
+            if (!didReleaseLast) {
+                didReleaseNum ++;
+                [self didReleasedRequest];
+            }
+        }
+    }else if (tableView == _isReleasedTableView) {
+        //判断将要出现的组是不是当前显示的最后一组的组号
+        if (indexPath.section == _isReleasedArr.count - 1) {
+            //判断当前页是否为最后一页
+            if (!isReleasedLast) {
+                isReleasedNum ++;
+                [self isReleasedRequest];
+                NSLog(@"不是最后一页");
+            }
+        }
+    }else{
+        //判断将要出现的组是不是当前显示的最后一组的组号
+        if (indexPath.section == _histroyArr.count - 1) {
+            //判断当前页是否为最后一页
+            if (!histroyLast) {
+                histroyNum ++;
+                [self historyRequest];
+                NSLog(@"不是最后一页");
+            }
+        }
+    }
+}
+
 //每行长什么样
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == _didReleaseTableView) {
-        DidRealeseTableViewCell *didReleaseCell = [tableView dequeueReusableCellWithIdentifier:@"didReleaseCell" forIndexPath:indexPath];
-        return didReleaseCell;
+        DidRealeseTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"didReleaseCell" forIndexPath:indexPath];
+        ReleaseModel *model = _didReleaseArr[indexPath.section];
+        cell.startTimeLab.text = model.startTime;
+        cell.departureLab.text = model.departure;
+        cell.destinationLab.text = model.destination;
+        cell.priceLab.text =[NSString stringWithFormat:@"成交价:%ld", model.finalPrice];
+        NSDate *date = [NSDate dateWithTimeIntervalSince1970:model.time / 1000];
+        NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+        formatter.dateFormat = @"HH:mm";
+        NSString *thDate = [formatter stringFromDate:date];
+        NSInteger i = [thDate intValue];
+        if (i<=12 && i>0) {
+            cell.detailLab.text = [NSString stringWithFormat:@"上午 %@ 起飞", thDate];
+        }else{
+            cell.detailLab.text = [NSString stringWithFormat:@"下午 %@ 起飞", thDate];
+        }
+        cell.aviationDetail.text = model.aviationDemandDetail;
+        return cell;
     }
     else if(tableView == _isReleasedTableView){
         IsReleasedTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"isReleasedCell" forIndexPath:indexPath];
@@ -342,12 +417,53 @@
         cell.departure.text = model.departure;
         cell.destination.text = model.destination;
         cell.price.text = [NSString stringWithFormat:@"%ld-%ld", model.lowPrice, model.highPrice];
+        NSDate *date = [NSDate dateWithTimeIntervalSince1970:model.time  / 1000];
+        NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+        formatter.dateFormat = @"HH";
+        NSString *thDate = [formatter stringFromDate:date];
+        NSInteger i = [thDate intValue];
+        if (i<=12 && i>0) {
+            cell.timeDetail.text = [NSString stringWithFormat:@"大约上午%@点左右", thDate];
+        }else{
+            cell.timeDetail.text = [NSString stringWithFormat:@"大约下午%@点左右", thDate];
+        }
         cell.aviationDetail.text = model.aviationDemandDetail;
         return cell;
     }
     else{
-        HistoryTableViewCell *historyCell = [tableView dequeueReusableCellWithIdentifier:@"historyCell" forIndexPath:indexPath];
-        return historyCell;
+        HistoryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"historyCell" forIndexPath:indexPath];
+        ReleaseModel *model = _histroyArr[indexPath.section];
+        cell.startTime.text = model.startTime;
+        cell.departure.text = model.departure;
+        cell.destination.text = model.destination;
+        cell.price.text =[NSString stringWithFormat:@"成交价:%ld", model.finalPrice];
+        NSDate *date = [NSDate dateWithTimeIntervalSince1970:model.time / 1000];
+        NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+        formatter.dateFormat = @"HH:mm";
+        NSString *thDate = [formatter stringFromDate:date];
+        NSInteger i = [thDate intValue];
+        if (i<=12 && i>0) {
+            cell.time.text = [NSString stringWithFormat:@"上午 %@ 起飞", thDate];
+        }else{
+            cell.time.text = [NSString stringWithFormat:@"下午 %@ 起飞", thDate];
+        }
+        cell.detail.text = model.aviationDemandDetail;
+        return cell;
     }
 }
+//当某一个页面跳转行为将要发生的时候
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if([segue.identifier isEqualToString:@"MyReleaseToOffer"]){
+        //当从列表页到详情页的这个跳转要发生的时候
+        NSIndexPath *indexPath = [_isReleasedTableView indexPathForSelectedRow];
+        ReleaseModel *model = _isReleasedArr[indexPath.section];
+        //2.获取下一页这个实例
+        OfferViewController *detailVC = segue.destinationViewController ;
+        //3、把数据给下一页预备好的接受容器
+        detailVC.IssueId = model.Id;
+
+        //1.获取要传递到下一页的数据
+            }
+}
+
 @end
