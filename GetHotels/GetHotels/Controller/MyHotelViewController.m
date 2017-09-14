@@ -30,6 +30,11 @@
 @property (strong,nonatomic)UIImageView *allorderImg;
 @property (strong,nonatomic)UIImageView *useableorderImg;
 @property (strong,nonatomic)UIImageView *datedorderImg;
+
+@property (strong,nonatomic) NSMutableArray *allOrdersArr;
+@property (strong,nonatomic) NSMutableArray *useableOrdersArr;
+@property (strong,nonatomic) NSMutableArray *datedOrderArr;
+
 @end
 
 @implementation MyHotelViewController
@@ -41,6 +46,10 @@
     allOrdersNum = 1;
     useableOrdersNum = 1;
     datedOrdersNum  = 1;
+    
+    _allOrdersArr = [NSMutableArray new];
+    _useableOrdersArr = [NSMutableArray new];
+    _datedOrderArr = [NSMutableArray new];
     // 状态栏(statusbar)
     _rectStatus = [[UIApplication sharedApplication] statusBarFrame];
     // 导航栏（navigationbar）
@@ -137,16 +146,19 @@
 //刷新全部订单
 -(void)refreshAllOrder{
     allOrdersNum = 1;
+    _aiv = [Utilities getCoverOnView:self.view];
     [self AllOrdersRequest];
 }
 //刷新可用订单
 -(void)refreshUseableOrder{
     useableOrdersNum = 1;
+    _aiv = [Utilities getCoverOnView:self.view];
     [self UseableOrdersRequest];
 }
 //刷新过期订单
 -(void)refreshDatedOrder{
     datedOrdersNum = 1;
+    _aiv = [Utilities getCoverOnView:self.view];
     [self DatedOrdersRequest];
 }
 /*
@@ -162,7 +174,7 @@
 -(void)AllOrdersRequest{
     UserModel *model = [[StorageMgr singletonStorageMgr] objectForKey:@"UserInfo"];
     NSDictionary *para = @{@"openid": model.openid,@"id" : @1};
-       [RequestAPI requestURL:@"/findOrders_edu" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
+    [RequestAPI requestURL:@"/findOrders_edu" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
        
         [_aiv stopAnimating];
         UIRefreshControl *ref = (UIRefreshControl *)[_AllOrderTableView viewWithTag:100];
@@ -175,7 +187,10 @@
             [Utilities popUpAlertViewWithMsg:@"网络错误,请稍后再试" andTitle:@"提示" onView:self];
         }
     }failure:^(NSInteger statusCode, NSError *error) {
-         
+        //当网络请求失败时让蒙层消失
+        [_aiv stopAnimating];
+        [Utilities
+         popUpAlertViewWithMsg:@"请保持网络连接畅通" andTitle:nil onView:self];
     }];
     
 }
@@ -196,6 +211,10 @@
             [Utilities popUpAlertViewWithMsg:@"网络错误,请稍后再试" andTitle:@"提示" onView:self];
         }
     } failure:^(NSInteger statusCode, NSError *error) {
+        //当网络请求失败时让蒙层消失
+        [_aiv stopAnimating];
+        [Utilities
+         popUpAlertViewWithMsg:@"请保持网络连接畅通" andTitle:nil onView:self];
     }];
     
 }
@@ -216,6 +235,10 @@
             [Utilities popUpAlertViewWithMsg:@"网络错误,请稍后再试" andTitle:@"提示" onView:self];
         }
     } failure:^(NSInteger statusCode, NSError *error) {
+        //当网络请求失败时让蒙层消失
+        [_aiv stopAnimating];
+        [Utilities
+         popUpAlertViewWithMsg:@"请保持网络连接畅通" andTitle:nil onView:self];
     }];
     
 }
