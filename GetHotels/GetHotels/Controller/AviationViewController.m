@@ -60,7 +60,8 @@
     _datePicker.backgroundColor = [UIColor whiteColor];
     //把状态栏变成白色
     //[[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
-    
+    self.titleTextField.delegate = self;
+    self.detailsTextField.delegate = self;
     //调用设置导航样式
     [self setNavigationItem];
     
@@ -106,22 +107,34 @@
     //[leftBtn addTarget:self action:@selector(leftButtonAction:) forControlEvents: UIControlEventTouchUpInside];
     //self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:leftBtn];
 }
-//英文键盘默认高度216
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
-{
-    //重写textField这个方法
-    //NSLog(@"开始编辑");
-    CGFloat offset = self.view.frame.size.height - (textField.frame.origin.y+textField.frame.size.height+216+50);
-    NSLog(@"偏移高度为 --- %f",offset);
-    if (offset<=0) {
-        [UIView animateWithDuration:0.3 animations:^{
-            CGRect frame = self.view.frame;
-            frame.origin.y = offset;
-            self.view.frame = frame;
-        }];
-    }
-    return YES;
-}
+////英文键盘默认高度216
+//- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+//{
+//    //重写textField这个方法
+//    NSLog(@"开始编辑");
+//    CGFloat offset = self.view.frame.size.height - (textField.frame.origin.y+textField.frame.size.height+216+50);
+//    NSLog(@"偏移高度为 --- %f",offset);
+//    if (offset<=0) {
+//        [UIView animateWithDuration:0.3f animations:^{
+//            CGRect frame = self.view.frame;
+//            frame.origin.y = offset;
+//            self.view.frame = frame;
+//        }];
+//    }
+//    return YES;
+//}
+//- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+//{
+//    
+//    //重写textField这个方法
+//    NSLog(@"将要结束编辑");
+//    [UIView animateWithDuration:0.3f animations:^{
+//        CGRect frame = self.view.frame;
+//        frame.origin.y = 0.0;
+//        self.view.frame = frame;
+//    }];
+//    return YES;
+//}
 
 -(void)defaultDate{
     //初始化日期格式器
@@ -148,9 +161,9 @@
     self.backView.layer.shadowOpacity = 0.5;//阴影透明度，默认0
     self.backView.layer.shadowRadius = 4;//阴影半径，默认3
     self.highPriceTextField.layer.borderColor = [[UIColor lightGrayColor] CGColor];//设置输入框边框颜色
-    _highPriceTextField.layer.borderWidth = 1.0;     //设置输入框边框宽度
+    _highPriceTextField.layer.borderWidth = 0.5;     //设置输入框边框宽度
     self.lowPriceTextField.layer.borderColor = [[UIColor lightGrayColor] CGColor];
-    _lowPriceTextField.layer.borderWidth = 1.0;
+    _lowPriceTextField.layer.borderWidth = 0.5;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
@@ -247,10 +260,10 @@
 }
 
 //让根视图结束编辑状态，到达收起键盘的目的
-//- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-//    _pickerview.hidden = YES;
-//}
-//
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    _pickerview.hidden = YES;
+}
+
 #pragma mark - quest
 //网络请求
 -(void)aviationRequest{

@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface AviationViewController : UIViewController
-
+@property (nonatomic)NSInteger tag;
 @end

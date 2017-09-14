@@ -36,11 +36,11 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="553"/>
                                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="didReleaseCell" rowHeight="160" id="kQx-Zj-JnJ">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="didReleaseCell" rowHeight="160" id="kQx-Zj-JnJ" customClass="DidRealeseTableViewCell">
                                                 <rect key="frame" x="0.0" y="28" width="375" height="160"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kQx-Zj-JnJ" id="aub-1A-9aj">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="159.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="160"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2-24" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gvd-Uu-3Vx">
@@ -151,6 +151,14 @@
                                                         <constraint firstItem="HgG-2e-sdZ" firstAttribute="bottom" secondItem="eaQ-Ie-yBr" secondAttribute="bottom" id="w7q-Eg-E1u"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
+                                                <connections>
+                                                    <outlet property="aviationDetail" destination="HgG-2e-sdZ" id="2p4-ZU-KIp"/>
+                                                    <outlet property="departureLab" destination="caL-VD-Xkj" id="5Z8-u6-82O"/>
+                                                    <outlet property="destinationLab" destination="96W-tv-KN6" id="Zji-8g-hoc"/>
+                                                    <outlet property="detailLab" destination="fOh-4w-y48" id="7iH-Fe-cKc"/>
+                                                    <outlet property="priceLab" destination="ExI-d1-oQA" id="lxF-2v-buY"/>
+                                                    <outlet property="startTimeLab" destination="gvd-Uu-3Vx" id="W4c-KN-NYC"/>
+                                                </connections>
                                             </tableViewCell>
                                         </prototypes>
                                         <connections>
@@ -166,7 +174,7 @@
                                                 <rect key="frame" x="0.0" y="28" width="375" height="159"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WWf-po-HRs" id="UFM-qQ-VMX">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="158.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="159"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plane" translatesAutoresizingMaskIntoConstraints="NO" id="SfH-2w-DXS">
@@ -283,6 +291,14 @@
                                                         <constraint firstItem="Psl-i3-t0J" firstAttribute="top" secondItem="1Fo-c0-2Nc" secondAttribute="top" id="xTq-fe-rg9"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
+                                                <connections>
+                                                    <outlet property="aviationDetail" destination="AdY-mr-8ym" id="jBN-r4-rZr"/>
+                                                    <outlet property="departure" destination="Psl-i3-t0J" id="UJt-AO-4Ed"/>
+                                                    <outlet property="destination" destination="cNn-AW-bWR" id="dnd-vO-Q6l"/>
+                                                    <outlet property="price" destination="v0G-tX-6tm" id="GWi-0A-j6P"/>
+                                                    <outlet property="startTime" destination="1Fo-c0-2Nc" id="rxQ-xx-4yf"/>
+                                                    <outlet property="timeDetail" destination="bgQ-e0-XRq" id="NPy-I9-RzD"/>
+                                                </connections>
                                             </tableViewCell>
                                         </prototypes>
                                         <connections>
@@ -298,7 +314,7 @@
                                                 <rect key="frame" x="0.0" y="28" width="375" height="138"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="azS-0L-LIB" id="44f-mQ-Epd">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="137.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="138"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plane" translatesAutoresizingMaskIntoConstraints="NO" id="PBk-7r-fSE">
@@ -407,6 +423,14 @@
                                                         <constraint firstItem="IOU-CY-iAK" firstAttribute="top" secondItem="vJu-S5-yJS" secondAttribute="bottom" constant="20" id="whM-rd-wae"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
+                                                <connections>
+                                                    <outlet property="departure" destination="raD-cO-XkT" id="bzl-1F-x5z"/>
+                                                    <outlet property="destination" destination="qQT-pb-b0e" id="IBq-UG-p60"/>
+                                                    <outlet property="detail" destination="sd2-a7-s0I" id="nrb-AO-Laq"/>
+                                                    <outlet property="price" destination="r3K-5s-5pY" id="iuU-rk-dEu"/>
+                                                    <outlet property="startTime" destination="vJu-S5-yJS" id="yaz-S3-UE3"/>
+                                                    <outlet property="time" destination="NVD-nh-WT5" id="rYc-Xm-a6Q"/>
+                                                </connections>
                                             </tableViewCell>
                                         </prototypes>
                                         <connections>
