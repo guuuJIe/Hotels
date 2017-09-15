@@ -11,7 +11,8 @@
 @implementation OfferCollectionViewCell
 
 - (IBAction)payAction:(UIButton *)sender forEvent:(UIEvent *)event {
-    PurchaseTableViewController *purchaseVS = [Utilities getStoryboardInstance:@"BookHotels" byIdentity:@"purchaseNavi"];
+    [_delegate chooseItem:sender];
+    //
     
 }
 @end

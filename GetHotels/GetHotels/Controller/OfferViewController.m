@@ -9,7 +9,8 @@
 #import "OfferViewController.h"
 #import "OfferCollectionViewCell.h"
 #import "ReleaseModel.h"
-@interface OfferViewController ()<UICollectionViewDelegate,UICollectionViewDataSource>{
+#import "PurchaseTableViewController.h"
+@interface OfferViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,TermCellDelegate>{
     NSInteger offerNum;
 }
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
@@ -128,6 +129,7 @@
 //item长什么样
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     OfferCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"offerCell" forIndexPath:indexPath];
+    cell.delegate = self;
     //设置边框阴影
     cell.layer.shadowColor = [UIColor lightGrayColor].CGColor;
     cell.layer.shadowOffset = CGSizeMake(0, 0);
@@ -169,5 +171,8 @@
     CGFloat space = self.view.frame.size.width - 40;
     return CGSizeMake(space,x);
 }
-
+-(void)chooseItem:(UIButton *)button{
+   PurchaseTableViewController *purchaseVS = [Utilities getStoryboardInstance:@"BookHotels" byIdentity:@"purchaseNavi"];
+    [self.navigationController pushViewController:purchaseVS animated:YES];
+}
 @end
