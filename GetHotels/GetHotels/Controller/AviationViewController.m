@@ -64,7 +64,7 @@
     self.detailsTextField.delegate = self;
     //调用设置导航样式
     [self setNavigationItem];
-    
+    //_datePicker.minimumDate =[NSDate date];
     //设置默认时间
     [self defaultDate];
     flag = 0;
@@ -296,10 +296,10 @@
         if([responseObject[@"result"]integerValue] == 1){
             
             [Utilities popUpAlertViewWithMsg:@"恭喜你发布成功，请注意接收消息" andTitle:@"提示" onView:self ];
-            _lowPriceTextField.text = @"";
-            _highPriceTextField.text = @"";
-            _detailsTextField.text =@"";
-            _titleTextField.text =@"";
+//            _lowPriceTextField.text = @"";
+//            _highPriceTextField.text = @"";
+//            _detailsTextField.text =@"";
+//            _titleTextField.text =@"";
         }
         else{
             //NSString *errorMsg = [ErrorHandler getProperErrorString:[responseObject[@"result"] integerValue]];
