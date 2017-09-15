@@ -56,7 +56,7 @@
         _departure = [Utilities nullAndNilCheck:dict[@"departure"] replaceBy:@""];
         _destination = [Utilities nullAndNilCheck:dict[@"destination"] replaceBy:@""];
         _finalPrice = [[Utilities nullAndNilCheck:dict[@"final_price"] replaceBy:@""]integerValue];
-        _cabin = [Utilities nullAndNilCheck:dict[@"aviation_cabin "] replaceBy:@""];
+        _cabin = [Utilities nullAndNilCheck:dict[@"aviation_cabin"] replaceBy:@""];
         _company = [Utilities nullAndNilCheck:dict[@"aviation_company"] replaceBy:@""];
         _inTime = [[Utilities nullAndNilCheck:dict[@"in_time"] replaceBy:@""]integerValue];
         _outTime = [[Utilities nullAndNilCheck:dict[@"out_time"] replaceBy:@""]integerValue];
