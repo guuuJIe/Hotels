@@ -7,10 +7,11 @@
 //
 
 #import "OfferCollectionViewCell.h"
-
+#import "PurchaseTableViewController.h"
 @implementation OfferCollectionViewCell
 
 - (IBAction)payAction:(UIButton *)sender forEvent:(UIEvent *)event {
+    PurchaseTableViewController *purchaseVS = [Utilities getStoryboardInstance:@"BookHotels" byIdentity:@"purchaseNavi"];
     
 }
 @end
