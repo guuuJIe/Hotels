@@ -16,6 +16,7 @@
     NSInteger  flag;
     BOOL dateFlag;
     float _keyBoardHeight;
+    NSTimeInterval datetime;
 }
 @property (weak, nonatomic) IBOutlet UIButton *dateButton;
 - (IBAction)dateActionButton:(UIButton *)sender forEvent:(UIEvent *)event;
@@ -64,7 +65,7 @@
     self.detailsTextField.delegate = self;
     //调用设置导航样式
     [self setNavigationItem];
-    
+    //_datePicker.minimumDate =[NSDate date];
     //设置默认时间
     [self defaultDate];
     flag = 0;
@@ -155,6 +156,7 @@
     [_nextDateButton setTitle:_dateTomStr forState:UIControlStateNormal];
     
 }
+
 - (void)uiLayout{
     self.backView.layer.shadowColor = [UIColor blackColor].CGColor;//shadowColor阴影颜色
     self.backView.layer.shadowOffset = CGSizeMake(0,0);//shadowOffset阴影偏移,x向右偏移4，y向下偏移4，默认(0, -3),这个跟shadowRadius配合使用
@@ -296,10 +298,10 @@
         if([responseObject[@"result"]integerValue] == 1){
             
             [Utilities popUpAlertViewWithMsg:@"恭喜你发布成功，请注意接收消息" andTitle:@"提示" onView:self ];
-            _lowPriceTextField.text = @"";
-            _highPriceTextField.text = @"";
-            _detailsTextField.text =@"";
-            _titleTextField.text =@"";
+//            _lowPriceTextField.text = @"";
+//            _highPriceTextField.text = @"";
+//            _detailsTextField.text =@"";
+//            _titleTextField.text =@"";
         }
         else{
             //NSString *errorMsg = [ErrorHandler getProperErrorString:[responseObject[@"result"] integerValue]];
@@ -445,7 +447,7 @@
     //初始化一个日期格式器
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     //定义日期的格式为yyyy-MM-dd
-    formatter.dateFormat = @"MM-dd";
+    formatter.dateFormat = @"yyyy-MM-dd";
     //    NSString *thDate = [formatter stringFromDate:date];
     //    followUpTime = [Utilities cTimestampFromString:thDate format:@"yyyy-MM-dd HH:mm"];
     //    if(dateFlag){
@@ -463,22 +465,46 @@
         if (![theDate isEqualToString: [formatter stringFromDate:[NSDate dateTomorrow]]]) {
             _dateLab.hidden = YES;
             [_dateButton setTitle:theDate forState:UIControlStateNormal];
+            datetime = [Utilities cTimestampFromString:theDate format:@"yyyy-MM-dd HH:mm"];
         }
-    }else{
-        _nextDayLab.hidden = NO;
-        [_nextDateButton setTitle:theDate forState:UIControlStateNormal];
-        if (![theDate isEqualToString: [formatter stringFromDate:[NSDate dateWithDaysFromNow:2]]]) {
-            _nextDayLab.hidden = YES;
-            [_nextDateButton setTitle:theDate forState:UIControlStateNormal];
-        }
+    //}else{
+      //  _nextDayLab.hidden = NO;
+       // [_nextDateButton setTitle:theDate forState:UIControlStateNormal];
+       // if (![theDate isEqualToString: [formatter stringFromDate:[NSDate dateWithDaysFromNow:2]]]) {
+         //   _nextDayLab.hidden = YES;
+           // [_nextDateButton setTitle:theDate forState:UIControlStateNormal];
+        //}
+    //}
+    }else if(followUpTime <= datetime){
+        [Utilities popUpAlertViewWithMsg:@"请正确选择日期" andTitle:@"提示" onView:self];
     }
-    
+    else{
+         [_nextDateButton setTitle:theDate forState:UIControlStateNormal];
+     }
     _tooBar.hidden = YES;
     _datePicker.hidden = YES;
     _datePicker.hidden = YES;
 }
 
-
+//- (IBAction)ConfirmItm:(UIBarButtonItem *)sender {
+    //_layerView.hidden = YES;
+    //NSDate *date = _datePicker.date;
+   // NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    //formatter.dateFormat = @"yyyy-MM-dd HH:mm";
+    //NSString *thDate = [formatter stringFromDate:date];
+    //followUpTime = [Utilities cTimestampFromString:thDate format:@"yyyy-MM-dd HH:mm"];
+    //if(flag == 1){
+     //   [_dateButton setTitle:thDate forState:UIControlStateNormal];
+     //   datetime = [Utilities cTimestampFromString:thDate format:@"yyyy-MM-dd HH:mm"];
+        
+    //}else if(followUpTime <= datetime){
+    //    [Utilities popUpAlertViewWithMsg:@"请正确选择日期" andTitle:@"提示" onView:self];
+    //}
+    //else{
+   //     [_nextDateButton setTitle:thDate forState:UIControlStateNormal];
+   // }
+    
+//}
 
 
 
