@@ -66,8 +66,8 @@
     [self setsegment];
     [self refreshControl];
     [self didReleasedRequest];
-    [self isReleasedRequest];
-    [self historyRequest];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -314,9 +314,11 @@
     // NSLog(@"scrollView.contentOffset.x = %f",scrollView.contentOffset.x);
     if (isReleasedFlag == 1  && page == 1) {
         isReleasedFlag =0;
+        [self isReleasedRequest];
     }
     if (histroyFlag == 1 && page ==2) {
         histroyFlag = 0;
+        [self historyRequest];
     }
     return page;
 }
