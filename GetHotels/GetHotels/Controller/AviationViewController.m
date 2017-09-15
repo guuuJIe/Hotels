@@ -277,6 +277,7 @@
     NSTimeInterval startTime = [Utilities cTimestampFromString:_dateButton.titleLabel.text format:@"MM-dd"];
     //结束日期
     NSTimeInterval endTime = [Utilities cTimestampFromString:_nextDateButton.titleLabel.text format:@"MM-dd"];
+    //NSTimeInterval secs = [endTime timeIntervalSinceDate:startTime];
     if (startTime >= endTime) {
         [aiv stopAnimating];
         [Utilities popUpAlertViewWithMsg:@"请正确设置开始日期和结束日期" andTitle:@"提示" onView:self ];
@@ -290,7 +291,7 @@
         return;
     }
     
-    NSDictionary *para =@{@"openid" : user.openid, @"set_low_time_str": _dateButton.titleLabel.text,@"set_high_time_str":_nextDateButton.titleLabel.text,@"set_hour":@"20",@"departure":_departureCityBtn.titleLabel.text,@"destination":_targetCityBtn.titleLabel.text,@"low_price":_lowPriceTextField.text,@"high_price":_highPriceTextField.text,@"aviation_demand_detail":_detailsTextField.text,@"aviation_demand_title":_titleTextField.text,@"is_back":@5,@"back_low_time_str":@"无",@"back_high_time_str":@"无",@"people_number":@3,@"child_number":@1,@"weight":@50.0};
+    NSDictionary *para =@{@"openid" : user.openid, @"set_low_time_str": _dateButton.titleLabel.text,@"set_high_time_str":_nextDateButton.titleLabel.text,@"set_hour":@"",@"departure":_departureCityBtn.titleLabel.text,@"destination":_targetCityBtn.titleLabel.text,@"low_price":_lowPriceTextField.text,@"high_price":_highPriceTextField.text,@"aviation_demand_detail":_detailsTextField.text,@"aviation_demand_title":_titleTextField.text,@"is_back":@"",@"back_low_time_str":@"",@"back_high_time_str":@"",@"people_number":@"",@"child_number":@"",@"weight":@""};
     [RequestAPI requestURL:@"/addIssue_edu" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
         [aiv stopAnimating];
         NSLog(@"responseObject:%@",responseObject);
@@ -298,10 +299,6 @@
         if([responseObject[@"result"]integerValue] == 1){
             
             [Utilities popUpAlertViewWithMsg:@"恭喜你发布成功，请注意接收消息" andTitle:@"提示" onView:self ];
-//            _lowPriceTextField.text = @"";
-//            _highPriceTextField.text = @"";
-//            _detailsTextField.text =@"";
-//            _titleTextField.text =@"";
         }
         else{
             //NSString *errorMsg = [ErrorHandler getProperErrorString:[responseObject[@"result"] integerValue]];
@@ -447,7 +444,7 @@
     //初始化一个日期格式器
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     //定义日期的格式为yyyy-MM-dd
-    formatter.dateFormat = @"yyyy-MM-dd";
+    formatter.dateFormat = @"MM-dd";
     //    NSString *thDate = [formatter stringFromDate:date];
     //    followUpTime = [Utilities cTimestampFromString:thDate format:@"yyyy-MM-dd HH:mm"];
     //    if(dateFlag){
@@ -465,28 +462,21 @@
         if (![theDate isEqualToString: [formatter stringFromDate:[NSDate dateTomorrow]]]) {
             _dateLab.hidden = YES;
             [_dateButton setTitle:theDate forState:UIControlStateNormal];
-            datetime = [Utilities cTimestampFromString:theDate format:@"yyyy-MM-dd HH:mm"];
         }
-    }else if(followUpTime <= datetime){
-            [Utilities popUpAlertViewWithMsg:@"请正确选择日期" andTitle:@"提示" onView:self];
-        }
-
-    else{
+    }else{
         _nextDayLab.hidden = NO;
         [_nextDateButton setTitle:theDate forState:UIControlStateNormal];
         if (![theDate isEqualToString: [formatter stringFromDate:[NSDate dateWithDaysFromNow:2]]]) {
             _nextDayLab.hidden = YES;
             [_nextDateButton setTitle:theDate forState:UIControlStateNormal];
-        //}
-    //}
-        //else{
-         //[_nextDateButton setTitle:theDate forState:UIControlStateNormal];
-     }
+        }
+    }
+    
     _tooBar.hidden = YES;
     _datePicker.hidden = YES;
     _datePicker.hidden = YES;
 }
-}
+
 //- (IBAction)ConfirmItm:(UIBarButtonItem *)sender {
     //_layerView.hidden = YES;
     //NSDate *date = _datePicker.date;
@@ -502,8 +492,8 @@
     //    [Utilities popUpAlertViewWithMsg:@"请正确选择日期" andTitle:@"提示" onView:self];
     //}
     //else{
-   //     [_nextDateButton setTitle:thDate forState:UIControlStateNormal];
-   // }
+       // [_nextDateButton setTitle:thDate forState:UIControlStateNormal];
+    //}
     
 //}
 
