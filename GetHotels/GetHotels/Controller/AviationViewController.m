@@ -467,25 +467,26 @@
             [_dateButton setTitle:theDate forState:UIControlStateNormal];
             datetime = [Utilities cTimestampFromString:theDate format:@"yyyy-MM-dd HH:mm"];
         }
-    //}else{
-      //  _nextDayLab.hidden = NO;
-       // [_nextDateButton setTitle:theDate forState:UIControlStateNormal];
-       // if (![theDate isEqualToString: [formatter stringFromDate:[NSDate dateWithDaysFromNow:2]]]) {
-         //   _nextDayLab.hidden = YES;
-           // [_nextDateButton setTitle:theDate forState:UIControlStateNormal];
+    }else if(followUpTime <= datetime){
+            [Utilities popUpAlertViewWithMsg:@"请正确选择日期" andTitle:@"提示" onView:self];
+        }
+
+    else{
+        _nextDayLab.hidden = NO;
+        [_nextDateButton setTitle:theDate forState:UIControlStateNormal];
+        if (![theDate isEqualToString: [formatter stringFromDate:[NSDate dateWithDaysFromNow:2]]]) {
+            _nextDayLab.hidden = YES;
+            [_nextDateButton setTitle:theDate forState:UIControlStateNormal];
         //}
     //}
-    }else if(followUpTime <= datetime){
-        [Utilities popUpAlertViewWithMsg:@"请正确选择日期" andTitle:@"提示" onView:self];
-    }
-    else{
-         [_nextDateButton setTitle:theDate forState:UIControlStateNormal];
+        //else{
+         //[_nextDateButton setTitle:theDate forState:UIControlStateNormal];
      }
     _tooBar.hidden = YES;
     _datePicker.hidden = YES;
     _datePicker.hidden = YES;
 }
-
+}
 //- (IBAction)ConfirmItm:(UIBarButtonItem *)sender {
     //_layerView.hidden = YES;
     //NSDate *date = _datePicker.date;
