@@ -8,10 +8,13 @@
 
 #import "OfferViewController.h"
 #import "OfferCollectionViewCell.h"
-@interface OfferViewController ()<UICollectionViewDelegate,UICollectionViewDataSource>
+#import "ReleaseModel.h"
+@interface OfferViewController ()<UICollectionViewDelegate,UICollectionViewDataSource>{
+    NSInteger offerNum;
+}
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong,nonatomic)UIActivityIndicatorView *aiv;
-
+@property(strong,nonatomic)NSMutableArray *offerArr;
 @end
 
 @implementation OfferViewController
@@ -19,7 +22,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+
     [self refreshControl];
+    [self request];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -67,9 +72,10 @@
     [self request];
 }
 
-//已发布
+//报价列表
 -(void)request{
-    NSDictionary *para = @{@"Id" : @1};
+    //ReleaseModel *model = [[StorageMgr singletonStorageMgr] objectForKey:@"UserInfo"];
+    NSDictionary *para = @{@"Id" : @(_IssueId)};
     [RequestAPI requestURL:@"/selectOffer_edu" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
         
         [_aiv stopAnimating];
@@ -77,7 +83,17 @@
         [ref endRefreshing];
         NSLog(@"报价列表:%@",responseObject);
         if ([responseObject[@"result"] integerValue] == 1) {
-            
+            NSDictionary *content = responseObject[@"content"];
+            if (histroyNum == 1) {
+                [_histroyArr removeAllObjects];
+            }
+            for (NSDictionary *dict in list) {
+                ReleaseModel *model = [[ReleaseModel alloc]initWithDictForHistroy:dict];
+                [_histroyArr addObject:model];
+            }
+            [_histroyTableView reloadData];
+        }
+        e
         }
         else{
             [Utilities popUpAlertViewWithMsg:@"网络错误,请稍后再试" andTitle:@"提示" onView:self];
@@ -90,6 +106,7 @@
     }];
     
 }
+
 /*
 #pragma mark - Navigation
 

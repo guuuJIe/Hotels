@@ -350,8 +350,12 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GFm-K7-jjg">
                                         <rect key="frame" x="75" y="68" width="225" height="30"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VvC-jT-xZC">
-                                                <rect key="frame" x="10" y="4" width="18" height="22"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VvC-jT-xZC">
+                                                <rect key="frame" x="7" y="2" width="18" height="26"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="VvC-jT-xZC" secondAttribute="height" multiplier="9:13" id="DhU-aj-7XD"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <state key="normal" image="search_city副本"/>
                                                 <connections>
                                                     <action selector="searchAction:forEvent:" destination="TV2-BL-SFl" eventType="touchUpInside" id="9X0-fL-ime"/>
@@ -371,9 +375,11 @@
                                         <color key="backgroundColor" red="0.1215686275" green="0.12941176469999999" blue="0.14117647059999999" alpha="0.19510380990000001" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstItem="KZb-aF-wze" firstAttribute="top" secondItem="GFm-K7-jjg" secondAttribute="top" id="549-8E-9TX"/>
-                                            <constraint firstItem="VvC-jT-xZC" firstAttribute="leading" secondItem="GFm-K7-jjg" secondAttribute="leading" constant="10" id="6d2-Ov-zLR"/>
+                                            <constraint firstItem="VvC-jT-xZC" firstAttribute="leading" secondItem="GFm-K7-jjg" secondAttribute="leading" constant="7" id="6d2-Ov-zLR"/>
                                             <constraint firstAttribute="height" constant="30" id="RRS-du-ubK"/>
                                             <constraint firstAttribute="trailing" secondItem="KZb-aF-wze" secondAttribute="trailing" id="aCD-rI-dLM"/>
+                                            <constraint firstAttribute="bottom" secondItem="VvC-jT-xZC" secondAttribute="bottom" constant="2" id="cTx-QA-OFF"/>
+                                            <constraint firstItem="VvC-jT-xZC" firstAttribute="top" secondItem="GFm-K7-jjg" secondAttribute="top" constant="2" id="ibf-Ot-njW"/>
                                             <constraint firstItem="KZb-aF-wze" firstAttribute="width" secondItem="GFm-K7-jjg" secondAttribute="width" multiplier="6:7" id="odP-k4-Q7K"/>
                                             <constraint firstItem="VvC-jT-xZC" firstAttribute="centerY" secondItem="GFm-K7-jjg" secondAttribute="centerY" id="rdf-SX-fRR"/>
                                             <constraint firstAttribute="bottom" secondItem="KZb-aF-wze" secondAttribute="bottom" id="zAY-Iq-u2r"/>
@@ -506,6 +512,7 @@
                                                 <constraint firstItem="4JY-NC-aoa" firstAttribute="leading" secondItem="tKw-Ud-QoI" secondAttribute="trailing" constant="15" id="y6Z-dl-wmL"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
                                             <outlet property="hotelDistanceLabel" destination="cIS-T8-Z8H" id="8tH-lD-IQL"/>
                                             <outlet property="hotelImg" destination="tKw-Ud-QoI" id="hpp-g2-YZR"/>
@@ -999,7 +1006,7 @@
         <!--使用协议-->
         <scene sceneID="BA1-Iv-ysc">
             <objects>
-                <viewController title="使用协议" id="oNS-BX-s1X" sceneMemberID="viewController">
+                <viewController title="使用协议" id="oNS-BX-s1X" customClass="UseDelegetViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="hAO-zp-9Np"/>
                         <viewControllerLayoutGuide type="bottom" id="nVe-XF-nkl"/>

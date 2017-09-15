@@ -11,5 +11,6 @@
 @implementation OfferCollectionViewCell
 
 - (IBAction)payAction:(UIButton *)sender forEvent:(UIEvent *)event {
+    
 }
 @end
