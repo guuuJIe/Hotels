@@ -58,8 +58,8 @@
         _finalPrice = [[Utilities nullAndNilCheck:dict[@"final_price"] replaceBy:@""]integerValue];
         _cabin = [Utilities nullAndNilCheck:dict[@"aviation_cabin "] replaceBy:@""];
         _company = [Utilities nullAndNilCheck:dict[@"aviation_company"] replaceBy:@""];
-        _inTime = [[Utilities nullAndNilCheck:dict[@"in_time_str"] replaceBy:@""]integerValue];
-        _outTime = [[Utilities nullAndNilCheck:dict[@"out_time_str"] replaceBy:@""]integerValue];
+        _inTime = [[Utilities nullAndNilCheck:dict[@"in_time"] replaceBy:@""]integerValue];
+        _outTime = [[Utilities nullAndNilCheck:dict[@"out_time"] replaceBy:@""]integerValue];
         _time = [[Utilities nullAndNilCheck:dict[@"start_time"] replaceBy:@""]integerValue];
     }
     return self;

@@ -22,7 +22,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-
+    _offerArr = [NSMutableArray new];
+    offerNum = 1;
     [self refreshControl];
     [self request];
 }
@@ -40,6 +41,7 @@
 
 //设置导航样式
 - (void)setNavigationItem {
+    self.navigationItem.title = @"报价列表";
     //设置导航栏的背景颜色
     //self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
     [self.navigationController.navigationBar setBarTintColor:UIColorFromRGB(23, 115, 232)];
@@ -69,6 +71,7 @@
 }
 //刷新已发布
 -(void)refresh{
+    offerNum = 1;
     [self request];
 }
 
@@ -83,19 +86,16 @@
         [ref endRefreshing];
         NSLog(@"报价列表:%@",responseObject);
         if ([responseObject[@"result"] integerValue] == 1) {
-            NSDictionary *content = responseObject[@"content"];
-            if (histroyNum == 1) {
-                [_histroyArr removeAllObjects];
+            NSArray *arr = responseObject[@"content"];
+            if (offerNum == 1) {
+                [_offerArr removeAllObjects];
             }
-            for (NSDictionary *dict in list) {
-                ReleaseModel *model = [[ReleaseModel alloc]initWithDictForHistroy:dict];
-                [_histroyArr addObject:model];
+            for (NSDictionary *dict in arr) {
+                ReleaseModel *model = [[ReleaseModel alloc]initWithDictForOffer:dict];
+                [_offerArr addObject:model];
             }
-            [_histroyTableView reloadData];
-        }
-        e
-        }
-        else{
+            [_collectionView reloadData];
+        }else{
             [Utilities popUpAlertViewWithMsg:@"网络错误,请稍后再试" andTitle:@"提示" onView:self];
         }
     }failure:^(NSInteger statusCode, NSError *error) {
@@ -119,7 +119,7 @@
 #pragma mark - conllectionView
 //有多少组
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
-    return 4;
+    return _offerArr.count;
 }
 //每组有多少个item
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
@@ -139,6 +139,26 @@
     UIView *bv = [UIView new];
     bv.backgroundColor = [UIColor whiteColor];
     cell.backgroundView = bv;
+    ReleaseModel *model = _offerArr[indexPath.section];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:model.time / 1000];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    formatter.dateFormat = @"MM-dd";
+    NSString *thDate = [formatter stringFromDate:date];
+    cell.startTime.text = thDate;
+    cell.departure.text = model.departure;
+    cell.destination.text = model.destination;
+    cell.price.text = [NSString stringWithFormat:@"￥ %ld", model.finalPrice];
+    cell.aviationCabin.text = model.cabin;
+    NSDate *date1 = [NSDate dateWithTimeIntervalSince1970:model.inTime / 1000];
+    NSDateFormatter *formatter1 = [[NSDateFormatter alloc]init];
+    formatter1.dateFormat = @"HH:mm";
+    NSString *inTime = [formatter stringFromDate:date1];
+    NSDate *date2 = [NSDate dateWithTimeIntervalSince1970:model.outTime / 1000];
+    NSDateFormatter *formatter2 = [[NSDateFormatter alloc]init];
+    formatter2.dateFormat = @"HH:mm";
+    NSString *outTime = [formatter stringFromDate:date2];
+    cell.time.text = [NSString stringWithFormat:@"%@-%@", inTime,outTime];
+    cell.aviationCompany.text = model.company;
     return cell;
 }
 //每个细胞的尺寸
