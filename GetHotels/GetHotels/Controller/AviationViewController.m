@@ -274,9 +274,9 @@
     UIActivityIndicatorView *aiv = [Utilities getCoverOnView:self.view];
     //开始日期
     //NSLog(@"");
-    NSTimeInterval startTime = [Utilities cTimestampFromString:_dateButton.titleLabel.text format:@"MM-dd"];
+    NSTimeInterval startTime = [Utilities cTimestampFromString:_dateButton.titleLabel.text format:@"yyyy-MM-dd"];
     //结束日期
-    NSTimeInterval endTime = [Utilities cTimestampFromString:_nextDateButton.titleLabel.text format:@"MM-dd"];
+    NSTimeInterval endTime = [Utilities cTimestampFromString:_nextDateButton.titleLabel.text format:@"yyyy-MM-dd"];
     //NSTimeInterval secs = [endTime timeIntervalSinceDate:startTime];
     if (startTime >= endTime) {
         [aiv stopAnimating];
@@ -290,7 +290,8 @@
         //[Utilities popUpAlertViewWithMsg:@"请选择抵达的城市" andTitle:@"提示" onView:self onCompletion:^{}];
         return;
     }
-    
+    //NSLog(@"出发时间：%@",_dateButton.titleLabel.text);
+    //NSLog(@"到达时间：%@",_nextDateButton.titleLabel.text);
     NSDictionary *para =@{@"openid" : user.openid, @"set_low_time_str": _dateButton.titleLabel.text,@"set_high_time_str":_nextDateButton.titleLabel.text,@"set_hour":@"",@"departure":_departureCityBtn.titleLabel.text,@"destination":_targetCityBtn.titleLabel.text,@"low_price":_lowPriceTextField.text,@"high_price":_highPriceTextField.text,@"aviation_demand_detail":_detailsTextField.text,@"aviation_demand_title":_titleTextField.text,@"is_back":@"",@"back_low_time_str":@"",@"back_high_time_str":@"",@"people_number":@"",@"child_number":@"",@"weight":@""};
     [RequestAPI requestURL:@"/addIssue_edu" withParameters:para andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
         [aiv stopAnimating];
@@ -444,7 +445,7 @@
     //初始化一个日期格式器
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     //定义日期的格式为yyyy-MM-dd
-    formatter.dateFormat = @"MM-dd";
+    formatter.dateFormat = @"yyyy-MM-dd";
     //    NSString *thDate = [formatter stringFromDate:date];
     //    followUpTime = [Utilities cTimestampFromString:thDate format:@"yyyy-MM-dd HH:mm"];
     //    if(dateFlag){

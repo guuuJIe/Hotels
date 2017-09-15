@@ -334,7 +334,8 @@
     }
     else if(tableView == _isReleasedTableView){
         NSIndexPath *indexPath = [_isReleasedTableView indexPathForSelectedRow];
-        ReleaseModel *model = _isReleasedArr[indexPath.row];
+        ReleaseModel *model = _isReleasedArr[indexPath.section];
+        
         //2.获取下一页这个实例
         //OfferViewController *detailVC;
         //detailVC.IssueId = model.Id;
