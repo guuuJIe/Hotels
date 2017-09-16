@@ -125,8 +125,7 @@
     [self duration];
     //滑动点设为4个
     _pageControl.numberOfPages = 4;
-    //设置最小时间
-    _datePick.minimumDate = [NSDate date];
+    
     _searchTextView.text = @"";
     
     // Do any additional setup after loading the view.
@@ -134,9 +133,10 @@
     //初始化数组
     _hotelArr = [NSMutableArray new];
     _advImgArr = [NSMutableArray new];
+    
     firstVisit = YES;
     selectBool = YES;
-    selectCirfimBool = NO;
+    selectCirfimBool = NO; 
     [self buttonAtt];
     //各种赋初值
     PageNum = 1;
@@ -236,6 +236,7 @@
  //=========================================================================
 //默认时间
 - (void)setDefaultDateForButton{
+    
     //初始化日期格式器
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     //定义日期格式
@@ -250,9 +251,13 @@
     //将处理好的字符串设置给两个Button
     [_inTime setTitle:[NSString stringWithFormat:@"入住%@▼",dateStr] forState:UIControlStateNormal];
     [_outTime setTitle:[NSString stringWithFormat:@"离店%@▼",dateTomStr] forState:UIControlStateNormal];
-    _inTimeDate = dateStr;
-    _outTimeDate = dateTomStr;
-    
+    //
+    NSDateFormatter *paraFormatter = [NSDateFormatter new];
+    paraFormatter.dateFormat = @"yyyy-MM-dd";
+    NSString *dateStr2 = [paraFormatter stringFromDate:date];
+    NSString *dateTomStr2= [paraFormatter stringFromDate:dateTom];
+    _inTimeDate = dateStr2;
+    _outTimeDate = dateTomStr2;
 }
 //创建一个刷新指示器
 - (void)refresh{
@@ -343,16 +348,16 @@
 - (void)hotelAdv{
     //拿到刷新指示器
     UIRefreshControl *ref = (UIRefreshControl *)[_hotelTableView viewWithTag:10004];
-    //开始日期
-    NSTimeInterval startTime = [Utilities cTimestampFromString:_inTimeDate format:@"MM-dd"];
-    //开始日期
-    NSTimeInterval endTime = [Utilities cTimestampFromString:_outTimeDate format:@"MM-dd"];
-    if (startTime >= endTime){
-        [_aiv stopAnimating];
-        [Utilities popUpAlertViewWithMsg:@"请正确设置日期" andTitle:nil onView:self];
-        [ref endRefreshing];
-        return;
-    } 
+//    //开始日期
+//    NSTimeInterval startTime = [Utilities cTimestampFromString:_inTimeDate format:@"MM-dd"];
+//    //开始日期
+//    NSTimeInterval endTime = [Utilities cTimestampFromString:_outTimeDate format:@"MM-dd"];
+//    if (startTime >= endTime){
+//        [_aiv stopAnimating];
+//        [Utilities popUpAlertViewWithMsg:@"请正确设置日期" andTitle:nil onView:self];
+//        [ref endRefreshing];
+//        return;
+//    } 
     //参数
     NSDictionary *para = @{@"city_name" : _cityBtn.titleLabel.text, @"pageNum" :@(PageNum), @"pageSize" :  @(pageSize), @"startId" :  @(starID), @"priceId" :@(priceID), @"sortingId" :@(sortID) ,@"inTime" : [NSString stringWithFormat:@"2017-%@",_inTimeDate] ,@"outTime" : [NSString stringWithFormat:@"2017-%@",_outTimeDate] ,@"wxlongitude" :@"", @"wxlatitude" :@""};
     
@@ -966,6 +971,9 @@
     [_outTime setTitle:[NSString stringWithFormat:@"%@▼",[_outTime.titleLabel.text substringToIndex:_outTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
     [_sortBtn setTitle:[NSString stringWithFormat:@"%@▼",[_sortBtn.titleLabel.text substringToIndex:_sortBtn.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
     
+    //设置最小时间
+    _datePick.minimumDate = [NSDate date];
+    
     _inTime.selected = YES;
     _outTime.selected = NO;
     _sortBtn.selected = NO;
@@ -982,6 +990,13 @@
     [_outTime setTitle:[NSString stringWithFormat:@"%@▲",[_outTime.titleLabel.text substringToIndex:_outTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
      [_inTime setTitle:[NSString stringWithFormat:@"%@▼",[_inTime.titleLabel.text substringToIndex:_inTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
     [_sortBtn setTitle:[NSString stringWithFormat:@"%@▼",[_sortBtn.titleLabel.text substringToIndex:_sortBtn.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+    //设置最小时间
+    NSDateFormatter *formatter = [NSDateFormatter new];
+    formatter.dateFormat = @"yyyy-MM-dd";
+    NSDate *date = [formatter dateFromString:_inTimeDate];
+    NSDate *nextDat = [NSDate dateWithTimeInterval:24*60*60 sinceDate:date];//后一天
+    _datePick.minimumDate = nextDat;
+    
     _outTime.selected = YES;
     _inTime.selected = NO;
     _sortBtn.selected = NO;
@@ -1055,10 +1070,14 @@
     _inTime.selected = NO;
     _outTime.selected = NO;
     NSDate *date = _datePick.date;
+    //
     NSDateFormatter *formatter = [NSDateFormatter new];
     formatter.dateFormat = @"MM-dd";
+    NSDateFormatter *paraFormatter = [NSDateFormatter new];
+    paraFormatter.dateFormat = @"yyyy-MM-dd";
+    //
     NSString *thDate = [formatter stringFromDate:date];
-    NSTimeInterval thDateTime = [Utilities cTimestampFromString:thDate format:@"MM-dd"];
+
     //获取默认时间
     //当前时间
     NSDate *dateToday = [NSDate date];
@@ -1066,26 +1085,24 @@
 //    NSDate *dateTom = [NSDate dateTomorrow];
     NSString *dateStr = [formatter stringFromDate:dateToday];
 //    NSString *dateTomStr= [formatter stringFromDate:dateTom];
-    NSTimeInterval startTime = [Utilities cTimestampFromString:dateStr format:@"MM-dd"];
+    NSTimeInterval startTime = [Utilities cTimestampFromString:_inTimeDate format:@"MM-dd"];
+    NSTimeInterval endTime = [Utilities cTimestampFromString:_outTimeDate format:@"MM-dd"];
  
     
     if (flag == 0){
-             [_inTime setTitle:[NSString stringWithFormat:@"入住%@▼",thDate] forState:UIControlStateNormal];
-            _inTimeDate = thDate;
-            //开始日期
-            startTime = [Utilities cTimestampFromString:thDate format:@"MM-dd"];
-    }else{
-        if (thDateTime <= startTime) {
-            [_outTime setTitle:[NSString stringWithFormat:@"%@▼",[_outTime.titleLabel.text substringToIndex:_outTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
-            [Utilities popUpAlertViewWithMsg:@"请正确设置日期" andTitle:nil onView:self];
-            
-        }else{
-            [_outTime setTitle:[NSString stringWithFormat:@"离店%@▼",thDate] forState:UIControlStateNormal];
-            _outTimeDate = thDate;
-            [self initializeData];
+        [_inTime setTitle:[NSString stringWithFormat:@"入住%@▼",thDate] forState:UIControlStateNormal];
+        _inTimeDate = [paraFormatter stringFromDate:date];
+        if (startTime >= endTime){
+            NSDate *nextDat = [NSDate dateWithTimeInterval:24*60*60 sinceDate:date];//后一天
+            NSString *dateStr = [formatter stringFromDate:nextDat];
+            [_outTime setTitle:[NSString stringWithFormat:@"离店%@▼",dateStr] forState:UIControlStateNormal];
         }
+    }else{
+        [_outTime setTitle:[NSString stringWithFormat:@"离店%@▼",thDate] forState:UIControlStateNormal];
+        _outTimeDate = [paraFormatter stringFromDate:date];
+        
     }
-    
+    [self initializeData];
     //followUptime = [date timeIntervalSince2017];
  
     _markView.hidden = YES;
