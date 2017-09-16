@@ -156,15 +156,9 @@
     cell.aviationCabin.text = model.cabin;
     cell.payBtn.layer.borderColor = [[UIColor blueColor] CGColor];
     cell.payBtn.tag = 10000+indexPath.section;
-    NSDate *date1 = [NSDate dateWithTimeIntervalSince1970:model.inTime / 1000];
-    NSDateFormatter *formatter1 = [[NSDateFormatter alloc]init];
-    formatter1.dateFormat = @"HH:mm";
-    NSString *inTime = [formatter stringFromDate:date1];
-    NSDate *date2 = [NSDate dateWithTimeIntervalSince1970:model.outTime / 1000];
-    NSDateFormatter *formatter2 = [[NSDateFormatter alloc]init];
-    formatter2.dateFormat = @"HH:mm";
-    NSString *outTime = [formatter stringFromDate:date2];
-    cell.time.text = [NSString stringWithFormat:@"%@-%@", inTime,outTime];
+    NSString *dateStr = [Utilities dateStrFromCstampTime:model.inTime withDateFormat:@"HH:mm"];
+    NSString *dateSt = [Utilities dateStrFromCstampTime:model.outTime  withDateFormat:@"HH:mm"];
+    cell.time.text = [NSString stringWithFormat:@"%@-%@", dateStr,dateSt];
     cell.aviationCompany.text = model.company;
     return cell;
 }
