@@ -173,6 +173,7 @@
 }
 -(void)chooseItem:(UIButton *)button{
    PurchaseTableViewController *purchaseVS = [Utilities getStoryboardInstance:@"BookHotels" byIdentity:@"purchaseNavi"];
+    
     [self.navigationController pushViewController:purchaseVS animated:YES];
 }
 @end
