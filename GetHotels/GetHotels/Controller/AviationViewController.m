@@ -46,6 +46,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topConstraint;
 @property (strong,nonatomic)NSArray *keys;
 @property (strong,nonatomic)NSDictionary *cities;
+@property (weak, nonatomic) IBOutlet UIView *bgView;
 @end
 
 @implementation AviationViewController
@@ -63,8 +64,7 @@
     //[[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     self.titleTextField.delegate = self;
     self.detailsTextField.delegate = self;
-    //调用设置导航样式
-    [self setNavigationItem];
+    
     //_datePicker.minimumDate =[NSDate date];
     //设置默认时间
     [self defaultDate];
@@ -82,7 +82,11 @@
     
     
 }
-
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    //调用设置导航样式
+    [self setNavigationItem];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -109,21 +113,22 @@
     //self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:leftBtn];
 }
 ////英文键盘默认高度216
-//- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
-//{
-//    //重写textField这个方法
-//    NSLog(@"开始编辑");
-//    CGFloat offset = self.view.frame.size.height - (textField.frame.origin.y+textField.frame.size.height+216+50);
-//    NSLog(@"偏移高度为 --- %f",offset);
-//    if (offset<=0) {
-//        [UIView animateWithDuration:0.3f animations:^{
-//            CGRect frame = self.view.frame;
-//            frame.origin.y = offset;
-//            self.view.frame = frame;
-//        }];
-//    }
-//    return YES;
-//}
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    //重写textField这个方法
+    NSLog(@"开始编辑");
+    CGFloat offset = self.bgView.frame.size.height - (textField.frame.origin.y+textField.frame.size.height+30);
+    NSLog(@"%f %f",self.bgView.frame.size.height,textField.frame.origin.y);
+    NSLog(@"偏移高度为 --- %f",offset);
+   if (offset<=0) {
+        [UIView animateWithDuration:0.3f animations:^{
+            CGRect frame = self.bgView.frame;
+            frame.origin.y = offset;
+            self.bgView.frame = frame;
+        }];
+    }
+    return YES;
+}
 //- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
 //{
 //    
@@ -243,16 +248,26 @@
             _releaseButton.backgroundColor = UIColorFromRGB(66, 162, 233);
         }
     }
+   
 }
-// 滑动空白处隐藏键盘
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    [self.view endEditing:YES];
+//让根视图结束编辑状态，到达收起键盘的目的
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    _pickerview.hidden = YES;
+    [_lowPriceTextField resignFirstResponder];
+    [_highPriceTextField resignFirstResponder];
+    [_titleTextField resignFirstResponder];
+    [_detailsTextField resignFirstResponder];
 }
 
+// 滑动空白处隐藏键盘
+//- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+ //   [self.view endEditing:YES];
+//}
+
 // 点击空白处收键盘
--(void)fingerTapped:(UITapGestureRecognizer *)gestureRecognizer {
-    [self.view endEditing:YES];
-}
+//-(void)fingerTapped:(UITapGestureRecognizer *)gestureRecognizer {
+//    [self.view endEditing:YES];
+//}
 
 //按键盘return收回按钮
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -261,10 +276,6 @@
     return YES;
 }
 
-//让根视图结束编辑状态，到达收起键盘的目的
-- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    _pickerview.hidden = YES;
-}
 
 #pragma mark - quest
 //网络请求

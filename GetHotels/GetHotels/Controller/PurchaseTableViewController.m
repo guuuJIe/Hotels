@@ -8,9 +8,7 @@
 
 #import "PurchaseTableViewController.h"
 
-@interface PurchaseTableViewController () {
-    NSInteger tag;
-}
+@interface PurchaseTableViewController ()
 
 @property (strong, nonatomic) IBOutlet UITableView *payTableView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -39,7 +37,7 @@
     [self uiLayout];
     [self dataInitilize];
     [self setFootViewForTableView];
-    tag = _tag;
+   
     //监听通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(purchaseResultAction:) name:@"AlipayResult" object:nil];
 }
@@ -85,8 +83,9 @@
 //专门做界面
 - (void)uiLayout {
     if (_tag == 1) {
-        _nameLabel.text = [NSString stringWithFormat:@"%@  %@————%@",_releaseModel.company,_releaseModel.departure,_releaseModel.destination];
-        _dateLabel.text = [NSString stringWithFormat:@"%ld 起飞",(long)_releaseModel.time];
+        _nameLabel.text = [NSString stringWithFormat:@"%@  %@——%@",_releaseModel.company,_releaseModel.departure,_releaseModel.destination];
+        NSString *timeStr = [Utilities dateStrFromCstampTime:_releaseModel.time withDateFormat:@"M月dd日 HH:mm"];
+        _dateLabel.text = [NSString stringWithFormat:@"%@ 起飞",timeStr];
         _priceLabel.text = [NSString stringWithFormat:@"%ld元",(long)_releaseModel.finalPrice];
     }else {
         //初始化日期格式器
@@ -210,9 +209,16 @@
 - (void)payAction {
     switch (self.tableView.indexPathForSelectedRow.row) {
         case 0: {
-            //生成订单号
-            NSString *tradeNo = [GBAlipayManager generateTradeNO];
-            [GBAlipayManager alipayWithProductName:_hotelModel.hotel_name amount:_hotelModel.now_price tradeNO:tradeNo notifyURL:nil productDescription:[NSString stringWithFormat:@"%@入住费",_hotelModel.hotel_name] itBPay:_hotelModel.now_price];
+            if (_tag == 1) {
+                //生成订单号
+                NSString *tradeNo = [GBAlipayManager generateTradeNO];
+                [GBAlipayManager alipayWithProductName:_releaseModel.company amount:[NSString stringWithFormat:@"%ld",(long)_releaseModel.finalPrice] tradeNO:tradeNo notifyURL:nil productDescription:[NSString stringWithFormat:@"%@——%@飞机票",_releaseModel.departure,_releaseModel.destination] itBPay:@"50"];
+            }else {
+                //生成订单号
+                NSString *tradeNo = [GBAlipayManager generateTradeNO];
+                [GBAlipayManager alipayWithProductName:_hotelModel.hotel_name amount:_hotelModel.now_price tradeNO:tradeNo notifyURL:nil productDescription:[NSString stringWithFormat:@"%@入住费",_hotelModel.hotel_name] itBPay:_hotelModel.now_price];
+            }
+    
         }
             break;
         case 1: {
