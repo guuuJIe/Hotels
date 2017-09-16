@@ -8,10 +8,12 @@
 
 #import "PurchaseTableViewController.h"
 
-@interface PurchaseTableViewController ()
+@interface PurchaseTableViewController () {
+    NSInteger tag;
+}
 
 @property (strong, nonatomic) IBOutlet UITableView *payTableView;
-@property (weak, nonatomic) IBOutlet UILabel *hotelNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 @property (strong, nonatomic) NSArray *arr;
@@ -37,7 +39,7 @@
     [self uiLayout];
     [self dataInitilize];
     [self setFootViewForTableView];
-    
+    tag = _tag;
     //监听通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(purchaseResultAction:) name:@"AlipayResult" object:nil];
 }
@@ -82,23 +84,29 @@
 
 //专门做界面
 - (void)uiLayout {
-    //初始化日期格式器
-    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    //定义日期格式
-    formatter.dateFormat = @"M月dd日";
-    //当前时间
-    NSDate *date = [NSDate date];
-    //后天的日期
-    NSDate *dateAfterdays = [NSDate dateWithDaysFromNow:2];
-    NSString *dateStr = [formatter stringFromDate:date];
-    NSString *dateTomStr= [formatter stringFromDate:dateAfterdays];
-    _dateLabel.text = [NSString stringWithFormat:@"%@ -- %@",dateStr,dateTomStr];
-    
-    //NSString *starTimeStr = [Utilities dateStrFromCstampTime:[_hotelModel.start_time integerValue] withDateFormat:@"M月dd日"];
-    //NSString *outTimeStr = [Utilities dateStrFromCstampTime:[_hotelModel.start_time integerValue] withDateFormat:@"M月dd日"];
-    _hotelNameLabel.text = _hotelModel.hotel_name;
-    //_dateLabel.text = [NSString stringWithFormat:@"%@ -- %@",starTimeStr,outTimeStr];
-    _priceLabel.text = [NSString stringWithFormat:@"%@元",_hotelModel.now_price];
+    if (_tag == 1) {
+        _nameLabel.text = [NSString stringWithFormat:@"%@  %@————%@",_releaseModel.company,_releaseModel.departure,_releaseModel.destination];
+        _dateLabel.text = [NSString stringWithFormat:@"%ld 起飞",(long)_releaseModel.time];
+        _priceLabel.text = [NSString stringWithFormat:@"%ld元",(long)_releaseModel.finalPrice];
+    }else {
+        //初始化日期格式器
+        NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+        //定义日期格式
+        formatter.dateFormat = @"M月dd日";
+        //当前时间
+        NSDate *date = [NSDate date];
+        //后天的日期
+        NSDate *dateAfterdays = [NSDate dateWithDaysFromNow:2];
+        NSString *dateStr = [formatter stringFromDate:date];
+        NSString *dateTomStr= [formatter stringFromDate:dateAfterdays];
+        _dateLabel.text = [NSString stringWithFormat:@"%@ -- %@",dateStr,dateTomStr];
+        
+        //NSString *starTimeStr = [Utilities dateStrFromCstampTime:[_hotelModel.start_time integerValue] withDateFormat:@"M月dd日"];
+        //NSString *outTimeStr = [Utilities dateStrFromCstampTime:[_hotelModel.start_time integerValue] withDateFormat:@"M月dd日"];
+        _nameLabel.text = _hotelModel.hotel_name;
+        //_dateLabel.text = [NSString stringWithFormat:@"%@ -- %@",starTimeStr,outTimeStr];
+        _priceLabel.text = [NSString stringWithFormat:@"%@元",_hotelModel.now_price];
+    }
     self.tableView.tableFooterView = [UIView new];
     //将表格视图设置为"编辑中"
     self.tableView.editing = YES;
