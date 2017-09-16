@@ -243,16 +243,26 @@
             _releaseButton.backgroundColor = UIColorFromRGB(66, 162, 233);
         }
     }
+   
 }
-// 滑动空白处隐藏键盘
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    [self.view endEditing:YES];
+//让根视图结束编辑状态，到达收起键盘的目的
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    _pickerview.hidden = YES;
+    [_lowPriceTextField resignFirstResponder];
+    [_highPriceTextField resignFirstResponder];
+    [_titleTextField resignFirstResponder];
+    [_detailsTextField resignFirstResponder];
 }
 
+// 滑动空白处隐藏键盘
+//- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+ //   [self.view endEditing:YES];
+//}
+
 // 点击空白处收键盘
--(void)fingerTapped:(UITapGestureRecognizer *)gestureRecognizer {
-    [self.view endEditing:YES];
-}
+//-(void)fingerTapped:(UITapGestureRecognizer *)gestureRecognizer {
+//    [self.view endEditing:YES];
+//}
 
 //按键盘return收回按钮
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -261,10 +271,6 @@
     return YES;
 }
 
-//让根视图结束编辑状态，到达收起键盘的目的
-- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    _pickerview.hidden = YES;
-}
 
 #pragma mark - quest
 //网络请求
