@@ -623,7 +623,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="dateLabel" destination="ZnG-9V-NJd" id="yeI-1p-bAI"/>
-                        <outlet property="hotelNameLabel" destination="ZkX-0T-lLo" id="zpp-1U-Gmi"/>
+                        <outlet property="nameLabel" destination="ZkX-0T-lLo" id="ihF-re-zsf"/>
                         <outlet property="payTableView" destination="Hwa-gk-k1S" id="vRs-X0-5To"/>
                         <outlet property="priceLabel" destination="qHJ-t5-VXm" id="4YE-eY-1Zg"/>
                     </connections>
