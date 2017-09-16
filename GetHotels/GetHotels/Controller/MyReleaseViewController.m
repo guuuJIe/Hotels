@@ -96,6 +96,9 @@
     _segmentcontrol.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;
     //选中时的标记
     _segmentcontrol.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
+    _segmentcontrol.borderType=HMSegmentedControlBorderTypeRight;
+    _segmentcontrol.borderColor =UIColorFromRGBA(66, 66, 66, 0.2);
+    
     //设置未选中的标题属性
     _segmentcontrol.titleTextAttributes = @{NSForegroundColorAttributeName:UIColorFromRGB(150, 150, 150),NSFontAttributeName:[UIFont boldSystemFontOfSize:15.f]};
     //选中时的标题样式
@@ -464,7 +467,7 @@
         OfferViewController *detailVC = segue.destinationViewController ;
         //3、把数据给下一页预备好的接受容器
         detailVC.IssueId = model.Id;
-
+        
         //1.获取要传递到下一页的数据
             }
 }

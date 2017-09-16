@@ -8,10 +8,12 @@
 
 #import "OfferCollectionViewCell.h"
 #import "PurchaseTableViewController.h"
+#import "ReleaseModel.h"
 @implementation OfferCollectionViewCell
 
 - (IBAction)payAction:(UIButton *)sender forEvent:(UIEvent *)event {
     [_delegate chooseItem:sender];
+
     //
     
 }

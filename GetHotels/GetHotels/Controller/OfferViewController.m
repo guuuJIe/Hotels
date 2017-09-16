@@ -14,6 +14,8 @@
     NSInteger offerNum;
 }
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UIButton *payBtn;
+
 @property (strong,nonatomic)UIActivityIndicatorView *aiv;
 @property(strong,nonatomic)NSMutableArray *offerArr;
 @end
@@ -60,7 +62,7 @@
 }
 //自定义的返回按钮的事件
 - (void)leftButtonAction:(UIButton *)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 //创建刷新指示器
@@ -151,6 +153,8 @@
     cell.destination.text = model.destination;
     cell.price.text = [NSString stringWithFormat:@"￥ %ld", model.finalPrice];
     cell.aviationCabin.text = model.cabin;
+    cell.payBtn.layer.borderColor = [[UIColor blueColor] CGColor];
+    cell.payBtn.tag = 10000+indexPath.section;
     NSDate *date1 = [NSDate dateWithTimeIntervalSince1970:model.inTime / 1000];
     NSDateFormatter *formatter1 = [[NSDateFormatter alloc]init];
     formatter1.dateFormat = @"HH:mm";
@@ -173,7 +177,21 @@
 }
 -(void)chooseItem:(UIButton *)button{
    PurchaseTableViewController *purchaseVS = [Utilities getStoryboardInstance:@"BookHotels" byIdentity:@"purchaseNavi"];
-    
+    ReleaseModel *model = _offerArr[button.tag-10000];
+    purchaseVS.releaseModel = model;
+    purchaseVS.tag = 1;
     [self.navigationController pushViewController:purchaseVS animated:YES];
 }
+//当某一个页面跳转行为将要发生的时候
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+//           ReleaseModel *model = _offerArr[sender.tag];
+//        //2.获取下一页这个实例
+//        PurchaseTableViewController *detailVC = segue.destinationViewController ;
+//        //3、把数据给下一页预备好的接受容器
+//    
+//    
+//        //1.获取要传递到下一页的数据
+//    
+}
+
 @end
