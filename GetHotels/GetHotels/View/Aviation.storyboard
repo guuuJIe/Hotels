@@ -24,6 +24,13 @@
                             <view contentMode="scaleToFill" restorationIdentifier="Bview" translatesAutoresizingMaskIntoConstraints="NO" id="W8n-yX-Bxr">
                                 <rect key="frame" x="15" y="124" width="345" height="350"/>
                                 <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ellipse副本" translatesAutoresizingMaskIntoConstraints="NO" id="N5R-PX-S0y">
+                                        <rect key="frame" x="142" y="-30" width="60" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="aFD-Lh-KXk"/>
+                                            <constraint firstAttribute="width" secondItem="N5R-PX-S0y" secondAttribute="height" multiplier="1:1" id="vKw-kQ-TQu"/>
+                                        </constraints>
+                                    </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="出发时间段" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z9e-7B-xm3">
                                         <rect key="frame" x="15" y="20" width="60" height="12"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
@@ -247,6 +254,7 @@
                                     <constraint firstAttribute="trailing" secondItem="gIf-QY-HqV" secondAttribute="trailing" constant="15" id="BW8-NP-40T"/>
                                     <constraint firstItem="IaA-mH-epe" firstAttribute="centerY" secondItem="UxC-Iv-QCo" secondAttribute="centerY" id="BXc-d2-zDc"/>
                                     <constraint firstItem="Tj8-fO-xdb" firstAttribute="leading" secondItem="AHm-AG-aIt" secondAttribute="leading" id="CVi-Bk-3Ti"/>
+                                    <constraint firstItem="N5R-PX-S0y" firstAttribute="top" secondItem="W8n-yX-Bxr" secondAttribute="top" constant="-30" id="D2p-Dq-Voa"/>
                                     <constraint firstItem="AHm-AG-aIt" firstAttribute="top" secondItem="CsB-HI-cOh" secondAttribute="bottom" constant="5" id="DWb-ap-Uli"/>
                                     <constraint firstItem="jHu-g9-JTL" firstAttribute="leading" secondItem="W8n-yX-Bxr" secondAttribute="leading" constant="15" id="ECC-Cl-5xr"/>
                                     <constraint firstItem="nUu-7f-96q" firstAttribute="centerY" secondItem="sWr-0v-JQh" secondAttribute="centerY" id="GcU-u7-dXe"/>
@@ -289,6 +297,7 @@
                                     <constraint firstItem="k7M-f0-lnY" firstAttribute="leading" secondItem="IaA-mH-epe" secondAttribute="trailing" constant="25" id="rB2-Hy-nnJ"/>
                                     <constraint firstItem="nUu-7f-96q" firstAttribute="top" secondItem="B75-5s-ePu" secondAttribute="bottom" constant="45" id="rRK-8g-b1y"/>
                                     <constraint firstItem="gIf-QY-HqV" firstAttribute="centerY" secondItem="CsB-HI-cOh" secondAttribute="centerY" id="rda-9q-oBb"/>
+                                    <constraint firstItem="N5R-PX-S0y" firstAttribute="centerX" secondItem="W8n-yX-Bxr" secondAttribute="centerX" id="rkn-Ph-fdN"/>
                                     <constraint firstItem="Ofu-QT-zXK" firstAttribute="leading" secondItem="6cH-jr-oJi" secondAttribute="leading" id="tKt-2r-PtL"/>
                                     <constraint firstItem="NCW-cq-HoI" firstAttribute="leading" secondItem="W8n-yX-Bxr" secondAttribute="leading" constant="15" id="thw-XE-2gU"/>
                                     <constraint firstItem="7wp-Tp-tm2" firstAttribute="leading" secondItem="7Pn-qe-ziS" secondAttribute="leading" id="toJ-wi-CaH"/>
@@ -318,13 +327,6 @@
                                     <action selector="releaseActionButton:forEvent:" destination="9YQ-rc-UfD" eventType="touchUpInside" id="UL8-N8-ijh"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ellipse副本" translatesAutoresizingMaskIntoConstraints="NO" id="N5R-PX-S0y">
-                                <rect key="frame" x="158" y="94" width="60" height="60"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="aFD-Lh-KXk"/>
-                                    <constraint firstAttribute="width" secondItem="N5R-PX-S0y" secondAttribute="height" multiplier="1:1" id="vKw-kQ-TQu"/>
-                                </constraints>
-                            </imageView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ldw-ro-LKV" userLabel="Pickerview">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <subviews>
@@ -372,17 +374,16 @@
                             <constraint firstItem="W8n-yX-Bxr" firstAttribute="top" secondItem="McT-rQ-hoN" secondAttribute="bottom" constant="60" id="JFd-P4-Dgb"/>
                             <constraint firstItem="ldw-ro-LKV" firstAttribute="top" secondItem="McT-rQ-hoN" secondAttribute="bottom" id="NHy-N6-iEk"/>
                             <constraint firstAttribute="trailing" secondItem="ldw-ro-LKV" secondAttribute="trailing" id="U7C-Vv-OVL"/>
-                            <constraint firstItem="N5R-PX-S0y" firstAttribute="centerX" secondItem="W8n-yX-Bxr" secondAttribute="centerX" id="YCW-eH-14f"/>
                             <constraint firstItem="OBW-ep-BMT" firstAttribute="centerX" secondItem="W8n-yX-Bxr" secondAttribute="centerX" id="lAz-9f-nXl"/>
                             <constraint firstAttribute="trailing" secondItem="OBW-ep-BMT" secondAttribute="trailing" constant="120" id="o1w-Wk-Q6z"/>
                             <constraint firstItem="OBW-ep-BMT" firstAttribute="leading" secondItem="XqN-Lc-98g" secondAttribute="leading" constant="120" id="pEY-Fs-4fb"/>
-                            <constraint firstItem="N5R-PX-S0y" firstAttribute="top" secondItem="McT-rQ-hoN" secondAttribute="bottom" constant="30" id="v9S-Gb-hlF"/>
                             <constraint firstAttribute="trailing" secondItem="W8n-yX-Bxr" secondAttribute="trailing" constant="15" id="w8v-Bh-BXQ"/>
                             <constraint firstItem="W8n-yX-Bxr" firstAttribute="leading" secondItem="XqN-Lc-98g" secondAttribute="leading" constant="15" id="xpL-fa-IBk"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="发布需求" id="XX7-bQ-wFU"/>
                     <connections>
+                        <outlet property="bgView" destination="W8n-yX-Bxr" id="oha-oQ-QJE"/>
                         <outlet property="dateButton" destination="UxC-Iv-QCo" id="fxN-1Y-Wi0"/>
                         <outlet property="dateLab" destination="IaA-mH-epe" id="6nH-aG-bHe"/>
                         <outlet property="datePicker" destination="72R-Yj-1Pb" id="t4P-WP-j2a"/>
