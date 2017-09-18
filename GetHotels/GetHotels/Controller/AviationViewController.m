@@ -289,12 +289,12 @@
     //结束日期
     NSTimeInterval endTime = [Utilities cTimestampFromString:_nextDateButton.titleLabel.text format:@"yyyy-MM-dd"];
     //NSTimeInterval secs = [endTime timeIntervalSinceDate:startTime];
-    if (startTime >= endTime) {
-        [aiv stopAnimating];
-        [Utilities popUpAlertViewWithMsg:@"请正确设置开始日期和结束日期" andTitle:@"提示" onView:self ];
-        //[Utilities popUpAlertViewWithMsg:@"请正确设置开始日期和结束日期" andTitle:@"提示" onView:self onCompletion:^{}];
-        return;
-    }
+//    if (startTime >= endTime) {
+//        [aiv stopAnimating];
+//        [Utilities popUpAlertViewWithMsg:@"请正确设置开始日期和结束日期" andTitle:@"提示" onView:self ];
+//        //[Utilities popUpAlertViewWithMsg:@"请正确设置开始日期和结束日期" andTitle:@"提示" onView:self onCompletion:^{}];
+//        return;
+//    }
     if ([_targetCityBtn.titleLabel.text isEqualToString:@"请选择城市"]) {
         [aiv stopAnimating];
         [Utilities popUpAlertViewWithMsg:@"请选择抵达的城市" andTitle:@"提示" onView:self ];
