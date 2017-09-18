@@ -128,14 +128,9 @@
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                     <connections>
-                                                        <action selector="payAction:forEvent:" destination="ATL-be-dPp" eventType="touchUpInside" id="H4W-jK-xHA"/>
+                                                        <action selector="payAction:forEvent:" destination="wMU-hI-8Wz" eventType="touchUpInside" id="yw0-eL-eV5"/>
                                                     </connections>
                                                 </button>
-                                                <view alpha="0.5" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D1i-9z-Jqe">
-                                                    <rect key="frame" x="125" y="116" width="111" height="1"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="backgroundColor" red="0.25818924492385786" green="0.25818924492385786" blue="0.25818924492385786" alpha="0.26062178938356162" colorSpace="custom" customColorSpace="sRGB"/>
-                                                </view>
                                             </subviews>
                                         </view>
                                         <constraints>
