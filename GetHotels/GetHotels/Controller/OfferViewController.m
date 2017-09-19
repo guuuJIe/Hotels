@@ -10,10 +10,13 @@
 #import "OfferCollectionViewCell.h"
 #import "ReleaseModel.h"
 #import "PurchaseTableViewController.h"
-@interface OfferViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,TermCellDelegate>{
+@interface OfferViewController ()<UICollectionViewDelegate,UICollectionViewDataSource>{
     NSInteger offerNum;
 }
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+- (IBAction)payAction:(UIButton *)sender forEvent:(UIEvent *)event;
+
+
 @property (strong,nonatomic)UIActivityIndicatorView *aiv;
 @property(strong,nonatomic)NSMutableArray *offerArr;
 @end
@@ -60,7 +63,7 @@
 }
 //自定义的返回按钮的事件
 - (void)leftButtonAction:(UIButton *)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 //创建刷新指示器
@@ -129,7 +132,7 @@
 //item长什么样
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     OfferCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"offerCell" forIndexPath:indexPath];
-    cell.delegate = self;
+
     //设置边框阴影
     cell.layer.shadowColor = [UIColor lightGrayColor].CGColor;
     cell.layer.shadowOffset = CGSizeMake(0, 0);
@@ -151,15 +154,11 @@
     cell.destination.text = model.destination;
     cell.price.text = [NSString stringWithFormat:@"￥ %ld", model.finalPrice];
     cell.aviationCabin.text = model.cabin;
-    NSDate *date1 = [NSDate dateWithTimeIntervalSince1970:model.inTime / 1000];
-    NSDateFormatter *formatter1 = [[NSDateFormatter alloc]init];
-    formatter1.dateFormat = @"HH:mm";
-    NSString *inTime = [formatter stringFromDate:date1];
-    NSDate *date2 = [NSDate dateWithTimeIntervalSince1970:model.outTime / 1000];
-    NSDateFormatter *formatter2 = [[NSDateFormatter alloc]init];
-    formatter2.dateFormat = @"HH:mm";
-    NSString *outTime = [formatter stringFromDate:date2];
-    cell.time.text = [NSString stringWithFormat:@"%@-%@", inTime,outTime];
+    cell.payBtn.layer.borderColor = [[UIColor blueColor] CGColor];
+    cell.payBtn.tag = 10000+indexPath.section;
+    NSString *dateStr = [Utilities dateStrFromCstampTime:model.inTime withDateFormat:@"HH:mm"];
+    NSString *dateSt = [Utilities dateStrFromCstampTime:model.outTime  withDateFormat:@"HH:mm"];
+    cell.time.text = [NSString stringWithFormat:@"%@-%@", dateStr,dateSt];
     cell.aviationCompany.text = model.company;
     return cell;
 }
@@ -171,8 +170,12 @@
     CGFloat space = self.view.frame.size.width - 40;
     return CGSizeMake(space,x);
 }
--(void)chooseItem:(UIButton *)button{
-   PurchaseTableViewController *purchaseVS = [Utilities getStoryboardInstance:@"BookHotels" byIdentity:@"purchaseNavi"];
-    [self.navigationController pushViewController:purchaseVS animated:YES];
+
+- (IBAction)payAction:(UIButton *)sender forEvent:(UIEvent *)event {
+    PurchaseTableViewController *purchase = [Utilities getStoryboardInstance:@"BookHotels" byIdentity:@"purchaseNavi"];
+    purchase.tag = 1;
+    ReleaseModel *model = _offerArr[sender.tag - 10000];
+    purchase.releaseModel = model;
+    [self.navigationController pushViewController:purchase animated:YES];
 }
 @end

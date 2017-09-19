@@ -7,13 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-@protocol TermCellDelegate<NSObject>
--(void)chooseItem:(UIButton *)button;
-@end
+
 @interface OfferCollectionViewCell : UICollectionViewCell
-@property (assign, nonatomic) id<TermCellDelegate> delegate;
+
 @property (weak, nonatomic) IBOutlet UIButton *payBtn;
-- (IBAction)payAction:(UIButton *)sender forEvent:(UIEvent *)event;
+
 @property (weak, nonatomic) IBOutlet UILabel *startTime;
 @property (weak, nonatomic) IBOutlet UILabel *departure;
 @property (weak, nonatomic) IBOutlet UILabel *destination;

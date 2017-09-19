@@ -46,6 +46,9 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topConstraint;
 @property (strong,nonatomic)NSArray *keys;
 @property (strong,nonatomic)NSDictionary *cities;
+@property (weak, nonatomic) IBOutlet UIView *bgView;
+@property (strong,nonatomic)NSString *startTime;
+@property (strong,nonatomic)NSString *ToEndTime;
 @end
 
 @implementation AviationViewController
@@ -63,12 +66,11 @@
     //[[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     self.titleTextField.delegate = self;
     self.detailsTextField.delegate = self;
-    //调用设置导航样式
-    [self setNavigationItem];
+    
     //_datePicker.minimumDate =[NSDate date];
     //设置默认时间
     [self defaultDate];
-    flag = 0;
+  //  flag = 0;
     [self uiLayout];
     
     // Do any additional setup after loading the view.
@@ -78,11 +80,19 @@
     //接收一个通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeCity:) name:@"Resetcity" object:nil];
     // 点击空白处收键盘
-    
-    
-    
-}
+    datetime = 33062449980000;
+    NSDate *startDate = [NSDate date];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    formatter.dateFormat = @"yyyy-MM-dd HH:mm";
+    NSString *star = [formatter stringFromDate:startDate];
+    _startTime = star;
 
+}
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    //调用设置导航样式
+    [self setNavigationItem];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -109,21 +119,22 @@
     //self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:leftBtn];
 }
 ////英文键盘默认高度216
-//- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
-//{
-//    //重写textField这个方法
-//    NSLog(@"开始编辑");
-//    CGFloat offset = self.view.frame.size.height - (textField.frame.origin.y+textField.frame.size.height+216+50);
-//    NSLog(@"偏移高度为 --- %f",offset);
-//    if (offset<=0) {
-//        [UIView animateWithDuration:0.3f animations:^{
-//            CGRect frame = self.view.frame;
-//            frame.origin.y = offset;
-//            self.view.frame = frame;
-//        }];
-//    }
-//    return YES;
-//}
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    //重写textField这个方法
+    NSLog(@"开始编辑");
+    CGFloat offset = self.bgView.frame.size.height - (textField.frame.origin.y+textField.frame.size.height+30);
+    NSLog(@"%f %f",self.bgView.frame.size.height,textField.frame.origin.y);
+    NSLog(@"偏移高度为 --- %f",offset);
+   if (offset<=0) {
+        [UIView animateWithDuration:0.3f animations:^{
+            CGRect frame = self.bgView.frame;
+            frame.origin.y = offset;
+            self.bgView.frame = frame;
+        }];
+    }
+    return YES;
+}
 //- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
 //{
 //    
@@ -243,16 +254,26 @@
             _releaseButton.backgroundColor = UIColorFromRGB(66, 162, 233);
         }
     }
+   
 }
-// 滑动空白处隐藏键盘
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    [self.view endEditing:YES];
+//让根视图结束编辑状态，到达收起键盘的目的
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    _pickerview.hidden = YES;
+    [_lowPriceTextField resignFirstResponder];
+    [_highPriceTextField resignFirstResponder];
+    [_titleTextField resignFirstResponder];
+    [_detailsTextField resignFirstResponder];
 }
 
+// 滑动空白处隐藏键盘
+//- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+ //   [self.view endEditing:YES];
+//}
+
 // 点击空白处收键盘
--(void)fingerTapped:(UITapGestureRecognizer *)gestureRecognizer {
-    [self.view endEditing:YES];
-}
+//-(void)fingerTapped:(UITapGestureRecognizer *)gestureRecognizer {
+//    [self.view endEditing:YES];
+//}
 
 //按键盘return收回按钮
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -261,10 +282,6 @@
     return YES;
 }
 
-//让根视图结束编辑状态，到达收起键盘的目的
-- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    _pickerview.hidden = YES;
-}
 
 #pragma mark - quest
 //网络请求
@@ -278,12 +295,12 @@
     //结束日期
     NSTimeInterval endTime = [Utilities cTimestampFromString:_nextDateButton.titleLabel.text format:@"yyyy-MM-dd"];
     //NSTimeInterval secs = [endTime timeIntervalSinceDate:startTime];
-    if (startTime >= endTime) {
-        [aiv stopAnimating];
-        [Utilities popUpAlertViewWithMsg:@"请正确设置开始日期和结束日期" andTitle:@"提示" onView:self ];
-        //[Utilities popUpAlertViewWithMsg:@"请正确设置开始日期和结束日期" andTitle:@"提示" onView:self onCompletion:^{}];
-        return;
-    }
+//    if (startTime >= endTime) {
+//        [aiv stopAnimating];
+//        [Utilities popUpAlertViewWithMsg:@"请正确设置开始日期和结束日期" andTitle:@"提示" onView:self ];
+//        //[Utilities popUpAlertViewWithMsg:@"请正确设置开始日期和结束日期" andTitle:@"提示" onView:self onCompletion:^{}];
+//        return;
+//    }
     if ([_targetCityBtn.titleLabel.text isEqualToString:@"请选择城市"]) {
         [aiv stopAnimating];
         [Utilities popUpAlertViewWithMsg:@"请选择抵达的城市" andTitle:@"提示" onView:self ];
@@ -363,6 +380,11 @@
     //    NSString *thDate = [formatter stringFromDate:date];
     //
     //   [_nextDateButton setTitle:thDate forState:UIControlStateNormal];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    formatter.dateFormat = @"yyyy-MM-dd";
+    NSDate *date = [formatter dateFromString:_startTime];
+    NSDate *nextDat = [NSDate dateWithTimeInterval:60*24*60 sinceDate:date];
+    _datePicker.minimumDate = nextDat;
 }
 - (IBAction)departureCityActionBtn:(UIButton *)sender forEvent:(UIEvent *)event {
     flag = 1;
@@ -456,21 +478,23 @@
     //将日期转换为字符串（通过日期格式器中的stringFromDate方法）
     NSString *theDate = [formatter stringFromDate:date];
     [NSString stringWithFormat:@""];
+    followUpTime = [Utilities cTimestampFromString:theDate format:@"yyyy-MM-dd HH:mm"];
     //flag等于0 则开始按钮变为时间，反之结束按钮变为时间
-    if (flag == 0 ) {
-        _dateLab.hidden = NO;
-        [_dateButton setTitle:theDate forState:UIControlStateNormal];
-        if (![theDate isEqualToString: [formatter stringFromDate:[NSDate dateTomorrow]]]) {
-            _dateLab.hidden = YES;
-            [_dateButton setTitle:theDate forState:UIControlStateNormal];
-        }
+    if (flag == 1 ) {
+        _nextDayLab.hidden = YES;
+        [_nextDateButton  setTitle:theDate forState:UIControlStateNormal];
+        datetime = [Utilities cTimestampFromString:theDate format:@"yyyy-MM-dd HH:mm"];
     }else{
-        _nextDayLab.hidden = NO;
-        [_nextDateButton setTitle:theDate forState:UIControlStateNormal];
-        if (![theDate isEqualToString: [formatter stringFromDate:[NSDate dateWithDaysFromNow:2]]]) {
-            _nextDayLab.hidden = YES;
-            [_nextDateButton setTitle:theDate forState:UIControlStateNormal];
+        _dateLab.hidden = YES;
+        [_dateButton setTitle:theDate forState:UIControlStateNormal];
+        _startTime = theDate;
+        if (followUpTime >=datetime) {
+            NSDate *nextDat = [NSDate dateWithTimeInterval:2*24*60*60 sinceDate:date];
+            NSString *endTime = [formatter stringFromDate:nextDat];
+            [_nextDateButton setTitle:endTime forState:UIControlStateNormal];
         }
+    
+    
     }
     
     _tooBar.hidden = YES;
