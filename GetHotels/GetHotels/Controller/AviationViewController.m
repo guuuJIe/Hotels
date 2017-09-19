@@ -47,6 +47,8 @@
 @property (strong,nonatomic)NSArray *keys;
 @property (strong,nonatomic)NSDictionary *cities;
 @property (weak, nonatomic) IBOutlet UIView *bgView;
+@property (strong,nonatomic)NSString *startTime;
+@property (strong,nonatomic)NSString *ToEndTime;
 @end
 
 @implementation AviationViewController
@@ -68,7 +70,7 @@
     //_datePicker.minimumDate =[NSDate date];
     //设置默认时间
     [self defaultDate];
-    flag = 0;
+  //  flag = 0;
     [self uiLayout];
     
     // Do any additional setup after loading the view.
@@ -78,9 +80,13 @@
     //接收一个通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeCity:) name:@"Resetcity" object:nil];
     // 点击空白处收键盘
-    
-    
-    
+    datetime = 33062449980000;
+    NSDate *startDate = [NSDate date];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    formatter.dateFormat = @"yyyy-MM-dd HH:mm";
+    NSString *star = [formatter stringFromDate:startDate];
+    _startTime = star;
+
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -289,12 +295,12 @@
     //结束日期
     NSTimeInterval endTime = [Utilities cTimestampFromString:_nextDateButton.titleLabel.text format:@"yyyy-MM-dd"];
     //NSTimeInterval secs = [endTime timeIntervalSinceDate:startTime];
-    if (startTime >= endTime) {
-        [aiv stopAnimating];
-        [Utilities popUpAlertViewWithMsg:@"请正确设置开始日期和结束日期" andTitle:@"提示" onView:self ];
-        //[Utilities popUpAlertViewWithMsg:@"请正确设置开始日期和结束日期" andTitle:@"提示" onView:self onCompletion:^{}];
-        return;
-    }
+//    if (startTime >= endTime) {
+//        [aiv stopAnimating];
+//        [Utilities popUpAlertViewWithMsg:@"请正确设置开始日期和结束日期" andTitle:@"提示" onView:self ];
+//        //[Utilities popUpAlertViewWithMsg:@"请正确设置开始日期和结束日期" andTitle:@"提示" onView:self onCompletion:^{}];
+//        return;
+//    }
     if ([_targetCityBtn.titleLabel.text isEqualToString:@"请选择城市"]) {
         [aiv stopAnimating];
         [Utilities popUpAlertViewWithMsg:@"请选择抵达的城市" andTitle:@"提示" onView:self ];
@@ -374,6 +380,11 @@
     //    NSString *thDate = [formatter stringFromDate:date];
     //
     //   [_nextDateButton setTitle:thDate forState:UIControlStateNormal];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    formatter.dateFormat = @"yyyy-MM-dd";
+    NSDate *date = [formatter dateFromString:_startTime];
+    NSDate *nextDat = [NSDate dateWithTimeInterval:60*24*60 sinceDate:date];
+    _datePicker.minimumDate = nextDat;
 }
 - (IBAction)departureCityActionBtn:(UIButton *)sender forEvent:(UIEvent *)event {
     flag = 1;
@@ -467,21 +478,23 @@
     //将日期转换为字符串（通过日期格式器中的stringFromDate方法）
     NSString *theDate = [formatter stringFromDate:date];
     [NSString stringWithFormat:@""];
+    followUpTime = [Utilities cTimestampFromString:theDate format:@"yyyy-MM-dd HH:mm"];
     //flag等于0 则开始按钮变为时间，反之结束按钮变为时间
-    if (flag == 0 ) {
-        _dateLab.hidden = NO;
-        [_dateButton setTitle:theDate forState:UIControlStateNormal];
-        if (![theDate isEqualToString: [formatter stringFromDate:[NSDate dateTomorrow]]]) {
-            _dateLab.hidden = YES;
-            [_dateButton setTitle:theDate forState:UIControlStateNormal];
-        }
+    if (flag == 1 ) {
+        _nextDayLab.hidden = YES;
+        [_nextDateButton  setTitle:theDate forState:UIControlStateNormal];
+        datetime = [Utilities cTimestampFromString:theDate format:@"yyyy-MM-dd HH:mm"];
     }else{
-        _nextDayLab.hidden = NO;
-        [_nextDateButton setTitle:theDate forState:UIControlStateNormal];
-        if (![theDate isEqualToString: [formatter stringFromDate:[NSDate dateWithDaysFromNow:2]]]) {
-            _nextDayLab.hidden = YES;
-            [_nextDateButton setTitle:theDate forState:UIControlStateNormal];
+        _dateLab.hidden = YES;
+        [_dateButton setTitle:theDate forState:UIControlStateNormal];
+        _startTime = theDate;
+        if (followUpTime >=datetime) {
+            NSDate *nextDat = [NSDate dateWithTimeInterval:2*24*60*60 sinceDate:date];
+            NSString *endTime = [formatter stringFromDate:nextDat];
+            [_nextDateButton setTitle:endTime forState:UIControlStateNormal];
         }
+    
+    
     }
     
     _tooBar.hidden = YES;
