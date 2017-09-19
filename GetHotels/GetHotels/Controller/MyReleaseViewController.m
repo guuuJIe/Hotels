@@ -96,8 +96,8 @@
     _segmentcontrol.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;
     //选中时的标记
     _segmentcontrol.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
-    _segmentcontrol.borderType=HMSegmentedControlBorderTypeRight;
-    _segmentcontrol.borderColor =UIColorFromRGBA(66, 66, 66, 0.2);
+    _segmentcontrol.borderType= HMSegmentedControlBorderTypeLeft;
+    _segmentcontrol.borderColor =UIColorFromRGB(230, 230, 230);
     
     //设置未选中的标题属性
     _segmentcontrol.titleTextAttributes = @{NSForegroundColorAttributeName:UIColorFromRGB(150, 150, 150),NSFontAttributeName:[UIFont boldSystemFontOfSize:15.f]};
@@ -356,10 +356,7 @@
 }
 //设置组的底部视图高度
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    if (section == 0){
-        return 5.f;
-    }
-    return 0;
+    return 5.0f;
 }
 
 //细胞将要出现时调用
