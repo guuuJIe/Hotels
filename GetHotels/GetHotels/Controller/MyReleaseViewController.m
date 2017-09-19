@@ -63,6 +63,8 @@
     _didReleaseTableView.tableFooterView = [UIView new];
     _isReleasedTableView.tableFooterView = [UIView new];
     _histroyTableView.tableFooterView = [UIView new];
+    _scrollView.showsHorizontalScrollIndicator = false;
+    _scrollView.showsVerticalScrollIndicator = NO;
     [self setsegment];
     [self refreshControl];
     [self didReleasedRequest];

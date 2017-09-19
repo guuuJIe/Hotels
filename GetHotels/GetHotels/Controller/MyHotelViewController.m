@@ -258,13 +258,13 @@
 //一共多少组
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if (tableView == _AllOrderTableView) {
-        return 1;
+        return _allOrdersArr.count;
     }
     else if(tableView == _UseableOrderTableView){
-        return 1;
+        return _useableOrdersArr.count;
     }
     else{
-        return 1;
+        return _datedOrderArr.count;
     }
 }
 #pragma mark - scrollView
