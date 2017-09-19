@@ -41,6 +41,10 @@
 @property(strong,nonatomic)NSMutableArray *isReleasedArr;
 @property(strong,nonatomic)NSMutableArray *didReleaseArr;
 @property(strong,nonatomic)NSMutableArray *histroyArr;
+
+@property (strong, nonatomic) UIImageView *didReleaseNothingImg;
+@property (strong, nonatomic) UIImageView *isReleasedNothingImg;
+@property (strong, nonatomic) UIImageView *histroyNothingImg;
 @end
 
 @implementation MyReleaseViewController
@@ -66,7 +70,10 @@
     [self setsegment];
     [self refreshControl];
     [self didReleasedRequest];
-    
+    //调用tableView没数据时显示图片的方法
+    if (_didReleaseArr.count == 0) {
+        [self nothingForTableView];
+    }
     
 }
 
@@ -168,7 +175,21 @@
     [self historyRequest];
 }
 
-
+//当tableView没有数据时显示图片的方法
+- (void)nothingForTableView{
+    _didReleaseNothingImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"no_things"]];
+    _didReleaseNothingImg.frame = CGRectMake((UI_SCREEN_W - 100) / 2, 50, 100, 100);
+    
+    _isReleasedNothingImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"no_things"]];
+    _isReleasedNothingImg.frame = CGRectMake(UI_SCREEN_W + (UI_SCREEN_W - 100) / 2, 50, 100, 100);
+    
+    _histroyNothingImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"no_things"]];
+    _histroyNothingImg.frame = CGRectMake(UI_SCREEN_W * 2 + (UI_SCREEN_W - 100) / 2, 50, 100, 100);
+    
+    [_scrollView addSubview:_didReleaseNothingImg];
+    [_scrollView addSubview:_isReleasedNothingImg];
+    [_scrollView addSubview:_histroyNothingImg];
+}
 /*
 #pragma mark - Navigation
 
@@ -198,6 +219,12 @@
             for (NSDictionary *dict in list) {
                 ReleaseModel *model = [[ReleaseModel alloc]initWithDict:dict];
                 [_isReleasedArr addObject:model];
+            }
+            //当数组没有数据时将图片显示，反之隐藏
+            if (_isReleasedArr.count == 0) {
+                _isReleasedNothingImg.hidden = NO;
+            }else{
+                _isReleasedNothingImg.hidden = YES;
             }
             [_isReleasedTableView reloadData];
         }
@@ -232,6 +259,12 @@
                 ReleaseModel *model = [[ReleaseModel alloc]initWithDictForRelease:dict];
                 [_didReleaseArr addObject:model];
             }
+            //当数组没有数据时将图片显示，反之隐藏
+            if (_didReleaseArr.count == 0) {
+                _didReleaseNothingImg.hidden = NO;
+            }else{
+                _didReleaseNothingImg.hidden = YES;
+            }
             [_didReleaseTableView reloadData];
         }
         else{
@@ -265,6 +298,12 @@
             for (NSDictionary *dict in list) {
                 ReleaseModel *model = [[ReleaseModel alloc]initWithDictForHistroy:dict];
                 [_histroyArr addObject:model];
+            }
+            //当数组没有数据时将图片显示，反之隐藏
+            if (_histroyArr.count == 0) {
+                _histroyNothingImg.hidden = NO;
+            }else{
+                _histroyNothingImg.hidden = YES;
             }
             [_histroyTableView reloadData];
         }
