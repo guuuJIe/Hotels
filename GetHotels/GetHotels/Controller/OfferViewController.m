@@ -8,10 +8,17 @@
 
 #import "OfferViewController.h"
 #import "OfferCollectionViewCell.h"
-@interface OfferViewController ()<UICollectionViewDelegate,UICollectionViewDataSource>
+#import "ReleaseModel.h"
+#import "PurchaseTableViewController.h"
+@interface OfferViewController ()<UICollectionViewDelegate,UICollectionViewDataSource>{
+    NSInteger offerNum;
+}
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+- (IBAction)payAction:(UIButton *)sender forEvent:(UIEvent *)event;
 
 
+@property (strong,nonatomic)UIActivityIndicatorView *aiv;
+@property(strong,nonatomic)NSMutableArray *offerArr;
 @end
 
 @implementation OfferViewController
@@ -19,6 +26,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    _offerArr = [NSMutableArray new];
+    offerNum = 1;
+    [self refreshControl];
+    [self request];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -34,6 +45,7 @@
 
 //设置导航样式
 - (void)setNavigationItem {
+    self.navigationItem.title = @"报价列表";
     //设置导航栏的背景颜色
     //self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
     [self.navigationController.navigationBar setBarTintColor:UIColorFromRGB(23, 115, 232)];
@@ -51,9 +63,54 @@
 }
 //自定义的返回按钮的事件
 - (void)leftButtonAction:(UIButton *)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+//创建刷新指示器
+-(void)refreshControl{
+    UIRefreshControl *didRelaseRefresh = [UIRefreshControl new];
+    [didRelaseRefresh addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
+    didRelaseRefresh.tag = 300;
+    [_collectionView addSubview:didRelaseRefresh];
+}
+//刷新已发布
+-(void)refresh{
+    offerNum = 1;
+    [self request];
+}
+
+//报价列表
+-(void)request{
+    //ReleaseModel *model = [[StorageMgr singletonStorageMgr] objectForKey:@"UserInfo"];
+    NSDictionary *para = @{@"Id" : @(_IssueId)};
+    [RequestAPI requestURL:@"/selectOffer_edu" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
+        
+        [_aiv stopAnimating];
+        UIRefreshControl *ref = (UIRefreshControl *)[_collectionView viewWithTag:300];
+        [ref endRefreshing];
+        NSLog(@"报价列表:%@",responseObject);
+        if ([responseObject[@"result"] integerValue] == 1) {
+            NSArray *arr = responseObject[@"content"];
+            if (offerNum == 1) {
+                [_offerArr removeAllObjects];
+            }
+            for (NSDictionary *dict in arr) {
+                ReleaseModel *model = [[ReleaseModel alloc]initWithDictForOffer:dict];
+                [_offerArr addObject:model];
+            }
+            [_collectionView reloadData];
+        }else{
+            [Utilities popUpAlertViewWithMsg:@"网络错误,请稍后再试" andTitle:@"提示" onView:self];
+        }
+    }failure:^(NSInteger statusCode, NSError *error) {
+        [_aiv stopAnimating];
+        UIRefreshControl *ref = (UIRefreshControl *)[_collectionView viewWithTag:300];
+        [ref endRefreshing];
+        
+    }];
     
 }
+
 /*
 #pragma mark - Navigation
 
@@ -66,7 +123,7 @@
 #pragma mark - conllectionView
 //有多少组
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
-    return 4;
+    return _offerArr.count;
 }
 //每组有多少个item
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
@@ -75,6 +132,7 @@
 //item长什么样
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     OfferCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"offerCell" forIndexPath:indexPath];
+
     //设置边框阴影
     cell.layer.shadowColor = [UIColor lightGrayColor].CGColor;
     cell.layer.shadowOffset = CGSizeMake(0, 0);
@@ -86,6 +144,22 @@
     UIView *bv = [UIView new];
     bv.backgroundColor = [UIColor whiteColor];
     cell.backgroundView = bv;
+    ReleaseModel *model = _offerArr[indexPath.section];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:model.time / 1000];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    formatter.dateFormat = @"MM-dd";
+    NSString *thDate = [formatter stringFromDate:date];
+    cell.startTime.text = thDate;
+    cell.departure.text = model.departure;
+    cell.destination.text = model.destination;
+    cell.price.text = [NSString stringWithFormat:@"￥ %ld", model.finalPrice];
+    cell.aviationCabin.text = model.cabin;
+    cell.payBtn.layer.borderColor = [[UIColor blueColor] CGColor];
+    cell.payBtn.tag = 10000+indexPath.section;
+    NSString *dateStr = [Utilities dateStrFromCstampTime:model.inTime withDateFormat:@"HH:mm"];
+    NSString *dateSt = [Utilities dateStrFromCstampTime:model.outTime  withDateFormat:@"HH:mm"];
+    cell.time.text = [NSString stringWithFormat:@"%@-%@", dateStr,dateSt];
+    cell.aviationCompany.text = model.company;
     return cell;
 }
 //每个细胞的尺寸
@@ -97,4 +171,11 @@
     return CGSizeMake(space,x);
 }
 
+- (IBAction)payAction:(UIButton *)sender forEvent:(UIEvent *)event {
+    PurchaseTableViewController *purchase = [Utilities getStoryboardInstance:@"BookHotels" byIdentity:@"purchaseNavi"];
+    purchase.tag = 1;
+    ReleaseModel *model = _offerArr[sender.tag - 10000];
+    purchase.releaseModel = model;
+    [self.navigationController pushViewController:purchase animated:YES];
+}
 @end

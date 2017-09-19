@@ -169,6 +169,7 @@
             [[StorageMgr singletonStorageMgr] addKey:@"MemberId" andValue:userModel.nickname];
             //如果键盘还打开就让它收回去
             [self.view endEditing:YES];
+            
             //登录成功后清空密码
             _pwdTextField.text = @"";
             //登录成功后按钮禁用

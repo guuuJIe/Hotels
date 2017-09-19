@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface OfferViewController : UIViewController
-
+@property (nonatomic)NSInteger IssueId;
 @end

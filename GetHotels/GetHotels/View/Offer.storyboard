@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="k3f-6C-r2t">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="wMU-hI-8Wz">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -123,9 +123,12 @@
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                             <integer key="value" value="5"/>
                                                         </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                                            <real key="value" value="0.29999999999999999"/>
+                                                        </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                     <connections>
-                                                        <action selector="payAction:forEvent:" destination="ATL-be-dPp" eventType="touchUpInside" id="H4W-jK-xHA"/>
+                                                        <action selector="payAction:forEvent:" destination="wMU-hI-8Wz" eventType="touchUpInside" id="yw0-eL-eV5"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -161,7 +164,14 @@
                                             <constraint firstItem="AOf-Dg-xBS" firstAttribute="leading" secondItem="ePT-Xc-319" secondAttribute="leading" id="yDl-5Y-mSA"/>
                                         </constraints>
                                         <connections>
-                                            <outlet property="payBtn" destination="Qaw-KM-vCS" id="sj6-Xk-D1G"/>
+                                            <outlet property="aviationCabin" destination="1VM-bo-ohG" id="Dxj-r6-I0n"/>
+                                            <outlet property="aviationCompany" destination="hqN-t7-fVx" id="x4x-0K-jQt"/>
+                                            <outlet property="departure" destination="B8w-LE-f6n" id="Jtz-tP-dj4"/>
+                                            <outlet property="destination" destination="I4w-vT-kd1" id="gkj-iu-p3u"/>
+                                            <outlet property="payBtn" destination="Qaw-KM-vCS" id="SU6-iv-WQT"/>
+                                            <outlet property="price" destination="3kq-4d-Skn" id="s6H-Cs-BPg"/>
+                                            <outlet property="startTime" destination="lnI-JY-2vu" id="W10-hQ-ia0"/>
+                                            <outlet property="time" destination="DVU-dJ-caQ" id="hTd-oL-Rpz"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -190,25 +200,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XgT-sU-WIz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1071.2" y="130.88455772113943"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="DB6-dE-X0O">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="k3f-6C-r2t" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="pEU-37-8Cv">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="wMU-hI-8Wz" kind="relationship" relationship="rootViewController" id="2B5-tQ-7qy"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="6wb-ZH-kcA" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="132" y="130.88455772113943"/>
+            <point key="canvasLocation" x="2010.4000000000001" y="130.88455772113943"/>
         </scene>
     </scenes>
     <resources>

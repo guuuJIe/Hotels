@@ -8,6 +8,7 @@
 
 #import "CityTableViewController.h"
 #import <CoreLocation/CoreLocation.h>
+#import "AviationViewController.h"
 @interface CityTableViewController ()<CLLocationManagerDelegate>{
     BOOL firstVisit; 
 }
@@ -160,9 +161,16 @@
     NSString *key = _keys[indexPath.section];
     NSArray *sectionCities = _cities[key];
     NSDictionary *city = sectionCities[indexPath.row];
-    [[NSNotificationCenter defaultCenter] performSelectorOnMainThread:@selector(postNotification:) withObject:[NSNotification notificationWithName:@"ResetCity" object:city[@"name"]] waitUntilDone:YES];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if(_tag == 1){
+        [[NSNotificationCenter defaultCenter] performSelectorOnMainThread:@selector(postNotification:) withObject:[NSNotification notificationWithName:@"ResetCity" object:city[@"name"]] waitUntilDone:YES];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    else{
+        [[NSNotificationCenter defaultCenter] performSelectorOnMainThread:@selector(postNotification:) withObject:[NSNotification notificationWithName:@"Resetcity" object:city[@"name"]] waitUntilDone:YES];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
+
 
 //设置右侧快捷键栏
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {

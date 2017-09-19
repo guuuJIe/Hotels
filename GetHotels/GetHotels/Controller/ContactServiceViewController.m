@@ -100,6 +100,14 @@
 
 //细胞选中后调用
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.row == _arr.count - 1){
+        NSDictionary *dict = _arr[indexPath.row];
+        //配置电话app的路径，并将要拨打的号码组合到路径中
+        NSString *tagetAppStr = [NSString stringWithFormat:@"telprompt://%@",dict[@"content"]];
+        NSURL *tagetAppUrl = [NSURL URLWithString:tagetAppStr];
+        //从当前APP跳转到其他指定的APP中
+        [[UIApplication sharedApplication] openURL:tagetAppUrl];
+    }
     //取消选中
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }

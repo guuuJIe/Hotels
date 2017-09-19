@@ -15,7 +15,7 @@
 #import "HomeMarkTableViewCell.h"
 #import "SKTagView.h"
 #import "JSONS.h"
-
+#import "CityTableViewController.h"
 @interface HotelViewController ()<UITableViewDataSource,UITableViewDelegate,CLLocationManagerDelegate,UITextFieldDelegate>
 {
     BOOL scrollFlag;
@@ -67,6 +67,7 @@
 @property (weak, nonatomic) IBOutlet UIToolbar *toolBar;
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePick;
 @property (weak, nonatomic) IBOutlet UIView *selectView;
+@property (strong, nonatomic) IBOutlet UIView *homeView;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *transviewPosotion;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *pageTop;
@@ -75,6 +76,7 @@
 - (IBAction)cancelAction:(UIBarButtonItem *)sender;
 - (IBAction)doneAction:(UIBarButtonItem *)sender;
 - (IBAction)selectTagCfirmAction:(UIButton *)sender forEvent:(UIEvent *)event;
+- (IBAction)locAction:(UIButton *)sender forEvent:(UIEvent *)event;
  
 
 @property (strong, nonatomic) CLLocationManager *locMgr;
@@ -123,8 +125,7 @@
     [self duration];
     //滑动点设为4个
     _pageControl.numberOfPages = 4;
-    //设置最小时间
-    _datePick.minimumDate = [NSDate date];
+    
     _searchTextView.text = @"";
     
     // Do any additional setup after loading the view.
@@ -132,9 +133,10 @@
     //初始化数组
     _hotelArr = [NSMutableArray new];
     _advImgArr = [NSMutableArray new];
+    
     firstVisit = YES;
     selectBool = YES;
-    selectCirfimBool = NO;
+    selectCirfimBool = NO; 
     [self buttonAtt];
     //各种赋初值
     PageNum = 1;
@@ -152,8 +154,6 @@
     [self initializeData];
     [self refresh];
     [self selectStar];
-    //调用键盘监听通知
-    [self keyboard];
     _sortArr = @[@"智能排序",@"价格低到高",@"价格高到低",@"离我从近到远"];
     
 }
@@ -236,6 +236,7 @@
  //=========================================================================
 //默认时间
 - (void)setDefaultDateForButton{
+    
     //初始化日期格式器
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     //定义日期格式
@@ -250,9 +251,13 @@
     //将处理好的字符串设置给两个Button
     [_inTime setTitle:[NSString stringWithFormat:@"入住%@▼",dateStr] forState:UIControlStateNormal];
     [_outTime setTitle:[NSString stringWithFormat:@"离店%@▼",dateTomStr] forState:UIControlStateNormal];
-    _inTimeDate = dateStr;
-    _outTimeDate = dateTomStr;
-    
+    //
+    NSDateFormatter *paraFormatter = [NSDateFormatter new];
+    paraFormatter.dateFormat = @"yyyy-MM-dd";
+    NSString *dateStr2 = [paraFormatter stringFromDate:date];
+    NSString *dateTomStr2= [paraFormatter stringFromDate:dateTom];
+    _inTimeDate = dateStr2;
+    _outTimeDate = dateTomStr2;
 }
 //创建一个刷新指示器
 - (void)refresh{
@@ -282,7 +287,7 @@
 -(void)weatherRequest{
 
     //获得全宇宙天气的接口（当前这一刻的天气）（http://api.openweathermap.org是一个开放天气接口提供商）
-    NSString *weatherURLStr =  [NSString stringWithFormat:@"http://api.yytianqi.com/observe?city=%f,%f&key=ed497bous144g6lo",latitude,longitude];
+    NSString *weatherURLStr =  [NSString stringWithFormat:@"http://api.openweathermap.org/data/2.5/weather?lat=%f&lon=%f&appid=b864044bb95a790134d17b43a9a14d70&lang=zh_cn&find?q=London&units=metric",latitude,longitude];
     
     //将字符串转换成NSURL对象lat=29&lon=120.444
     NSURL *weatherURL = [NSURL URLWithString:weatherURLStr];
@@ -297,23 +302,21 @@
                 //NSLog(@"网络请求成功，真的开始做事");
                 //将JSON格式的数据流data用JSONS工具包里的NSData下的Category中的JSONCol方法转化为OC对象（Array或Dictionary）
                 id jsonObject = [data JSONCol];
-                //NSLog(@"%@", jsonObject);
-                NSDictionary *data = jsonObject[@"data"];
-                NSString *tq = data[@"tq"];
-                NSString *qw = data[@"qw"];
-                NSString *numtq = data[@"numtq"];
-                
-                if ([numtq isEqualToString:@"00"]){
-                    _weatherImg.image = [UIImage imageNamed:@"晴"];
-                }else if ([numtq isEqualToString:@"01"]){
-                    _weatherImg.image = [UIImage imageNamed:@"多云"];
-                }else if ([numtq isEqualToString:@"02"]){
-                    _weatherImg.image = [UIImage imageNamed:@"阴"];
-                }else{
-                    _weatherImg.image = [UIImage imageNamed:@"小雨"];
+                NSLog(@"%@", jsonObject);
+                NSArray *weatherArr = jsonObject[@"weather"];
+                NSDictionary *weather = [NSDictionary new];
+                for (NSDictionary *dict in weatherArr) {
+                    weather = dict;
                 }
-                _tempLabel.text = qw;
-                _weatherLabel.text = tq;
+                
+                NSDictionary *main = jsonObject[@"main"];
+                NSString *temq = [NSString stringWithFormat:@"%ld",([main[@"temp"] integerValue]/1)];
+                NSString *weatherStr = weather[@"description"];
+                //NSString *weatherID = [NSString stringWithFormat:@"%@",weather[@"id"]];
+                NSInteger weatherID = [weather[@"id"] integerValue];
+                //将某指定方法抛回主线程去执行
+                [self performSelectorOnMainThread:@selector(updateUI:) withObject:[NSArray arrayWithObjects:@(weatherID),weatherStr,temq,nil] waitUntilDone:YES];
+                
                 
             } else {
                 //NSLog(@"%ld", (long)httpRes.statusCode);
@@ -326,26 +329,41 @@
     [jsonDataTask resume];
 }
 
+-(void)updateUI:(NSArray *)data {
+    
+    if ([data[0] integerValue] == 800){
+        _weatherImg.image = [UIImage imageNamed:@"晴"];
+    }else if ([data[0] integerValue] > 800 && [data[0] integerValue] < 804){
+        _weatherImg.image = [UIImage imageNamed:@"多云"];
+    }else if ([data[0] integerValue] == 804){
+        _weatherImg.image = [UIImage imageNamed:@"阴"];
+    }else{
+        _weatherImg.image = [UIImage imageNamed:@"小雨"];
+    }
+    _tempLabel.text = [NSString stringWithFormat:@"%@℃",data[2]];
+    _weatherLabel.text = data[1];
+}
+
 //广告,酒店
 - (void)hotelAdv{
     //拿到刷新指示器
     UIRefreshControl *ref = (UIRefreshControl *)[_hotelTableView viewWithTag:10004];
-    //开始日期
-    NSTimeInterval startTime = [Utilities cTimestampFromString:_inTimeDate format:@"MM-dd"];
-    //开始日期
-    NSTimeInterval endTime = [Utilities cTimestampFromString:_outTimeDate format:@"MM-dd"];
-    if (startTime >= endTime){
-        [_aiv stopAnimating];
-        [Utilities popUpAlertViewWithMsg:@"请正确设置日期" andTitle:nil onView:self];
-        [ref endRefreshing];
-        return;
-    } 
+//    //开始日期
+//    NSTimeInterval startTime = [Utilities cTimestampFromString:_inTimeDate format:@"MM-dd"];
+//    //开始日期
+//    NSTimeInterval endTime = [Utilities cTimestampFromString:_outTimeDate format:@"MM-dd"];
+//    if (startTime >= endTime){
+//        [_aiv stopAnimating];
+//        [Utilities popUpAlertViewWithMsg:@"请正确设置日期" andTitle:nil onView:self];
+//        [ref endRefreshing];
+//        return;
+//    } 
     //参数
     NSDictionary *para = @{@"city_name" : _cityBtn.titleLabel.text, @"pageNum" :@(PageNum), @"pageSize" :  @(pageSize), @"startId" :  @(starID), @"priceId" :@(priceID), @"sortingId" :@(sortID) ,@"inTime" : [NSString stringWithFormat:@"2017-%@",_inTimeDate] ,@"outTime" : [NSString stringWithFormat:@"2017-%@",_outTimeDate] ,@"wxlongitude" :@"", @"wxlatitude" :@""};
     
     //网络请求
     [RequestAPI requestURL:@"/findHotelByCity_edu" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
-        //NSLog(@"登录 = %@",responseObject);
+        NSLog(@"登录 = %@",responseObject);
         //当网络请求成功时让蒙层消失
         [_aiv stopAnimating];
         [ref endRefreshing];
@@ -378,8 +396,6 @@
             [_threeImg sd_setImageWithURL:[NSURL URLWithString:_advImgArr[3]] placeholderImage:[UIImage imageNamed:@"多云"]];
             [_fourImg sd_setImageWithURL:[NSURL URLWithString:_advImgArr[4]] placeholderImage:[UIImage imageNamed:@"多云"]];
             
-            
-            [_homeScrollView reloadInputViews];
             [_hotelTableView reloadData];
         } else {
             [_aiv stopAnimating];
@@ -736,12 +752,12 @@
     //防止循环引用，把块变成弱指针
     //选中一个按钮的时候，
     __weak SKTagView *weakView = _selectTagView;
-//    if (selectCirfimBool == 1){
+//    if (selectCirfimBool == 2){
 //        weakView.didTapTagAtIndex(otherIndexOne, otherPreIdxOne);
 //    }
     _selectTagView.didTapTagAtIndex = ^(NSUInteger preIdx, NSUInteger index) {
 
-//        if (selectCirfimBool == 1){
+//        if (selectCirfimBool == 2){
 //            preIdx = otherIndexOne;
 //            index = otherPreIdxOne;
 //        }
@@ -764,8 +780,8 @@
         tag.borderColor = SELECTE_BORDER_COLOR;
         [weakView removeTagAtIndex:index];
         [weakView insertTag:tag atIndex:index];
-//        selectCirfimBool = 1;
-//        otherIndexOne = index;
+        selectCirfimBool = 3;
+        otherIndexOne = index;
         
     };
     //防止循环引用，把块变成弱指针
@@ -954,13 +970,10 @@
     [_inTime setTitle:[NSString stringWithFormat:@"%@▲",[_inTime.titleLabel.text substringToIndex:_inTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
     [_outTime setTitle:[NSString stringWithFormat:@"%@▼",[_outTime.titleLabel.text substringToIndex:_outTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
     [_sortBtn setTitle:[NSString stringWithFormat:@"%@▼",[_sortBtn.titleLabel.text substringToIndex:_sortBtn.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
-//    [_outTime setTitle:@"离店时间▼" forState:UIControlStateNormal];
-//    [_sortBtn setTitle:@"智能排序▼" forState:UIControlStateNormal];
-//    [_selectBtn setTitle:@"筛选▼" forState:UIControlStateNormal];
-//    [_inTime setTitleColor:SELECT_COLOR forState:UIControlStateNormal];
-//    [_outTime setTitleColor:UNSELECT_TITLECOLOR forState:UIControlStateNormal];
-//    [_sortBtn setTitleColor:UNSELECT_TITLECOLOR forState:UIControlStateNormal];
-//    [_selectBtn setTitleColor:UNSELECT_TITLECOLOR forState:UIControlStateNormal];
+    
+    //设置最小时间
+    _datePick.minimumDate = [NSDate date];
+    
     _inTime.selected = YES;
     _outTime.selected = NO;
     _sortBtn.selected = NO;
@@ -977,6 +990,13 @@
     [_outTime setTitle:[NSString stringWithFormat:@"%@▲",[_outTime.titleLabel.text substringToIndex:_outTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
      [_inTime setTitle:[NSString stringWithFormat:@"%@▼",[_inTime.titleLabel.text substringToIndex:_inTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
     [_sortBtn setTitle:[NSString stringWithFormat:@"%@▼",[_sortBtn.titleLabel.text substringToIndex:_sortBtn.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+    //设置最小时间
+    NSDateFormatter *formatter = [NSDateFormatter new];
+    formatter.dateFormat = @"yyyy-MM-dd";
+    NSDate *date = [formatter dateFromString:_inTimeDate];
+    NSDate *nextDat = [NSDate dateWithTimeInterval:24*60*60 sinceDate:date];//后一天
+    _datePick.minimumDate = nextDat;
+    
     _outTime.selected = YES;
     _inTime.selected = NO;
     _sortBtn.selected = NO;
@@ -1050,10 +1070,14 @@
     _inTime.selected = NO;
     _outTime.selected = NO;
     NSDate *date = _datePick.date;
+    //
     NSDateFormatter *formatter = [NSDateFormatter new];
     formatter.dateFormat = @"MM-dd";
+    NSDateFormatter *paraFormatter = [NSDateFormatter new];
+    paraFormatter.dateFormat = @"yyyy-MM-dd";
+    //
     NSString *thDate = [formatter stringFromDate:date];
-    NSTimeInterval thDateTime = [Utilities cTimestampFromString:thDate format:@"MM-dd"];
+
     //获取默认时间
     //当前时间
     NSDate *dateToday = [NSDate date];
@@ -1061,26 +1085,24 @@
 //    NSDate *dateTom = [NSDate dateTomorrow];
     NSString *dateStr = [formatter stringFromDate:dateToday];
 //    NSString *dateTomStr= [formatter stringFromDate:dateTom];
-    NSTimeInterval startTime = [Utilities cTimestampFromString:dateStr format:@"MM-dd"];
+    NSTimeInterval startTime = [Utilities cTimestampFromString:_inTimeDate format:@"MM-dd"];
+    NSTimeInterval endTime = [Utilities cTimestampFromString:_outTimeDate format:@"MM-dd"];
  
     
     if (flag == 0){
-             [_inTime setTitle:[NSString stringWithFormat:@"入住%@▼",thDate] forState:UIControlStateNormal];
-            _inTimeDate = thDate;
-            //开始日期
-            startTime = [Utilities cTimestampFromString:thDate format:@"MM-dd"];
-    }else{
-        if (thDateTime <= startTime) {
-            [_outTime setTitle:[NSString stringWithFormat:@"%@▼",[_outTime.titleLabel.text substringToIndex:_outTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
-            [Utilities popUpAlertViewWithMsg:@"请正确设置日期" andTitle:nil onView:self];
-            
-        }else{
-            [_outTime setTitle:[NSString stringWithFormat:@"离店%@▼",thDate] forState:UIControlStateNormal];
-            _outTimeDate = thDate;
-            [self initializeData];
+        [_inTime setTitle:[NSString stringWithFormat:@"入住%@▼",thDate] forState:UIControlStateNormal];
+        _inTimeDate = [paraFormatter stringFromDate:date];
+        if (startTime >= endTime){
+            NSDate *nextDat = [NSDate dateWithTimeInterval:24*60*60 sinceDate:date];//后一天
+            NSString *dateStr = [formatter stringFromDate:nextDat];
+            [_outTime setTitle:[NSString stringWithFormat:@"离店%@▼",dateStr] forState:UIControlStateNormal];
         }
+    }else{
+        [_outTime setTitle:[NSString stringWithFormat:@"离店%@▼",thDate] forState:UIControlStateNormal];
+        _outTimeDate = [paraFormatter stringFromDate:date];
+        
     }
-    
+    [self initializeData];
     //followUptime = [date timeIntervalSince2017];
  
     _markView.hidden = YES;
@@ -1092,11 +1114,17 @@
     PageNum = 1;
     starID = starTestID;
     priceID = priceTestID;
-    selectCirfimBool = 0;
+    selectCirfimBool = 1;
     _markView.hidden = YES;
-//    otherPreIdxOne = otherIndexOne;
-//    otherPreIdxTwo = otherIndexTwo;
+    otherPreIdxOne = otherIndexOne;
+    otherPreIdxTwo = otherIndexTwo;
     [self initializeData];
+}
+
+- (IBAction)locAction:(UIButton *)sender forEvent:(UIEvent *)event {
+    CityTableViewController *citylist = [Utilities getStoryboardInstance:@"Main" byIdentity:@"city"];
+    [self.navigationController pushViewController:citylist animated:YES];
+    citylist.tag = 1;
 }
 
 //按键盘上的Return键收起键盘
@@ -1117,30 +1145,29 @@
     _selectBtn.selected = NO;
     _markView.hidden = YES;
     [self.view endEditing:YES];
-//    if (selectCirfimBool != 0){
-//        [self weakSelect];
-//       // _selectTagView.didTapTagAtIndex(otherPreIdxOne, otherIndexOne);
-//    }
+    selectCirfimBool = 2;
+//    [self weakSelect];
+       // _selectTagView.didTapTagAtIndex(otherPreIdxOne, otherIndexOne);
     
 }
 
--(void)keyboard{
-    //监听键盘将要打开这一操作,打开后执行keyboardWillShow:方法
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    //监听键盘将要隐藏这一操作,打开后执行keyboardWillHide:方法
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-}
-//键盘出现
-- (void)keyboardWillShow: (NSNotification *)notification {
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
     _mark = [UIView new];
     _mark.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     _mark.backgroundColor = UIColorFromRGBA(104, 104, 104, 0.3);
-    [[UIApplication sharedApplication].keyWindow addSubview:_mark];
+    //[[UIApplication sharedApplication].keyWindow addSubview:_mark];
+    [self.view addSubview:_mark];
+    return YES;
 }
 
-//键盘隐藏
-- (void)keyboardWillHide: (NSNotification *)notification {
+- (void)textFieldDidEndEditing:(UITextField *)textField{
     [_mark removeFromSuperview];
     _mark = nil;
 }
+//- (IBAction)choosecityAction:(UIButton *)sender forEvent:(UIEvent *)event{
+//    CityTableViewController *citylist = [Utilities getStoryboardInstance:@"Main" byIdentity:@"City"];
+//    [self.navigationController pushViewController:citylist animated:YES];
+//    citylist.tag = 1;
+//}
+
 @end

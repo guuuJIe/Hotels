@@ -11,7 +11,7 @@
 @interface PurchaseTableViewController ()
 
 @property (strong, nonatomic) IBOutlet UITableView *payTableView;
-@property (weak, nonatomic) IBOutlet UILabel *hotelNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 @property (strong, nonatomic) NSArray *arr;
@@ -37,7 +37,7 @@
     [self uiLayout];
     [self dataInitilize];
     [self setFootViewForTableView];
-    
+   
     //监听通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(purchaseResultAction:) name:@"AlipayResult" object:nil];
 }
@@ -82,23 +82,30 @@
 
 //专门做界面
 - (void)uiLayout {
-    //初始化日期格式器
-    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    //定义日期格式
-    formatter.dateFormat = @"M月dd日";
-    //当前时间
-    NSDate *date = [NSDate date];
-    //后天的日期
-    NSDate *dateAfterdays = [NSDate dateWithDaysFromNow:2];
-    NSString *dateStr = [formatter stringFromDate:date];
-    NSString *dateTomStr= [formatter stringFromDate:dateAfterdays];
-    _dateLabel.text = [NSString stringWithFormat:@"%@ -- %@",dateStr,dateTomStr];
-    
-    //NSString *starTimeStr = [Utilities dateStrFromCstampTime:[_hotelModel.start_time integerValue] withDateFormat:@"M月dd日"];
-    //NSString *outTimeStr = [Utilities dateStrFromCstampTime:[_hotelModel.start_time integerValue] withDateFormat:@"M月dd日"];
-    _hotelNameLabel.text = _hotelModel.hotel_name;
-    //_dateLabel.text = [NSString stringWithFormat:@"%@ -- %@",starTimeStr,outTimeStr];
-    _priceLabel.text = [NSString stringWithFormat:@"%@元",_hotelModel.now_price];
+    if (_tag == 1) {
+        _nameLabel.text = [NSString stringWithFormat:@"%@  %@——%@",_releaseModel.company,_releaseModel.departure,_releaseModel.destination];
+        NSString *timeStr = [Utilities dateStrFromCstampTime:_releaseModel.time withDateFormat:@"M月dd日 HH:mm"];
+        _dateLabel.text = [NSString stringWithFormat:@"%@ 起飞",timeStr];
+        _priceLabel.text = [NSString stringWithFormat:@"%ld元",(long)_releaseModel.finalPrice];
+    }else {
+        //初始化日期格式器
+        NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+        //定义日期格式
+        formatter.dateFormat = @"M月dd日";
+        //当前时间
+        NSDate *date = [NSDate date];
+        //后天的日期
+        NSDate *dateAfterdays = [NSDate dateWithDaysFromNow:2];
+        NSString *dateStr = [formatter stringFromDate:date];
+        NSString *dateTomStr= [formatter stringFromDate:dateAfterdays];
+        _dateLabel.text = [NSString stringWithFormat:@"%@ -- %@",dateStr,dateTomStr];
+        
+        //NSString *starTimeStr = [Utilities dateStrFromCstampTime:[_hotelModel.start_time integerValue] withDateFormat:@"M月dd日"];
+        //NSString *outTimeStr = [Utilities dateStrFromCstampTime:[_hotelModel.start_time integerValue] withDateFormat:@"M月dd日"];
+        _nameLabel.text = _hotelModel.hotel_name;
+        //_dateLabel.text = [NSString stringWithFormat:@"%@ -- %@",starTimeStr,outTimeStr];
+        _priceLabel.text = [NSString stringWithFormat:@"%@元",_hotelModel.now_price];
+    }
     self.tableView.tableFooterView = [UIView new];
     //将表格视图设置为"编辑中"
     self.tableView.editing = YES;
@@ -202,9 +209,16 @@
 - (void)payAction {
     switch (self.tableView.indexPathForSelectedRow.row) {
         case 0: {
-            //生成订单号
-            NSString *tradeNo = [GBAlipayManager generateTradeNO];
-            [GBAlipayManager alipayWithProductName:_hotelModel.hotel_name amount:_hotelModel.now_price tradeNO:tradeNo notifyURL:nil productDescription:[NSString stringWithFormat:@"%@入住费",_hotelModel.hotel_name] itBPay:_hotelModel.now_price];
+            if (_tag == 1) {
+                //生成订单号
+                NSString *tradeNo = [GBAlipayManager generateTradeNO];
+                [GBAlipayManager alipayWithProductName:_releaseModel.company amount:[NSString stringWithFormat:@"%ld",(long)_releaseModel.finalPrice] tradeNO:tradeNo notifyURL:nil productDescription:[NSString stringWithFormat:@"%@——%@飞机票",_releaseModel.departure,_releaseModel.destination] itBPay:@"50"];
+            }else {
+                //生成订单号
+                NSString *tradeNo = [GBAlipayManager generateTradeNO];
+                [GBAlipayManager alipayWithProductName:_hotelModel.hotel_name amount:_hotelModel.now_price tradeNO:tradeNo notifyURL:nil productDescription:[NSString stringWithFormat:@"%@入住费",_hotelModel.hotel_name] itBPay:_hotelModel.now_price];
+            }
+    
         }
             break;
         case 1: {
