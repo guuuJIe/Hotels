@@ -11,6 +11,7 @@
 #import "ZLImageViewDisplayView.h"
 #import "hotelDetailModel.h"
 #import "PurchaseTableViewController.h"
+#import "MapViewController.h"
 @interface HotelDetailViewController (){
     NSTimeInterval followUpTime;
     NSUInteger flag;
@@ -60,6 +61,8 @@
 @property (strong,nonatomic) hotelDetailModel *detailModel;
 @property (strong,nonatomic)NSDate *afterTomorrow;
 @property (weak, nonatomic) IBOutlet UIView *pickerview;
+@property (weak, nonatomic) IBOutlet UIButton *mapBtn;
+- (IBAction)mapBtnAct:(UIButton *)sender forEvent:(UIEvent *)event;
 
 @end
 
@@ -322,4 +325,13 @@ failure:^(NSInteger statusCode, NSError *error) {
 }
  
 
+- (IBAction)mapBtnAct:(UIButton *)sender forEvent:(UIEvent *)event {
+    MapViewController *purchaseVC = [Utilities getStoryboardInstance:@"BookHotels" byIdentity:@"mapNavi"];
+    //传参
+    purchaseVC.latitude =_detailModel.latitude;
+    purchaseVC.longitude = _detailModel.longitude;
+    NSLog(@"purchaseVC.mapModel %@",purchaseVC.mapModel);
+    //push跳转
+    [self.navigationController pushViewController:purchaseVC animated:YES];
+}
 @end

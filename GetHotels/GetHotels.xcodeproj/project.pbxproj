@@ -83,6 +83,8 @@
 		84A346861F4C44510051BDFB /* MyInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A346851F4C44510051BDFB /* MyInfoTableViewCell.m */; };
 		84F729DB1F48661D00E7E773 /* BookHotels.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84F729D91F48661D00E7E773 /* BookHotels.storyboard */; };
 		84F729DE1F48663400E7E773 /* Myself.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84F729DC1F48663400E7E773 /* Myself.storyboard */; };
+		FE7202881F70E84700518621 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7202871F70E84700518621 /* MapViewController.m */; };
+		FE72028B1F7124F000518621 /* Annotation.m in Sources */ = {isa = PBXBuildFile; fileRef = FE72028A1F7124F000518621 /* Annotation.m */; };
 		FE9C941D1F4E7BAE00252250 /* ZLImageViewDisplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C941C1F4E7BAE00252250 /* ZLImageViewDisplayView.m */; };
 		FE9CAA7F1F49645C0064E327 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FE9CAA7E1F49645C0064E327 /* Assets.xcassets */; };
 		FEA94EBC1F52757B00F37096 /* hotelDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = FEA94EBB1F52757B00F37096 /* hotelDetailModel.m */; };
@@ -249,6 +251,10 @@
 		84F729DA1F48661D00E7E773 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = GetHotels/Base.lproj/BookHotels.storyboard; sourceTree = SOURCE_ROOT; };
 		84F729DD1F48663400E7E773 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = GetHotels/Base.lproj/Myself.storyboard; sourceTree = SOURCE_ROOT; };
 		930E5F009C5987E6FC36A05C /* Pods-GetHotels.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GetHotels.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GetHotels/Pods-GetHotels.debug.xcconfig"; sourceTree = "<group>"; };
+		FE7202861F70E84700518621 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		FE7202871F70E84700518621 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
+		FE7202891F7124F000518621 /* Annotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Annotation.h; sourceTree = "<group>"; };
+		FE72028A1F7124F000518621 /* Annotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Annotation.m; sourceTree = "<group>"; };
 		FE9C941B1F4E7BAE00252250 /* ZLImageViewDisplayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLImageViewDisplayView.h; sourceTree = "<group>"; };
 		FE9C941C1F4E7BAE00252250 /* ZLImageViewDisplayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZLImageViewDisplayView.m; sourceTree = "<group>"; };
 		FE9CAA7E1F49645C0064E327 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = GetHotels/Assets.xcassets; sourceTree = SOURCE_ROOT; };
@@ -779,6 +785,10 @@
 			children = (
 				FEACC78A1F4AF4A6002EC5F8 /* HotelDetailViewController.h */,
 				FEACC78B1F4AF4A6002EC5F8 /* HotelDetailViewController.m */,
+				FE7202861F70E84700518621 /* MapViewController.h */,
+				FE7202871F70E84700518621 /* MapViewController.m */,
+				FE7202891F7124F000518621 /* Annotation.h */,
+				FE72028A1F7124F000518621 /* Annotation.m */,
 			);
 			name = HotelDetail;
 			sourceTree = "<group>";
@@ -1007,6 +1017,7 @@
 				8475263F1F5A4A79001B9D9C /* OfferCollectionViewCell.m in Sources */,
 				046F327B1F5445C400157DD3 /* DataSigner.m in Sources */,
 				847526371F5A497D001B9D9C /* MyReleaseViewController.m in Sources */,
+				FE72028B1F7124F000518621 /* Annotation.m in Sources */,
 				84A346831F4C443D0051BDFB /* HotelTableViewCell.m in Sources */,
 				846DB0251F4DA09300578D22 /* CityTableViewController.m in Sources */,
 				046F327D1F5445C400157DD3 /* MD5DataSigner.m in Sources */,
@@ -1017,6 +1028,7 @@
 				84289C071F5FACEC00F90FD0 /* UIView+Frame.m in Sources */,
 				0464CC331F52D101006260CE /* ContactServiceViewController.m in Sources */,
 				845F5A2F1F59010B00D163C0 /* SKTag.m in Sources */,
+				FE7202881F70E84700518621 /* MapViewController.m in Sources */,
 				845DB9471F5FDF2A00EF7BBB /* HotelViewController.m in Sources */,
 				841E379D1F4960710057D58A /* ViewController.m in Sources */,
 				8445AD861F4C535000417B79 /* AllOrdersTableViewCell.m in Sources */,
