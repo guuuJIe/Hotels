@@ -359,7 +359,7 @@
 //        return;
 //    } 
     //参数
-    NSDictionary *para = @{@"city_name" : _cityBtn.titleLabel.text, @"pageNum" :@(PageNum), @"pageSize" :  @(pageSize), @"startId" :  @(starID), @"priceId" :@(priceID), @"sortingId" :@(sortID) ,@"inTime" : [NSString stringWithFormat:@"2017-%@",_inTimeDate] ,@"outTime" : [NSString stringWithFormat:@"2017-%@",_outTimeDate] ,@"wxlongitude" :@"", @"wxlatitude" :@""};
+    NSDictionary *para = @{@"city_name" : _cityBtn.titleLabel.text, @"pageNum" :@(PageNum), @"pageSize" :  @(pageSize), @"startId" :  @(starID), @"priceId" :@(priceID), @"sortingId" :@(sortID) ,@"inTime" : _inTimeDate ,@"outTime" : _outTimeDate ,@"wxlongitude" :@"", @"wxlatitude" :@""};
     
     //网络请求
     [RequestAPI requestURL:@"/findHotelByCity_edu" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
@@ -1080,19 +1080,19 @@
 
     //获取默认时间
     //当前时间
-    NSDate *dateToday = [NSDate date];
+ //   NSDate *dateToday = [NSDate date];
     //明天的日期
 //    NSDate *dateTom = [NSDate dateTomorrow];
-    NSString *dateStr = [formatter stringFromDate:dateToday];
+ //   NSString *dateStr = [formatter stringFromDate:dateToday];
 //    NSString *dateTomStr= [formatter stringFromDate:dateTom];
-    NSTimeInterval startTime = [Utilities cTimestampFromString:_inTimeDate format:@"MM-dd"];
-    NSTimeInterval endTime = [Utilities cTimestampFromString:_outTimeDate format:@"MM-dd"];
  
     
     if (flag == 0){
         [_inTime setTitle:[NSString stringWithFormat:@"入住%@▼",thDate] forState:UIControlStateNormal];
         _inTimeDate = [paraFormatter stringFromDate:date];
-        if (startTime >= endTime){
+        
+        if ([Utilities cTimestampFromString:_inTimeDate format:paraFormatter.dateFormat] >= [Utilities cTimestampFromString:_outTimeDate format:paraFormatter.dateFormat]){
+            
             NSDate *nextDat = [NSDate dateWithTimeInterval:24*60*60 sinceDate:date];//后一天
             NSString *dateStr = [formatter stringFromDate:nextDat];
             [_outTime setTitle:[NSString stringWithFormat:@"离店%@▼",dateStr] forState:UIControlStateNormal];
@@ -1100,7 +1100,6 @@
     }else{
         [_outTime setTitle:[NSString stringWithFormat:@"离店%@▼",thDate] forState:UIControlStateNormal];
         _outTimeDate = [paraFormatter stringFromDate:date];
-        
     }
     [self initializeData];
     //followUptime = [date timeIntervalSince2017];
