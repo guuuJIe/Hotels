@@ -41,6 +41,10 @@
 @property(strong,nonatomic)NSMutableArray *isReleasedArr;
 @property(strong,nonatomic)NSMutableArray *didReleaseArr;
 @property(strong,nonatomic)NSMutableArray *histroyArr;
+
+@property (strong, nonatomic) UIImageView *didReleaseNothingImg;
+@property (strong, nonatomic) UIImageView *isReleasedNothingImg;
+@property (strong, nonatomic) UIImageView *histroyNothingImg;
 @end
 
 @implementation MyReleaseViewController
@@ -63,10 +67,15 @@
     _didReleaseTableView.tableFooterView = [UIView new];
     _isReleasedTableView.tableFooterView = [UIView new];
     _histroyTableView.tableFooterView = [UIView new];
+    _scrollView.showsHorizontalScrollIndicator = false;
+    _scrollView.showsVerticalScrollIndicator = NO;
     [self setsegment];
     [self refreshControl];
     [self didReleasedRequest];
-    
+    //调用tableView没数据时显示图片的方法
+    if (_didReleaseArr.count == 0) {
+        [self nothingForTableView];
+    }
     
 }
 
@@ -96,6 +105,9 @@
     _segmentcontrol.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;
     //选中时的标记
     _segmentcontrol.selectionIndicatorLocation = HMSegmentedControlSelectionIndicatorLocationDown;
+    _segmentcontrol.borderType= HMSegmentedControlBorderTypeLeft;
+    _segmentcontrol.borderColor =UIColorFromRGB(230, 230, 230);
+    
     //设置未选中的标题属性
     _segmentcontrol.titleTextAttributes = @{NSForegroundColorAttributeName:UIColorFromRGB(150, 150, 150),NSFontAttributeName:[UIFont boldSystemFontOfSize:15.f]};
     //选中时的标题样式
@@ -165,7 +177,21 @@
     [self historyRequest];
 }
 
-
+//当tableView没有数据时显示图片的方法
+- (void)nothingForTableView{
+    _didReleaseNothingImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"no_things"]];
+    _didReleaseNothingImg.frame = CGRectMake((UI_SCREEN_W - 100) / 2, 50, 100, 100);
+    
+    _isReleasedNothingImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"no_things"]];
+    _isReleasedNothingImg.frame = CGRectMake(UI_SCREEN_W + (UI_SCREEN_W - 100) / 2, 50, 100, 100);
+    
+    _histroyNothingImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"no_things"]];
+    _histroyNothingImg.frame = CGRectMake(UI_SCREEN_W * 2 + (UI_SCREEN_W - 100) / 2, 50, 100, 100);
+    
+    [_scrollView addSubview:_didReleaseNothingImg];
+    [_scrollView addSubview:_isReleasedNothingImg];
+    [_scrollView addSubview:_histroyNothingImg];
+}
 /*
 #pragma mark - Navigation
 
@@ -195,6 +221,12 @@
             for (NSDictionary *dict in list) {
                 ReleaseModel *model = [[ReleaseModel alloc]initWithDict:dict];
                 [_isReleasedArr addObject:model];
+            }
+            //当数组没有数据时将图片显示，反之隐藏
+            if (_isReleasedArr.count == 0) {
+                _isReleasedNothingImg.hidden = NO;
+            }else{
+                _isReleasedNothingImg.hidden = YES;
             }
             [_isReleasedTableView reloadData];
         }
@@ -229,6 +261,12 @@
                 ReleaseModel *model = [[ReleaseModel alloc]initWithDictForRelease:dict];
                 [_didReleaseArr addObject:model];
             }
+            //当数组没有数据时将图片显示，反之隐藏
+            if (_didReleaseArr.count == 0) {
+                _didReleaseNothingImg.hidden = NO;
+            }else{
+                _didReleaseNothingImg.hidden = YES;
+            }
             [_didReleaseTableView reloadData];
         }
         else{
@@ -262,6 +300,12 @@
             for (NSDictionary *dict in list) {
                 ReleaseModel *model = [[ReleaseModel alloc]initWithDictForHistroy:dict];
                 [_histroyArr addObject:model];
+            }
+            //当数组没有数据时将图片显示，反之隐藏
+            if (_histroyArr.count == 0) {
+                _histroyNothingImg.hidden = NO;
+            }else{
+                _histroyNothingImg.hidden = YES;
             }
             [_histroyTableView reloadData];
         }
@@ -353,10 +397,7 @@
 }
 //设置组的底部视图高度
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    if (section == 0){
-        return 5.f;
-    }
-    return 0;
+    return 5.0f;
 }
 
 //细胞将要出现时调用
@@ -464,7 +505,7 @@
         OfferViewController *detailVC = segue.destinationViewController ;
         //3、把数据给下一页预备好的接受容器
         detailVC.IssueId = model.Id;
-
+        
         //1.获取要传递到下一页的数据
             }
 }

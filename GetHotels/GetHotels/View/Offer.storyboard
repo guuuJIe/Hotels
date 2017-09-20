@@ -123,9 +123,12 @@
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                             <integer key="value" value="5"/>
                                                         </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                                            <real key="value" value="0.29999999999999999"/>
+                                                        </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                     <connections>
-                                                        <action selector="payAction:forEvent:" destination="ATL-be-dPp" eventType="touchUpInside" id="H4W-jK-xHA"/>
+                                                        <action selector="payAction:forEvent:" destination="wMU-hI-8Wz" eventType="touchUpInside" id="yw0-eL-eV5"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -165,7 +168,7 @@
                                             <outlet property="aviationCompany" destination="hqN-t7-fVx" id="x4x-0K-jQt"/>
                                             <outlet property="departure" destination="B8w-LE-f6n" id="Jtz-tP-dj4"/>
                                             <outlet property="destination" destination="I4w-vT-kd1" id="gkj-iu-p3u"/>
-                                            <outlet property="payBtn" destination="Qaw-KM-vCS" id="sj6-Xk-D1G"/>
+                                            <outlet property="payBtn" destination="Qaw-KM-vCS" id="SU6-iv-WQT"/>
                                             <outlet property="price" destination="3kq-4d-Skn" id="s6H-Cs-BPg"/>
                                             <outlet property="startTime" destination="lnI-JY-2vu" id="W10-hQ-ia0"/>
                                             <outlet property="time" destination="DVU-dJ-caQ" id="hTd-oL-Rpz"/>
