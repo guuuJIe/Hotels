@@ -86,6 +86,9 @@
     formatter.dateFormat = @"yyyy-MM-dd HH:mm";
     NSString *star = [formatter stringFromDate:startDate];
     _startTime = star;
+    //数字键盘
+    _lowPriceTextField.keyboardType = UIKeyboardTypeNumberPad;
+    _highPriceTextField.keyboardType = UIKeyboardTypeNumberPad;
 
 }
 -(void)viewWillAppear:(BOOL)animated{
@@ -221,6 +224,7 @@
     NSDictionary *userInfo = [notification userInfo];
     CGSize keyboardSize = [[userInfo objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     _keyBoardHeight = keyboardSize.height;
+    
     //[self changeViewYByShow];
     
 }
