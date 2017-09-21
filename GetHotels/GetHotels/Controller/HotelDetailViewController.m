@@ -176,7 +176,7 @@
             _detailModel = [[hotelDetailModel alloc]initWithDictionary:content];
             _nameLabel.text = _detailModel.hotel_name;
             _adressLabel.text = _detailModel.hotel_address;
-            _priceLabel.text = _detailModel.now_price;
+            _priceLabel.text = [NSString stringWithFormat:@"%ld",(long)_detailModel.now_price];
             _priceLabel.text = [NSString stringWithFormat:@"¥%@",_priceLabel.text];
             _petLabel.text = _detailModel.is_pet;
             
@@ -287,7 +287,15 @@ failure:^(NSInteger statusCode, NSError *error) {
 - (IBAction)buyAction:(UIButton *)sender forEvent:(UIEvent *)event {
     if([Utilities loginCheck]){
         PurchaseTableViewController *purchaseVC = [Utilities getStoryboardInstance:@"BookHotels" byIdentity:@"purchaseNavi"];
+        NSString *dateStr = [NSString stringWithFormat:@"%@",_dateBtn.titleLabel.text];
+        NSTimeInterval dates = [Utilities cTimestampFromString:dateStr format:@"yyyy-MM-dd"];
+        NSString *nextDateStr = [NSString stringWithFormat:@"%@",_nextDateBtn.titleLabel.text];
+        NSTimeInterval nextDate = [Utilities cTimestampFromString:nextDateStr format:@"yyyy-MM-dd"];
+        NSTimeInterval days = nextDate - dates;
+        NSInteger totaldays =days/(24*60*60*1000);
+        NSLog(@"%f",days/(24*60*60*1000));
         //传参
+        purchaseVC.days = totaldays;
         purchaseVC.hotelModel =_detailModel;
         //push跳转
         [self.navigationController pushViewController:purchaseVC animated:YES];
