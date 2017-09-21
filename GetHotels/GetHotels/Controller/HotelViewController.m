@@ -141,8 +141,8 @@
     //各种赋初值
     PageNum = 1;
     pageSize = 8;
-    starID = 1;
-    priceID = 1;
+    starTestID = 1;
+    priceTestID = 1;
     selectCirfimBool = 0;
     scrollPage = 0;
     
@@ -175,6 +175,7 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:NO];
+    self.tabBarController.tabBar.hidden = YES;
 //    //取消定时器
 //    [_dt invalidate];
 //    _dt = nil;
@@ -780,7 +781,7 @@
         tag.borderColor = SELECTE_BORDER_COLOR;
         [weakView removeTagAtIndex:index];
         [weakView insertTag:tag atIndex:index];
-        selectCirfimBool = 3;
+        //selectCirfimBool = 3;
         otherIndexOne = index;
         
     };
@@ -1126,14 +1127,7 @@
     citylist.tag = 1;
 }
 
-//按键盘上的Return键收起键盘
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    if (textField == _searchTextView){
-        [textField resignFirstResponder];
-    }
-    
-    return YES;
-}
+
 - (void) touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     [_outTime setTitle:[NSString stringWithFormat:@"%@▼",[_outTime.titleLabel.text substringToIndex:_outTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
     [_inTime setTitle:[NSString stringWithFormat:@"%@▼",[_inTime.titleLabel.text substringToIndex:_inTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
@@ -1144,10 +1138,20 @@
     _selectBtn.selected = NO;
     _markView.hidden = YES;
     [self.view endEditing:YES];
-    selectCirfimBool = 2;
+//    selectCirfimBool = 2;
 //    [self weakSelect];
        // _selectTagView.didTapTagAtIndex(otherPreIdxOne, otherIndexOne);
     
+}
+
+
+//按键盘上的Return键收起键盘
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (textField == _searchTextView){
+        [textField resignFirstResponder];
+        [self initializeData];
+    } 
+    return YES;
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
@@ -1158,6 +1162,8 @@
     [self.view addSubview:_mark];
     return YES;
 }
+
+
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     [_mark removeFromSuperview];

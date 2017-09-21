@@ -178,10 +178,10 @@
             //记忆用户名
             [Utilities setUserDefaults:@"Username" content:_phoneTextField.text];
             //登录成功后返回上一页
-            //[self dismissViewControllerAnimated:YES completion:nil];
-            UINavigationController *tabBar = [Utilities getStoryboardInstance:@"Main" byIdentity:@"TabBar"];
-            //执行跳转
-            [self presentViewController:tabBar animated:YES completion:nil];
+            [self dismissViewControllerAnimated:YES completion:nil];
+//            UINavigationController *tabBar = [Utilities getStoryboardInstance:@"Main" byIdentity:@"TabBar"];
+//            //执行跳转
+//            [self presentViewController:tabBar animated:YES completion:nil];
         } else {
             [_aiv stopAnimating];
             //业务逻辑失败的情况下
