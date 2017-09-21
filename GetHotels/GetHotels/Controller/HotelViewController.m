@@ -16,7 +16,7 @@
 #import "SKTagView.h"
 #import "JSONS.h"
 #import "CityTableViewController.h"
-@interface HotelViewController ()<UITableViewDataSource,UITableViewDelegate,CLLocationManagerDelegate,UITextFieldDelegate>
+@interface HotelViewController ()<UITableViewDataSource,UITableViewDelegate,CLLocationManagerDelegate,UITextFieldDelegate,UIGestureRecognizerDelegate>
 {
     BOOL scrollFlag;
     BOOL firstVisit;
@@ -125,9 +125,10 @@
     [self duration];
     //滑动点设为4个
     _pageControl.numberOfPages = 4;
-    
     _searchTextView.text = @"";
     
+    //给markview添加手势
+    [self addTapGestureRecognizer:_markView];
     // Do any additional setup after loading the view.
     
     //初始化数组
@@ -1130,21 +1131,46 @@
     citylist.tag = 1;
 }
 
+//添加单击手势事件
+- (void)addTapGestureRecognizer:(id)any {
+    //初始化一个单击手势，设置响应事件为tapClick：
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapClick:)];
+    tap.delegate = self;
+    //将手势添加给入参
+    [any addGestureRecognizer:tap];
+}
+
+//单击手势事件代理方法
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
+    
+    if ([touch.view isDescendantOfView:_selectView] || [touch.view isDescendantOfView:_markTabelView] || [touch.view isDescendantOfView:_toolBar]) {
+        return NO;
+    }
+    return YES;
+}
+
+//单击手势响应事件
+- (void) tapClick:(UILongPressGestureRecognizer *)tap {
+    if (tap.state == UIGestureRecognizerStateRecognized){
+        [_outTime setTitle:[NSString stringWithFormat:@"%@▼",[_outTime.titleLabel.text substringToIndex:_outTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+        [_inTime setTitle:[NSString stringWithFormat:@"%@▼",[_inTime.titleLabel.text substringToIndex:_inTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+        [_sortBtn setTitle:[NSString stringWithFormat:@"%@▼",[_sortBtn.titleLabel.text substringToIndex:_sortBtn.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+        _inTime.selected = NO;
+        _outTime.selected = NO;
+        _sortBtn.selected = NO;
+        _selectBtn.selected = NO;
+        _markView.hidden = YES;
+    }
+}
+
+
 
 - (void) touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    [_outTime setTitle:[NSString stringWithFormat:@"%@▼",[_outTime.titleLabel.text substringToIndex:_outTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
-    [_inTime setTitle:[NSString stringWithFormat:@"%@▼",[_inTime.titleLabel.text substringToIndex:_inTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
-    [_sortBtn setTitle:[NSString stringWithFormat:@"%@▼",[_sortBtn.titleLabel.text substringToIndex:_sortBtn.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
-    _inTime.selected = NO;
-    _outTime.selected = NO;
-    _sortBtn.selected = NO;
-    _selectBtn.selected = NO;
-    _markView.hidden = YES;
+    
     [self.view endEditing:YES];
 //    selectCirfimBool = 2;
 //    [self weakSelect];
        // _selectTagView.didTapTagAtIndex(otherPreIdxOne, otherIndexOne);
-    
 }
 
 
