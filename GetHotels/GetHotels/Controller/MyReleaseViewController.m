@@ -99,7 +99,7 @@
     _segmentcontrol.selectedSegmentIndex = 0;
     //设置背景颜色
     _segmentcontrol.backgroundColor = [UIColor whiteColor];
-    //设置下划线的高度
+    //设置                                                                                                                                                                          下划线的高度
     _segmentcontrol.selectionIndicatorHeight = 2.5;
     //设置选中状态的样式
     _segmentcontrol.selectionStyle = HMSegmentedControlSelectionStyleTextWidthStripe;
@@ -379,13 +379,13 @@
         
     }
     else if(tableView == _isReleasedTableView){
-        NSIndexPath *indexPath = [_isReleasedTableView indexPathForSelectedRow];
+       // NSIndexPath *indexPath = [_isReleasedTableView indexPathForSelectedRow];
         //ReleaseModel *model = _isReleasedArr[indexPath.section];
         
         //2.获取下一页这个实例
         //OfferViewController *detailVC;
         //detailVC.IssueId = model.Id;
-        [self performSegueWithIdentifier:@"MyReleaseToOffer" sender:self ];
+        [self performSegueWithIdentifier:@"MyReleaseToOffer" sender:indexPath ];
     }
     else{
         
@@ -499,8 +499,10 @@
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if([segue.identifier isEqualToString:@"MyReleaseToOffer"]){
         //当从列表页到详情页的这个跳转要发生的时候
-        NSIndexPath *indexPath = [_isReleasedTableView indexPathForSelectedRow];
+       // NSIndexPath *indexPath = [_isReleasedTableView indexPathForSelectedRow];
+        NSIndexPath *indexPath = sender;
         ReleaseModel *model = _isReleasedArr[indexPath.section];
+        NSLog(@"ahaiha:%ld", (long)model.Id);
         //2.获取下一页这个实例
         OfferViewController *detailVC = segue.destinationViewController ;
         //3、把数据给下一页预备好的接受容器
