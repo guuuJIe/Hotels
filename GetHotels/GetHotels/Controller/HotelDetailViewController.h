@@ -10,4 +10,6 @@
 
 @interface HotelDetailViewController : UIViewController
 @property (nonatomic)NSInteger hotelId;
+@property (strong,nonatomic)NSString *intiemstr;
+@property (strong,nonatomic)NSString *outtimestr;
 @end
