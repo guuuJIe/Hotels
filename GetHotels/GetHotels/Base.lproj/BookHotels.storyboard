@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="2Bt-FB-rBK">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="2Bt-FB-rBK">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -406,7 +407,7 @@
                                 <constraints>
                                     <constraint firstItem="QNq-5w-mZs" firstAttribute="leading" secondItem="bPf-SQ-anw" secondAttribute="leading" id="0DB-sZ-nij"/>
                                     <constraint firstItem="pvs-jl-bDF" firstAttribute="top" secondItem="oR8-3u-Gg1" secondAttribute="bottom" id="0Sz-cr-uyz"/>
-                                    <constraint firstAttribute="bottom" secondItem="6vn-SD-2TS" secondAttribute="bottom" id="4sg-ke-b0r"/>
+                                    <constraint firstAttribute="bottom" secondItem="6vn-SD-2TS" secondAttribute="bottom" constant="20" id="4sg-ke-b0r"/>
                                     <constraint firstAttribute="trailing" secondItem="QNq-5w-mZs" secondAttribute="trailing" id="5dY-PH-xv5"/>
                                     <constraint firstItem="hwj-wE-gJf" firstAttribute="top" secondItem="GlG-41-6EN" secondAttribute="bottom" id="77o-hm-r2E"/>
                                     <constraint firstItem="gH2-UK-y9Z" firstAttribute="leading" secondItem="bPf-SQ-anw" secondAttribute="leading" id="C2J-Oa-tHL"/>
@@ -628,7 +629,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="银行" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Uxj-pk-mAt">
-                                            <rect key="frame" x="15" y="0.0" width="345" height="43.5"/>
+                                            <rect key="frame" x="16" y="0.0" width="344" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>

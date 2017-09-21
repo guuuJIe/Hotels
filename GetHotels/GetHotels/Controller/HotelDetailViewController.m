@@ -130,17 +130,17 @@
                 if (i == 0){
                    _oneLabel.text = string;
                 }if(i == 1){
-                    _twoLabel.text = string;
-                }if(i == 2){
-                    _secondLabel.text = string;
-                }if(i == 3){
                     _fourLabel.text = string;
+                }if(i == 2){
+                    _sevenLabel.text = string;
+                }if(i == 3){
+                    _twoLabel.text = string;
                 }if(i == 4){
-                    _fiveLabel.text = string;
+                    _secondLabel.text = string;
                 }if(i == 5){
                     _sixLabel.text = string;
                 }if(i == 6){
-                    _sevenLabel.text = string;
+                    _fiveLabel.text = string;
                 }if(i == 7){
                     _eigtLabel.text = string;
                 }
