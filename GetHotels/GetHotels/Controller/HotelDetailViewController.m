@@ -76,7 +76,7 @@
     _arr = [NSMutableArray new];
     [self hotelDetailRequest];
     
-   
+    
     // Do any additional setup after loading the view.
     //状态栏变成白色
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
@@ -193,8 +193,8 @@
             NSString *dateStr = [formatter stringFromDate:dates];
             NSString *dateTomStr= [formatter stringFromDate:dateAfterdays];
             //将处理好的字符串设置给两个Button
-            [_dateBtn setTitle:dateStr forState:UIControlStateNormal];
-            [_nextDateBtn setTitle:dateTomStr forState:UIControlStateNormal];
+            [_dateBtn setTitle: _intiemstr forState:UIControlStateNormal];
+            [_nextDateBtn setTitle:_outtimestr forState:UIControlStateNormal];
         }
         else{
             
