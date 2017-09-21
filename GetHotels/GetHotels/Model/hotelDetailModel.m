@@ -21,6 +21,8 @@
         _now_price = [Utilities nullAndNilCheck:dict[@"now_price"] replaceBy:@""];
         _room_img = [Utilities nullAndNilCheck:dict[@"room_img"] replaceBy:@""];
         _start_time = [Utilities nullAndNilCheck:dict[@"start_time"] replaceBy:@""];
+        _longitude = [Utilities nullAndNilCheck:dict[@"longitude"] replaceBy:@""];
+        _latitude = [Utilities nullAndNilCheck:dict[@"latitude"] replaceBy:@""];
         if([dict[@"is_pet"]isKindOfClass:[NSNull class]]){
             _is_pet=@"";
         }else{

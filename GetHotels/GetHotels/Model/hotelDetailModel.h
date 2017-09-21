@@ -20,6 +20,8 @@
 @property (strong,nonatomic) NSString *now_price;
 @property (strong,nonatomic) NSString *room_img;
 @property (strong,nonatomic) NSString *start_time;
+@property (strong,nonatomic) NSString  *latitude;
+@property (strong,nonatomic) NSString  *longitude;
 @property (strong,nonatomic) NSString  *is_pet;
 - (instancetype)initWithDictionary: (NSDictionary *)dict;
 

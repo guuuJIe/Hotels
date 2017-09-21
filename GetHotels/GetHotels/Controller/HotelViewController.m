@@ -141,8 +141,8 @@
     //各种赋初值
     PageNum = 1;
     pageSize = 8;
-    starID = 1;
-    priceID = 1;
+    starTestID = 1;
+    priceTestID = 1;
     selectCirfimBool = 0;
     scrollPage = 0;
     
@@ -175,6 +175,7 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:NO];
+    self.tabBarController.tabBar.hidden = YES;
 //    //取消定时器
 //    [_dt invalidate];
 //    _dt = nil;
@@ -359,7 +360,7 @@
 //        return;
 //    } 
     //参数
-    NSDictionary *para = @{@"city_name" : _cityBtn.titleLabel.text, @"pageNum" :@(PageNum), @"pageSize" :  @(pageSize), @"startId" :  @(starID), @"priceId" :@(priceID), @"sortingId" :@(sortID) ,@"inTime" : [NSString stringWithFormat:@"2017-%@",_inTimeDate] ,@"outTime" : [NSString stringWithFormat:@"2017-%@",_outTimeDate] ,@"wxlongitude" :@"", @"wxlatitude" :@""};
+    NSDictionary *para = @{@"city_name" : _cityBtn.titleLabel.text, @"pageNum" :@(PageNum), @"pageSize" :  @(pageSize), @"startId" :  @(starID), @"priceId" :@(priceID), @"sortingId" :@(sortID) ,@"inTime" : _inTimeDate ,@"outTime" : _outTimeDate ,@"wxlongitude" :@"", @"wxlatitude" :@""};
     
     //网络请求
     [RequestAPI requestURL:@"/findHotelByCity_edu" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
@@ -780,7 +781,7 @@
         tag.borderColor = SELECTE_BORDER_COLOR;
         [weakView removeTagAtIndex:index];
         [weakView insertTag:tag atIndex:index];
-        selectCirfimBool = 3;
+        //selectCirfimBool = 3;
         otherIndexOne = index;
         
     };
@@ -1080,19 +1081,19 @@
 
     //获取默认时间
     //当前时间
-    NSDate *dateToday = [NSDate date];
+ //   NSDate *dateToday = [NSDate date];
     //明天的日期
 //    NSDate *dateTom = [NSDate dateTomorrow];
-    NSString *dateStr = [formatter stringFromDate:dateToday];
+ //   NSString *dateStr = [formatter stringFromDate:dateToday];
 //    NSString *dateTomStr= [formatter stringFromDate:dateTom];
-    NSTimeInterval startTime = [Utilities cTimestampFromString:_inTimeDate format:@"MM-dd"];
-    NSTimeInterval endTime = [Utilities cTimestampFromString:_outTimeDate format:@"MM-dd"];
  
     
     if (flag == 0){
         [_inTime setTitle:[NSString stringWithFormat:@"入住%@▼",thDate] forState:UIControlStateNormal];
         _inTimeDate = [paraFormatter stringFromDate:date];
-        if (startTime >= endTime){
+        
+        if ([Utilities cTimestampFromString:_inTimeDate format:paraFormatter.dateFormat] >= [Utilities cTimestampFromString:_outTimeDate format:paraFormatter.dateFormat]){
+            
             NSDate *nextDat = [NSDate dateWithTimeInterval:24*60*60 sinceDate:date];//后一天
             NSString *dateStr = [formatter stringFromDate:nextDat];
             [_outTime setTitle:[NSString stringWithFormat:@"离店%@▼",dateStr] forState:UIControlStateNormal];
@@ -1100,7 +1101,6 @@
     }else{
         [_outTime setTitle:[NSString stringWithFormat:@"离店%@▼",thDate] forState:UIControlStateNormal];
         _outTimeDate = [paraFormatter stringFromDate:date];
-        
     }
     [self initializeData];
     //followUptime = [date timeIntervalSince2017];
@@ -1127,14 +1127,7 @@
     citylist.tag = 1;
 }
 
-//按键盘上的Return键收起键盘
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    if (textField == _searchTextView){
-        [textField resignFirstResponder];
-    }
-    
-    return YES;
-}
+
 - (void) touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     [_outTime setTitle:[NSString stringWithFormat:@"%@▼",[_outTime.titleLabel.text substringToIndex:_outTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
     [_inTime setTitle:[NSString stringWithFormat:@"%@▼",[_inTime.titleLabel.text substringToIndex:_inTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
@@ -1145,10 +1138,20 @@
     _selectBtn.selected = NO;
     _markView.hidden = YES;
     [self.view endEditing:YES];
-    selectCirfimBool = 2;
+//    selectCirfimBool = 2;
 //    [self weakSelect];
        // _selectTagView.didTapTagAtIndex(otherPreIdxOne, otherIndexOne);
     
+}
+
+
+//按键盘上的Return键收起键盘
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (textField == _searchTextView){
+        [textField resignFirstResponder];
+        [self initializeData];
+    } 
+    return YES;
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
@@ -1159,6 +1162,8 @@
     [self.view addSubview:_mark];
     return YES;
 }
+
+
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     [_mark removeFromSuperview];
