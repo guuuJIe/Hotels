@@ -165,11 +165,14 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     _markView.frame = CGRectMake(0, _HeadView.frame.size.height + 40, UI_SCREEN_W, 400);
-    [self.navigationController setNavigationBarHidden:YES animated:NO];
-    self.tabBarController.tabBar.hidden = NO;
+    [self.navigationController setNavigationBarHidden:YES animated:NO]; 
     //[[UIApplication sharedApplication]setStatusBarHidden:NO];
     [self locationStart];
     [self geocodeAddressString];
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    self.tabBarController.tabBar.hidden = NO;
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
