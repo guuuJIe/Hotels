@@ -173,8 +173,8 @@
               NSString *img = [NSHomeDirectory()stringByAppendingString:string];
                 [_arr addObject:img];
             }
-          _detailModel = [[hotelDetailModel alloc]initWithDictionary:content];
-         _nameLabel.text = _detailModel.hotel_name;
+            _detailModel = [[hotelDetailModel alloc]initWithDictionary:content];
+            _nameLabel.text = _detailModel.hotel_name;
             _adressLabel.text = _detailModel.hotel_address;
             _priceLabel.text = _detailModel.now_price;
             _priceLabel.text = [NSString stringWithFormat:@"¥%@",_priceLabel.text];
@@ -190,8 +190,38 @@
             NSDate *dates = [NSDate date];
             //后天的日期
             NSDate *dateAfterdays = [NSDate dateWithDaysFromNow:2];
+            NSDate *dateday = [NSDate dateWithDaysFromNow:1];
             NSString *dateStr = [formatter stringFromDate:dates];
             NSString *dateTomStr= [formatter stringFromDate:dateAfterdays];
+            NSString *datedayStr = [formatter stringFromDate:dateday];
+            
+            NSTimeInterval  tomorrow = [Utilities cTimestampFromString:dateTomStr format:@"yyyy-MM-dd"];
+            NSTimeInterval  outtime = [Utilities cTimestampFromString:_outtimestr format:@"yyyy-MM-dd"];
+            NSTimeInterval  date1 = [Utilities cTimestampFromString:dateStr format:@"yyyy-MM-dd"];
+            NSTimeInterval  intime = [Utilities cTimestampFromString:_intiemstr format:@"yyyy-MM-dd"];
+            NSTimeInterval  dateday1 = [Utilities cTimestampFromString:datedayStr format:@"yyyy-MM-dd"];
+            
+            if (intime > date1) {
+                _dayLabel.text = NULL;
+            }if (intime == tomorrow){
+                _dayLabel.text =[NSString stringWithFormat:@"后天"] ;
+            }
+            if(intime ==  date1){
+                _dayLabel.text =[NSString stringWithFormat:@"今天"] ;
+            }
+            if (intime == dateday1){
+                _dayLabel.text =[NSString stringWithFormat:@"明天"] ;
+            }
+
+            if (outtime>tomorrow) {
+                _nextDayLabel.text =NULL;
+            }
+            if (outtime == dateday1){
+                _nextDayLabel.text =[NSString stringWithFormat:@"明天"] ;
+            }
+            if(outtime == tomorrow){
+                _nextDayLabel.text =[NSString stringWithFormat:@"后天"] ;
+            }
             //将处理好的字符串设置给两个Button
             [_dateBtn setTitle: _intiemstr forState:UIControlStateNormal];
             [_nextDateBtn setTitle:_outtimestr forState:UIControlStateNormal];
