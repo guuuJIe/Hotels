@@ -319,17 +319,17 @@
                                     <constraint firstItem="M8n-9e-elf" firstAttribute="leading" secondItem="W8n-yX-Bxr" secondAttribute="leading" constant="15" id="ydB-Bz-WGY"/>
                                 </constraints>
                             </view>
-                            <view hidden="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FzV-kp-wr7" userLabel="Pickerview">
-                                <rect key="frame" x="0.0" y="32" width="375" height="603"/>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FzV-kp-wr7" userLabel="Pickerview">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <subviews>
-                                    <datePicker contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="AxL-0T-Khq">
+                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="AxL-0T-Khq">
                                         <rect key="frame" x="0.0" y="387" width="375" height="216"/>
                                         <date key="date" timeIntervalSinceReferenceDate="526453156.96140599">
                                             <!--2017-09-07 04:59:16 +0000-->
                                         </date>
                                         <locale key="locale" localeIdentifier="zh-Hans"/>
                                     </datePicker>
-                                    <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5VS-Yv-zpO">
+                                    <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5VS-Yv-zpO">
                                         <rect key="frame" x="0.0" y="343" width="375" height="44"/>
                                         <items>
                                             <barButtonItem title="取消" id="pvn-kp-tq8">
@@ -377,11 +377,15 @@
                             <constraint firstItem="hsO-WN-WLa" firstAttribute="top" secondItem="OBW-ep-BMT" secondAttribute="bottom" constant="30" id="3oV-cT-2EZ"/>
                             <constraint firstItem="W8n-yX-Bxr" firstAttribute="centerX" secondItem="XqN-Lc-98g" secondAttribute="centerX" id="Fln-XE-Fc1"/>
                             <constraint firstItem="W8n-yX-Bxr" firstAttribute="top" secondItem="McT-rQ-hoN" secondAttribute="bottom" constant="60" id="JFd-P4-Dgb"/>
+                            <constraint firstItem="FzV-kp-wr7" firstAttribute="top" secondItem="McT-rQ-hoN" secondAttribute="bottom" id="Ual-zh-4om"/>
+                            <constraint firstItem="hsO-WN-WLa" firstAttribute="top" secondItem="FzV-kp-wr7" secondAttribute="bottom" id="XRp-jT-uIV"/>
+                            <constraint firstAttribute="trailing" secondItem="FzV-kp-wr7" secondAttribute="trailing" id="afG-DE-Zol"/>
                             <constraint firstItem="OBW-ep-BMT" firstAttribute="centerX" secondItem="W8n-yX-Bxr" secondAttribute="centerX" id="lAz-9f-nXl"/>
                             <constraint firstAttribute="trailing" secondItem="OBW-ep-BMT" secondAttribute="trailing" constant="120" id="o1w-Wk-Q6z"/>
                             <constraint firstItem="OBW-ep-BMT" firstAttribute="leading" secondItem="XqN-Lc-98g" secondAttribute="leading" constant="120" id="pEY-Fs-4fb"/>
                             <constraint firstAttribute="trailing" secondItem="W8n-yX-Bxr" secondAttribute="trailing" constant="15" id="w8v-Bh-BXQ"/>
                             <constraint firstItem="W8n-yX-Bxr" firstAttribute="leading" secondItem="XqN-Lc-98g" secondAttribute="leading" constant="15" id="xpL-fa-IBk"/>
+                            <constraint firstItem="FzV-kp-wr7" firstAttribute="leading" secondItem="XqN-Lc-98g" secondAttribute="leading" id="z2i-YZ-b21"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="发布需求" id="XX7-bQ-wFU"/>
@@ -389,15 +393,18 @@
                         <outlet property="bgView" destination="W8n-yX-Bxr" id="oha-oQ-QJE"/>
                         <outlet property="dateButton" destination="UxC-Iv-QCo" id="fxN-1Y-Wi0"/>
                         <outlet property="dateLab" destination="IaA-mH-epe" id="6nH-aG-bHe"/>
+                        <outlet property="datePicker" destination="AxL-0T-Khq" id="4rq-c0-WWD"/>
                         <outlet property="departureCityBtn" destination="7wp-Tp-tm2" id="1sf-fG-oqm"/>
                         <outlet property="detailsTextField" destination="8o4-6Y-w4c" id="FdB-Kj-H9F"/>
                         <outlet property="highPriceTextField" destination="1EW-Zk-w8M" id="VLJ-Bf-zJc"/>
                         <outlet property="lowPriceTextField" destination="sWr-0v-JQh" id="aeI-Bj-zdV"/>
                         <outlet property="nextDateButton" destination="CsB-HI-cOh" id="jCY-Qe-pl9"/>
                         <outlet property="nextDayLab" destination="ET6-kO-zAo" id="iTo-LH-tBf"/>
+                        <outlet property="pickerview" destination="FzV-kp-wr7" id="kYE-Xc-IUz"/>
                         <outlet property="releaseButton" destination="OBW-ep-BMT" id="6hP-wX-JVp"/>
                         <outlet property="targetCityBtn" destination="Ofu-QT-zXK" id="JJr-wg-36O"/>
                         <outlet property="titleTextField" destination="w2M-XL-Iat" id="e7J-Ad-GTR"/>
+                        <outlet property="tooBar" destination="5VS-Yv-zpO" id="wL3-J6-qoa"/>
                         <segue destination="w0F-8m-qMa" kind="show" identifier="AviationToMyRelease" id="Roa-fL-OuL"/>
                     </connections>
                 </viewController>
