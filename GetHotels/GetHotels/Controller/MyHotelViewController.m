@@ -34,7 +34,8 @@
 @property (strong,nonatomic) NSMutableArray *allOrdersArr;
 @property (strong,nonatomic) NSMutableArray *useableOrdersArr;
 @property (strong,nonatomic) NSMutableArray *datedOrderArr;
-
+@property (strong,nonatomic) NSArray *allorderscontent;
+@property (strong,nonatomic) NSArray *useableorderscontent;
 @end
 
 @implementation MyHotelViewController
@@ -60,7 +61,7 @@
     _AllOrderTableView.tableFooterView = [UIView new];
     _UseableOrderTableView.tableFooterView = [UIView new];
     _DatedOrderTableView.tableFooterView = [UIView new];
-  
+    self.tabBarController.tabBar.hidden = YES;
     [self AllOrdersRequest];
     [self SetImgForThreeTableView];
 }
@@ -183,8 +184,8 @@
         [ref endRefreshing];
         NSLog(@"Orders:%@",responseObject);
         if ([responseObject[@"result"] integerValue] == 1) {
-            
-        }
+            _allorderscontent = responseObject[@"content"];
+                    }
         else{
             [Utilities popUpAlertViewWithMsg:@"网络错误,请稍后再试" andTitle:@"提示" onView:self];
         }
@@ -207,7 +208,7 @@
         [ref endRefreshing];
         NSLog(@"可使用订单%@",responseObject);
         if ([responseObject[@"result"] integerValue] == 1) {
-            
+            _useableorderscontent = responseObject[@"content"];
         }
         else{
             [Utilities popUpAlertViewWithMsg:@"网络错误,请稍后再试" andTitle:@"提示" onView:self];
@@ -321,6 +322,13 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == _AllOrderTableView) {
         AllOrdersTableViewCell *AllOrderCell = [tableView dequeueReusableCellWithIdentifier:@"AllOrderCell" forIndexPath:indexPath];
+        for(NSDictionary *dic in _useableorderscontent){
+            AllOrderCell.hotelName = dic[@"hotel_name"];
+            AllOrderCell.hotelLocation = dic[@"hotel_address"];
+            AllOrderCell.stayTime = dic[@"final_in_time_str"];
+            AllOrderCell.leavelTime = dic[@"final_out_time_str"];
+        }
+
         return AllOrderCell;
     }
     else if(tableView == _UseableOrderTableView){

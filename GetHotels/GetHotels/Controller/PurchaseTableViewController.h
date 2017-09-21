@@ -16,5 +16,5 @@
 @property (strong,nonatomic) hotelDetailModel *hotelModel;
 @property (strong,nonatomic) ReleaseModel *releaseModel;
 @property (nonatomic) NSInteger tag;
-
+@property (nonatomic)NSInteger days;
 @end

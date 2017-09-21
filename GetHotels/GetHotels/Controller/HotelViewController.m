@@ -16,7 +16,7 @@
 #import "SKTagView.h"
 #import "JSONS.h"
 #import "CityTableViewController.h"
-@interface HotelViewController ()<UITableViewDataSource,UITableViewDelegate,CLLocationManagerDelegate,UITextFieldDelegate>
+@interface HotelViewController ()<UITableViewDataSource,UITableViewDelegate,CLLocationManagerDelegate,UITextFieldDelegate,UIGestureRecognizerDelegate>
 {
     BOOL scrollFlag;
     BOOL firstVisit;
@@ -125,9 +125,10 @@
     [self duration];
     //滑动点设为4个
     _pageControl.numberOfPages = 4;
-    
     _searchTextView.text = @"";
     
+    //给markview添加手势
+    [self addTapGestureRecognizer:_markView];
     // Do any additional setup after loading the view.
     
     //初始化数组
@@ -141,8 +142,8 @@
     //各种赋初值
     PageNum = 1;
     pageSize = 8;
-    starID = 1;
-    priceID = 1;
+    starTestID = 1;
+    priceTestID = 1;
     selectCirfimBool = 0;
     scrollPage = 0;
     
@@ -165,16 +166,20 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     _markView.frame = CGRectMake(0, _HeadView.frame.size.height + 40, UI_SCREEN_W, 400);
-    [self.navigationController setNavigationBarHidden:YES animated:NO];
-    self.tabBarController.tabBar.hidden = NO;
+    [self.navigationController setNavigationBarHidden:YES animated:NO]; 
     //[[UIApplication sharedApplication]setStatusBarHidden:NO];
     [self locationStart];
     [self geocodeAddressString];
 }
 
+-(void)viewDidAppear:(BOOL)animated{
+    self.tabBarController.tabBar.hidden = NO;
+}
+
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:NO];
+    self.tabBarController.tabBar.hidden = YES;
 //    //取消定时器
 //    [_dt invalidate];
 //    _dt = nil;
@@ -359,7 +364,7 @@
 //        return;
 //    } 
     //参数
-    NSDictionary *para = @{@"city_name" : _cityBtn.titleLabel.text, @"pageNum" :@(PageNum), @"pageSize" :  @(pageSize), @"startId" :  @(starID), @"priceId" :@(priceID), @"sortingId" :@(sortID) ,@"inTime" : [NSString stringWithFormat:@"2017-%@",_inTimeDate] ,@"outTime" : [NSString stringWithFormat:@"2017-%@",_outTimeDate] ,@"wxlongitude" :@"", @"wxlatitude" :@""};
+    NSDictionary *para = @{@"city_name" : _cityBtn.titleLabel.text, @"pageNum" :@(PageNum), @"pageSize" :  @(pageSize), @"startId" :  @(starID), @"priceId" :@(priceID), @"sortingId" :@(sortID) ,@"inTime" : _inTimeDate ,@"outTime" : _outTimeDate ,@"wxlongitude" :@"", @"wxlatitude" :@""};
     
     //网络请求
     [RequestAPI requestURL:@"/findHotelByCity_edu" withParameters:para andHeader:nil byMethod:kGet andSerializer:kForm success:^(id responseObject) {
@@ -780,7 +785,7 @@
         tag.borderColor = SELECTE_BORDER_COLOR;
         [weakView removeTagAtIndex:index];
         [weakView insertTag:tag atIndex:index];
-        selectCirfimBool = 3;
+        //selectCirfimBool = 3;
         otherIndexOne = index;
         
     };
@@ -953,6 +958,8 @@
         HotelDetailViewController *detailVC = segue.destinationViewController;
         //3、把数据给下一页预备好的接受容器
         detailVC.hotelId = model.hotelId;
+        detailVC.intiemstr = _inTimeDate;
+        detailVC.outtimestr = _outTimeDate;
     }
 }
 
@@ -1080,19 +1087,19 @@
 
     //获取默认时间
     //当前时间
-    NSDate *dateToday = [NSDate date];
+ //   NSDate *dateToday = [NSDate date];
     //明天的日期
 //    NSDate *dateTom = [NSDate dateTomorrow];
-    NSString *dateStr = [formatter stringFromDate:dateToday];
+ //   NSString *dateStr = [formatter stringFromDate:dateToday];
 //    NSString *dateTomStr= [formatter stringFromDate:dateTom];
-    NSTimeInterval startTime = [Utilities cTimestampFromString:_inTimeDate format:@"MM-dd"];
-    NSTimeInterval endTime = [Utilities cTimestampFromString:_outTimeDate format:@"MM-dd"];
  
     
     if (flag == 0){
         [_inTime setTitle:[NSString stringWithFormat:@"入住%@▼",thDate] forState:UIControlStateNormal];
         _inTimeDate = [paraFormatter stringFromDate:date];
-        if (startTime >= endTime){
+        
+        if ([Utilities cTimestampFromString:_inTimeDate format:paraFormatter.dateFormat] >= [Utilities cTimestampFromString:_outTimeDate format:paraFormatter.dateFormat]){
+            
             NSDate *nextDat = [NSDate dateWithTimeInterval:24*60*60 sinceDate:date];//后一天
             NSString *dateStr = [formatter stringFromDate:nextDat];
             [_outTime setTitle:[NSString stringWithFormat:@"离店%@▼",dateStr] forState:UIControlStateNormal];
@@ -1100,7 +1107,6 @@
     }else{
         [_outTime setTitle:[NSString stringWithFormat:@"离店%@▼",thDate] forState:UIControlStateNormal];
         _outTimeDate = [paraFormatter stringFromDate:date];
-        
     }
     [self initializeData];
     //followUptime = [date timeIntervalSince2017];
@@ -1127,28 +1133,56 @@
     citylist.tag = 1;
 }
 
+//添加单击手势事件
+- (void)addTapGestureRecognizer:(id)any {
+    //初始化一个单击手势，设置响应事件为tapClick：
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapClick:)];
+    tap.delegate = self;
+    //将手势添加给入参
+    [any addGestureRecognizer:tap];
+}
+
+//单击手势事件代理方法
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
+    
+    if ([touch.view isDescendantOfView:_selectView] || [touch.view isDescendantOfView:_markTabelView] || [touch.view isDescendantOfView:_toolBar]) {
+        return NO;
+    }
+    return YES;
+}
+
+//单击手势响应事件
+- (void) tapClick:(UILongPressGestureRecognizer *)tap {
+    if (tap.state == UIGestureRecognizerStateRecognized){
+        [_outTime setTitle:[NSString stringWithFormat:@"%@▼",[_outTime.titleLabel.text substringToIndex:_outTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+        [_inTime setTitle:[NSString stringWithFormat:@"%@▼",[_inTime.titleLabel.text substringToIndex:_inTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+        [_sortBtn setTitle:[NSString stringWithFormat:@"%@▼",[_sortBtn.titleLabel.text substringToIndex:_sortBtn.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
+        _inTime.selected = NO;
+        _outTime.selected = NO;
+        _sortBtn.selected = NO;
+        _selectBtn.selected = NO;
+        _markView.hidden = YES;
+    }
+}
+
+
+
+- (void) touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    
+    [self.view endEditing:YES];
+//    selectCirfimBool = 2;
+//    [self weakSelect];
+       // _selectTagView.didTapTagAtIndex(otherPreIdxOne, otherIndexOne);
+}
+
+
 //按键盘上的Return键收起键盘
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if (textField == _searchTextView){
         [textField resignFirstResponder];
-    }
-    
+        [self initializeData];
+    } 
     return YES;
-}
-- (void) touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    [_outTime setTitle:[NSString stringWithFormat:@"%@▼",[_outTime.titleLabel.text substringToIndex:_outTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
-    [_inTime setTitle:[NSString stringWithFormat:@"%@▼",[_inTime.titleLabel.text substringToIndex:_inTime.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
-    [_sortBtn setTitle:[NSString stringWithFormat:@"%@▼",[_sortBtn.titleLabel.text substringToIndex:_sortBtn.titleLabel.text.length - 1] ] forState:UIControlStateNormal];
-    _inTime.selected = NO;
-    _outTime.selected = NO;
-    _sortBtn.selected = NO;
-    _selectBtn.selected = NO;
-    _markView.hidden = YES;
-    [self.view endEditing:YES];
-    selectCirfimBool = 2;
-//    [self weakSelect];
-       // _selectTagView.didTapTagAtIndex(otherPreIdxOne, otherIndexOne);
-    
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
@@ -1159,6 +1193,8 @@
     [self.view addSubview:_mark];
     return YES;
 }
+
+
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     [_mark removeFromSuperview];
