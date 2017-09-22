@@ -191,10 +191,11 @@
 }
 
 - (void)uiLayout{
-    self.backView.layer.shadowColor = [UIColor blackColor].CGColor;//shadowColor阴影颜色
-    self.backView.layer.shadowOffset = CGSizeMake(0,0);//shadowOffset阴影偏移,x向右偏移4，y向下偏移4，默认(0, -3),这个跟shadowRadius配合使用
-    self.backView.layer.shadowOpacity = 0.5;//阴影透明度，默认0
-    self.backView.layer.shadowRadius = 4;//阴影半径，默认3
+    
+    _bgView.layer.shadowColor = [UIColor blackColor].CGColor;//shadowColor阴影颜色
+    _bgView.layer.shadowOffset = CGSizeMake(0,0);//shadowOffset阴影偏移,x向右偏移4，y向下偏移4，默认(0, -3),这个跟shadowRadius配合使用
+    _bgView.layer.shadowOpacity = 0.5;//阴影透明度，默认0
+    _bgView.layer.shadowRadius = 4.0;//阴影半径，默认3
     self.highPriceTextField.layer.borderColor = [[UIColor lightGrayColor] CGColor];//设置输入框边框颜色
     _highPriceTextField.layer.borderWidth = 0.5;     //设置输入框边框宽度
     self.lowPriceTextField.layer.borderColor = [[UIColor lightGrayColor] CGColor];
