@@ -60,7 +60,7 @@
     // Do any additional setup after loading the view.
     [self setNavigationItem];
     
-    _datePicker.minimumDate = [NSDate date];
+    
     //_arr = [NSMutableArray new];
     
     _datePicker.backgroundColor = [UIColor whiteColor];
@@ -69,8 +69,8 @@
     self.titleTextField.delegate = self;
     self.detailsTextField.delegate = self;
     
-    //_datePicker.minimumDate =[NSDate date];
-     self.datePicker.date = [NSDate dateTomorrow];
+    
+    
     //设置默认时间
     [self defaultDate];
   //  flag = 0;
@@ -85,11 +85,12 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeCity:) name:@"Resetcity" object:nil];
     // 点击空白处收键盘
     //datetime = 33062449980000;
-    NSDate *startDate = [NSDate date];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    formatter.dateFormat = @"yyyy-MM-dd HH:mm";
-    NSString *star = [formatter stringFromDate:startDate];
-    _startTime = star;
+    NSTimeInterval  inttime = [Utilities cTimestampFromString:_dateStr format:@"yyyy-MM-dd"];
+    NSTimeInterval  outtime = [Utilities cTimestampFromString:_dateTomStr format:@"yyyy-MM-dd"];
+    followUpTime = inttime;
+    datetime = outtime;
+    _startTime =_dateStr;
+
     //数字键盘
     _lowPriceTextField.keyboardType = UIKeyboardTypeNumberPad;
     _highPriceTextField.keyboardType = UIKeyboardTypeNumberPad;
@@ -180,7 +181,6 @@
     NSDate *dateAfterdays = [NSDate dateWithDaysFromNow:2];
     _dateStr = [formatter stringFromDate:Tomorrow];
     _dateTomStr= [formatter stringFromDate:dateAfterdays];
-    
     //将处理好的字符串设置给两个Button
     [_dateButton setTitle:_dateStr forState:UIControlStateNormal];
     [_nextDateButton setTitle:_dateTomStr forState:UIControlStateNormal];
@@ -314,15 +314,24 @@
  //   [self.view endEditing:YES];
 //}
 
-// 点击空白处收键盘
-//-(void)fingerTapped:(UITapGestureRecognizer *)gestureRecognizer {
-//    [self.view endEditing:YES];
-//}
+ //点击空白处收键盘
+-(void)fingerTapped:(UITapGestureRecognizer *)gestureRecognizer {
+    NSInteger low = [_lowPriceTextField.text integerValue];
+    NSInteger hight = [_highPriceTextField.text integerValue] ;
+    if (low > hight) {
+        [Utilities popUpAlertViewWithMsg:@"请正确设置价格" andTitle:@"提示" onView:self ];
+        return;
+    }
+    
+    [self.view endEditing:YES];
+
+}
 
 //按键盘return收回按钮
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     
     [textField resignFirstResponder];
+    
     return YES;
 }
 
@@ -369,8 +378,8 @@
             _lowPriceTextField.text = @"";
             _titleTextField.text = @"";
             _detailsTextField.text =@"";
-            _dateLab.hidden = NO;
-            _nextDayLab.hidden = NO;
+            //_dateLab.hidden = NO;
+           // _nextDayLab.hidden = NO;
             
         }
         else{
@@ -423,8 +432,8 @@
     //    formatter.dateFormat = @"MM-dd";
     //    NSString *thDate = [formatter stringFromDate:date];
     //    [_dateButton setTitle:thDate forState:UIControlStateNormal];
-    _dateLab.hidden = YES;
-    _nextDayLab.hidden = YES;
+    //_dateLab.hidden = YES;
+    //_nextDayLab.hidden = YES;
     
 }
 - (IBAction)nextDateActionButton:(UIButton *)sender forEvent:(UIEvent *)event {
@@ -445,10 +454,10 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     formatter.dateFormat = @"yyyy-MM-dd";
     NSDate *date = [formatter dateFromString:_startTime];
-    NSDate *nextDat = [NSDate dateWithTimeInterval:60*24*60 sinceDate:date];
+    NSDate *nextDat = [NSDate dateWithTimeInterval:24*60*60 sinceDate:date];
     _datePicker.minimumDate = nextDat;
-    _dateLab.hidden = YES;
-    _nextDayLab.hidden = YES;
+    ///_dateLab.hidden = YES;
+    //_nextDayLab.hidden = YES;
 }
 - (IBAction)departureCityActionBtn:(UIButton *)sender forEvent:(UIEvent *)event {
     flag = 1;
@@ -503,23 +512,40 @@
     }else{
         [_targetCityBtn setTitle:citystr forState:UIControlStateNormal];
     }
+//    if ([_t.titleLabel.text isEqualToString:_departureCityBtn.titleLabel.text]) {
+//        [Utilities popUpAlertViewWithMsg:@"与已选择的城市相同，请重新选择" andTitle:@"提示" onView:self onCompletion:^{
+//        }];
+//        return;
+//    }
+
 }
 
 - (IBAction)releaseActionButton:(UIButton *)sender forEvent:(UIEvent *)event {
     if([Utilities loginCheck]){
-        [self aviationRequest];
-        [self performSegueWithIdentifier:@"AviationToMyRelease" sender:self];
-        [self.navigationController popViewControllerAnimated:YES];
         
+        
+        if (_lowPriceTextField.text.length == 0) {
+            [Utilities popUpAlertViewWithMsg:@"请输入最低价格" andTitle:@"提示" onView:self ];
+            return;
+        }
+        if (_highPriceTextField.text.length == 0) {
+            [Utilities popUpAlertViewWithMsg:@"请输入最高价格" andTitle:@"提示" onView:self ];
+            return;
+        }
+        if (_titleTextField.text.length == 0) {
+            [Utilities popUpAlertViewWithMsg:@"请输入标题" andTitle:@"提示" onView:self ];
+            return;
+        }
+
+//    [self performSegueWithIdentifier:@"AviationToMyRelease" sender:self];
+//        [self.navigationController popViewControllerAnimated:YES];
+         [self aviationRequest];
     }
     else{
-        
         //获取要跳转过去的那个页面
         LoginViewController *login = [Utilities getStoryboardInstance:@"Login" byIdentity:@"login"];
         //执行跳转
         [self.navigationController pushViewController:login animated:YES ];
-        
-        
     }
 }
 
@@ -535,6 +561,10 @@
     _pickerview.hidden = YES;
     //拿到当前datepicker选择的时间
     NSDate *date = _datePicker.date;
+    NSDate *today = [NSDate date];
+    NSDate *tomorrow = [NSDate dateTomorrow];
+    NSDate *afterTomorrow = [NSDate dateWithDaysFromNow:2];
+    
     //初始化一个日期格式器
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     //定义日期的格式为yyyy-MM-dd
@@ -548,55 +578,72 @@
     //    }
     //将日期转换为字符串（通过日期格式器中的stringFromDate方法）
     NSString *theDate = [formatter stringFromDate:date];
+    NSString *todaystr =[formatter stringFromDate:today];
+    NSString *tomorrowstr =[formatter stringFromDate:tomorrow];
+    NSString *afterTomorrowstr = [formatter stringFromDate:afterTomorrow];
+    NSTimeInterval todaytime = [Utilities cTimestampFromString:todaystr format:@"yyyy-MM-dd"];
+    NSTimeInterval tomorrowtime = [Utilities cTimestampFromString:tomorrowstr format:@"yyyy-MM-dd"];
+    NSTimeInterval afterTomorrowtime = [Utilities cTimestampFromString:afterTomorrowstr format:@"yyyy-MM-dd"];
     [NSString stringWithFormat:@""];
        //flag等于0 则开始按钮变为时间，反之结束按钮变为时间
     if (flag == 1 ) {
-        _nextDayLab.hidden = YES;
-        [_nextDateButton  setTitle:theDate forState:UIControlStateNormal];
+       
         datetime = [Utilities cTimestampFromString:theDate format:@"yyyy-MM-dd"];
+       
+        [_nextDateButton  setTitle:theDate forState:UIControlStateNormal];
+       
     }else{
+        
         followUpTime = [Utilities cTimestampFromString:theDate format:@"yyyy-MM-dd"];
-        _dateLab.hidden = YES;
         [_dateButton setTitle:theDate forState:UIControlStateNormal];
         _startTime = theDate;
-        if (followUpTime >=datetime) {
+        if (followUpTime >= datetime)
+        {
             NSDate *nextDat = [NSDate dateWithTimeInterval:24*60*60 sinceDate:date];
             NSString *endTime = [formatter stringFromDate:nextDat];
+
             [_nextDateButton setTitle:endTime forState:UIControlStateNormal];
-        }
-    
-    
+            datetime = [Utilities cTimestampFromString:endTime format:@"yyyy-MM-dd"];
     }
-    _avi.hidden = YES;
-    _dateLab.hidden = YES;
-    _nextDayLab.hidden = YES;
+        
+
+       
+
+        _avi.hidden = YES;
     _tooBar.hidden = YES;
     _datePicker.hidden = YES;
     _datePicker.hidden = YES;
-}
-
-//- (IBAction)ConfirmItm:(UIBarButtonItem *)sender {
-    //_layerView.hidden = YES;
-    //NSDate *date = _datePicker.date;
-   // NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    //formatter.dateFormat = @"yyyy-MM-dd HH:mm";
-    //NSString *thDate = [formatter stringFromDate:date];
-    //followUpTime = [Utilities cTimestampFromString:thDate format:@"yyyy-MM-dd HH:mm"];
-    //if(flag == 1){
-     //   [_dateButton setTitle:thDate forState:UIControlStateNormal];
-     //   datetime = [Utilities cTimestampFromString:thDate format:@"yyyy-MM-dd HH:mm"];
         
-    //}else if(followUpTime <= datetime){
-    //    [Utilities popUpAlertViewWithMsg:@"请正确选择日期" andTitle:@"提示" onView:self];
-    //}
-    //else{
-       // [_nextDateButton setTitle:thDate forState:UIControlStateNormal];
-    //}
-    
-//}
+        
+}
+        if(datetime == todaytime){
+            _nextDayLab.text =@"今天";
+        }
+        if(datetime == tomorrowtime){
+            _nextDayLab.text =@"明天";
+        }
+        if(datetime == afterTomorrowtime){
+            _nextDayLab.text =@"后天";
+        }
+        if(datetime > afterTomorrowtime){
+            _nextDayLab.text =@"";
+        }
+        
+        if(followUpTime == todaytime){
+            _dateLab.text =@"今天";
+        }
+        if(followUpTime == tomorrowtime){
+            _dateLab.text =@"明天";
+        }
+        if(followUpTime == afterTomorrowtime){
+            _dateLab.text =@"后天";
+        }
+        if(followUpTime > afterTomorrowtime){
+            _dateLab.text =@"";
+        }
 
 
 
-
+}
 
 @end
