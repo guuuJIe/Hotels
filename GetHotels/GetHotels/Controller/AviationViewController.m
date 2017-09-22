@@ -101,17 +101,11 @@
     [super viewWillAppear:animated];
     //调用设置导航样式
     [self setNavigationItem];
-    
-}
-
--(void)viewDidAppear:(BOOL)animated{
-    //显示下部栏
     self.tabBarController.tabBar.hidden = NO;
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    self.tabBarController.tabBar.hidden = YES;
+    [super viewWillDisappear:animated]; 
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

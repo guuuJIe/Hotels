@@ -21,6 +21,11 @@
     [self setNavigationItem];
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden = YES;
+}
+
 - (void)setNavigationItem {
      
     //设置导航条的标题颜色

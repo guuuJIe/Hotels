@@ -40,7 +40,7 @@
 //页面将要出现的时候
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self setNavigationItem];
+    [self setNavigationItem]; 
 }
 
 //设置导航样式

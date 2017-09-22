@@ -170,17 +170,13 @@
     //[[UIApplication sharedApplication]setStatusBarHidden:NO];
     [self locationStart];
     [self geocodeAddressString];
-}
-
--(void)viewDidAppear:(BOOL)animated{
-    //[super viewDidAppear:NO];
     self.tabBarController.tabBar.hidden = NO;
 }
 
+
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    [self.navigationController setNavigationBarHidden:NO animated:NO];
-    self.tabBarController.tabBar.hidden = YES;
+    [self.navigationController setNavigationBarHidden:NO animated:NO]; 
 //    //取消定时器
 //    [_dt invalidate];
 //    _dt = nil;

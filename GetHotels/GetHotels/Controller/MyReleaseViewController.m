@@ -90,6 +90,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self setNavigationItem];
+    self.tabBarController.tabBar.hidden = YES;
 }
 
 //设置菜单栏的方法
