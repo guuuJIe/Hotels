@@ -69,6 +69,9 @@
     _histroyTableView.tableFooterView = [UIView new];
     _scrollView.showsHorizontalScrollIndicator = false;
     _scrollView.showsVerticalScrollIndicator = NO;
+    
+    [UIApplication.sharedApplication.keyWindow setBackgroundColor:THEME_COLOR];
+    
     [self setsegment];
     [self refreshControl];
     [self didReleasedRequest];
@@ -140,6 +143,7 @@
 
 //自定义的返回按钮的事件
 - (void)leftButtonAction:(UIButton *)sender {
+    [self.navigationController popViewControllerAnimated:YES];
     [self dismissViewControllerAnimated:YES completion:nil];
     
 }

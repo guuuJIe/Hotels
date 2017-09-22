@@ -9,5 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface UseableOrderTableViewCell : UITableViewCell
-
+@property (weak, nonatomic) IBOutlet UILabel *hotelName;
+@property (weak, nonatomic) IBOutlet UILabel *hotelLocation;
+@property (weak, nonatomic) IBOutlet UILabel *numberOfPeople;
+@property (weak, nonatomic) IBOutlet UILabel *stayTime;
+@property (weak, nonatomic) IBOutlet UILabel *leavelTime;
 @end
