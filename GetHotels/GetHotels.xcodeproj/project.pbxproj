@@ -76,6 +76,7 @@
 		847BA8E31F5A47E600B0EA8A /* Aviation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 847BA8E21F5A47E600B0EA8A /* Aviation.storyboard */; };
 		847BA8E71F5A481B00B0EA8A /* AviationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 847BA8E61F5A481B00B0EA8A /* AviationViewController.m */; };
 		8497D00D1F544E2400B495C6 /* HomeMarkTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8497D00C1F544E2400B495C6 /* HomeMarkTableViewCell.m */; };
+		849EAD8A1F739510002FBC75 /* HotelOrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 849EAD891F739510002FBC75 /* HotelOrderModel.m */; };
 		84A346761F4C3BCD0051BDFB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84A346751F4C3BCD0051BDFB /* Main.storyboard */; };
 		84A346781F4C3BE60051BDFB /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84A346771F4C3BE60051BDFB /* Login.storyboard */; };
 		84A3467F1F4C42C60051BDFB /* MyInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A3467E1F4C42C60051BDFB /* MyInfoViewController.m */; };
@@ -239,6 +240,8 @@
 		847BA8E61F5A481B00B0EA8A /* AviationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AviationViewController.m; sourceTree = "<group>"; };
 		8497D00B1F544E2400B495C6 /* HomeMarkTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeMarkTableViewCell.h; sourceTree = "<group>"; };
 		8497D00C1F544E2400B495C6 /* HomeMarkTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeMarkTableViewCell.m; sourceTree = "<group>"; };
+		849EAD881F739510002FBC75 /* HotelOrderModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotelOrderModel.h; sourceTree = "<group>"; };
+		849EAD891F739510002FBC75 /* HotelOrderModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HotelOrderModel.m; sourceTree = "<group>"; };
 		84A346751F4C3BCD0051BDFB /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		84A346771F4C3BE60051BDFB /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
 		84A3467A1F4C42A20051BDFB /* HotelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HotelViewController.h; sourceTree = "<group>"; };
@@ -416,6 +419,7 @@
 		045E651B1F485D9B001A8263 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				849EAD871F7394C1002FBC75 /* HotelOrderModel */,
 				845DB93F1F5CEB6B00EF7BBB /* AviationModel */,
 				847526401F5A8655001B9D9C /* ReleaseModel */,
 				0464CC2F1F52D042006260CE /* UserModel */,
@@ -738,6 +742,15 @@
 			name = HomeMarkCell;
 			sourceTree = "<group>";
 		};
+		849EAD871F7394C1002FBC75 /* HotelOrderModel */ = {
+			isa = PBXGroup;
+			children = (
+				849EAD881F739510002FBC75 /* HotelOrderModel.h */,
+				849EAD891F739510002FBC75 /* HotelOrderModel.m */,
+			);
+			name = HotelOrderModel;
+			sourceTree = "<group>";
+		};
 		84A346791F4C42360051BDFB /* Hotel */ = {
 			isa = PBXGroup;
 			children = (
@@ -1043,6 +1056,7 @@
 				8445AD8E1F4C53DE00417B79 /* DatedOrderTableViewCell.m in Sources */,
 				045E64F01F485CA3001A8263 /* GetHotels.xcdatamodeld in Sources */,
 				045E655D1F485F4D001A8263 /* ErrorHandler.m in Sources */,
+				849EAD8A1F739510002FBC75 /* HotelOrderModel.m in Sources */,
 				8445AD8A1F4C53BD00417B79 /* UseableOrderTableViewCell.m in Sources */,
 				845F5A311F59010B00D163C0 /* SKTagView.m in Sources */,
 				045E64E71F485CA3001A8263 /* AppDelegate.m in Sources */,

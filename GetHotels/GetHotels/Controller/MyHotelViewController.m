@@ -11,6 +11,7 @@
 #import "AllOrdersTableViewCell.h"
 #import "UseableOrderTableViewCell.h"
 #import "DatedOrderTableViewCell.h"
+#import "HotelOrderModel.h"
 @interface MyHotelViewController ()<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>{
     NSInteger useableFirst;
     NSInteger datedFirst;
@@ -36,6 +37,7 @@
 @property (strong,nonatomic) NSMutableArray *datedOrderArr;
 @property (strong,nonatomic) NSArray *allorderscontent;
 @property (strong,nonatomic) NSArray *useableorderscontent;
+@property (strong,nonatomic) NSArray *datedContent;
 @end
 
 @implementation MyHotelViewController
@@ -61,7 +63,9 @@
     _AllOrderTableView.tableFooterView = [UIView new];
     _UseableOrderTableView.tableFooterView = [UIView new];
     _DatedOrderTableView.tableFooterView = [UIView new];
+    //[[UIApplication sharedApplication].keyWindow setBackgroundColor:];
     self.tabBarController.tabBar.hidden = YES;
+    _scrollView.showsHorizontalScrollIndicator = false;
     [self AllOrdersRequest];
     [self SetImgForThreeTableView];
 }
@@ -149,19 +153,19 @@
 //刷新全部订单
 -(void)refreshAllOrder{
     allOrdersNum = 1;
-    _aiv = [Utilities getCoverOnView:self.view];
+   // _aiv = [Utilities getCoverOnView:self.view];
     [self AllOrdersRequest];
 }
 //刷新可用订单
 -(void)refreshUseableOrder{
     useableOrdersNum = 1;
-    _aiv = [Utilities getCoverOnView:self.view];
+   // _aiv = [Utilities getCoverOnView:self.view];
     [self UseableOrdersRequest];
 }
 //刷新过期订单
 -(void)refreshDatedOrder{
     datedOrdersNum = 1;
-    _aiv = [Utilities getCoverOnView:self.view];
+    //_aiv = [Utilities getCoverOnView:self.view];
     [self DatedOrdersRequest];
 }
 /*
@@ -183,9 +187,25 @@
         UIRefreshControl *ref = (UIRefreshControl *)[_AllOrderTableView viewWithTag:100];
         [ref endRefreshing];
         NSLog(@"Orders:%@",responseObject);
-        if ([responseObject[@"result"] integerValue] == 1) {
+        if (allOrdersNum == 1) {
+            [_allOrdersArr removeAllObjects];
+        }
+        if ([responseObject[@"result"] integerValue] == 1)
+        {
             _allorderscontent = responseObject[@"content"];
-                    }
+            for (NSDictionary *dict in _allorderscontent) {
+                HotelOrderModel *model = [[HotelOrderModel alloc] initWithDict:dict];
+                [_allOrdersArr addObject:model];
+            }
+            if (_allOrdersArr.count == 0) {
+                _allorderImg.hidden =NO;
+            }
+            else {
+                _allorderImg.hidden= YES;
+            }
+
+            [_AllOrderTableView reloadData];
+        }
         else{
             [Utilities popUpAlertViewWithMsg:@"网络错误,请稍后再试" andTitle:@"提示" onView:self];
         }
@@ -207,8 +227,23 @@
         UIRefreshControl *ref = (UIRefreshControl *)[_UseableOrderTableView viewWithTag:101];
         [ref endRefreshing];
         NSLog(@"可使用订单%@",responseObject);
+        if (useableOrdersNum ==1 ) {
+            [_useableOrdersArr removeAllObjects];
+        }
         if ([responseObject[@"result"] integerValue] == 1) {
             _useableorderscontent = responseObject[@"content"];
+            for (NSDictionary *dict in _useableorderscontent) {
+                HotelOrderModel *model = [[HotelOrderModel alloc] initWithDict:dict];
+                [_useableOrdersArr addObject:model];
+            }
+            if (_useableOrdersArr.count == 0) {
+                _useableorderImg.hidden =NO;
+            }
+            else {
+                _useableorderImg.hidden= YES;
+            }
+            
+            [_UseableOrderTableView reloadData];
         }
         else{
             [Utilities popUpAlertViewWithMsg:@"网络错误,请稍后再试" andTitle:@"提示" onView:self];
@@ -231,8 +266,24 @@
         UIRefreshControl *ref = (UIRefreshControl *)[_DatedOrderTableView viewWithTag:102];
         [ref endRefreshing];
         NSLog(@"过期订单:%@",responseObject);
+        if (datedOrdersNum == 1) {
+            [_datedOrderArr removeAllObjects];
+        }
         if ([responseObject[@"result"] integerValue] == 1) {
+            _datedContent = responseObject[@"content"];
+            for (NSDictionary *dict in _datedContent) {
+                HotelOrderModel *model = [[HotelOrderModel alloc] initWithDict:dict];
+                [_datedOrderArr addObject:model];
+            }
+            if (_datedOrderArr.count == 0) {
+                _datedorderImg.hidden =NO;
+            }
+            else {
+                _datedorderImg.hidden= YES;
+            }
             
+            [_DatedOrderTableView reloadData];
+
         }
         else{
             [Utilities popUpAlertViewWithMsg:@"网络错误,请稍后再试" andTitle:@"提示" onView:self];
@@ -260,15 +311,17 @@
 #pragma mark - tableView
 //一共多少组
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    
     if (tableView == _AllOrderTableView) {
-        return _allOrdersArr.count;
+        return 1;
     }
     else if(tableView == _UseableOrderTableView){
-        return _useableOrdersArr.count;
+        return 1;
     }
     else{
-        return _datedOrderArr.count;
+        return 1;
     }
+
 }
 #pragma mark - scrollView
 //scrollView已经停止减速
@@ -315,28 +368,50 @@
 }
 //每组有几行
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 1;
+    if (tableView == _AllOrderTableView) {
+        return _allOrdersArr.count;
+    }
+    else if(tableView == _UseableOrderTableView){
+        return _useableOrdersArr.count;
+    }
+    else{
+        return _datedOrderArr.count;
+    }
+
 }
 
 //每行长什么样
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == _AllOrderTableView) {
         AllOrdersTableViewCell *AllOrderCell = [tableView dequeueReusableCellWithIdentifier:@"AllOrderCell" forIndexPath:indexPath];
-        for(NSDictionary *dic in _useableorderscontent){
-            AllOrderCell.hotelName = dic[@"hotel_name"];
-            AllOrderCell.hotelLocation = dic[@"hotel_address"];
-            AllOrderCell.stayTime = dic[@"final_in_time_str"];
-            AllOrderCell.leavelTime = dic[@"final_out_time_str"];
-        }
+        HotelOrderModel *model = _allOrdersArr[indexPath.row];
+        
+        AllOrderCell.hotelName.text = model.hotelName;
+        AllOrderCell.hotelLocation.text = model.hotelAddress;
+        AllOrderCell.stayTime.text = model.inTime;
+        AllOrderCell.leavelTime.text = model.outTime;
+        
 
         return AllOrderCell;
     }
     else if(tableView == _UseableOrderTableView){
-        UseableOrderTableViewCell *useableCell = [tableView dequeueReusableCellWithIdentifier:@"UseableOrderCell" forIndexPath:indexPath];
+        UseableOrderTableViewCell *useableCell = [tableView dequeueReusableCellWithIdentifier:@"useableCell" forIndexPath:indexPath];
+        HotelOrderModel *model = _useableOrdersArr[indexPath.row];
+        
+        useableCell.hotelName.text = model.hotelName;
+        useableCell.hotelLocation.text = model.hotelAddress;
+        useableCell.stayTime.text = model.inTime;
+        useableCell.leavelTime.text = model.outTime;
         return useableCell;
     }
     else{
-        DatedOrderTableViewCell *datedCell = [tableView dequeueReusableCellWithIdentifier:@"DatedOrderCell" forIndexPath:indexPath];
+        DatedOrderTableViewCell *datedCell = [tableView dequeueReusableCellWithIdentifier:@"datedCell" forIndexPath:indexPath];
+        HotelOrderModel *model = _datedOrderArr[indexPath.row];
+        
+        datedCell.hotelName.text = model.hotelName;
+        datedCell.hotelLocation.text = model.hotelAddress;
+        datedCell.stayTime.text = model.inTime;
+        datedCell.leavelTime.text = model.outTime;
         return datedCell;
        
     }
