@@ -15,7 +15,7 @@
 @interface HotelDetailViewController (){
     NSTimeInterval followUpTime;
     NSUInteger flag;
-    NSTimeInterval  date;
+    NSTimeInterval datetime;
 }
 @property (weak, nonatomic) IBOutlet UIScrollView *DetailScrollView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -62,6 +62,7 @@
 @property (strong,nonatomic)NSDate *afterTomorrow;
 @property (weak, nonatomic) IBOutlet UIView *pickerview;
 @property (weak, nonatomic) IBOutlet UIButton *mapBtn;
+@property (strong,nonatomic)NSString *startTime;
 - (IBAction)mapBtnAct:(UIButton *)sender forEvent:(UIEvent *)event;
 
 @end
@@ -81,6 +82,13 @@
     //状态栏变成白色
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     _DetailScrollView.showsVerticalScrollIndicator = NO;
+    
+    NSTimeInterval  inttime = [Utilities cTimestampFromString:_intiemstr format:@"yyyy-MM-dd"];
+    NSTimeInterval  outtime = [Utilities cTimestampFromString:_outtimestr format:@"yyyy-MM-dd"];
+    followUpTime = inttime;
+    datetime = outtime;
+    _startTime =_intiemstr;
+    
 
     
 }
@@ -197,7 +205,9 @@
             NSString *datedayStr = [formatter stringFromDate:dateday];
             
             NSTimeInterval  tomorrow = [Utilities cTimestampFromString:dateTomStr format:@"yyyy-MM-dd"];
+ 
             NSTimeInterval  outtime = [Utilities cTimestampFromString:_outtimestr format:@"yyyy-MM-dd"];
+          
             NSTimeInterval  date1 = [Utilities cTimestampFromString:dateStr format:@"yyyy-MM-dd"];
             NSTimeInterval  intime = [Utilities cTimestampFromString:_intiemstr format:@"yyyy-MM-dd"];
             NSTimeInterval  dateday1 = [Utilities cTimestampFromString:datedayStr format:@"yyyy-MM-dd"];
@@ -276,6 +286,7 @@ failure:^(NSInteger statusCode, NSError *error) {
     _tooBar.hidden = NO;
     _datePicker.hidden = NO;
     _pickerview.hidden= NO;
+    _datePicker.minimumDate = [NSDate date];
  
 }
 - (IBAction)nextDateActionBtn:(UIButton *)sender forEvent:(UIEvent *)event {
@@ -283,6 +294,18 @@ failure:^(NSInteger statusCode, NSError *error) {
     _tooBar.hidden = NO;
     _datePicker.hidden = NO;
     _pickerview.hidden= NO;
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    formatter.dateFormat = @"yyyy-MM-dd";
+    
+//    NSDate *date1 = [NSDate dateWithTimeIntervalSince1970:(followUpTime / 1000)];
+//    NSString *timeStr = [formatter stringFromDate:date1];
+//
+//    NSDate *date = [formatter dateFromString:timeStr];
+    formatter.dateFormat = @"yyyy-MM-dd";
+    NSDate *date = [formatter dateFromString:_startTime];
+    NSDate *nextDat = [NSDate dateWithTimeInterval:24*60*60 sinceDate:date];//后一天
+    _datePicker.minimumDate = nextDat;
+    
 
 }
 - (IBAction)buyAction:(UIButton *)sender forEvent:(UIEvent *)event {
@@ -326,58 +349,62 @@ failure:^(NSInteger statusCode, NSError *error) {
         NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     formatter.dateFormat = @"yyyy-MM-dd";
    NSString *thDate = [formatter stringFromDate:date];
-    NSTimeInterval  day = [Utilities cTimestampFromString:thDate format:@"yyyy-MM-dd"];
+    
     //获取默认时间
     //当前时间
     NSDate *dateToday = [NSDate date];
     NSString *dateStr = [formatter stringFromDate:dateToday];
-    NSTimeInterval startTime = [Utilities cTimestampFromString:dateStr format:@"yyyy-MM-dd"];
+    NSTimeInterval todayTime = [Utilities cTimestampFromString:dateStr format:@"yyyy-MM-dd"];
     NSDate *dateAfterdays = [NSDate dateWithDaysFromNow:2];
     NSDate *tomorrowdays =  [NSDate dateWithDaysFromNow:1];
     NSString *aftertomorrow = [formatter stringFromDate:dateAfterdays];
     NSString *tomorrowStr =   [formatter stringFromDate:tomorrowdays];
     NSTimeInterval  dateAfter = [Utilities cTimestampFromString:aftertomorrow format:@"yyyy-MM-dd"];
     NSTimeInterval  tomorrow = [Utilities cTimestampFromString:tomorrowStr format:@"yyyy-MM-dd"];
-    if(flag == 0){
-        if(day < startTime){
-            [Utilities popUpAlertViewWithMsg:@"请正确选择日期" andTitle:@"提示" onView:self];
-        }else{
-            if(day > dateAfter ){
-                _dayLabel.text = nil;
-            }
-            if (day == startTime ) {
-                _dayLabel.text =[NSString stringWithFormat:@"今天"];
-            }
-            if(day == tomorrow){
-                _dayLabel.text =[NSString stringWithFormat:@"明天"] ;
-            }
-            if (day ==  dateAfter) {
-                _dayLabel.text =[NSString stringWithFormat:@"后天"] ;
-            }
 
-            [_dateBtn setTitle:thDate forState:UIControlStateNormal];
-            startTime = [Utilities cTimestampFromString:thDate format:@"yyyy-MM-dd"];
-        }
+    if(flag == 1){
+         [_nextDateBtn setTitle:thDate forState:UIControlStateNormal];
+        datetime = [Utilities cTimestampFromString:thDate format:@"yyyy-MM-dd"];
         
     }else{
-        if(day<= startTime){
-            [Utilities popUpAlertViewWithMsg:@"请正确选择日期" andTitle:@"提示" onView:self];
-        }else{
-            if(day > dateAfter){
-                _nextDayLabel.text = nil;
-            }else{
-                 _nextDayLabel.text =[NSString stringWithFormat:@"后天"] ;
-            }
-            if(day == tomorrow){
-                _nextDayLabel.text =[NSString stringWithFormat:@"明天"] ;
-            }
+        [_dateBtn setTitle:thDate forState:UIControlStateNormal];
+        followUpTime = [Utilities cTimestampFromString:thDate format:@"yyyy-MM-dd"];
+        _startTime = thDate;
+        if(followUpTime >= datetime){
+            NSDate *nextDat = [NSDate dateWithTimeInterval:24*60*60 sinceDate:date];//后一天
+            NSString *endTime =  [formatter stringFromDate:nextDat];
+            [_nextDateBtn  setTitle:endTime forState:UIControlStateNormal];
+            datetime = [Utilities cTimestampFromString:endTime format:@"yyyy-MM-dd"];
         }
-         [_nextDateBtn setTitle:thDate forState:UIControlStateNormal];
+        if(followUpTime ==todayTime){
+            _dayLabel.text =[NSString stringWithFormat:@"今天"];
+        }
+        if(followUpTime ==tomorrow){
+            _dayLabel.text =[NSString stringWithFormat:@"明天"];
+
+        }
+        if(followUpTime ==dateAfter)
         
-        
-    }
+        {
+            _dayLabel.text =[NSString stringWithFormat:@"后天"];
+        }
+        if(followUpTime > dateAfter ){
+        _dayLabel.text = nil;
+        }
 }
- 
+            if(datetime ==todayTime){
+                _nextDayLabel.text =[NSString stringWithFormat:@"今天"];
+            }
+            if(datetime ==tomorrow){
+                 _nextDayLabel.text =[NSString stringWithFormat:@"明天"];
+            }
+            if(datetime ==dateAfter){
+                 _nextDayLabel.text =[NSString stringWithFormat:@"后天"];
+            }
+            if(datetime > dateAfter ){
+                _nextDayLabel.text = nil;
+            }
+}
 
 - (IBAction)mapBtnAct:(UIButton *)sender forEvent:(UIEvent *)event {
     MapViewController *purchaseVC = [Utilities getStoryboardInstance:@"BookHotels" byIdentity:@"mapNavi"];
