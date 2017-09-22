@@ -48,6 +48,8 @@
 @property (strong,nonatomic)NSDictionary *cities;
 @property (weak, nonatomic) IBOutlet UIView *bgView;
 @property (strong,nonatomic)NSString *startTime;
+@property (weak, nonatomic) IBOutlet UIView *avi;
+@property (strong,nonatomic)UIActivityIndicatorView *aiv;
 @property (strong,nonatomic)NSString *ToEndTime;
 @end
 
@@ -78,6 +80,7 @@
     //监听键盘将要打开这一操作，打开后执行keyboardWillShow:方法
     //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
     //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
+    [self addTapGestureRecognizer:_pickerview];
     //接收一个通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeCity:) name:@"Resetcity" object:nil];
     // 点击空白处收键盘
@@ -90,6 +93,7 @@
     //数字键盘
     _lowPriceTextField.keyboardType = UIKeyboardTypeNumberPad;
     _highPriceTextField.keyboardType = UIKeyboardTypeNumberPad;
+    
 
 }
 -(void)viewWillAppear:(BOOL)animated{
@@ -167,7 +171,7 @@
     //初始化日期格式器
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     //定义日期格式
-    formatter.dateFormat = @"MM-dd";
+    formatter.dateFormat = @"yyyy-MM-dd";
     //当前时间
     NSDate *date = [NSDate date];
     
@@ -289,7 +293,22 @@
     [_titleTextField resignFirstResponder];
     [_detailsTextField resignFirstResponder];
 }
-
+//添加单击手势事件
+- (void)addTapGestureRecognizer:(id)any {
+    //初始化一个单击手势，设置响应事件为tapClick：
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapClick:)];
+    //将手势添加给入参
+    [any addGestureRecognizer:tap];
+}
+//小图的单击手势响应事件
+- (void) tapClick:(UILongPressGestureRecognizer *)tap {
+    
+    if (tap.state == UIGestureRecognizerStateRecognized){
+        _datePicker.hidden = NO;
+        _tooBar.hidden = NO;
+        _avi.hidden = NO;
+    }
+}
 // 滑动空白处隐藏键盘
 //- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
  //   [self.view endEditing:YES];
@@ -313,7 +332,8 @@
 -(void)aviationRequest{
     UserModel *user = [[StorageMgr singletonStorageMgr]objectForKey:@"UserInfo"];
     //创建菊花膜（点击按钮的时候，并显示在当前页面）
-    UIActivityIndicatorView *aiv = [Utilities getCoverOnView:self.view];
+    //UIActivityIndicatorView *aiv = [Utilities getCoverOnView:self.view];
+    _aiv = [Utilities getCoverOnView:self.view];
     //开始日期
     //NSLog(@"");
     NSTimeInterval startTime = [Utilities cTimestampFromString:_dateButton.titleLabel.text format:@"yyyy-MM-dd"];
@@ -327,7 +347,7 @@
 //        return;
 //    }
     if ([_targetCityBtn.titleLabel.text isEqualToString:@"请选择城市"]) {
-        [aiv stopAnimating];
+        [_aiv stopAnimating];
         [Utilities popUpAlertViewWithMsg:@"请选择抵达的城市" andTitle:@"提示" onView:self ];
         //[Utilities popUpAlertViewWithMsg:@"请选择抵达的城市" andTitle:@"提示" onView:self onCompletion:^{}];
         return;
@@ -336,7 +356,7 @@
     //NSLog(@"到达时间：%@",_nextDateButton.titleLabel.text);
     NSDictionary *prarmeter =@{@"openid" : user.openid, @"set_low_time_str": _dateButton.titleLabel.text,@"set_high_time_str":_nextDateButton.titleLabel.text,@"set_hour":@"",@"departure":_departureCityBtn.titleLabel.text,@"destination":_targetCityBtn.titleLabel.text,@"low_price":_lowPriceTextField.text,@"high_price":_highPriceTextField.text,@"aviation_demand_detail":_detailsTextField.text,@"aviation_demand_title":_titleTextField.text,@"is_back":@"",@"back_low_time_str":@"",@"back_high_time_str":@"",@"people_number":@"",@"child_number":@"",@"weight":@""};
     [RequestAPI requestURL:@"/addIssue_edu" withParameters:prarmeter andHeader:nil byMethod:kPost andSerializer:kForm success:^(id responseObject) {
-        [aiv stopAnimating];
+        [_aiv stopAnimating];
         NSLog(@"responseObject:%@",responseObject);
         
         if([responseObject[@"result"]integerValue] == 1){
@@ -359,7 +379,7 @@
         }
     }
                    failure:^(NSInteger statusCode, NSError *error) {
-                       [aiv stopAnimating];
+                       [_aiv stopAnimating];
                        [Utilities popUpAlertViewWithMsg:@"网络错误，稍后再试" andTitle:@"提示" onView:self ];
                    }];
     
@@ -392,6 +412,7 @@
 }
 - (IBAction)dateActionButton:(UIButton *)sender forEvent:(UIEvent *)event {
     _datePicker.minimumDate = [NSDate date];
+    _avi.hidden = NO;
     flag = 0;
     dateFlag = YES;
     _pickerview.hidden = NO;
@@ -407,8 +428,11 @@
     
 }
 - (IBAction)nextDateActionButton:(UIButton *)sender forEvent:(UIEvent *)event {
+    
+    _avi.hidden = NO;
     flag = 1;
     dateFlag = NO;
+    
     _pickerview.hidden = NO;
     _datePicker.hidden = NO;
     _tooBar.hidden = NO;
@@ -500,6 +524,8 @@
 }
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
+    
+    _avi.hidden = NO;
     _pickerview.hidden = YES;
     _tooBar.hidden = YES;
     _datePicker.hidden = YES;
@@ -541,6 +567,7 @@
     
     
     }
+    _avi.hidden = YES;
     _dateLab.hidden = YES;
     _nextDayLab.hidden = YES;
     _tooBar.hidden = YES;
