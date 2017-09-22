@@ -63,7 +63,7 @@
     _AllOrderTableView.tableFooterView = [UIView new];
     _UseableOrderTableView.tableFooterView = [UIView new];
     _DatedOrderTableView.tableFooterView = [UIView new];
-    //[[UIApplication sharedApplication].keyWindow setBackgroundColor:];
+    [[UIApplication sharedApplication].keyWindow setBackgroundColor:THEME_COLOR];
     self.tabBarController.tabBar.hidden = YES;
     _scrollView.showsHorizontalScrollIndicator = false;
     [self AllOrdersRequest];
