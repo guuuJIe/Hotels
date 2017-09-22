@@ -23,6 +23,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [UIApplication.sharedApplication.keyWindow setBackgroundColor:[UIColor darkGrayColor]];
     [self naviConfig];
     [self uiLayout];
     [self dataInitalize];
@@ -32,10 +33,21 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden = YES;
+}
+
 //每次要离开这个页面的时候,结束定位
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [_locMgr stopUpdatingLocation];
+}
+
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    [UIApplication.sharedApplication.keyWindow setBackgroundColor:THEME_COLOR];
 }
 
 - (void)didReceiveMemoryWarning {
