@@ -173,6 +173,7 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated{
+    //[super viewDidAppear:NO];
     self.tabBarController.tabBar.hidden = NO;
 }
 
