@@ -84,6 +84,7 @@
 		84A346861F4C44510051BDFB /* MyInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84A346851F4C44510051BDFB /* MyInfoTableViewCell.m */; };
 		84F729DB1F48661D00E7E773 /* BookHotels.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84F729D91F48661D00E7E773 /* BookHotels.storyboard */; };
 		84F729DE1F48663400E7E773 /* Myself.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84F729DC1F48663400E7E773 /* Myself.storyboard */; };
+		84FEA6E31F7512680034646F /* UseDelegetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84FEA6E21F7512680034646F /* UseDelegetViewController.m */; };
 		FE7202881F70E84700518621 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE7202871F70E84700518621 /* MapViewController.m */; };
 		FE72028B1F7124F000518621 /* Annotation.m in Sources */ = {isa = PBXBuildFile; fileRef = FE72028A1F7124F000518621 /* Annotation.m */; };
 		FE9C941D1F4E7BAE00252250 /* ZLImageViewDisplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9C941C1F4E7BAE00252250 /* ZLImageViewDisplayView.m */; };
@@ -253,6 +254,8 @@
 		84A346851F4C44510051BDFB /* MyInfoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyInfoTableViewCell.m; sourceTree = "<group>"; };
 		84F729DA1F48661D00E7E773 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = GetHotels/Base.lproj/BookHotels.storyboard; sourceTree = SOURCE_ROOT; };
 		84F729DD1F48663400E7E773 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = GetHotels/Base.lproj/Myself.storyboard; sourceTree = SOURCE_ROOT; };
+		84FEA6E11F7512680034646F /* UseDelegetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UseDelegetViewController.h; sourceTree = "<group>"; };
+		84FEA6E21F7512680034646F /* UseDelegetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UseDelegetViewController.m; sourceTree = "<group>"; };
 		930E5F009C5987E6FC36A05C /* Pods-GetHotels.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GetHotels.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GetHotels/Pods-GetHotels.debug.xcconfig"; sourceTree = "<group>"; };
 		FE7202861F70E84700518621 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		FE7202871F70E84700518621 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
@@ -399,6 +402,7 @@
 		045E651A1F485D9B001A8263 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				84FEA6E01F74D5EC0034646F /* Usedeleget */,
 				847526381F5A49FF001B9D9C /* Offer */,
 				847BA8E41F5A47F600B0EA8A /* Aviation */,
 				842DB6161F57A1F600AFE2AE /* MyRelease */,
@@ -465,9 +469,9 @@
 		045E651D1F485D9B001A8263 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				842DB6211F57EC4700AFE2AE /* IsReleasedTableViewCell */,
 				8475263C1F5A4A52001B9D9C /* OfferCell */,
 				842DB6251F5819A000AFE2AE /* HistoryTableViewCell */,
-				842DB6211F57EC4700AFE2AE /* IsReleasedTableViewCell */,
 				842DB61A1F57A34500AFE2AE /* DidRealeseTableViewCell */,
 				8497D00A1F544DEB00B495C6 /* HomeMarkCell */,
 				8445AD8B1F4C53C300417B79 /* DatedOrderTableViewCell */,
@@ -775,6 +779,15 @@
 			name = HomeCell;
 			sourceTree = "<group>";
 		};
+		84FEA6E01F74D5EC0034646F /* Usedeleget */ = {
+			isa = PBXGroup;
+			children = (
+				84FEA6E11F7512680034646F /* UseDelegetViewController.h */,
+				84FEA6E21F7512680034646F /* UseDelegetViewController.m */,
+			);
+			name = Usedeleget;
+			sourceTree = "<group>";
+		};
 		FE9C941A1F4E7BAE00252250 /* ZLImageViewDisplayView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1014,6 +1027,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				045E655F1F485F4D001A8263 /* NSData+Base64.m in Sources */,
+				84FEA6E31F7512680034646F /* UseDelegetViewController.m in Sources */,
 				847BA8E71F5A481B00B0EA8A /* AviationViewController.m in Sources */,
 				841E379A1F495AE90057D58A /* MyHotelViewController.m in Sources */,
 				045E65621F485F4D001A8263 /* NSString+Crypt.m in Sources */,

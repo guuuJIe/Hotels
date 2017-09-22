@@ -51,17 +51,24 @@
     self.navigationController.navigationBar.hidden = NO;
     //设置导航条上按钮的风格颜色
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    //设置是否需要毛玻璃效果
-    self.navigationController.navigationBar.translucent = YES;
-    //为导航条左上角创建一个按钮
-    UIBarButtonItem *left = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(backAction)];
-    self.navigationItem.leftBarButtonItem = left;
+    //设置背景图片为返回图片
+    
+    //实例化一个button，类型为UIButtonTypeSystem
+    UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+    //设置位置大小
+    leftBtn.frame = CGRectMake(0, 0, 20, 20);
+
+    //设置背景图片为返回图片
+    [leftBtn setBackgroundImage:[UIImage imageNamed:@"返回3"] forState:UIControlStateNormal];
+    //给按钮添加事件
+    [leftBtn addTarget:self action:@selector(leftButtonAction) forControlEvents: UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:leftBtn];
 }
 
 //用Modal方式返回上一页
-- (void)backAction {
-    [self dismissViewControllerAnimated:YES completion:nil];
-    // [self.navigationController popViewControllerAnimated:YES];
+- (void)leftButtonAction {
+    //[self dismissViewControllerAnimated:YES completion:nil];
+     [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)uiLayout {
     if ([[[StorageMgr singletonStorageMgr] objectForKey:@"LocCity"] isKindOfClass:[NSNull class]]) {

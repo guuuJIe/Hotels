@@ -9,6 +9,7 @@
 #import "UseDelegetViewController.h"
 
 @interface UseDelegetViewController ()
+@property (weak, nonatomic) IBOutlet UITextView *textView;
 
 @end
 
