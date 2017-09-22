@@ -16,7 +16,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 @property (strong, nonatomic) NSArray *arr;
 @property (strong, nonatomic) UIButton *payBtn;
-
+@property (strong,nonatomic)NSIndexPath *index;
 @end
 
 @implementation PurchaseTableViewController
@@ -89,16 +89,8 @@
         _dateLabel.text = [NSString stringWithFormat:@"%@ 起飞",timeStr];
         _priceLabel.text = [NSString stringWithFormat:@"%ld元",(long)_releaseModel.finalPrice];
     }else {
-        //初始化日期格式器
-        NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-        //定义日期格式
-        formatter.dateFormat = @"M月dd日";
-        //当前时间
-        NSDate *date = [NSDate date];
-        //后天的日期
-        NSDate *dateAfterdays = [NSDate dateWithDaysFromNow:2];
-        NSString *dateStr = [formatter stringFromDate:date];
-        NSString *dateTomStr= [formatter stringFromDate:dateAfterdays];
+        NSString *dateStr = [Utilities dateStrFromCstampTime:_intimestr withDateFormat:@"M月dd日"];
+        NSString *dateTomStr = [Utilities dateStrFromCstampTime:_outtimestr withDateFormat:@"M月dd日"];
         _dateLabel.text = [NSString stringWithFormat:@"%@ -- %@",dateStr,dateTomStr];
         _nameLabel.text = _hotelModel.hotel_name;
         _priceLabel.text = [NSString stringWithFormat:@"%ld元",_hotelModel.now_price * _days];
@@ -108,9 +100,9 @@
     self.tableView.editing = YES;
     
     //创建细胞的行号和组号(第一行，第一组)
-    NSIndexPath *indexpath = [NSIndexPath indexPathForRow:0 inSection:0];
+    _index = [NSIndexPath indexPathForRow:0 inSection:0];
     //用代码来选中表格视图中的某个细胞(默认选中某个细胞)
-    [self.tableView selectRowAtIndexPath:indexpath animated:YES scrollPosition:UITableViewScrollPositionNone];
+    [self.tableView selectRowAtIndexPath:_index animated:YES scrollPosition:UITableViewScrollPositionNone];
     
 }
 
@@ -173,6 +165,8 @@
 //细胞选中后调用
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    self.payBtn.enabled = YES;
+    _index = indexPath;
     //遍历表格视图中所有选中的细胞
     for (NSIndexPath *eachIP in tableView.indexPathsForSelectedRows)
     {
@@ -187,7 +181,9 @@
     }
    
 }
-
+-(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath{
+    self.payBtn.enabled = NO;
+}
 
 //设置tableview的底部视图
 - (void)setFootViewForTableView {
@@ -210,9 +206,9 @@
 
 //确认支付按钮事件
 - (void)payAction {
-    switch (self.tableView.indexPathForSelectedRow.row) {
+    switch (_index.row) {
         case 0: {
-            _payBtn.enabled = YES;
+            
             if (_tag == 1) {
                 //生成订单号
                 NSString *tradeNo = [GBAlipayManager generateTradeNO];
@@ -226,12 +222,12 @@
         }
             break;
         case 1: {
-            _payBtn.enabled = NO;
+            
             
         }
             break;
         case 2: {
-             _payBtn.enabled = NO;
+            
         }
             break;
         default:

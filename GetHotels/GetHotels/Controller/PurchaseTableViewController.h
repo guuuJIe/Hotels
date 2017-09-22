@@ -17,4 +17,6 @@
 @property (strong,nonatomic) ReleaseModel *releaseModel;
 @property (nonatomic) NSInteger tag;
 @property (nonatomic)NSInteger days;
+@property (nonatomic)NSTimeInterval intimestr;
+@property (nonatomic)NSTimeInterval outtimestr;
 @end
