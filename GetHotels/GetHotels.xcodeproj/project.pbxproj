@@ -465,9 +465,9 @@
 		045E651D1F485D9B001A8263 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				842DB6211F57EC4700AFE2AE /* IsReleasedTableViewCell */,
 				8475263C1F5A4A52001B9D9C /* OfferCell */,
 				842DB6251F5819A000AFE2AE /* HistoryTableViewCell */,
-				842DB6211F57EC4700AFE2AE /* IsReleasedTableViewCell */,
 				842DB61A1F57A34500AFE2AE /* DidRealeseTableViewCell */,
 				8497D00A1F544DEB00B495C6 /* HomeMarkCell */,
 				8445AD8B1F4C53C300417B79 /* DatedOrderTableViewCell */,
