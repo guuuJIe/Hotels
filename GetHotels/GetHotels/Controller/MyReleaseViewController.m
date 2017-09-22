@@ -69,6 +69,9 @@
     _histroyTableView.tableFooterView = [UIView new];
     _scrollView.showsHorizontalScrollIndicator = false;
     _scrollView.showsVerticalScrollIndicator = NO;
+    
+    [UIApplication.sharedApplication.keyWindow setBackgroundColor:THEME_COLOR];
+    
     [self setsegment];
     [self refreshControl];
     [self didReleasedRequest];
