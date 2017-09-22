@@ -307,7 +307,7 @@
                 //NSLog(@"网络请求成功，真的开始做事");
                 //将JSON格式的数据流data用JSONS工具包里的NSData下的Category中的JSONCol方法转化为OC对象（Array或Dictionary）
                 id jsonObject = [data JSONCol];
-                NSLog(@"%@", jsonObject);
+                //NSLog(@"%@", jsonObject);
                 NSArray *weatherArr = jsonObject[@"weather"];
                 NSDictionary *weather = [NSDictionary new];
                 for (NSDictionary *dict in weatherArr) {
@@ -338,15 +338,19 @@
     
     if ([data[0] integerValue] == 800){
         _weatherImg.image = [UIImage imageNamed:@"晴"];
+        _weatherLabel.text = @"晴";
     }else if ([data[0] integerValue] > 800 && [data[0] integerValue] < 804){
         _weatherImg.image = [UIImage imageNamed:@"多云"];
+        _weatherLabel.text = @"多云";
     }else if ([data[0] integerValue] == 804){
         _weatherImg.image = [UIImage imageNamed:@"阴"];
+        _weatherLabel.text = @"阴";
     }else{
         _weatherImg.image = [UIImage imageNamed:@"小雨"];
+        _weatherLabel.text = @"小雨";
     }
     _tempLabel.text = [NSString stringWithFormat:@"%@℃",data[2]];
-    _weatherLabel.text = data[1];
+    //_weatherLabel.text = data[1];
 }
 
 //广告,酒店
