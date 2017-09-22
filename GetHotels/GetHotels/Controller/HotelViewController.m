@@ -99,6 +99,7 @@
 @property (strong, nonatomic) UIView *cellHeaderView;
 @property (strong, nonatomic) NSIndexPath *indexPath;
 @property (strong, nonatomic) NSTimer *dt;
+@property (strong, nonatomic) UIImageView *nothing;
 @end
 
 @implementation HotelViewController
@@ -131,6 +132,10 @@
     [self addTapGestureRecognizer:_markView];
     // Do any additional setup after loading the view.
     
+    _nothing = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"no_things"]];
+    _nothing.frame = CGRectMake((UI_SCREEN_W-100)/2, self.navigationController.navigationBar.frame.size.height + _homeScrollView.height + 40, 100, 100);
+    [_hotelTableView addSubview:_nothing];
+    _nothing.hidden = YES;
     //初始化数组
     _hotelArr = [NSMutableArray new];
     _advImgArr = [NSMutableArray new];
@@ -388,7 +393,11 @@
                 _model = [[HotelListModel alloc] initWithDict:dict];
                 [_hotelArr addObject:_model];
             }
-            
+            if (_hotelArr.count == 0){
+                _nothing.hidden = NO;
+            }else{
+                _nothing.hidden = YES;
+            }
             //调用天气接口
             [self weatherRequest];
             //广告图片
@@ -440,6 +449,11 @@
             for (NSDictionary *dict in  content){ 
                 HotelListModel *model = [[HotelListModel alloc] initWithDict:dict];
                 [_hotelArr addObject:model];
+            }
+            if (_hotelArr.count == 0){
+                _nothing.hidden = NO;
+            }else{
+                _nothing.hidden = YES;
             }
             [_hotelTableView reloadData];
         } else {
