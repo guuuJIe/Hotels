@@ -958,6 +958,8 @@
         HotelDetailViewController *detailVC = segue.destinationViewController;
         //3、把数据给下一页预备好的接受容器
         detailVC.hotelId = model.hotelId;
+        detailVC.intiemstr = _inTimeDate;
+        detailVC.outtimestr = _outTimeDate;
     }
 }
 

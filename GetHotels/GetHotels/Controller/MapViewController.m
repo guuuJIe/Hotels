@@ -17,7 +17,8 @@
 @property (strong, nonatomic) MKMapView *mapView;
 @property (strong, nonatomic) UILabel *longitudeLabel;
 @property (strong, nonatomic) UILabel *latitudeLabel;
-
+@property (strong, nonatomic) MKPolyline *routeLine;
+@property (strong, nonatomic) MKPolylineView *routeLineView;
 @end
 
 @implementation MapViewController
@@ -144,6 +145,7 @@
     region.center = location;
     //将坐标给大头针
     [self pinAnnotationViaCoordinate:location];
+    [self drawLine:userLocation];
     [mapView setRegion:region animated:YES];
 }
 //当地图加载失败时调用
@@ -226,7 +228,44 @@
         }
     }];
 }
+//画线的协议方法
+- (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id<MKOverlay>)overlay
+{
+    if(overlay == self.routeLine) {
+        if(nil == self.routeLineView) {
+            self.routeLineView = [[MKPolylineView alloc] initWithPolyline:self.routeLine] ;
+            self.routeLineView.fillColor = [UIColor blueColor];
+            self.routeLineView.strokeColor = [UIColor redColor];
+            self.routeLineView.lineWidth = 5;
+        }
+        return self.routeLineView;
+    }
+    return nil;
+}
 
+-(void)drawLineLocation:(NSArray *)locationArray{
+    NSUInteger pointCount = [locationArray count];
+    CLLocationCoordinate2D *coordinateArray = (CLLocationCoordinate2D *)malloc(pointCount * sizeof(CLLocationCoordinate2D));
+    
+    for (int i = 0; i < pointCount; ++i) {
+        CLLocation *location = [locationArray objectAtIndex:i];
+        coordinateArray[i] = [location coordinate];
+    }
+    
+    self.routeLine = [MKPolyline polylineWithCoordinates:coordinateArray count:pointCount];
+    [self.mapView setVisibleMapRect:[self.routeLine boundingMapRect]];
+    [self.mapView addOverlay:self.routeLine];
+    
+    free(coordinateArray);
+    coordinateArray = NULL;
+}
+-(void)drawLine:(MKUserLocation *)userLocation{
+    CLLocation *location0 = [[CLLocation alloc]initWithLatitude:userLocation.coordinate.latitude longitude:userLocation.coordinate.longitude];
+    CLLocation *location1 = [[CLLocation alloc]initWithLatitude:[_latitude doubleValue] longitude:[_longitude doubleValue]];
+    NSArray *arr = [NSArray arrayWithObjects:location0,location1,nil];
+    [self drawLineLocation:arr];
+    
+}
 /*
 #pragma mark - Navigation
 
