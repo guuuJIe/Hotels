@@ -15,10 +15,10 @@
        _hotel_address= [Utilities nullAndNilCheck:dict[@"hotel_address"] replaceBy:@""];
         _hotel_imgs= [Utilities nullAndNilCheck:dict[@"hotel_img"] replaceBy:@""];
          _hotel_name= [Utilities nullAndNilCheck:dict[@"hotel_name"] replaceBy:@""];
-        _now_price = [Utilities nullAndNilCheck:dict[@"now_price"] replaceBy:@""];
+        _now_price = [[Utilities nullAndNilCheck:dict[@"now_price"] replaceBy:0] integerValue];
         _in_time = [Utilities nullAndNilCheck:dict[@"in_time"] replaceBy:@""];
         _out_time = [Utilities nullAndNilCheck:dict[@"out_time"] replaceBy:@""];
-        _now_price = [Utilities nullAndNilCheck:dict[@"now_price"] replaceBy:@""];
+       
         _room_img = [Utilities nullAndNilCheck:dict[@"room_img"] replaceBy:@""];
         _start_time = [Utilities nullAndNilCheck:dict[@"start_time"] replaceBy:@""];
         _longitude = [Utilities nullAndNilCheck:dict[@"longitude"] replaceBy:@""];

@@ -34,7 +34,8 @@
 @property (strong,nonatomic) NSMutableArray *allOrdersArr;
 @property (strong,nonatomic) NSMutableArray *useableOrdersArr;
 @property (strong,nonatomic) NSMutableArray *datedOrderArr;
-@property (strong,nonatomic) NSArray *content;
+@property (strong,nonatomic) NSArray *allorderscontent;
+@property (strong,nonatomic) NSArray *useableorderscontent;
 @end
 
 @implementation MyHotelViewController
@@ -183,7 +184,7 @@
         [ref endRefreshing];
         NSLog(@"Orders:%@",responseObject);
         if ([responseObject[@"result"] integerValue] == 1) {
-            _content = responseObject[@"content"];
+            _allorderscontent = responseObject[@"content"];
                     }
         else{
             [Utilities popUpAlertViewWithMsg:@"网络错误,请稍后再试" andTitle:@"提示" onView:self];
@@ -207,7 +208,7 @@
         [ref endRefreshing];
         NSLog(@"可使用订单%@",responseObject);
         if ([responseObject[@"result"] integerValue] == 1) {
-            
+            _useableorderscontent = responseObject[@"content"];
         }
         else{
             [Utilities popUpAlertViewWithMsg:@"网络错误,请稍后再试" andTitle:@"提示" onView:self];
@@ -321,7 +322,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == _AllOrderTableView) {
         AllOrdersTableViewCell *AllOrderCell = [tableView dequeueReusableCellWithIdentifier:@"AllOrderCell" forIndexPath:indexPath];
-        for(NSDictionary *dic in _content){
+        for(NSDictionary *dic in _useableorderscontent){
             AllOrderCell.hotelName = dic[@"hotel_name"];
             AllOrderCell.hotelLocation = dic[@"hotel_address"];
             AllOrderCell.stayTime = dic[@"final_in_time_str"];
