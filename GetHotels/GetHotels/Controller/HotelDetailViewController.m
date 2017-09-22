@@ -122,6 +122,11 @@
        [self.navigationController popViewControllerAnimated:YES];
 
 }
+- (void) touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    //让根视图结束编辑状态来达到收起键盘的目的
+    [self.view endEditing:YES];
+    _pickerview.hidden = YES;
+}
 #pragma mark - quest
 //网络请求
 -(void)hotelDetailRequest{
@@ -252,7 +257,7 @@ failure:^(NSInteger statusCode, NSError *error) {
     //获取要显示的位置
     CGRect screenFrame = [[UIScreen mainScreen] bounds];
     
-    CGRect frame = CGRectMake(0, 0, screenFrame.size.width, 170);
+    CGRect frame = CGRectMake(0, 0, screenFrame.size.width, 215);
     
     NSArray *imageArray =@[@"酒店1.jpg",@"酒店2.jpg",@"酒店3.jpg"];
     
