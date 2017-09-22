@@ -314,15 +314,24 @@
  //   [self.view endEditing:YES];
 //}
 
-// 点击空白处收键盘
-//-(void)fingerTapped:(UITapGestureRecognizer *)gestureRecognizer {
-//    [self.view endEditing:YES];
-//}
+ //点击空白处收键盘
+-(void)fingerTapped:(UITapGestureRecognizer *)gestureRecognizer {
+    NSInteger low = [_lowPriceTextField.text integerValue];
+    NSInteger hight = [_highPriceTextField.text integerValue] ;
+    if (low > hight) {
+        [Utilities popUpAlertViewWithMsg:@"请正确设置价格" andTitle:@"提示" onView:self ];
+        return;
+    }
+    
+    [self.view endEditing:YES];
+
+}
 
 //按键盘return收回按钮
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     
     [textField resignFirstResponder];
+    
     return YES;
 }
 
@@ -507,10 +516,26 @@
 
 - (IBAction)releaseActionButton:(UIButton *)sender forEvent:(UIEvent *)event {
     if([Utilities loginCheck]){
-        [self aviationRequest];
-        [self performSegueWithIdentifier:@"AviationToMyRelease" sender:self];
-        [self.navigationController popViewControllerAnimated:YES];
         
+        
+        if (_lowPriceTextField.text.length == 0) {
+            [Utilities popUpAlertViewWithMsg:@"请输入最低价格" andTitle:@"提示" onView:self ];
+            return;
+        }
+        if (_highPriceTextField.text.length == 0) {
+            [Utilities popUpAlertViewWithMsg:@"请输入最高价格" andTitle:@"提示" onView:self ];
+            return;
+        }
+        if (_titleTextField.text.length == 0) {
+            [Utilities popUpAlertViewWithMsg:@"请输入标题" andTitle:@"提示" onView:self ];
+            return;
+        }
+
+//    [self performSegueWithIdentifier:@"AviationToMyRelease" sender:self];
+//        [self.navigationController popViewControllerAnimated:YES];
+         [self aviationRequest];
+       
+       
     }
     else{
         
