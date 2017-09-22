@@ -80,6 +80,7 @@
     // Do any additional setup after loading the view.
     //状态栏变成白色
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+    _DetailScrollView.showsVerticalScrollIndicator = NO;
 
     
 }
@@ -295,6 +296,8 @@ failure:^(NSInteger statusCode, NSError *error) {
         NSInteger totaldays =days/(24*60*60*1000);
         NSLog(@"%f",days/(24*60*60*1000));
         //传参
+        purchaseVC.intimestr = dates;
+        purchaseVC.outtimestr = nextDate;
         purchaseVC.days = totaldays;
         purchaseVC.hotelModel =_detailModel;
         //push跳转
@@ -328,17 +331,30 @@ failure:^(NSInteger statusCode, NSError *error) {
     //当前时间
     NSDate *dateToday = [NSDate date];
     NSString *dateStr = [formatter stringFromDate:dateToday];
-    NSTimeInterval startTime = [Utilities cTimestampFromString:dateStr format:@"MM-dd"];
+    NSTimeInterval startTime = [Utilities cTimestampFromString:dateStr format:@"yyyy-MM-dd"];
     NSDate *dateAfterdays = [NSDate dateWithDaysFromNow:2];
-    NSDate *tomorrowdays = [NSDate dateWithDaysFromNow:1];
-    NSString *aftertomorrow= [formatter stringFromDate:dateAfterdays];
-    NSString *tomorrowStr= [formatter stringFromDate:tomorrowdays];
-     NSTimeInterval  dateAfter = [Utilities cTimestampFromString:aftertomorrow format:@"yyyy-MM-dd"];
-     NSTimeInterval  tomorrow = [Utilities cTimestampFromString:tomorrowStr format:@"yyyy-MM-dd"];
+    NSDate *tomorrowdays =  [NSDate dateWithDaysFromNow:1];
+    NSString *aftertomorrow = [formatter stringFromDate:dateAfterdays];
+    NSString *tomorrowStr =   [formatter stringFromDate:tomorrowdays];
+    NSTimeInterval  dateAfter = [Utilities cTimestampFromString:aftertomorrow format:@"yyyy-MM-dd"];
+    NSTimeInterval  tomorrow = [Utilities cTimestampFromString:tomorrowStr format:@"yyyy-MM-dd"];
     if(flag == 0){
         if(day < startTime){
             [Utilities popUpAlertViewWithMsg:@"请正确选择日期" andTitle:@"提示" onView:self];
         }else{
+            if(day > dateAfter ){
+                _dayLabel.text = nil;
+            }
+            if (day == startTime ) {
+                _dayLabel.text =[NSString stringWithFormat:@"今天"];
+            }
+            if(day == tomorrow){
+                _dayLabel.text =[NSString stringWithFormat:@"明天"] ;
+            }
+            if (day ==  dateAfter) {
+                _dayLabel.text =[NSString stringWithFormat:@"后天"] ;
+            }
+
             [_dateBtn setTitle:thDate forState:UIControlStateNormal];
             startTime = [Utilities cTimestampFromString:thDate format:@"yyyy-MM-dd"];
         }
