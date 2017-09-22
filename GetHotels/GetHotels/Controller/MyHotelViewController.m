@@ -313,13 +313,13 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     
     if (tableView == _AllOrderTableView) {
-        return 1;
+        return _allOrdersArr.count;
     }
     else if(tableView == _UseableOrderTableView){
-        return 1;
+        return _useableOrdersArr.count;
     }
     else{
-        return 1;
+        return _datedOrderArr.count;
     }
 
 }
@@ -366,16 +366,39 @@
     //取消选中
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (tableView == _AllOrderTableView) {
+        if (section == 0) {
+            return 0;
+        }
+        return 10;
+    }
+    else if(tableView == _UseableOrderTableView){
+        if (section == 0) {
+            return 0;
+        }
+
+        return 10;
+    }
+    else{
+        if (section == 0) {
+            return 0;
+        }
+
+        return 10;
+    }
+
+}
 //每组有几行
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (tableView == _AllOrderTableView) {
-        return _allOrdersArr.count;
+        return 1;
     }
     else if(tableView == _UseableOrderTableView){
-        return _useableOrdersArr.count;
+        return 1;
     }
     else{
-        return _datedOrderArr.count;
+        return 1;
     }
 
 }
@@ -384,7 +407,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView == _AllOrderTableView) {
         AllOrdersTableViewCell *AllOrderCell = [tableView dequeueReusableCellWithIdentifier:@"AllOrderCell" forIndexPath:indexPath];
-        HotelOrderModel *model = _allOrdersArr[indexPath.row];
+        HotelOrderModel *model = _allOrdersArr[indexPath.section];
         
         AllOrderCell.hotelName.text = model.hotelName;
         AllOrderCell.hotelLocation.text = model.hotelAddress;
@@ -396,7 +419,7 @@
     }
     else if(tableView == _UseableOrderTableView){
         UseableOrderTableViewCell *useableCell = [tableView dequeueReusableCellWithIdentifier:@"useableCell" forIndexPath:indexPath];
-        HotelOrderModel *model = _useableOrdersArr[indexPath.row];
+        HotelOrderModel *model = _useableOrdersArr[indexPath.section];
         
         useableCell.hotelName.text = model.hotelName;
         useableCell.hotelLocation.text = model.hotelAddress;
@@ -406,7 +429,7 @@
     }
     else{
         DatedOrderTableViewCell *datedCell = [tableView dequeueReusableCellWithIdentifier:@"datedCell" forIndexPath:indexPath];
-        HotelOrderModel *model = _datedOrderArr[indexPath.row];
+        HotelOrderModel *model = _datedOrderArr[indexPath.section];
         
         datedCell.hotelName.text = model.hotelName;
         datedCell.hotelLocation.text = model.hotelAddress;
@@ -417,4 +440,6 @@
     }
 
 }
+//id = 18 openid = 150354357588518720393673 18720393673
+//
 @end
