@@ -130,17 +130,17 @@
                 if (i == 0){
                    _oneLabel.text = string;
                 }if(i == 1){
-                    _twoLabel.text = string;
-                }if(i == 2){
-                    _secondLabel.text = string;
-                }if(i == 3){
                     _fourLabel.text = string;
+                }if(i == 2){
+                    _sevenLabel.text = string;
+                }if(i == 3){
+                    _twoLabel.text = string;
                 }if(i == 4){
-                    _fiveLabel.text = string;
+                    _secondLabel.text = string;
                 }if(i == 5){
                     _sixLabel.text = string;
                 }if(i == 6){
-                    _sevenLabel.text = string;
+                    _fiveLabel.text = string;
                 }if(i == 7){
                     _eigtLabel.text = string;
                 }
@@ -173,10 +173,10 @@
               NSString *img = [NSHomeDirectory()stringByAppendingString:string];
                 [_arr addObject:img];
             }
-          _detailModel = [[hotelDetailModel alloc]initWithDictionary:content];
-         _nameLabel.text = _detailModel.hotel_name;
+            _detailModel = [[hotelDetailModel alloc]initWithDictionary:content];
+            _nameLabel.text = _detailModel.hotel_name;
             _adressLabel.text = _detailModel.hotel_address;
-            _priceLabel.text = _detailModel.now_price;
+            _priceLabel.text = [NSString stringWithFormat:@"%ld",(long)_detailModel.now_price];
             _priceLabel.text = [NSString stringWithFormat:@"¥%@",_priceLabel.text];
             _petLabel.text = _detailModel.is_pet;
             
@@ -190,8 +190,38 @@
             NSDate *dates = [NSDate date];
             //后天的日期
             NSDate *dateAfterdays = [NSDate dateWithDaysFromNow:2];
+            NSDate *dateday = [NSDate dateWithDaysFromNow:1];
             NSString *dateStr = [formatter stringFromDate:dates];
             NSString *dateTomStr= [formatter stringFromDate:dateAfterdays];
+            NSString *datedayStr = [formatter stringFromDate:dateday];
+            
+            NSTimeInterval  tomorrow = [Utilities cTimestampFromString:dateTomStr format:@"yyyy-MM-dd"];
+            NSTimeInterval  outtime = [Utilities cTimestampFromString:_outtimestr format:@"yyyy-MM-dd"];
+            NSTimeInterval  date1 = [Utilities cTimestampFromString:dateStr format:@"yyyy-MM-dd"];
+            NSTimeInterval  intime = [Utilities cTimestampFromString:_intiemstr format:@"yyyy-MM-dd"];
+            NSTimeInterval  dateday1 = [Utilities cTimestampFromString:datedayStr format:@"yyyy-MM-dd"];
+            
+            if (intime > date1) {
+                _dayLabel.text = NULL;
+            }if (intime == tomorrow){
+                _dayLabel.text =[NSString stringWithFormat:@"后天"] ;
+            }
+            if(intime ==  date1){
+                _dayLabel.text =[NSString stringWithFormat:@"今天"] ;
+            }
+            if (intime == dateday1){
+                _dayLabel.text =[NSString stringWithFormat:@"明天"] ;
+            }
+
+            if (outtime>tomorrow) {
+                _nextDayLabel.text =NULL;
+            }
+            if (outtime == dateday1){
+                _nextDayLabel.text =[NSString stringWithFormat:@"明天"] ;
+            }
+            if(outtime == tomorrow){
+                _nextDayLabel.text =[NSString stringWithFormat:@"后天"] ;
+            }
             //将处理好的字符串设置给两个Button
             [_dateBtn setTitle: _intiemstr forState:UIControlStateNormal];
             [_nextDateBtn setTitle:_outtimestr forState:UIControlStateNormal];
@@ -257,7 +287,15 @@ failure:^(NSInteger statusCode, NSError *error) {
 - (IBAction)buyAction:(UIButton *)sender forEvent:(UIEvent *)event {
     if([Utilities loginCheck]){
         PurchaseTableViewController *purchaseVC = [Utilities getStoryboardInstance:@"BookHotels" byIdentity:@"purchaseNavi"];
+        NSString *dateStr = [NSString stringWithFormat:@"%@",_dateBtn.titleLabel.text];
+        NSTimeInterval dates = [Utilities cTimestampFromString:dateStr format:@"yyyy-MM-dd"];
+        NSString *nextDateStr = [NSString stringWithFormat:@"%@",_nextDateBtn.titleLabel.text];
+        NSTimeInterval nextDate = [Utilities cTimestampFromString:nextDateStr format:@"yyyy-MM-dd"];
+        NSTimeInterval days = nextDate - dates;
+        NSInteger totaldays =days/(24*60*60*1000);
+        NSLog(@"%f",days/(24*60*60*1000));
         //传参
+        purchaseVC.days = totaldays;
         purchaseVC.hotelModel =_detailModel;
         //push跳转
         [self.navigationController pushViewController:purchaseVC animated:YES];

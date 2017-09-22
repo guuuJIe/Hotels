@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 @property (strong, nonatomic) NSArray *arr;
+@property (strong, nonatomic) UIButton *payBtn;
 
 @end
 
@@ -99,12 +100,8 @@
         NSString *dateStr = [formatter stringFromDate:date];
         NSString *dateTomStr= [formatter stringFromDate:dateAfterdays];
         _dateLabel.text = [NSString stringWithFormat:@"%@ -- %@",dateStr,dateTomStr];
-        
-        //NSString *starTimeStr = [Utilities dateStrFromCstampTime:[_hotelModel.start_time integerValue] withDateFormat:@"M月dd日"];
-        //NSString *outTimeStr = [Utilities dateStrFromCstampTime:[_hotelModel.start_time integerValue] withDateFormat:@"M月dd日"];
         _nameLabel.text = _hotelModel.hotel_name;
-        //_dateLabel.text = [NSString stringWithFormat:@"%@ -- %@",starTimeStr,outTimeStr];
-        _priceLabel.text = [NSString stringWithFormat:@"%@元",_hotelModel.now_price];
+        _priceLabel.text = [NSString stringWithFormat:@"%ld元",_hotelModel.now_price * _days];
     }
     self.tableView.tableFooterView = [UIView new];
     //将表格视图设置为"编辑中"
@@ -174,15 +171,21 @@
 }
 
 //细胞选中后调用
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
     //遍历表格视图中所有选中的细胞
-    for (NSIndexPath *eachIP in tableView.indexPathsForSelectedRows) {
+    for (NSIndexPath *eachIP in tableView.indexPathsForSelectedRows)
+    {
         //当选中的细胞不是当前正在按的这个细胞的情况下
-        if (eachIP != indexPath) {
+        if (eachIP != indexPath)
+        {
             //将细胞从选中状态改为不选中状态
             [tableView deselectRowAtIndexPath:eachIP animated:YES];
+            
         }
+        
     }
+   
 }
 
 
@@ -191,16 +194,16 @@
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, UI_SCREEN_W, 100)];
     
-    UIButton *payBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-    payBtn.frame = CGRectMake(0, 60, UI_SCREEN_W, 40.f);
-    [payBtn setTitle:@"确认支付" forState:UIControlStateNormal];
+    _payBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+    _payBtn.frame = CGRectMake(0, 60, UI_SCREEN_W, 40.f);
+    [_payBtn setTitle:@"确认支付" forState:UIControlStateNormal];
     //设置按钮标题的字体大小
-    payBtn.titleLabel.font = [UIFont systemFontOfSize:17.f];
-    [payBtn setTitleColor:UIColorFromRGB(23, 115, 232) forState:UIControlStateNormal];
-    payBtn.backgroundColor = [UIColor whiteColor];
-    [payBtn addTarget:self action:@selector(payAction) forControlEvents:UIControlEventTouchUpInside];
+    _payBtn.titleLabel.font = [UIFont systemFontOfSize:17.f];
+    [_payBtn setTitleColor:UIColorFromRGB(23, 115, 232) forState:UIControlStateNormal];
+    _payBtn.backgroundColor = [UIColor whiteColor];
+    [_payBtn addTarget:self action:@selector(payAction) forControlEvents:UIControlEventTouchUpInside];
     
-    [view addSubview:payBtn];
+    [view addSubview:_payBtn];
     
     [_payTableView setTableFooterView:view];
 }
@@ -209,6 +212,7 @@
 - (void)payAction {
     switch (self.tableView.indexPathForSelectedRow.row) {
         case 0: {
+            _payBtn.enabled = YES;
             if (_tag == 1) {
                 //生成订单号
                 NSString *tradeNo = [GBAlipayManager generateTradeNO];
@@ -216,17 +220,18 @@
             }else {
                 //生成订单号
                 NSString *tradeNo = [GBAlipayManager generateTradeNO];
-                [GBAlipayManager alipayWithProductName:_hotelModel.hotel_name amount:_hotelModel.now_price tradeNO:tradeNo notifyURL:nil productDescription:[NSString stringWithFormat:@"%@入住费",_hotelModel.hotel_name] itBPay:_hotelModel.now_price];
+                [GBAlipayManager alipayWithProductName:_hotelModel.hotel_name amount:[NSString stringWithFormat:@"%ld",(long)_hotelModel.now_price] tradeNO:tradeNo notifyURL:nil productDescription:[NSString stringWithFormat:@"%@入住费",_hotelModel.hotel_name] itBPay:[NSString stringWithFormat:@"%ld",(long)_hotelModel.now_price]];
             }
     
         }
             break;
         case 1: {
+            _payBtn.enabled = NO;
             
         }
             break;
         case 2: {
-            
+             _payBtn.enabled = NO;
         }
             break;
         default:
