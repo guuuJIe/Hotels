@@ -80,7 +80,7 @@
     //监听键盘将要打开这一操作，打开后执行keyboardWillShow:方法
     //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardWillShowNotification object:nil];
     //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardWillHideNotification object:nil];
-    [self addTapGestureRecognizer:_pickerview];
+   // [self addTapGestureRecognizer:_pickerview];
     //接收一个通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeCity:) name:@"Resetcity" object:nil];
     // 点击空白处收键盘
@@ -278,7 +278,6 @@
             _releaseButton.backgroundColor = UIColorFromRGB(66, 162, 233);
         }
     }
-   
 }
 //让根视图结束编辑状态，到达收起键盘的目的
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
@@ -415,6 +414,8 @@
     
 }
 - (IBAction)dateActionButton:(UIButton *)sender forEvent:(UIEvent *)event {
+    [_detailsTextField resignFirstResponder];
+    [_titleTextField resignFirstResponder];
     _datePicker.minimumDate = [NSDate date];
     _avi.hidden = NO;
     flag = 0;
@@ -432,7 +433,8 @@
     
 }
 - (IBAction)nextDateActionButton:(UIButton *)sender forEvent:(UIEvent *)event {
-    
+    [_detailsTextField resignFirstResponder];
+    [_titleTextField resignFirstResponder];
     _avi.hidden = NO;
     flag = 1;
     dateFlag = NO;
